@@ -36,7 +36,7 @@ function installDB($file, $link){
 }
 
 
-$defPathToConfig="include/secrets.inc.php";
+$defPathToConfig="../include/secrets.inc.php";
 
 $config_raw="<?php \r\n";
 foreach($need4conf as $need){
