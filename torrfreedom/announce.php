@@ -3,21 +3,11 @@ if (ob_get_level() == 0) ob_start("ob_gzhandler");
 require_once("include/bittorrent.inc.php");
 require_once("include/benc.php");
 
-function err($msg) {
-	benc_resp(array("failure reason" => array("type" => "string", "value" => $msg)));
-	exit();
-}
+require_once("include/announcer_class.php"); //
 
-function benc_resp($d) {
-	benc_resp_raw(benc(array("type" => "dictionary", "value" => $d)));
-}
 
-function benc_resp_raw($x) {
-	header("Content-Type: text/plain");
-	header("Pragma: no-cache");
-	print($x);
-}
 
+// удалить
 function bigintval($value) {
   $value = trim($value);
   if (ctype_digit($value)) {
@@ -30,27 +20,34 @@ function bigintval($value) {
   return 0;
 }
 
-// I2P: ip required
-$req = "info_hash:peer_id:ip:port:uploaded:downloaded:left:!event";
-foreach (explode(":", $req) as $x) {
-	if ($x[0] == "!") {
-		$x = substr($x, 1);
-		$opt = 1;
-	}
-	else
-		$opt = 0;
-	if (!isset($_GET[$x])) {
-		if (!$opt)
-			err("missing key");
-		continue;
-	}
-	$GLOBALS[$x] = unesc($_GET[$x]);
-}
+$announcer = new Announcer();
 
-foreach (array("info_hash","peer_id") as $x) {
+// I2P: ip required
+// ВОТ тута бля надо не из $req сука стринг брать, а блять из POST/GET
+// $_POST['info_hash'] maybe я хуй знает как announce передается
+// хотя вроде GET, ща
+//
+
+$announcer->announce($_GET);
+//foreach (explode(":", $req) as $x) {
+//	if ($x[0] == "!") {
+//		$x = substr($x, 1);
+//		$opt = 1;
+//	}
+//	else
+//		$opt = 0;
+//	if (!isset($_GET[$x])) {
+//		if (!$opt)
+//			err("missing key");
+//		continue;
+//	}
+//	$GLOBALS[$x] = unesc($_GET[$x]);
+//}
+
+/*foreach (array("info_hash","peer_id") as $x) {
 	if (strlen($GLOBALS[$x]) != 20)
 		err("invalid $x (" . strlen($GLOBALS[$x]) . " - " . urlencode($GLOBALS[$x]) . ")");
-}
+}*/
 
 // I2P: dont check ip
 //if (empty($ip) || !preg_match('/^(\d{1,3}\.){3}\d{1,3}$/s', $ip))

@@ -27,13 +27,13 @@ $appname = "TorrFreedom";
 $version = "1.1.0";
 
 # the first one will be displayed on the pages
-$announce_urls = array();
-$announce_urls[] = $tracker_url_name . "/announce.php";
-$announce_urls[] = $tracker_url_key . "/announce.php";
-$announce_urls[] = $tracker_url_name . "/announce";
-$announce_urls[] = $tracker_url_key . "/announce";
-$announce_urls[] = $tracker_url_name . "/a";
-$announce_urls[] = $tracker_url_key . "/a";
+$announce_urls = array();// ссылочки нахуй поправим
+$announce_urls[] .= $tracker_url_name . "/announce.php";
+$announce_urls[] .= $tracker_url_key . "/announce.php";
+$announce_urls[] .= $tracker_url_name . "/announce";
+$announce_urls[] .= $tracker_url_key . "/announce";
+$announce_urls[] .= $tracker_url_name . "/a";
+$announce_urls[] .= $tracker_url_key . "/a";
 
 function dbconn($autoclean = 1) {
 	global $mysql_host, $mysql_user, $mysql_pass, $mysql_db;
