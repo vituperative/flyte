@@ -9,10 +9,16 @@ dbconn();
 
 
 class Announcer {
-
-  protected $fields = "seeder, peer_id, ip, port"; // TODO: to do
-	//all requests/ fields to stringsss 
-	//variables
+  protected $sql_templates = array(
+	  "getTorrentByID" => "SELECT id, banned, seeders + leechers AS numpeers FROM torrents WHERE ",
+	  "getPeersByTorrentID" => "SELECT %s FROM peers WHERE torrent = '%d' AND (1 OR connectable = 'yes') %s" // fields, torrentID, limit
+//        $selfwhere = "torrent = $torrentid AND " . hash_where("peer_id", $peer_id);
+	  "getPeersByTorrentID_selfwhere" => "torrent = %s AND %s" ,
+	  //SELECT $fields FROM peers WHERE $selfwhere
+	  "selectWW" => "select %s WHERE %s",
+	  //"DELETE FROM peers WHERE $this->selfwhere"
+	  "deleteWW" => "DELETE FROM %s WHERE %s",
+  );
 
   protected static $sDB=null;
    
@@ -43,7 +49,7 @@ class Announcer {
 	return true;
    }
    protected function getTorrentByID($ihash){
-	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT id, banned, seeders + leechers AS numpeers FROM torrents WHERE " . hash_where("info_hash", $ihash));
+	$res = mysqli_query($GLOBALS["___mysqli_ston"], $this->sql_templates['getTorrentByID'] . hash_where("info_hash", $ihash));
 
 	$torrent = mysqli_fetch_assoc($res);
 	if (!$torrent){
@@ -53,12 +59,13 @@ class Announcer {
 
 	return $torrent;
    }
-   protected function getPeersByTorrentID($id){// TODO: все $res/selfwhere и ттд в константы запросов блять в $torQueryGETTORRENT; и ттд
-        $limit = "";//поправить эт нах
+   protected function getPeersByTorrentID($torrent, $fields="seeder, peer_id, ip, port"){// TODO: все $res/selfwhere и ттд в константы запросов блять в $torQueryGETTORRENT; и ттд
+	   $limit = "";//поправить эт нах
         if ($torrent["numpeers"] > $this->rsize)
-                $limit = "ORDER BY RAND() LIMIT $this->rsize";
-
-	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT $this->fields FROM peers WHERE torrent = $torrentid AND (1 OR connectable = 'yes') $limit");
+		$limit = "ORDER BY RAND() LIMIT $this->rsize";
+	$torrentid=$torrent['id'];
+	$qRAW=sprintf($this->sql_templates['getTorrentByID'], $fields, $torrentid, $limit);
+	$res = mysqli_query($GLOBALS["___mysqli_ston"], $qRAW);
 
 	$resp = "d" . benc_str("interval") . "i" . $announce_interval . "e" . benc_str("peers") . "l";
 	unset($this->self);
@@ -77,11 +84,12 @@ class Announcer {
                  "e";
 	}//while end
 	$resp .= "ee";
-
-	$selfwhere = "torrent = $torrentid AND " . hash_where("peer_id", $peer_id);
+	//"getPeersByTorrentID_selfwhere" => "torrent = %s AND %s"
+	$this->selfwhere=sprintf($this->sql_templates['getTorrentByID_selfwhere'], $torrentid, hash_where("peer_id", $peer_id) );
 
 	if (!isset($this->self)) {
-        	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT $this->fields FROM peers WHERE $selfwhere");
+
+        	$res = mysqli_query($GLOBALS["___mysqli_ston"], sprintf($this->sql_templates['selectWW'], $fields, $selfwhere));
         	$row = mysqli_fetch_assoc($res);
         	if ($row)
                 	$this->self = $row;
@@ -92,12 +100,13 @@ class Announcer {
 
 
 
-   protected function checkEvent($event){
+   protected function checkEvent($event, $torrentid){
 	$updateset = array();
 
       	if ($event == "stopped") {
-              if (isset($self)) {
-                      mysqli_query($GLOBALS["___mysqli_ston"], "DELETE FROM peers WHERE $selfwhere");
+		if (isset($self)) {
+		      //deleteWW
+                      mysqli_query($GLOBALS["___mysqli_ston"], sprintf($this->sql_templates['deleteWW'], "peers", $this->selfwhere);
                       if (mysqli_affected_rows($GLOBALS["___mysqli_ston"])) {
                               if ($self["seeder"] == "yes")
                                       array_push($updateset, "seeders = seeders - 1");
@@ -108,9 +117,14 @@ class Announcer {
       }else {
               if ($event == "completed")
                       array_push($updateset, "times_completed = times_completed + 1");
-      
+	      //   $this->port = intval($port);
+	     //   $this->downloaded = $this->bigintval($downloaded);
+  	    // $this->uploaded = $this->bigintval($uploaded);
+   	   //$this->left = $this->bigintval($left);
+
+	      //
               if (isset($self)) {
-                      mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE peers SET ip = " . sqlesc($ip) . ", port = $port, uploaded = $uploaded, downloaded = $downloaded, to_go = $left, last_action = NOW(), seeder = '$seeder' WHERE $selfwhere");
+                      mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE peers SET ip = " . sqlesc($ip) . ", port = $this->port, uploaded  = $this->uploaded, downloaded  = $this->downloaded, to_go  = $this->left, last_action = NOW(), seeder = '$this->seeder' WHERE $this->selfwhere");
                       if (mysqli_affected_rows($GLOBALS["___mysqli_ston"]) && $self["seeder"] != $seeder) {
                               if ($seeder == "yes") {
                                       array_push($updateset, "seeders = seeders + 1");
@@ -131,7 +145,7 @@ class Announcer {
                               $connectable = "yes";
       //                      @fclose($sockres);
       //              }
-                      $ret = mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO peers (connectable, torrent, peer_id, ip, port, uploaded, downloaded, to_go, started, last_action, seeder) VALUES ('$connectable', $torrentid, " . sqlesc($peer_id) . ", " . sqlesc($ip) . ", $port, $uploaded, $downloaded, $left, NOW(), NOW(), '$seeder')");
+                      $ret = mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO peers (connectable, torrent, peer_id, ip, port, uploaded, downloaded, to_go, started, last_action, seeder) VALUES ('$connectable', $torrentid, " . sqlesc($peer_id) . ", " . sqlesc($ip) . ", $this->port, $this->uploaded, $this->downloaded, $this->left, NOW(), NOW(), '$this->seeder')");//IP всегда пустое что ли у нас?! peer_id из GLOBALS?
                       if ($ret) {
                               if ($seeder == "yes")
                                       array_push($updateset, "seeders = seeders + 1");
@@ -165,7 +179,7 @@ class Announcer {
                 	$opt = 0;
         	if (!isset($ask[$element])) {
                 	if (!$opt)
-                        	$this->$this->err("missing key");
+                        	$this->err("missing key");
                 	continue;
         	}
         	$GLOBALS[$element] = unesc($ask[$element]);
@@ -190,8 +204,8 @@ class Announcer {
 	if(!torrent) return false;
 
 
-	$resp=$this->getPeersByTorrentID($torrent["id"]);
-	$this->checkEvent($this->event);
+	$resp=$this->getPeersByTorrentID($torrent);
+	$this->checkEvent($this->event, $torrent['id']);
 
 	$this->benc_resp_raw($resp);
 
