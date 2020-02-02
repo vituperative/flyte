@@ -61,18 +61,20 @@ class Announcer {
 	return $torrent;
    }
    protected function getPeersByTorrentID($torrent, $fields="seeder, peer_id, ip, port"){
-// TODO: all $res/$selfwhere and like that to const/map of sql queries
-	   $limit = "";//shitcode... TODO: del;
+	   // TODO: all $res/$selfwhere and like that to const/map of sql queries
+	global $peer_id;   
+	$limit = "";//shitcode... TODO: del;
         if ($torrent["numpeers"] > $this->rsize)
 		$limit = "ORDER BY RAND() LIMIT $this->rsize";
 	$torrentid=$torrent['id'];
-	$qRAW=sprintf($this->sql_templates['getTorrentByID'], $fields, $torrentid, $limit);
+	$qRAW=sprintf($this->sql_templates['getPeersByTorrentID'], $fields, $torrentid, $limit);
 
 	$res = mysqli_query(self::$sDB, $qRAW);
 
 	$resp = "d" . benc_str("interval") . "i" . $announce_interval . "e" . benc_str("peers") . "l";
 	unset($this->self);
 	while ($row = mysqli_fetch_assoc($res)) {
+	 
          $row["peer_id"] = hash_pad($row["peer_id"]);
 
          if ($row["peer_id"] === $peer_id) {
