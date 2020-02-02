@@ -9,21 +9,28 @@ dbconn();
 
 
 class Announcer {
-
-  protected $fields = "seeder, peer_id, ip, port"; // TODO: to do
-	//all requests/ fields to stringsss 
-	//variables
+  protected $sql_templates = array(
+	  "getTorrentByID" => "SELECT id, banned, seeders + leechers AS numpeers FROM torrents WHERE ",
+	  "getPeersByTorrentID" => "SELECT %s FROM peers WHERE torrent = '%d' AND (1 OR connectable = 'yes') %s", // fields, torrentID, limit
+//        $selfwhere = "torrent = $torrentid AND " . hash_where("peer_id", $peer_id);
+	  "getTorrentByID_selfwhere" => "torrent = %s AND %s",
+	  //SELECT $fields FROM peers WHERE $selfwhere
+	  "selectWW" => "select %s WHERE %s",
+	  //"DELETE FROM peers WHERE $this->selfwhere"
+	  "deleteWW" => "DELETE FROM %s WHERE %s",
+	  "updateWW"=> "UPDATE %s SET %s = %s"
+  );//TODO: fix shitcode to readable, another style and did full support of that map in code
 
   protected static $sDB=null;
    
    public function __construct( $db=false ){
-	   if ($db !== false) $this->sDB=$db;
-	   else $this->sDB=$GLOBALS["___mysqli_ston"];
+	   if ($db !== false) self::$sDB=$db;
+	   else self::$sDB=$GLOBALS["___mysqli_ston"];
 	   dbconn(0); // TODO: another DB support full;
    }
 
    protected function err($msg) {
-        	$this->benc_resp(array("failure reason" => array("type" => "string", "value" => $msg)));
+        	benc_resp(array("failure reason" => array("type" => "string", "value" => $msg)));
         	//exit();
    }
 
@@ -43,7 +50,7 @@ class Announcer {
 	return true;
    }
    protected function getTorrentByID($ihash){
-	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT id, banned, seeders + leechers AS numpeers FROM torrents WHERE " . hash_where("info_hash", $ihash));
+	$res = mysqli_query(self::$sDB, $this->sql_templates['getTorrentByID'] . hash_where("info_hash", $ihash));
 
 	$torrent = mysqli_fetch_assoc($res);
 	if (!$torrent){
@@ -53,12 +60,14 @@ class Announcer {
 
 	return $torrent;
    }
-   protected function getPeersByTorrentID($id){// TODO: все $res/selfwhere и ттд в константы запросов блять в $torQueryGETTORRENT; и ттд
-        $limit = "";//поправить эт нах
+   protected function getPeersByTorrentID($torrent, $fields="seeder, peer_id, ip, port"){
+// TODO: all $res/$selfwhere and like that to const/map of sql queries
+	   $limit = "";//shitcode... TODO: del;
         if ($torrent["numpeers"] > $this->rsize)
-                $limit = "ORDER BY RAND() LIMIT $this->rsize";
-
-	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT $this->fields FROM peers WHERE torrent = $torrentid AND (1 OR connectable = 'yes') $limit");
+		$limit = "ORDER BY RAND() LIMIT $this->rsize";
+	$torrentid=$torrent['id'];
+	$qRAW=sprintf($this->sql_templates['getTorrentByID'], $fields, $torrentid, $limit);
+	$res = mysqli_query(self::$sDB, $qRAW);
 
 	$resp = "d" . benc_str("interval") . "i" . $announce_interval . "e" . benc_str("peers") . "l";
 	unset($this->self);
@@ -68,7 +77,7 @@ class Announcer {
          if ($row["peer_id"] === $peer_id) {
                 $this->self = $row;//???!
                 continue;
-         } // это чосукаблятьяебалнахуйнепонимаюблятьааааа ладно перепроверить это 10 раз мб надо таки
+         } // WTF?!
 
          $resp .= "d" .
                  benc_str("ip") . benc_str($row["ip"]) .
@@ -77,11 +86,12 @@ class Announcer {
                  "e";
 	}//while end
 	$resp .= "ee";
-
-	$selfwhere = "torrent = $torrentid AND " . hash_where("peer_id", $peer_id);
+	//"getPeersByTorrentID_selfwhere" => "torrent = %s AND %s"
+	$this->selfwhere=sprintf($this->sql_templates['getTorrentByID_selfwhere'], $torrentid, hash_where("peer_id", $peer_id) );
 
 	if (!isset($this->self)) {
-        	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT $this->fields FROM peers WHERE $selfwhere");
+
+        	$res = mysqli_query(self::$sDB, sprintf($this->sql_templates['selectWW'], $fields, $selfwhere));
         	$row = mysqli_fetch_assoc($res);
         	if ($row)
                 	$this->self = $row;
@@ -92,13 +102,14 @@ class Announcer {
 
 
 
-   protected function checkEvent($event){
+   protected function checkEvent($event, $torrentid){
 	$updateset = array();
 
       	if ($event == "stopped") {
-              if (isset($self)) {
-                      mysqli_query($GLOBALS["___mysqli_ston"], "DELETE FROM peers WHERE $selfwhere");
-                      if (mysqli_affected_rows($GLOBALS["___mysqli_ston"])) {
+		if (isset($self)) {
+		      //deleteWW
+                      mysqli_query(self::$sDB, sprintf($this->sql_templates['deleteWW'], "peers", $this->selfwhere) );
+                      if (mysqli_affected_rows(self::$sDB)) {
                               if ($self["seeder"] == "yes")
                                       array_push($updateset, "seeders = seeders - 1");
                               else
@@ -108,10 +119,16 @@ class Announcer {
       }else {
               if ($event == "completed")
                       array_push($updateset, "times_completed = times_completed + 1");
-      
-              if (isset($self)) {
-                      mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE peers SET ip = " . sqlesc($ip) . ", port = $port, uploaded = $uploaded, downloaded = $downloaded, to_go = $left, last_action = NOW(), seeder = '$seeder' WHERE $selfwhere");
-                      if (mysqli_affected_rows($GLOBALS["___mysqli_ston"]) && $self["seeder"] != $seeder) {
+	      //   $this->port = intval($port);
+	     //   $this->downloaded = $this->bigintval($downloaded);
+  	    // $this->uploaded = $this->bigintval($uploaded);
+   	   //$this->left = $this->bigintval($left);
+
+	      //
+	      if (isset($self)) {//$ip from $GLOBALS TODO: maybe fuck it GLOBALS?!
+	   	      $q=sprintf($this->sql_templates['updateWW'], "peers", "ip", sqlesc($this->ip) . ", port = $this->port, uploaded  = $this->uploaded, downloaded  = $this->downloaded, to_go  = $this->left, last_action = NOW(), seeder = '$this->seeder' WHERE $this->selfwhere");
+                      mysqli_query(self::$sDB, $q);
+                      if (mysqli_affected_rows(self::$sDB) && $self["seeder"] != $seeder) {
                               if ($seeder == "yes") {
                                       array_push($updateset, "seeders = seeders + 1");
                                       array_push($updateset, "leechers = leechers - 1");
@@ -131,7 +148,19 @@ class Announcer {
                               $connectable = "yes";
       //                      @fclose($sockres);
       //              }
-                      $ret = mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO peers (connectable, torrent, peer_id, ip, port, uploaded, downloaded, to_go, started, last_action, seeder) VALUES ('$connectable', $torrentid, " . sqlesc($peer_id) . ", " . sqlesc($ip) . ", $port, $uploaded, $downloaded, $left, NOW(), NOW(), '$seeder')");
+      //"deleteWW" => "DELETE FROM %s WHERE %s",
+			      $ret = mysqli_query(self::$sDB, 
+				      $this->sql_templates['deleteWW'], "peers", "peer_id='".sqlesc($this->peer_id)."' AND torrent='".$torrentid."'");
+			      if(!$ret){
+					$this->err("sql trouble in update peer");
+					exit();
+			      }
+			      $ret = 
+			      mysqli_query(
+				      self::$sDB, 
+				      "INSERT INTO peers (connectable, torrent, peer_id, ip, port, uploaded, downloaded, to_go, started, last_action, seeder) VALUES 
+('$connectable', $torrentid, " . sqlesc($this->peer_id) . ", " . sqlesc($this->ip) . ", $this->port, $this->uploaded, $this->downloaded, $this->left, NOW(), NOW(), '$this->seeder')"
+			      );
                       if ($ret) {
                               if ($seeder == "yes")
                                       array_push($updateset, "seeders = seeders + 1");
@@ -146,14 +175,14 @@ class Announcer {
           array_push($updateset, "last_action = NOW()");
       }
 
-      if (count($updateset))// ЕСЛИ ВОЩЕ ЧОТ НАД ТО ЕБАШИМ ОК ДА ЫЫЫ
-	      mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE torrents SET " . join(",", $updateset) . " WHERE id = $torrentid");
+      if (count($updateset))
+	      mysqli_query(self::$sDB, "UPDATE torrents SET " . join(",", $updateset) . " WHERE id = $torrentid");
 
   
    }
    const defreq = "info_hash:peer_id:ip:port:uploaded:downloaded:left:!event";      
    public function announce($ask){
-	//Так ещё раз пройтись по всем действиям прежде чем реквестить, пересмотреть не в терминальчике, а сука на FULL HD на acer монитор 2000 какого то года!
+	//to need to recheck that 10 times as minimum
 	$opt=0;
 	$rsize=50;
 	foreach (explode(":", self::defreq) as $element) {
@@ -165,7 +194,7 @@ class Announcer {
                 	$opt = 0;
         	if (!isset($ask[$element])) {
                 	if (!$opt)
-                        	$this->$this->err("missing key");
+                        	$this->err("missing key");
                 	continue;
         	}
         	$GLOBALS[$element] = unesc($ask[$element]);
@@ -173,10 +202,9 @@ class Announcer {
 	foreach (array("info_hash","peer_id") as $x) 
          if (strlen($GLOBALS[$x]) != 20)
 		 $this->err("invalid $x (" . strlen($GLOBALS[$x]) . " - " . urlencode($GLOBALS[$x]) . ")");
-	$this->constructAnswer();
-	$this->rsize = $this->getRSize();//rsize какой то хуй знает чо какие то цифры там блять хотят
+	$this->rsize = $this->getRSize($ask);
 
-	if (!$this->checkPort){
+	if ( !$this->checkPort($port) ){
 		$this->err("invalid port");
 		exit();
 	}
@@ -186,14 +214,17 @@ class Announcer {
 	$this->seeder = ($this->left == 0) ? "yes" : "no";
 	dbconn(0);
 	//$this->info_hash=$info_hash;
-	$torrent = $this->getTorrentByID($info_hash);// блять потом поправить сука
-	if(!torrent) return false;
+
+	$this->constructAnswer();
+
+	$torrent = $this->getTorrentByID($this->info_hash);
+	if($torrent === false) return false;
 
 
-	$resp=$this->getPeersByTorrentID($torrent["id"]);
-	$this->checkEvent($this->event);
+	$resp=$this->getPeersByTorrentID($torrent);
+	$this->checkEvent($this->event, $torrent['id']);
 
-	$this->benc_resp_raw($resp);
+	benc_resp_raw($resp);
 
 
 }
@@ -211,10 +242,13 @@ class Announcer {
  }
  protected function constructAnswer(){
 
-   $this->port = intval($port);
-   $this->downloaded = $this->bigintval($downloaded);
-   $this->uploaded = $this->bigintval($uploaded);
-   $this->left = $this->bigintval($left);
+   $this->port = mysqli_real_escape_string(self::$sDB, intval($port) );
+   $this->downloaded = mysqli_real_escape_string(self::$sDB, $this->bigintval($downloaded) );
+   $this->uploaded = mysqli_real_escape_string(self::$sDB, $this->bigintval($uploaded) );
+   $this->left = mysqli_real_escape_string(self::$sDB, $this->bigintval($left) );
+   $this->ip = mysqli_real_escape_string(self::$sDB, $ip);
+   $this->peer_id= mysqli_real_escape_string(self::$sDB, $peer_id);
+   $this->info_hash=mysqli_real_escape_string(self::$sDB, $info_hash);
  }
 
 

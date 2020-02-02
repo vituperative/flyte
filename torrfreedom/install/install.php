@@ -30,28 +30,52 @@ $torrent_dir = "/path/to/torrents";
 require_once("need.php");//some shitcode
 
 function installDB($file, $link){
-	$sql = file_get_contents($file);
-	$result = $link->query($sql);
-	return $result;
+	$sql = file($file);
+	$templine = '';
+	$errs=0;
+	foreach ($sql as $query){
+		if (substr($query, 0, 2) == '--' || $query == '') continue;
+		$templine .= $query;
+		//echo "do"; //https://stackoverflow.com/questions/19751354/how-to-import-sql-file-in-mysql-database-using-php thx author; because source db.sql sdont works
+		if (substr(trim($query), -1, 1) == ';')
+		 {
+    			// Perform the query
+    			$link->query($templine) or print('Error performing query \'<strong>' . $templine . '\': ' . $link->error . '<br /><br />');
+			// Reset temp variable to empty
+			//echo ("I did ".$templine);
+			$templine = '';
+			$errs+=1;
+		 }
+		}
+
 }
 
 
-$defPathToConfig="include/secrets.inc.php";
+$defPathToConfig="../include/secrets.inc.php";
 
 $config_raw="<?php \r\n";
 foreach($need4conf as $need){
-	if ( !isset( $_POST[$need]) )
-		die("need ".$need." for installing");
+	if ( !isset( $_POST[$need]) ){
+		var_dump($_POST);
+		die("need ".$need." for installing, <hr><a href='index.php'>START INSTALLATION</a> ");
+	}
 	$config_raw.='$'.$need.'="'.$_POST[$need].'";'."\r\n";
 }
-$link=mysqli_connect($_POST['mysql_host'],  $_POST['mysql_user'],  $_POST['mysql_pass'], $_POST['mysql_db']);
+
+$mysql_host=$_POST['mysql_host'];
+$mysql_user=$_POST['mysql_user'];
+$mysql_pass=$_POST['mysql_pass'];
+$mysql_db=$_POST['mysql_db'];
+$link=mysqli_connect("$mysql_host",  "$mysql_user",  "$mysql_pass", "$mysql_db");
 
 if (!$link) {
+    var_dump($_POST);
     die("Can't connect to db: " . mysqli_connect_errno() );
+
 }
 $iDB=installDB("db.sql", $link);
-if(!$iDB)
-        die( " Can't install db " .$link->error);
+if($iDB>0)
+        echo( " errs in install db " .$iDB);
 
 
 
@@ -59,6 +83,7 @@ $configFile = fopen($defPathToConfig, "w") or die("Can't open ".$defPathToConfig
 fwrite($configFile, $config_raw);
 fclose($configFile);
 
+echo "If you dont see errors, delete install.php and use that";
 
 
 
