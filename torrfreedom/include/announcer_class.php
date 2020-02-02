@@ -18,8 +18,8 @@ class Announcer {
 	   else $this->sDB=$GLOBALS["___mysqli_ston"];
    }
 
-   function err($msg) {
-        	benc_resp(array("failure reason" => array("type" => "string", "value" => $msg)));
+   protected function err($msg) {
+        	$this->benc_resp(array("failure reason" => array("type" => "string", "value" => $msg)));
         	//exit();
    }
 
@@ -32,6 +32,7 @@ class Announcer {
 	}
 	return $default;
 
+     }
    }
    protected function checkPort($port){
 	if (!$port || $port > 0xffff) return false;
@@ -42,37 +43,113 @@ class Announcer {
 
 	$torrent = mysqli_fetch_assoc($res);
 	if (!$torrent){
-		err("torrent not registered with this tracker");
+		$this->err("torrent not registered with this tracker");
 		return false;
 	}
 
 	return $torrent;
    }
-   protected function getPeersByTorrentID($id){
+   protected function getPeersByTorrentID($id){// TODO: все $res/selfwhere и ттд в константы запросов блять в $torQueryGETTORRENT; и ттд
+        $limit = "";//поправить эт нах
+        if ($torrent["numpeers"] > $this->rsize)
+                $limit = "ORDER BY RAND() LIMIT $this->rsize";
+
 	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT $fields FROM peers WHERE torrent = $torrentid AND (1 OR connectable = 'yes') $limit");
 
 	$resp = "d" . benc_str("interval") . "i" . $announce_interval . "e" . benc_str("peers") . "l";
-	//unset($self);
+	unset($this->self);
 	while ($row = mysqli_fetch_assoc($res)) {
-        $row["peer_id"] = hash_pad($row["peer_id"]);
+         $row["peer_id"] = hash_pad($row["peer_id"]);
 
-        //if ($row["peer_id"] === $peer_id) {
-                //$self = $row;//???!
-          //      continue;
-        //}
+         if ($row["peer_id"] === $peer_id) {
+                $this->self = $row;//???!
+                continue;
+         } // это чосукаблятьяебалнахуйнепонимаюблятьааааа ладно перепроверить это 10 раз мб надо таки
 
-        $resp .= "d" .
-                benc_str("ip") . benc_str($row["ip"]) .
-                benc_str("peer id") . benc_str($row["peer_id"]) .
-                benc_str("port") . "i" . $row["port"] . "e" .
-                "e";
-	}
+         $resp .= "d" .
+                 benc_str("ip") . benc_str($row["ip"]) .
+                 benc_str("peer id") . benc_str($row["peer_id"]) .
+                 benc_str("port") . "i" . $row["port"] . "e" .
+                 "e";
+	}//while end
 	$resp .= "ee";
+
+	$selfwhere = "torrent = $torrentid AND " . hash_where("peer_id", $peer_id);
+
+	if (!isset($this->self)) {
+        	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT $fields FROM peers WHERE $selfwhere");
+        	$row = mysqli_fetch_assoc($res);
+        	if ($row)
+                	$this->self = $row;
+		}
+
 	return $resp;
    }
 
+
+
+   protected function checkEvent($event){
+	$updateset = array();
+
+      	if ($event == "stopped") {
+              if (isset($self)) {
+                      mysqli_query($GLOBALS["___mysqli_ston"], "DELETE FROM peers WHERE $selfwhere");
+                      if (mysqli_affected_rows($GLOBALS["___mysqli_ston"])) {
+                              if ($self["seeder"] == "yes")
+                                      array_push($updateset, "seeders = seeders - 1");
+                              else
+                                      array_push($updateset, "leechers = leechers - 1");
+                      }
+              }
+      }else {
+              if ($event == "completed")
+                      array_push($updateset, "times_completed = times_completed + 1");
+      
+              if (isset($self)) {
+                      mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE peers SET ip = " . sqlesc($ip) . ", port = $port, uploaded = $uploaded, downloaded = $downloaded, to_go = $left, last_action = NOW(), seeder = '$seeder' WHERE $selfwhere");
+                      if (mysqli_affected_rows($GLOBALS["___mysqli_ston"]) && $self["seeder"] != $seeder) {
+                              if ($seeder == "yes") {
+                                      array_push($updateset, "seeders = seeders + 1");
+                                      array_push($updateset, "leechers = leechers - 1");
+                              }
+                              else {
+                                      array_push($updateset, "seeders = seeders - 1");
+                                      array_push($updateset, "leechers = leechers + 1");
+                              }
+                      }
+              }
+              else {
+      // anonymity breaker, commented out for security, I2P nodes are always connectable
+      //              $sockres = @fsockopen($ip, $port, $errno, $errstr, 5);
+      //              if (!$sockres)
+      //                      $connectable = "no";
+      //              else {
+                              $connectable = "yes";
+      //                      @fclose($sockres);
+      //              }
+                      $ret = mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO peers (connectable, torrent, peer_id, ip, port, uploaded, downloaded, to_go, started, last_action, seeder) VALUES ('$connectable', $torrentid, " . sqlesc($peer_id) . ", " . sqlesc($ip) . ", $port, $uploaded, $downloaded, $left, NOW(), NOW(), '$seeder')");
+                      if ($ret) {
+                              if ($seeder == "yes")
+                                      array_push($updateset, "seeders = seeders + 1");
+                              else
+                                      array_push($updateset, "leechers = leechers + 1");
+                      }
+              }
+      }//endELSE
+      if ($seeder == "yes") {
+       if ($torrent["banned"] != "yes")
+                array_push($updateset, "visible = 'yes'");
+          array_push($updateset, "last_action = NOW()");
+      }
+
+      if (count($updateset))// ЕСЛИ ВОЩЕ ЧОТ НАД ТО ЕБАШИМ ОК ДА ЫЫЫ
+	      mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE torrents SET " . join(",", $updateset) . " WHERE id = $torrentid");
+
+  
+   }
    const defreq = "info_hash:peer_id:ip:port:uploaded:downloaded:left:!event";      
    public function announce($ask){
+	//Так ещё раз пройтись по всем действиям прежде чем реквестить, пересмотреть не в терминальчике, а сука на FULL HD на acer монитор 2000 какого то года!
 	$opt=0;
 	$rsize=50;
 	foreach (explode(":", self::defreq) as $element) {
@@ -84,43 +161,39 @@ class Announcer {
                 	$opt = 0;
         	if (!isset($ask[$element])) {
                 	if (!$opt)
-                        	$this->err("missing key");
+                        	$this->$this->err("missing key");
                 	continue;
         	}
         	$GLOBALS[$element] = unesc($ask[$element]);
 	}
 	foreach (array("info_hash","peer_id") as $x) 
          if (strlen($GLOBALS[$x]) != 20)
-		 err("invalid $x (" . strlen($GLOBALS[$x]) . " - " . urlencode($GLOBALS[$x]) . ")");
+		 $this->err("invalid $x (" . strlen($GLOBALS[$x]) . " - " . urlencode($GLOBALS[$x]) . ")");
 	$this->constructAnswer();
-	$rsize = $this->getRSize();//rsize какой то хуй знает чо какие то цифры там блять хотят
+	$this->rsize = $this->getRSize();//rsize какой то хуй знает чо какие то цифры там блять хотят
+
 	if (!$this->checkPort){
-		err("invalid port");
+		$this->err("invalid port");
 		exit();
 	}
+
 	if (!isset($event)) $this->event="";
 	else $this->event=$event;
 	$this->seeder = ($this->left == 0) ? "yes" : "no";
 	dbconn(0);
 	//$this->info_hash=$info_hash;
 	$torrent = $this->getTorrentByID($info_hash);// блять потом поправить сука
-	$torrentid = $torrent["id"];
-	$limit = "";
-	if ($torrent["numpeers"] > $rsize)
-		$limit = "ORDER BY RAND() LIMIT $rsize";
+	if(!torrent) return false;
 
 
+	$resp=$this->getPeersByTorrentID($torrent["id"]);
+	$this->checkEvent($this->event);
 
-	
-	
+	$this->benc_resp_raw($resp);
 
 
 }
 
-		
-
-
-   } 
  public function bigintval($value) {
   	$value = trim($value);
   	if (ctype_digit($value)) {
@@ -135,9 +208,9 @@ class Announcer {
  protected function constructAnswer(){
 
    $this->port = intval($port);
-   $this->downloaded = bigintval($downloaded);
-   $this->uploaded = bigintval($uploaded);
-   $this->left = bigintval($left);
+   $this->downloaded = $this->bigintval($downloaded);
+   $this->uploaded = $this->bigintval($uploaded);
+   $this->left = $this->bigintval($left);
  }
 
 
