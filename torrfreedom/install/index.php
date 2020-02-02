@@ -12,8 +12,10 @@
 	<form action='install.php' method="POST">
 		<?php
 	     		require_once("need.php");
-	     		foreach( $need4conf as $element){
-	     			printf("\n%s: <input type='textarea' name='%s' placeholder='%s' \><hr/>\n", $element, $element, $element);
+			foreach( $need4conf as $element){
+				$type="text";
+				if ( strstr($element, "pass") )  $type="password";
+	     			printf("\n%s: <input type='%s' name='%s' placeholder='%s' \><hr/>\n", str_replace("_"," ",$element), $type, $element, $element);
 			}
 		?>
 	</div>
