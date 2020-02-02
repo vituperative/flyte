@@ -13,7 +13,7 @@ class Announcer {
 	  "getTorrentByID" => "SELECT id, banned, seeders + leechers AS numpeers FROM torrents WHERE ",
 	  "getPeersByTorrentID" => "SELECT %s FROM peers WHERE torrent = '%d' AND (1 OR connectable = 'yes') %s", // fields, torrentID, limit
 //        $selfwhere = "torrent = $torrentid AND " . hash_where("peer_id", $peer_id);
-	  "getPeersByTorrentID_selfwhere" => "torrent = %s AND %s",
+	  "getTorrentByID_selfwhere" => "torrent = %s AND %s",
 	  //SELECT $fields FROM peers WHERE $selfwhere
 	  "selectWW" => "select %s WHERE %s",
 	  //"DELETE FROM peers WHERE $this->selfwhere"
@@ -49,7 +49,7 @@ class Announcer {
 	return true;
    }
    protected function getTorrentByID($ihash){
-	$res = mysqli_query($GLOBALS["___mysqli_ston"], $this->sql_templates['getTorrentByID'] . hash_where("info_hash", $ihash));
+	$res = mysqli_query($this->sDB, $this->sql_templates['getTorrentByID'] . hash_where("info_hash", $ihash));
 
 	$torrent = mysqli_fetch_assoc($res);
 	if (!$torrent){
@@ -65,7 +65,7 @@ class Announcer {
 		$limit = "ORDER BY RAND() LIMIT $this->rsize";
 	$torrentid=$torrent['id'];
 	$qRAW=sprintf($this->sql_templates['getTorrentByID'], $fields, $torrentid, $limit);
-	$res = mysqli_query($GLOBALS["___mysqli_ston"], $qRAW);
+	$res = mysqli_query($this->sDB, $qRAW);
 
 	$resp = "d" . benc_str("interval") . "i" . $announce_interval . "e" . benc_str("peers") . "l";
 	unset($this->self);
@@ -89,7 +89,7 @@ class Announcer {
 
 	if (!isset($this->self)) {
 
-        	$res = mysqli_query($GLOBALS["___mysqli_ston"], sprintf($this->sql_templates['selectWW'], $fields, $selfwhere));
+        	$res = mysqli_query($this->sDB, sprintf($this->sql_templates['selectWW'], $fields, $selfwhere));
         	$row = mysqli_fetch_assoc($res);
         	if ($row)
                 	$this->self = $row;
@@ -106,8 +106,8 @@ class Announcer {
       	if ($event == "stopped") {
 		if (isset($self)) {
 		      //deleteWW
-                      mysqli_query($GLOBALS["___mysqli_ston"], sprintf($this->sql_templates['deleteWW'], "peers", $this->selfwhere) );
-                      if (mysqli_affected_rows($GLOBALS["___mysqli_ston"])) {
+                      mysqli_query($this->sDB, sprintf($this->sql_templates['deleteWW'], "peers", $this->selfwhere) );
+                      if (mysqli_affected_rows($this->sDB)) {
                               if ($self["seeder"] == "yes")
                                       array_push($updateset, "seeders = seeders - 1");
                               else
@@ -124,8 +124,8 @@ class Announcer {
 
 	      //
               if (isset($self)) {
-                      mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE peers SET ip = " . sqlesc($ip) . ", port = $this->port, uploaded  = $this->uploaded, downloaded  = $this->downloaded, to_go  = $this->left, last_action = NOW(), seeder = '$this->seeder' WHERE $this->selfwhere");
-                      if (mysqli_affected_rows($GLOBALS["___mysqli_ston"]) && $self["seeder"] != $seeder) {
+                      mysqli_query($this->sDB, "UPDATE peers SET ip = " . sqlesc($ip) . ", port = $this->port, uploaded  = $this->uploaded, downloaded  = $this->downloaded, to_go  = $this->left, last_action = NOW(), seeder = '$this->seeder' WHERE $this->selfwhere");
+                      if (mysqli_affected_rows($this->sDB) && $self["seeder"] != $seeder) {
                               if ($seeder == "yes") {
                                       array_push($updateset, "seeders = seeders + 1");
                                       array_push($updateset, "leechers = leechers - 1");
@@ -145,7 +145,7 @@ class Announcer {
                               $connectable = "yes";
       //                      @fclose($sockres);
       //              }
-                      $ret = mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO peers (connectable, torrent, peer_id, ip, port, uploaded, downloaded, to_go, started, last_action, seeder) VALUES ('$connectable', $torrentid, " . sqlesc($peer_id) . ", " . sqlesc($ip) . ", $this->port, $this->uploaded, $this->downloaded, $this->left, NOW(), NOW(), '$this->seeder')");//IP всегда пустое что ли у нас?! peer_id из GLOBALS?
+                      $ret = mysqli_query($this->sDB, "INSERT INTO peers (connectable, torrent, peer_id, ip, port, uploaded, downloaded, to_go, started, last_action, seeder) VALUES ('$connectable', $torrentid, " . sqlesc($peer_id) . ", " . sqlesc($ip) . ", $this->port, $this->uploaded, $this->downloaded, $this->left, NOW(), NOW(), '$this->seeder')");//IP всегда пустое что ли у нас?! peer_id из GLOBALS?
                       if ($ret) {
                               if ($seeder == "yes")
                                       array_push($updateset, "seeders = seeders + 1");
@@ -161,7 +161,7 @@ class Announcer {
       }
 
       if (count($updateset))// ЕСЛИ ВОЩЕ ЧОТ НАД ТО ЕБАШИМ ОК ДА ЫЫЫ
-	      mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE torrents SET " . join(",", $updateset) . " WHERE id = $torrentid");
+	      mysqli_query($this->sDB, "UPDATE torrents SET " . join(",", $updateset) . " WHERE id = $torrentid");
 
   
    }
