@@ -153,14 +153,15 @@ class Announcer {
                               $connectable = "yes";
       //                      @fclose($sockres);
       //              }
-			      //"deleteWW" => "DELETE FROM %s WHERE %s",
-			      $ret = mysqli_query(self::$sDB,
-                                      sprintf($this->sql_templates['deleteWW'], "peers", "peer_id=".sqlesc($this->peer_id)." AND torrent='".$torrentid."'") );
 
-			      if(!$ret){
-					$this->err("sql trouble in update peer");
-					exit();
-			      }
+      //"deleteWW" => "DELETE FROM %s WHERE %s",
+			      $ret = mysqli_query(self::$sDB, 
+
+				      $this->sql_templates['deleteWW'], "peers", "peer_id='".sqlesc($this->peer_id)."' AND torrent='".$torrentid."'");
+			    if(!$ret){
+					    $this->err("sql trouble in update peer");
+					    exit();
+			    }
 			      $ret = 
 			      mysqli_query(
 				      self::$sDB, 
@@ -227,7 +228,6 @@ class Announcer {
 
 	$torrent = $this->getTorrentByID($info_hash);//mysqli_escape it kill hash, raw hash, not vulg
 	if($torrent === false) return false;
-
 
 	$resp=$this->getPeersByTorrentID($torrent);
 	$this->checkEvent($this->event, $torrent['id']);
