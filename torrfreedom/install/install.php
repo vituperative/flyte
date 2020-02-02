@@ -40,10 +40,13 @@ $defPathToConfig="../include/secrets.inc.php";
 
 $config_raw="<?php \r\n";
 foreach($need4conf as $need){
-	if ( !isset( $_POST[$need]) )
-		die("need ".$need." for installing");
+	if ( !isset( $_POST[$need]) ){
+		var_dump($_POST);
+		die("need ".$need." for installing, <hr><a href='index.php'>START INSTALLATION</a> ");
+	}
 	$config_raw.='$'.$need.'="'.$_POST[$need].'";'."\r\n";
 }
+
 $link=mysqli_connect($_POST['mysql_host'],  $_POST['mysql_user'],  $_POST['mysql_pass'], $_POST['mysql_db']);
 
 if (!$link) {
