@@ -173,7 +173,7 @@ form + br, form + br + p[align="center"], .tablenews + br {
     display: none;
 }
 
-.title table td:nth-child(2) {
+.title table td:nth-child(2), #sitename a {
     padding: 8px 0 0 !important;
     line-height: 1;
     word-spacing: -0.05em;
@@ -187,19 +187,23 @@ form + br, form + br + p[align="center"], .tablenews + br {
     user-select: none;
 }
 
+#sitename {
+    text-align: center;
+}
+
 @supports (-webkit-background-clip: text) {
-    .title table td:nth-child(2) {
-    text-shadow: none;
-    background: linear-gradient(to bottom, #210, #310 15%, #fff 50%, #310 80%) !important;
-    background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .5) 2px),
-                linear-gradient(to bottom, rgba(255, 96, 0, .5), rgba(0, 0, 0, .4) 100%),
-                linear-gradient(to bottom, #740, #520 10%, #fff 35%, #310 75%) !important;
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
-    -webkit-text-stroke-color: #fff;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-fill-color: transparent !important;
-    filter: drop-shadow(0 0 1px #300) drop-shadow(0 0 2px #200) drop-shadow(0 0 3px rgba(0,0,0,.1));
+    .title table td:nth-child(2), #sitename a {
+        text-shadow: none;
+        background: linear-gradient(to bottom, #210, #310 15%, #fff 50%, #310 80%) !important;
+        background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .5) 2px),
+                    linear-gradient(to bottom, rgba(255, 96, 0, .5), rgba(0, 0, 0, .4) 100%),
+                    linear-gradient(to bottom, #740, #520 10%, #fff 35%, #310 75%) !important;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        -webkit-text-stroke-color: #fff;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-fill-color: transparent !important;
+        filter: drop-shadow(0 0 1px #300) drop-shadow(0 0 2px #200) drop-shadow(0 0 3px rgba(0,0,0,.1));
     }
 }
 
@@ -617,7 +621,7 @@ form[action="./"] + br + p + .table1[width="95%"] tr:nth-child(n+2) td:nth-child
     z-index: 10;
 }
 
-.borderTable[width="100%"][cellpadding="2"][border="0"] td::before {
+/*.borderTable[width="100%"][cellpadding="2"][border="0"] td::before {
     position: relative;
     z-index: 20;
     background: #f00 !important;
@@ -625,7 +629,7 @@ form[action="./"] + br + p + .table1[width="95%"] tr:nth-child(n+2) td:nth-child
     height: 100%;
     content: "";
     display: inline-block;
-}
+}*/
 
 br + h2 {
     margin-bottom: -9px;
@@ -681,7 +685,7 @@ br + h2 + p[align="center"] + .table1 {
         font-size: 10pt !important;
     }
 
-    .title table td:nth-child(2) {
+    .title table td:nth-child(2), #sitename a {
         font-size: 46pt !important;
     }
 
@@ -880,4 +884,55 @@ p[align="center"] a[href*="?page="] b {
     .table1 + p[align="center"] br + a + a {
         margin: 0 -20px !important;
     }
+}
+
+
+#footer {
+    margin: 0 10% !important;
+    padding: 0 !important;
+    border-top: 1px solid #323030;
+}
+
+#footer, #footer a {
+    text-align: center;
+    font-size: 9pt !important;
+}
+
+#blurb {
+    margin-top: -1px !important;
+    padding: 5px 10% 7px;
+    display: inline-block;
+    line-height: 1;
+    color: #9a9090;
+    border-radius: 0 0 5px 5px;
+    background: #323030;
+}
+
+#installer {
+    margin: 50px auto;
+    padding: 20px 20px 40px;
+    width: 30%;
+    min-width: 400px;
+    max-width: 500px;
+    border: 1px solid #121010;
+    background: #212020;
+}
+
+#installer label span {
+    margin-right: 10px;
+    min-width: 140px;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 600;
+    text-align: right;
+}
+
+#installer hr {
+   display: block !important;
+   background: linear-gradient(to right, #121010, #232020);
+}
+
+#installer input[type="submit"] {
+    float: right;
+    text-transform: capitalize;
 }
