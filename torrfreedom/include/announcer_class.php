@@ -6,16 +6,20 @@ require_once("include/bittorrent.inc.php");
 require_once("include/benc.php");
 dbconn();
 
-$r = "d" . benc_str("files") . "d";// $r волшебная константа для files в benc_str массив типа бля ee в конце
 
-$fields = "info_hash, times_completed, seeders, leechers"; // так поля
 
 class Announcer {
+
+  protected $fields = "seeder, peer_id, ip, port"; // TODO: to do
+	//all requests/ fields to stringsss 
+	//variables
+
   protected static $sDB=null;
    
    public function __construct( $db=false ){
 	   if ($db !== false) $this->sDB=$db;
 	   else $this->sDB=$GLOBALS["___mysqli_ston"];
+	   dbconn(0); // TODO: another DB support full;
    }
 
    protected function err($msg) {
@@ -54,7 +58,7 @@ class Announcer {
         if ($torrent["numpeers"] > $this->rsize)
                 $limit = "ORDER BY RAND() LIMIT $this->rsize";
 
-	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT $fields FROM peers WHERE torrent = $torrentid AND (1 OR connectable = 'yes') $limit");
+	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT $this->fields FROM peers WHERE torrent = $torrentid AND (1 OR connectable = 'yes') $limit");
 
 	$resp = "d" . benc_str("interval") . "i" . $announce_interval . "e" . benc_str("peers") . "l";
 	unset($this->self);
@@ -77,7 +81,7 @@ class Announcer {
 	$selfwhere = "torrent = $torrentid AND " . hash_where("peer_id", $peer_id);
 
 	if (!isset($this->self)) {
-        	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT $fields FROM peers WHERE $selfwhere");
+        	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT $this->fields FROM peers WHERE $selfwhere");
         	$row = mysqli_fetch_assoc($res);
         	if ($row)
                 	$this->self = $row;
