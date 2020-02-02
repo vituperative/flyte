@@ -18,6 +18,7 @@
 	     			printf("\n%s: <input type='%s' name='%s' placeholder='%s' \><hr>\n", str_replace("_"," ",$element), $type, $element, $element);
 			}
 		?>
+		<input type=submit value="Start install"/>
 	</div>
 	</form>
 </body>
