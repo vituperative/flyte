@@ -27,6 +27,7 @@ $tracker_url_key = "http://nfrjvknwcw47itotkzmk6mdlxmxfxsxhbhlr5ozhlsuavcogv4hq.
 // use forward slashes for windows paths eg. C:/path/to/torrents
 $torrent_dir = "/path/to/torrents";
  */
+require_once("need.php");//some shitcode
 
 function installDB($file, $link){
 	$sql = file_get_contents($file);
@@ -37,10 +38,6 @@ function installDB($file, $link){
 
 $defPathToConfig="include/secrets.inc.php";
 
-$need4conf= array( "mysql_host", "mysql_pass",
-	"mysql_db", "tracker_title",
-	"tracker_url_name", "tracker_url_key",
-	"torrent_dir");
 $config_raw="<?php \r\n";
 foreach($need4conf as $need){
 	if ( !isset( $_POST[$need]) )
