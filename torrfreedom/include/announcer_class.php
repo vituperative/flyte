@@ -10,10 +10,10 @@ dbconn();
 
 class Announcer {
   protected $sql_templates = array(
-	  "getTorrentByID" => "SELECT id, banned, seeders + leechers AS numpeers FROM torrents WHERE ",
+	  "getTorrentID" => "SELECT id, banned, seeders + leechers AS numpeers FROM torrents WHERE ",
 	  "getPeersByTorrentID" => "SELECT %s FROM peers WHERE torrent = '%d' AND (1 OR connectable = 'yes') %s", // fields, torrentID, limit
 //        $selfwhere = "torrent = $torrentid AND " . hash_where("peer_id", $peer_id);
-	  "getTorrentByID_selfwhere" => "torrent = %s AND %s",
+	  "getTorrentID_selfwhere" => "torrent = %s AND %s",
 	  //SELECT $fields FROM peers WHERE $selfwhere
 	  "selectWW" => "select %s WHERE %s",
 	  //"DELETE FROM peers WHERE $this->selfwhere"
@@ -49,8 +49,8 @@ class Announcer {
 	if (!$port || $port > 0xffff) return false;
 	return true;
    }
-   protected function getTorrentByID($ihash){
-	  $res = mysqli_query(self::$sDB, $this->sql_templates['getTorrentByID'] . hash_where("info_hash", $ihash));
+   protected function getTorrentID($ihash){
+	  $res = mysqli_query(self::$sDB, $this->sql_templates['getTorrentID'] . hash_where("info_hash", $ihash));
 
 	$torrent = mysqli_fetch_assoc($res);
 	if (!$torrent){
@@ -90,7 +90,7 @@ class Announcer {
 	}//while end
 	$resp .= "ee";
 	//"getPeersByTorrentID_selfwhere" => "torrent = %s AND %s"
-	$this->selfwhere=sprintf($this->sql_templates['getTorrentByID_selfwhere'], $torrentid, hash_where("peer_id", $peer_id) );
+	$this->selfwhere=sprintf($this->sql_templates['getTorrentID_selfwhere'], $torrentid, hash_where("peer_id", $peer_id) );
 
 	if (!isset($this->self)) {
 
@@ -153,14 +153,15 @@ class Announcer {
                               $connectable = "yes";
       //                      @fclose($sockres);
       //              }
-			      //"deleteWW" => "DELETE FROM %s WHERE %s",
-			      $ret = mysqli_query(self::$sDB,
-                                      sprintf($this->sql_templates['deleteWW'], "peers", "peer_id=".sqlesc($this->peer_id)." AND torrent='".$torrentid."'") );
 
-			      if(!$ret){
-					$this->err("sql trouble in update peer");
-					exit();
-			      }
+      //"deleteWW" => "DELETE FROM %s WHERE %s",
+			      $ret = mysqli_query(self::$sDB, 
+
+				      $this->sql_templates['deleteWW'], "peers", "peer_id='".sqlesc($this->peer_id)."' AND torrent='".$torrentid."'");
+			    if(!$ret){
+					    $this->err("sql trouble in update peer");
+					    exit();
+			    }
 			      $ret = 
 			      mysqli_query(
 				      self::$sDB, 
@@ -225,7 +226,7 @@ class Announcer {
 
 	$this->constructAnswer();
 
-	$torrent = $this->getTorrentByID($info_hash);//mysqli_escape it kill hash, raw hash, not vulg
+	$torrent = $this->getTorrentID($info_hash);//mysqli_escape it kill hash, raw hash, not vulg
 	if($torrent === false) return false;
 
 
