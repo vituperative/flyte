@@ -202,9 +202,9 @@ class Announcer {
 	foreach (array("info_hash","peer_id") as $x) 
          if (strlen($GLOBALS[$x]) != 20)
 		 $this->err("invalid $x (" . strlen($GLOBALS[$x]) . " - " . urlencode($GLOBALS[$x]) . ")");
-	$this->rsize = $this->getRSize();
+	$this->rsize = $this->getRSize($ask);
 
-	if ( !$this->checkPort() ){
+	if ( !$this->checkPort($port) ){
 		$this->err("invalid port");
 		exit();
 	}
