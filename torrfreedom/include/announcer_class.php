@@ -60,7 +60,8 @@ class Announcer {
 
 	return $torrent;
    }
-   protected function getPeersByTorrentID($torrent, $fields="seeder, peer_id, ip, port"){// TODO: все $res/selfwhere и ттд в константы запросов блять в $torQueryGETTORRENT; и ттд
+   protected function getPeersByTorrentID($torrent, $fields="seeder, peer_id, ip, port"){
+// TODO: all $res/$selfwhere and like that to const/map of sql queries
 	   $limit = "";//поправить эт нах
         if ($torrent["numpeers"] > $this->rsize)
 		$limit = "ORDER BY RAND() LIMIT $this->rsize";
@@ -76,7 +77,7 @@ class Announcer {
          if ($row["peer_id"] === $peer_id) {
                 $this->self = $row;//???!
                 continue;
-         } // это чосукаблятьяебалнахуйнепонимаюблятьааааа ладно перепроверить это 10 раз мб надо таки
+         } // WTF?!
 
          $resp .= "d" .
                  benc_str("ip") . benc_str($row["ip"]) .
@@ -124,7 +125,7 @@ class Announcer {
    	   //$this->left = $this->bigintval($left);
 
 	      //
-	      if (isset($self)) {//$ip из $GLOBALS TODO: сделать адекватнее и понятнее;
+	      if (isset($self)) {//$ip from $GLOBALS TODO: maybe fuck it GLOBALS?!
 	   	      $q=sprintf($this->sql_templates['updateWW'], "peers", "ip", sqlesc($this->ip) . ", port = $this->port, uploaded  = $this->uploaded, downloaded  = $this->downloaded, to_go  = $this->left, last_action = NOW(), seeder = '$this->seeder' WHERE $this->selfwhere");
                       mysqli_query($this->sDB, $q);
                       if (mysqli_affected_rows($this->sDB) && $self["seeder"] != $seeder) {
@@ -174,14 +175,14 @@ class Announcer {
           array_push($updateset, "last_action = NOW()");
       }
 
-      if (count($updateset))// ЕСЛИ ВОЩЕ ЧОТ НАД ТО ЕБАШИМ ОК ДА ЫЫЫ
+      if (count($updateset))
 	      mysqli_query($this->sDB, "UPDATE torrents SET " . join(",", $updateset) . " WHERE id = $torrentid");
 
   
    }
    const defreq = "info_hash:peer_id:ip:port:uploaded:downloaded:left:!event";      
    public function announce($ask){
-	//Так ещё раз пройтись по всем действиям прежде чем реквестить, пересмотреть не в терминальчике, а сука на FULL HD на acer монитор 2000 какого то года!
+	//to need to recheck that 10 times as minimum
 	$opt=0;
 	$rsize=50;
 	foreach (explode(":", self::defreq) as $element) {
