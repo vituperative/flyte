@@ -77,7 +77,7 @@ class Announcer {
 	 
          $row["peer_id"] = hash_pad($row["peer_id"]);
 
-         if ($row["peer_id"] === $peer_id) {
+         if ($row["peer_id"] == $peer_id) {
                 $this->self = $row;//???!
                 continue;
          } // WTF?!
@@ -90,22 +90,20 @@ class Announcer {
 	}//while end
 	$resp .= "ee";
 	//"getPeersByTorrentID_selfwhere" => "torrent = %s AND %s"
-	$this->selfwhere=sprintf($this->sql_templates['getTorrentID_selfwhere'], $torrentid, hash_where("peer_id", $peer_id) );
-
-	if (!isset($this->self)) {
-
-        	$res = mysqli_query(self::$sDB, sprintf($this->sql_templates['selectWW'], $fields, $selfwhere));
-        	$row = mysqli_fetch_assoc($res);
-        	if ($row)
-                	$this->self = $row;
-		}
 
 	return $resp;
    }
 
+   protected function checkEvent($event, $torrent){
+	$torrentid=$torrent['id'];
+	if (!isset($this->self)) { // comment
 
+        	$res = mysqli_query(self::$sDB, sprintf($this->sql_templates['selectWW'], $fields, $this->selfwhere));
+        	$row = mysqli_fetch_assoc($res);
+        	if ($row)
+                	$this->self = $row;
+	}
 
-   protected function checkEvent($event, $torrentid){
 	$updateset = array();
         global $info_hash, $peer_id, $ip, $port, $uploaded, $downlaoded, $left, $event;
 	
@@ -123,18 +121,16 @@ class Announcer {
               }
       }else {
               if ($event == "completed")
-                      array_push($updateset, "times_completed = times_completed + 1");
-	      //   $this->port = intval($port);
-	     //   $this->downloaded = $this->bigintval($downloaded);
-  	    // $this->uploaded = $this->bigintval($uploaded);
-   	   //$this->left = $this->bigintval($left);
+		      array_push($updateset, "times_completed = times_completed + 1");
+
 
 	      //
-	      if (isset($self)) {//$ip from $GLOBALS TODO: maybe fuck it GLOBALS?!
+	      $this->selfwhere=sprintf($this->sql_templates['getTorrentID_selfwhere'], $torrentid, hash_where("peer_id", $peer_id) );
+	      if (isset($this->self)) {//$ip from $GLOBALS TODO: maybe fuck it GLOBALS?!
 	   	      $q=sprintf($this->sql_templates['updateWW'], "peers", "ip", sqlesc($this->ip) . ", port = $this->port, uploaded  = $this->uploaded, downloaded  = $this->downloaded, to_go  = $this->left, last_action = NOW(), seeder = '$this->seeder' WHERE $this->selfwhere");
                       mysqli_query(self::$sDB, $q);
-                      if (mysqli_affected_rows(self::$sDB) && $self["seeder"] != $seeder) {
-                              if ($seeder == "yes") {
+                      if (mysqli_affected_rows(self::$sDB) && $this->self["seeder"] != $seeder) {
+                              if ($this->seeder == "yes") {
                                       array_push($updateset, "seeders = seeders + 1");
                                       array_push($updateset, "leechers = leechers - 1");
                               }
@@ -154,14 +150,13 @@ class Announcer {
       //                      @fclose($sockres);
       //              }
 
-      //"deleteWW" => "DELETE FROM %s WHERE %s",
 			      $ret = mysqli_query(self::$sDB, 
 
-				      $this->sql_templates['deleteWW'], "peers", "peer_id='".sqlesc($this->peer_id)."' AND torrent='".$torrentid."'");
-			    if(!$ret){
+				      sprintf($this->sql_templates['deleteWW'], "peers", "peer_id=".sqlesc($peer_id)." AND torrent='".$torrentid."'"));
+			    	if(!$ret){
 					    $this->err("sql trouble in update peer");
 					    exit();
-			    }
+			    	}
 			      $ret = 
 			      mysqli_query(
 				      self::$sDB, 
@@ -169,14 +164,14 @@ class Announcer {
 ('$connectable', $torrentid, " . sqlesc($this->peer_id) . ", " . sqlesc($this->ip) . ", $this->port, $this->uploaded, $this->downloaded, $this->left, NOW(), NOW(), '$this->seeder')"
 			      );
                       if ($ret) {
-                              if ($seeder == "yes")
+                              if ($this->seeder == "yes")
                                       array_push($updateset, "seeders = seeders + 1");
                               else
                                       array_push($updateset, "leechers = leechers + 1");
                       }
               }
       }//endELSE
-      if ($seeder == "yes") {
+      if ($this->seeder == "yes") {
        if ($torrent["banned"] != "yes")
                 array_push($updateset, "visible = 'yes'");
           array_push($updateset, "last_action = NOW()");
@@ -230,7 +225,7 @@ class Announcer {
 	if($torrent === false) return false;
 
 
-	$this->checkEvent($this->event, $torrent['id']);
+	$this->checkEvent($this->event, $torrent);
 	$resp=$this->getPeersByTorrentID($torrent);
 
 	benc_resp_raw($resp);
