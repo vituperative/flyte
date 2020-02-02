@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div id=installer>
-	<form action='instal.php' method="POST">
+	<form action='install.php' method="POST">
 		<?php
 	     		require_once("need.php");
 	     		foreach( $need4conf as $element){
