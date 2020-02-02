@@ -17,8 +17,9 @@ class Announcer {
 	  //SELECT $fields FROM peers WHERE $selfwhere
 	  "selectWW" => "select %s WHERE %s",
 	  //"DELETE FROM peers WHERE $this->selfwhere"
-	  "deleteWW" => "DELETE FROM %s WHERE %s"
-  );
+	  "deleteWW" => "DELETE FROM %s WHERE %s",
+	  "updateWW"=> "UPDATE %s SET %s = %s"
+  );//TODO: fix shitcode to readable, another style and did full support of that map in code
 
   protected static $sDB=null;
    
@@ -123,8 +124,9 @@ class Announcer {
    	   //$this->left = $this->bigintval($left);
 
 	      //
-              if (isset($self)) {
-                      mysqli_query($this->sDB, "UPDATE peers SET ip = " . sqlesc($ip) . ", port = $this->port, uploaded  = $this->uploaded, downloaded  = $this->downloaded, to_go  = $this->left, last_action = NOW(), seeder = '$this->seeder' WHERE $this->selfwhere");
+	      if (isset($self)) {//$ip из $GLOBALS TODO: сделать адекватнее и понятнее;
+	   	      $q=sprintf($this->sql_templates['updateWW'], "peers", "ip", sqlesc($this->ip) . ", port = $this->port, uploaded  = $this->uploaded, downloaded  = $this->downloaded, to_go  = $this->left, last_action = NOW(), seeder = '$this->seeder' WHERE $this->selfwhere");
+                      mysqli_query($this->sDB, $q);
                       if (mysqli_affected_rows($this->sDB) && $self["seeder"] != $seeder) {
                               if ($seeder == "yes") {
                                       array_push($updateset, "seeders = seeders + 1");
@@ -145,7 +147,19 @@ class Announcer {
                               $connectable = "yes";
       //                      @fclose($sockres);
       //              }
-                      $ret = mysqli_query($this->sDB, "INSERT INTO peers (connectable, torrent, peer_id, ip, port, uploaded, downloaded, to_go, started, last_action, seeder) VALUES ('$connectable', $torrentid, " . sqlesc($peer_id) . ", " . sqlesc($ip) . ", $this->port, $this->uploaded, $this->downloaded, $this->left, NOW(), NOW(), '$this->seeder')");//IP всегда пустое что ли у нас?! peer_id из GLOBALS?
+      //"deleteWW" => "DELETE FROM %s WHERE %s",
+			      $ret = mysqli_query($this->sDB, 
+				      $this->sql_templates['deleteWW'], "peers", "peer_id='".sqlesc($this->peer_id)."' AND torrent='".$torrentid."'");
+			      if(!$ret){
+					$this->err("sql trouble in update peer");
+					exit();
+			      }
+			      $ret = 
+			      mysqli_query(
+				      $this->sDB, 
+				      "INSERT INTO peers (connectable, torrent, peer_id, ip, port, uploaded, downloaded, to_go, started, last_action, seeder) VALUES 
+('$connectable', $torrentid, " . sqlesc($this->peer_id) . ", " . sqlesc($this->ip) . ", $this->port, $this->uploaded, $this->downloaded, $this->left, NOW(), NOW(), '$this->seeder')"
+			      );
                       if ($ret) {
                               if ($seeder == "yes")
                                       array_push($updateset, "seeders = seeders + 1");
@@ -187,10 +201,9 @@ class Announcer {
 	foreach (array("info_hash","peer_id") as $x) 
          if (strlen($GLOBALS[$x]) != 20)
 		 $this->err("invalid $x (" . strlen($GLOBALS[$x]) . " - " . urlencode($GLOBALS[$x]) . ")");
-	$this->constructAnswer();
 	$this->rsize = $this->getRSize();//rsize какой то хуй знает чо какие то цифры там блять хотят
 
-	if (!$this->checkPort){
+	if ( !$this->checkPort() ){
 		$this->err("invalid port");
 		exit();
 	}
@@ -200,6 +213,9 @@ class Announcer {
 	$this->seeder = ($this->left == 0) ? "yes" : "no";
 	dbconn(0);
 	//$this->info_hash=$info_hash;
+
+	$this->constructAnswer();
+
 	$torrent = $this->getTorrentByID($info_hash);// блять потом поправить сука
 	if(!torrent) return false;
 
@@ -225,10 +241,12 @@ class Announcer {
  }
  protected function constructAnswer(){
 
-   $this->port = intval($port);
-   $this->downloaded = $this->bigintval($downloaded);
-   $this->uploaded = $this->bigintval($uploaded);
-   $this->left = $this->bigintval($left);
+   $this->port = mysqli_real_escape_string($this->sDB, intval($port) );
+   $this->downloaded = mysqli_real_escape_string($this->sDB, $this->bigintval($downloaded) );
+   $this->uploaded = mysqli_real_escape_string($this->sDB, $this->bigintval($uploaded) );
+   $this->left = mysqli_real_escape_string($this->sDB, $this->bigintval($left) );
+   $this->ip = mysqli_real_escape_string($this->sDB, $ip);
+   $this->peer_id= mysqli_real_escape_string($this->sDB, $peer_id);
  }
 
 
