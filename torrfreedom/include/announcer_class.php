@@ -62,7 +62,7 @@ class Announcer {
    }
    protected function getPeersByTorrentID($torrent, $fields="seeder, peer_id, ip, port"){
 	   // TODO: all $res/$selfwhere and like that to const/map of sql queries
-	global $peer_id;   
+	global $peer_id, $announce_interval;   
 	$limit = "";//shitcode... TODO: del;
         if ($torrent["numpeers"] > $this->rsize)
 		$limit = "ORDER BY RAND() LIMIT $this->rsize";
@@ -229,8 +229,8 @@ class Announcer {
 	if($torrent === false) return false;
 
 
-	$resp=$this->getPeersByTorrentID($torrent);
 	$this->checkEvent($this->event, $torrent['id']);
+	$resp=$this->getPeersByTorrentID($torrent);
 
 	benc_resp_raw($resp);
 
