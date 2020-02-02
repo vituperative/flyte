@@ -216,7 +216,7 @@ class Announcer {
 
 	$this->constructAnswer();
 
-	$torrent = $this->getTorrentByID($info_hash);// блять потом поправить сука
+	$torrent = $this->getTorrentByID($this->info_hash);
 	if(!torrent) return false;
 
 
@@ -247,6 +247,7 @@ class Announcer {
    $this->left = mysqli_real_escape_string($this->sDB, $this->bigintval($left) );
    $this->ip = mysqli_real_escape_string($this->sDB, $ip);
    $this->peer_id= mysqli_real_escape_string($this->sDB, $peer_id);
+   $this->info_hash=mysqli_real_escape_string($this->sDB, $info_hash);
  }
 
 
