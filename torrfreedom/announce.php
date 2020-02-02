@@ -11,16 +11,6 @@ function err($msg) {
 	exit();
 }
 
-function benc_resp($d) {
-	benc_resp_raw(benc(array("type" => "dictionary", "value" => $d)));
-}
-
-function benc_resp_raw($x) {
-	header("Content-Type: text/plain");
-	header("Pragma: no-cache");
-	print($x);
-}
-
 function bigintval($value) {
   $value = trim($value);
   if (ctype_digit($value)) {
