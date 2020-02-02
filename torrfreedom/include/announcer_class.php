@@ -218,7 +218,7 @@ class Announcer {
 	$this->constructAnswer();
 
 	$torrent = $this->getTorrentByID($this->info_hash);
-	if(!torrent) return false;
+	if($torrent === false) return false;
 
 
 	$resp=$this->getPeersByTorrentID($torrent);
