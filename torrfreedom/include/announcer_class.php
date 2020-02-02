@@ -105,6 +105,8 @@ class Announcer {
 
    protected function checkEvent($event, $torrentid){
 	$updateset = array();
+        global $info_hash, $peer_id, $ip, $port, $uploaded, $downlaoded, $left, $event;
+	
 
       	if ($event == "stopped") {
 		if (isset($self)) {
@@ -149,9 +151,10 @@ class Announcer {
                               $connectable = "yes";
       //                      @fclose($sockres);
       //              }
-      //"deleteWW" => "DELETE FROM %s WHERE %s",
-			      $ret = mysqli_query(self::$sDB, 
-				      $this->sql_templates['deleteWW'], "peers", "peer_id='".sqlesc($this->peer_id)."' AND torrent='".$torrentid."'");
+			      //"deleteWW" => "DELETE FROM %s WHERE %s",
+			      $ret = mysqli_query(self::$sDB,
+                                      sprintf($this->sql_templates['deleteWW'], "peers", "peer_id=".sqlesc($this->peer_id)." AND torrent='".$torrentid."'") );
+
 			      if(!$ret){
 					$this->err("sql trouble in update peer");
 					exit();
@@ -220,7 +223,7 @@ class Announcer {
 
 	$this->constructAnswer();
 
-	$torrent = $this->getTorrentByID($this->info_hash);
+	$torrent = $this->getTorrentByID($info_hash);//mysqli_escape it kill hash, raw hash, not vulg
 	if($torrent === false) return false;
 
 
@@ -244,14 +247,14 @@ class Announcer {
   	return 0;
  }
  protected function constructAnswer(){
-
-   $this->port = mysqli_real_escape_string(self::$sDB, intval($port) );
-   $this->downloaded = mysqli_real_escape_string(self::$sDB, $this->bigintval($downloaded) );
-   $this->uploaded = mysqli_real_escape_string(self::$sDB, $this->bigintval($uploaded) );
-   $this->left = mysqli_real_escape_string(self::$sDB, $this->bigintval($left) );
+   global $info_hash, $peer_id, $ip, $port, $uploaded, $downlaoded, $left, $event;
+   $this->port = intval($port) ; // not need escape because big int
+   $this->downloaded = $this->bigintval($downloaded) ;
+   $this->uploaded = $this->bigintval($uploaded) ;
+   $this->left = $this->bigintval($left) ;
    $this->ip = mysqli_real_escape_string(self::$sDB, $ip);
    $this->peer_id= mysqli_real_escape_string(self::$sDB, $peer_id);
-   $this->info_hash=mysqli_real_escape_string(self::$sDB, $info_hash);
+
  }
 
 
