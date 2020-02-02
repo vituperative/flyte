@@ -11,13 +11,13 @@ dbconn();
 class Announcer {
   protected $sql_templates = array(
 	  "getTorrentByID" => "SELECT id, banned, seeders + leechers AS numpeers FROM torrents WHERE ",
-	  "getPeersByTorrentID" => "SELECT %s FROM peers WHERE torrent = '%d' AND (1 OR connectable = 'yes') %s" // fields, torrentID, limit
+	  "getPeersByTorrentID" => "SELECT %s FROM peers WHERE torrent = '%d' AND (1 OR connectable = 'yes') %s", // fields, torrentID, limit
 //        $selfwhere = "torrent = $torrentid AND " . hash_where("peer_id", $peer_id);
-	  "getPeersByTorrentID_selfwhere" => "torrent = %s AND %s" ,
+	  "getPeersByTorrentID_selfwhere" => "torrent = %s AND %s",
 	  //SELECT $fields FROM peers WHERE $selfwhere
 	  "selectWW" => "select %s WHERE %s",
 	  //"DELETE FROM peers WHERE $this->selfwhere"
-	  "deleteWW" => "DELETE FROM %s WHERE %s",
+	  "deleteWW" => "DELETE FROM %s WHERE %s"
   );
 
   protected static $sDB=null;
@@ -106,7 +106,7 @@ class Announcer {
       	if ($event == "stopped") {
 		if (isset($self)) {
 		      //deleteWW
-                      mysqli_query($GLOBALS["___mysqli_ston"], sprintf($this->sql_templates['deleteWW'], "peers", $this->selfwhere);
+                      mysqli_query($GLOBALS["___mysqli_ston"], sprintf($this->sql_templates['deleteWW'], "peers", $this->selfwhere) );
                       if (mysqli_affected_rows($GLOBALS["___mysqli_ston"])) {
                               if ($self["seeder"] == "yes")
                                       array_push($updateset, "seeders = seeders - 1");
