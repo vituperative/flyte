@@ -62,7 +62,7 @@ class Announcer {
    }
    protected function getPeersByTorrentID($torrent, $fields="seeder, peer_id, ip, port"){
 // TODO: all $res/$selfwhere and like that to const/map of sql queries
-	   $limit = "";//поправить эт нах
+	   $limit = "";//shitcode... TODO: del;
         if ($torrent["numpeers"] > $this->rsize)
 		$limit = "ORDER BY RAND() LIMIT $this->rsize";
 	$torrentid=$torrent['id'];
@@ -202,7 +202,7 @@ class Announcer {
 	foreach (array("info_hash","peer_id") as $x) 
          if (strlen($GLOBALS[$x]) != 20)
 		 $this->err("invalid $x (" . strlen($GLOBALS[$x]) . " - " . urlencode($GLOBALS[$x]) . ")");
-	$this->rsize = $this->getRSize();//rsize какой то хуй знает чо какие то цифры там блять хотят
+	$this->rsize = $this->getRSize();
 
 	if ( !$this->checkPort() ){
 		$this->err("invalid port");

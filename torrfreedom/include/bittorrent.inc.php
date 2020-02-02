@@ -27,7 +27,7 @@ $appname = "TorrFreedom";
 $version = "1.1.0";
 
 # the first one will be displayed on the pages
-$announce_urls = array();// ссылочки нахуй поправим
+$announce_urls = array();// 
 array_push($announce_urls, $tracker_url_name . "/announce.php", $tracker_url_key . "/announce.php", $tracker_url_name . "/announce",
 	$tracker_url_key . "/announce", $tracker_url_name . "/a", $tracker_url_key . "/a");
 

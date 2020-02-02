@@ -9,6 +9,6 @@ require_once("include/announcer_class.php"); //
 
 $announcer = new Announcer();
 
-//СТАРЫЙ КОД В КОММИТАХ ЕСЬ ЧО ЫЫ
+//OLD CODE IN COMMENTS FUCK
 $announcer->announce($_GET);
 ?>
