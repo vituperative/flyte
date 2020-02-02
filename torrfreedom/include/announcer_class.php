@@ -150,6 +150,7 @@ class Announcer {
       //              }
       //"deleteWW" => "DELETE FROM %s WHERE %s",
 			      $ret = mysqli_query(self::$sDB, 
+
 				      $this->sql_templates['deleteWW'], "peers", "peer_id='".sqlesc($this->peer_id)."' AND torrent='".$torrentid."'");
 			      if(!$ret){
 					$this->err("sql trouble in update peer");
@@ -219,7 +220,6 @@ class Announcer {
 
 	$torrent = $this->getTorrentByID($this->info_hash);
 	if($torrent === false) return false;
-
 
 	$resp=$this->getPeersByTorrentID($torrent);
 	$this->checkEvent($this->event, $torrent['id']);
