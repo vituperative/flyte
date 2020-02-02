@@ -140,4 +140,15 @@ function bdec_dict($s) {
 	return array("type" => "dictionary", "value" => $v, "strlen" => strlen($ss), "string" => $ss);
 }
 
+function benc_resp($d) { // словалрь bencode
+        benc_resp_raw(benc(array("type" => "dictionary", "value" => $d)));
+}
+
+function benc_resp_raw($x) { // сырая отправка видимо
+        header("Content-Type: text/html");
+        header("Pragma: no-cache");
+        print($x);
+}
+
+
 ?>
