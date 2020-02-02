@@ -50,7 +50,7 @@ class Announcer {
 	return true;
    }
    protected function getTorrentByID($ihash){
-	$res = mysqli_query(self::$sDB, $this->sql_templates['getTorrentByID'] . hash_where("info_hash", $ihash));
+	  $res = mysqli_query(self::$sDB, $this->sql_templates['getTorrentByID'] . hash_where("info_hash", $ihash));
 
 	$torrent = mysqli_fetch_assoc($res);
 	if (!$torrent){
@@ -67,6 +67,7 @@ class Announcer {
 		$limit = "ORDER BY RAND() LIMIT $this->rsize";
 	$torrentid=$torrent['id'];
 	$qRAW=sprintf($this->sql_templates['getTorrentByID'], $fields, $torrentid, $limit);
+
 	$res = mysqli_query(self::$sDB, $qRAW);
 
 	$resp = "d" . benc_str("interval") . "i" . $announce_interval . "e" . benc_str("peers") . "l";
@@ -177,6 +178,7 @@ class Announcer {
 
       if (count($updateset))
 	      mysqli_query(self::$sDB, "UPDATE torrents SET " . join(",", $updateset) . " WHERE id = $torrentid");
+
 
   
    }
