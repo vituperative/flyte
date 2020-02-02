@@ -15,7 +15,7 @@ class Scraper extends Announcer{
 			$query = "SELECT $fields FROM torrents WHERE " .
 		       	hash_where("info_hash", $_GET["info_hash"]);
 
-		$res = mysqli_query($GLOBALS["___mysqli_ston"], $query);
+		$res = mysqli_query(self::$sDB, $query);
 
 		while ($row = mysqli_fetch_assoc($res)) {
         		$r .= "20:" . hash_pad($row["info_hash"]) . "d" .
