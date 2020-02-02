@@ -184,7 +184,8 @@ class Announcer {
    }
    const defreq = "info_hash:peer_id:ip:port:uploaded:downloaded:left:!event";      
    public function announce($ask){
-	//to need to recheck that 10 times as minimum
+	   //to need to recheck that 10 times as minimum
+	global $info_hash, $peer_id, $ip, $port, $uploaded, $downlaoded, $left, $event;
 	$opt=0;
 	$rsize=50;
 	foreach (explode(":", self::defreq) as $element) {
