@@ -145,7 +145,7 @@ function benc_resp($d) { // dictinary bencode
 }
 
 function benc_resp_raw($x) { // raw send?
-        header("Content-Type: text/html");
+        header("Content-Type: text/plain");
         header("Pragma: no-cache");
         print($x);
 }

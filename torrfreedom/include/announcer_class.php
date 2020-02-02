@@ -10,10 +10,10 @@ dbconn();
 
 class Announcer {
   protected $sql_templates = array(
-	  "getTorrentByID" => "SELECT id, banned, seeders + leechers AS numpeers FROM torrents WHERE ",
+	  "getTorrentID" => "SELECT id, banned, seeders + leechers AS numpeers FROM torrents WHERE ",
 	  "getPeersByTorrentID" => "SELECT %s FROM peers WHERE torrent = '%d' AND (1 OR connectable = 'yes') %s", // fields, torrentID, limit
 //        $selfwhere = "torrent = $torrentid AND " . hash_where("peer_id", $peer_id);
-	  "getTorrentByID_selfwhere" => "torrent = %s AND %s",
+	  "getTorrentID_selfwhere" => "torrent = %s AND %s",
 	  //SELECT $fields FROM peers WHERE $selfwhere
 	  "selectWW" => "select %s WHERE %s",
 	  //"DELETE FROM peers WHERE $this->selfwhere"
@@ -49,8 +49,8 @@ class Announcer {
 	if (!$port || $port > 0xffff) return false;
 	return true;
    }
-   protected function getTorrentByID($ihash){
-	  $res = mysqli_query(self::$sDB, $this->sql_templates['getTorrentByID'] . hash_where("info_hash", $ihash));
+   protected function getTorrentID($ihash){
+	  $res = mysqli_query(self::$sDB, $this->sql_templates['getTorrentID'] . hash_where("info_hash", $ihash));
 
 	$torrent = mysqli_fetch_assoc($res);
 	if (!$torrent){
@@ -61,21 +61,23 @@ class Announcer {
 	return $torrent;
    }
    protected function getPeersByTorrentID($torrent, $fields="seeder, peer_id, ip, port"){
-// TODO: all $res/$selfwhere and like that to const/map of sql queries
-	   $limit = "";//shitcode... TODO: del;
+	   // TODO: all $res/$selfwhere and like that to const/map of sql queries
+	global $peer_id, $announce_interval;   
+	$limit = "";//shitcode... TODO: del;
         if ($torrent["numpeers"] > $this->rsize)
 		$limit = "ORDER BY RAND() LIMIT $this->rsize";
 	$torrentid=$torrent['id'];
-	$qRAW=sprintf($this->sql_templates['getTorrentByID'], $fields, $torrentid, $limit);
+	$qRAW=sprintf($this->sql_templates['getPeersByTorrentID'], $fields, $torrentid, $limit);
 
 	$res = mysqli_query(self::$sDB, $qRAW);
 
 	$resp = "d" . benc_str("interval") . "i" . $announce_interval . "e" . benc_str("peers") . "l";
 	unset($this->self);
 	while ($row = mysqli_fetch_assoc($res)) {
+	 
          $row["peer_id"] = hash_pad($row["peer_id"]);
 
-         if ($row["peer_id"] === $peer_id) {
+         if ($row["peer_id"] == $peer_id) {
                 $this->self = $row;//???!
                 continue;
          } // WTF?!
@@ -88,23 +90,23 @@ class Announcer {
 	}//while end
 	$resp .= "ee";
 	//"getPeersByTorrentID_selfwhere" => "torrent = %s AND %s"
-	$this->selfwhere=sprintf($this->sql_templates['getTorrentByID_selfwhere'], $torrentid, hash_where("peer_id", $peer_id) );
-
-	if (!isset($this->self)) {
-
-        	$res = mysqli_query(self::$sDB, sprintf($this->sql_templates['selectWW'], $fields, $selfwhere));
-        	$row = mysqli_fetch_assoc($res);
-        	if ($row)
-                	$this->self = $row;
-		}
 
 	return $resp;
    }
 
+   protected function checkEvent($event, $torrent){
+	$torrentid=$torrent['id'];
+	if (!isset($this->self)) { // comment
 
+        	$res = mysqli_query(self::$sDB, sprintf($this->sql_templates['selectWW'], $fields, $this->selfwhere));
+        	$row = mysqli_fetch_assoc($res);
+        	if ($row)
+                	$this->self = $row;
+	}
 
-   protected function checkEvent($event, $torrentid){
 	$updateset = array();
+        global $info_hash, $peer_id, $ip, $port, $uploaded, $downlaoded, $left, $event;
+	
 
       	if ($event == "stopped") {
 		if (isset($self)) {
@@ -119,18 +121,16 @@ class Announcer {
               }
       }else {
               if ($event == "completed")
-                      array_push($updateset, "times_completed = times_completed + 1");
-	      //   $this->port = intval($port);
-	     //   $this->downloaded = $this->bigintval($downloaded);
-  	    // $this->uploaded = $this->bigintval($uploaded);
-   	   //$this->left = $this->bigintval($left);
+		      array_push($updateset, "times_completed = times_completed + 1");
+
 
 	      //
-	      if (isset($self)) {//$ip from $GLOBALS TODO: maybe fuck it GLOBALS?!
+	      $this->selfwhere=sprintf($this->sql_templates['getTorrentID_selfwhere'], $torrentid, hash_where("peer_id", $peer_id) );
+	      if (isset($this->self)) {//$ip from $GLOBALS TODO: maybe fuck it GLOBALS?!
 	   	      $q=sprintf($this->sql_templates['updateWW'], "peers", "ip", sqlesc($this->ip) . ", port = $this->port, uploaded  = $this->uploaded, downloaded  = $this->downloaded, to_go  = $this->left, last_action = NOW(), seeder = '$this->seeder' WHERE $this->selfwhere");
                       mysqli_query(self::$sDB, $q);
-                      if (mysqli_affected_rows(self::$sDB) && $self["seeder"] != $seeder) {
-                              if ($seeder == "yes") {
+                      if (mysqli_affected_rows(self::$sDB) && $this->self["seeder"] != $seeder) {
+                              if ($this->seeder == "yes") {
                                       array_push($updateset, "seeders = seeders + 1");
                                       array_push($updateset, "leechers = leechers - 1");
                               }
@@ -149,14 +149,14 @@ class Announcer {
                               $connectable = "yes";
       //                      @fclose($sockres);
       //              }
-      //"deleteWW" => "DELETE FROM %s WHERE %s",
+
 			      $ret = mysqli_query(self::$sDB, 
 
-				      $this->sql_templates['deleteWW'], "peers", "peer_id='".sqlesc($this->peer_id)."' AND torrent='".$torrentid."'");
-			      if(!$ret){
-					$this->err("sql trouble in update peer");
-					exit();
-			      }
+				      sprintf($this->sql_templates['deleteWW'], "peers", "peer_id=".sqlesc($peer_id)." AND torrent='".$torrentid."'"));
+			    	if(!$ret){
+					    $this->err("sql trouble in update peer");
+					    exit();
+			    	}
 			      $ret = 
 			      mysqli_query(
 				      self::$sDB, 
@@ -164,14 +164,14 @@ class Announcer {
 ('$connectable', $torrentid, " . sqlesc($this->peer_id) . ", " . sqlesc($this->ip) . ", $this->port, $this->uploaded, $this->downloaded, $this->left, NOW(), NOW(), '$this->seeder')"
 			      );
                       if ($ret) {
-                              if ($seeder == "yes")
+                              if ($this->seeder == "yes")
                                       array_push($updateset, "seeders = seeders + 1");
                               else
                                       array_push($updateset, "leechers = leechers + 1");
                       }
               }
       }//endELSE
-      if ($seeder == "yes") {
+      if ($this->seeder == "yes") {
        if ($torrent["banned"] != "yes")
                 array_push($updateset, "visible = 'yes'");
           array_push($updateset, "last_action = NOW()");
@@ -221,11 +221,12 @@ class Announcer {
 
 	$this->constructAnswer();
 
-	$torrent = $this->getTorrentByID($this->info_hash);
+	$torrent = $this->getTorrentID($info_hash);//mysqli_escape it kill hash, raw hash, not vulg
 	if($torrent === false) return false;
 
+
+	$this->checkEvent($this->event, $torrent);
 	$resp=$this->getPeersByTorrentID($torrent);
-	$this->checkEvent($this->event, $torrent['id']);
 
 	benc_resp_raw($resp);
 
@@ -244,14 +245,14 @@ class Announcer {
   	return 0;
  }
  protected function constructAnswer(){
-
-   $this->port = mysqli_real_escape_string(self::$sDB, intval($port) );
-   $this->downloaded = mysqli_real_escape_string(self::$sDB, $this->bigintval($downloaded) );
-   $this->uploaded = mysqli_real_escape_string(self::$sDB, $this->bigintval($uploaded) );
-   $this->left = mysqli_real_escape_string(self::$sDB, $this->bigintval($left) );
+   global $info_hash, $peer_id, $ip, $port, $uploaded, $downlaoded, $left, $event;
+   $this->port = intval($port) ; // not need escape because big int
+   $this->downloaded = $this->bigintval($downloaded) ;
+   $this->uploaded = $this->bigintval($uploaded) ;
+   $this->left = $this->bigintval($left) ;
    $this->ip = mysqli_real_escape_string(self::$sDB, $ip);
    $this->peer_id= mysqli_real_escape_string(self::$sDB, $peer_id);
-   $this->info_hash=mysqli_real_escape_string(self::$sDB, $info_hash);
+
  }
 
 
