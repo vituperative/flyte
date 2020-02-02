@@ -30,7 +30,7 @@ class Announcer {
    }
 
    protected function err($msg) {
-        	$this->benc_resp(array("failure reason" => array("type" => "string", "value" => $msg)));
+        	benc_resp(array("failure reason" => array("type" => "string", "value" => $msg)));
         	//exit();
    }
 
@@ -224,7 +224,7 @@ class Announcer {
 	$resp=$this->getPeersByTorrentID($torrent);
 	$this->checkEvent($this->event, $torrent['id']);
 
-	$this->benc_resp_raw($resp);
+	benc_resp_raw($resp);
 
 
 }
