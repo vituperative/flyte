@@ -53,40 +53,40 @@ $announcer->announce($_GET);
 //if (empty($ip) || !preg_match('/^(\d{1,3}\.){3}\d{1,3}$/s', $ip))
 //	$ip = $_SERVER["REMOTE_ADDR"];
 
-$port = intval($port);
-$downloaded = bigintval($downloaded);
-$uploaded = bigintval($uploaded);
-$left = bigintval($left);
+//$port = intval($port);
+//$downloaded = bigintval($downloaded);
+//$uploaded = bigintval($uploaded);
+//$left = bigintval($left);
 
-$rsize = 50;
-foreach(array("num want", "numwant", "num_want") as $k) {
-	if (isset($_GET[$k])) {
-		$rsize = intval($_GET[$k]);
-		break;
-	}
-}
+////$rsize = 50;
+//foreach(array("num want", "numwant", "num_want") as $k) {
+//	if (isset($_GET[$k])) {
+//		$rsize = intval($_GET[$k]);
+//		break;
+//	}
+//}
+//
+//if (!$port || $port > 0xffff)
+//	err("invalid port");
+//
+//if (!isset($event))
+//	$event = "";
 
-if (!$port || $port > 0xffff)
-	err("invalid port");
+//$seeder = ($left == 0) ? "yes" : "no";
 
-if (!isset($event))
-	$event = "";
+//dbconn(0);
 
-$seeder = ($left == 0) ? "yes" : "no";
+//$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT id, banned, seeders + leechers AS numpeers FROM torrents WHERE " . hash_where("info_hash", $info_hash));
 
-dbconn(0);
-
-$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT id, banned, seeders + leechers AS numpeers FROM torrents WHERE " . hash_where("info_hash", $info_hash));
-
-$torrent = mysqli_fetch_assoc($res);
+//$torrent = mysqli_fetch_assoc($res);
 if (!$torrent)
 	err("torrent not registered with this tracker");
 
-$torrentid = $torrent["id"];
+//$torrentid = $torrent["id"];
 
-$fields = "seeder, peer_id, ip, port";
+//$fields = "seeder, peer_id, ip, port";
 
-$numpeers = $torrent["numpeers"];
+//$numpeers = $torrent["numpeers"];
 $limit = "";
 if ($numpeers > $rsize)
 	$limit = "ORDER BY RAND() LIMIT $rsize";
