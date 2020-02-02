@@ -1,9 +1,15 @@
+<!DOCTYPE HTML>
 <html>
-	<head>
-		<title>Install prepare htmlmarkup</title>
-	</head>
+<head>
+  <meta http-equiv="Content-Language" content="en-us">
+  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="include/style.css" type="text/css">
+  <link rel="shortcut icon" href="favicon.ico" />
+  <title> Installer of that tracker </title>
+</head>
 <body>
 	<div id=installer>
+	<form action='instal.php' method="POST">
 		<?php
 	     		require_once("need.php");
 	     		foreach( $need4conf as $element){
@@ -11,5 +17,6 @@
 			}
 		?>
 	</div>
+	</form>
 </body>
 </html>
