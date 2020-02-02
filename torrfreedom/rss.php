@@ -37,10 +37,6 @@ echo "<?xml version=\"1.0\"?>\n";
 		<language>en-us</language>
 <?php
 
-function hex_esc($matches) {
-	return sprintf("%02x", ord($matches[0]));
-}
-
 $query = "SELECT torrents.name AS name, torrents.id AS id, filename, info_hash, save_as, ori_descr, torrents.added AS added, size, categories.name AS cat_name, users.username AS username FROM torrents, categories, users WHERE category = categories.id AND owner = users.id ORDER BY added DESC LIMIT 10";
 
 $res = mysqli_query($GLOBALS["___mysqli_ston"], $query);
