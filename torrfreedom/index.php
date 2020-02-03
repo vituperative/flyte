@@ -176,6 +176,5 @@ else {
 
 </div>
 <?php
- require_once "include/footer.inc.php";
  stdfoot(); 
 ?>
