@@ -128,7 +128,7 @@ p, div[align="center"] {
     display: none;
 }
 
-.table1 {
+.table1, #uploader {
     margin-top: 8px;
     border: 1px solid #222;
 }
@@ -465,7 +465,7 @@ div[align="center"] font[size="1"] {
     background: #311;
 }
 
-.table1 + p[align="center"], .table1 + hr + p + .important + p, #addcomment {
+.table1 + p[align="center"], .table1 + hr + p + .important + p, #addcomment, #upload.note {
     margin-top: -1px !important;
     padding: 10px !important;
     font-size: 110%;
@@ -873,7 +873,6 @@ p[align="center"] a[href*="?page="] b {
     }
 }
 
-
 #footer {
     margin: 0 10% !important;
     padding: 0 !important;
@@ -924,9 +923,9 @@ p[align="center"] a[href*="?page="] b {
     text-transform: capitalize;
 }
 
-/* tables */
+/* details */
 
-#details, #addcomment {
+#details, #addcomment, #uploader, #upload.note {
     width: 800px !important;
     box-sizing: border-box;
     border: 1px solid #111 !important;
@@ -935,7 +934,7 @@ p[align="center"] a[href*="?page="] b {
 #details th {
     padding: 8px 14px !important;
     font-size: 110% !important;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
     text-align: left;
     border-top: none !important;
     border-bottom: 1px solid #111 !important;
@@ -946,16 +945,50 @@ p[align="center"] a[href*="?page="] b {
 }
 
 #details tr:first-child th::before {
-    content: "Torrent: ";
     display: inline;
-    vertical-align: middle;
+    vertical-align: text-bottom;
+    font-weight: 700 !important;
+    content: "Torrent: ";
 }
 
-#details td:first-child {
+#details td:first-child, #uploader td:first-child {
     padding: 6px;
+    white-space: nowrap;
     text-align: right;
 }
 
 #nocomments {
     display: none;
+}
+
+/* uploader */
+
+#uploader td:last-child {
+    text-align: left;
+}
+
+#uploader td {
+    padding: 9px;
+}
+
+#uploader input, #uploader input[type="text"], #uploader textarea {
+    width: calc(100% - 6px);
+    max-width: calc(100% - 6px);
+}
+
+#uploader input[type="submit"] {
+    margin-right: 3px;
+    width: auto;
+    float: right;
+}
+
+#uploader textarea {
+    resize: vertical;
+    height: 120px;
+    min-height: 120px;
+}
+
+#upload.note {
+    margin-bottom: -9px !important;
+    box-shadow: inset 0 0 0 1px #232020, inset 0 0 1px 1px #900;
 }
