@@ -19,6 +19,6 @@ Note: if <?=$tracker_title?>'s tracker isn't already present in the torrent, it 
 <h3>Can I be notified of new torrents?</h3>
 <p>Yes! Use the <a href="rss.php">RSS Feed</a> feature to track new uploads.</p>
 </div>
-<?php require_once("include/footer.inc.php"); ?>
+<?php stdfoot(); ?>
 </body>
 </html>
