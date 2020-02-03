@@ -24,12 +24,12 @@ border: 1px solid white;" value="<?=$tracker_url_key?>/announce.php"></p>
 -->
 <p class="note" id="upload">Only upload torrents you're going to seed!<br>Uploaded torrents won't be visible on the main page until you start seeding them.</p>
 
-<table id="uploader" class="table1" border="2" cellspacing="0" cellpadding="5">
+<table id="uploader">
 <?php
 
 tr("Upload file", "<input class=\"input\" type=\"file\" name=\"file\" size=\"60\" />\n", 1);
 tr("Torrent name", "<input class=\"input\" type=\"text\" name=\"name\" size=\"80\" placeholder=\"Taken from filename if not specified.\"/>", 1);
-tr("Description<br />(no html allowed)", "<textarea class=\"input\" name=\"descr\" rows=\"10\" cols=\"80\"></textarea>", 1);
+tr("Description", "<textarea class=\"input\" name=\"descr\" rows=\"10\" cols=\"80\"></textarea>", 1);
 
 $s = "<select class=\"input\" name=\"type\">\n<option value=\"0\">(choose one)</option>\n";
 
@@ -42,11 +42,10 @@ $s .= "</select>\n";
 tr("Category", $s, 1);
 
 ?>
-<tr><td align="center" colspan="2"><input class="input" type="submit" value="Upload Torrent" /></td></tr>
+<tr id=dostuff><td colspan=2><input class="input" type="submit" value="Upload Torrent"></td></tr>
 </table>
 </form>
 </div>
 <?php
 stdfoot();
-
 ?>
