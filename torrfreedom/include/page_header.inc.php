@@ -33,7 +33,7 @@ echo $birthday->diff($now)->format('%a days');?></td>
         <?php if (!$CURUSER) {?>
         <a href="login.php">Login</a> / <a href="signup.php">Signup</a>&nbsp;&nbsp;
         <?php } else {?>
-        <span class="username">Hello, <?=htmlspecialchars($CURUSER["username"])?></span> | <a href="my.php">Your Account</a> | <a href="logout.php">Logout</a>
+       <a href="my.php">Your Account</a> | <a href="logout.php">Logout</a>
         <?php }?>
         | <a href="./">Torrents</a> | <a href="upload.php">Upload</a> | <a href="rss.php">RSS Feed</a>
         | <a href="i2psnark-standalone.zip">I2PSnark Client</a>
