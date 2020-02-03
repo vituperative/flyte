@@ -226,7 +226,7 @@ table[cellpadding="4"][border="0"] td[colspan="2"][valign="top"] {
 input[type="submit"], input[type="reset"], input[type="file"], input[type="text"], textarea, input[type="password"], select, button {
     margin: 0 6px;
     padding: 3px 8px;
-    border: none !important;t
+    border: none !important;
     box-shadow: 0 0 0 1px #121010;
     border-radius: 2px !important;
     background: #343232;
