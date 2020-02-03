@@ -236,6 +236,7 @@ function stdfoot() {
 //	print('</td></tr><tr><td width="100%" height="21" colspan="2">');
 //	print('<div align="center">' . $appname . " v" . $version . ' -- Page generated in ' . $time . '</div>');
 //	print('</td></tr></table></body></html>');
+    print('<p id="footer"><span id="blurb">SiteAdmin: <a href=\"mailto:torrfreedom@mail.i2p\">torrfreedom@mail.i2p</a> &bullet; Design by <a href=\"http:\/\/skank.i2p/\">dr|z3d</a> &bullet; Est. 2017</span></p>');
 	print("\n</body>\n</html>");
 }
 
