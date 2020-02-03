@@ -9,7 +9,7 @@ require_once("include/bittorrent.inc.php");
 <ul>
 <li>Q: I want to <b>download</b> a torrent</li><br>
 <ol>
-<li>Choose the torrent you like and click on the icon next to it <b><font color="red">🖹</font></b> or <b>🧲</b>.</li>
+<li>Choose the torrent you like and click on the icon next to it <b><font color="red">🖹</b> or <b>🧲</b>.</li>
 <li>Open .torrent file in your client and download it!</li>
 </ol>
 <br>
@@ -31,7 +31,7 @@ border: 1px solid white;" value="<?=$tracker_url_key?>/announce.php"></li>
 </ul>
 <hr>
 <b>Useful links:</b> <a href="http://tracker2.postman.i2p/" target="_blank">Postman's Tracker</a> | <a href="http://diftracker.i2p/" target="_blank">DifTracker</a> | <a href="http://mpc73okj7wq2xl6clofl64cn6v7vrvhpmi6d524nrsvbeuvjxalq.b32.i2p/" target="_blank">Torrent Search Engine</a> | <a href="http://planet.i2p/" target="_blank">I2P Planet</a> | <a href="http://identiguy.i2p/" target="_blank">IdentiGuy</a>  | To be continued... ;-)
-</font>
+
 </td>
 </tr>
 </table>

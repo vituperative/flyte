@@ -90,19 +90,19 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
         $spacer = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 
         if (isset($_GET["uploaded"])) {
-            print("<h2>Successfully uploaded!</h2>\n");
-            print("<p>You can start seeding now. <b>Note</b> that the torrent won't be visible until you do that!</p>\n");
+            print("<p id=success> Torrent successfully uploaded!<br>");
+            print("You can start seeding now. <b>Note</b> that the torrent won't be visible until you do that!</p>\n");
         } elseif (isset($_GET["edited"])) {
-            print("<h2>Successfully edited!</h2>\n");
+            print("<p id=success>Torrent successfully edited!<br>");
             if (isset($_GET["returnto"])) {
-                print("<p><b>Go back to <a href=\"" . htmlspecialchars($_GET["returnto"]) . "\">whence you came</a>.</b></p>\n");
+                print("<p><b>Go back to <a href=\"" . htmlspecialchars($_GET["returnto"]) . "\">whence you came</a>.</b>");
             }
-
+            print("</p>\n");
         } elseif (isset($_GET["searched"])) {
             print("<h2>Your search for \"" . htmlspecialchars($_GET["searched"]) . "\" gave a single result:</h2>\n");
         }
 
-        echo '<center>';
+        echo '';
         echo '<table id="details">';
 
         $url = "edit.php?id=" . $row["id"];
@@ -115,14 +115,14 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
 
         $s = "<b>" . htmlspecialchars($row["name"]) . "</b>";
         if ($owned) {
-            $s .= " $spacer<$editlink>[Edit torrent]</a>";
+            $s .= " $spacer<$editlink>Edit torrent</a>";
         }
 
-        echo '<tr><th colspan="2"><span class="text1"' . $s . '</span></th></tr>';
+        echo '<tr><th colspan="2"><span class=text1>' . $s . '</span></th></tr>';
 
         $rowcount = 0;
 
-        tr("Filename", "<a class=\"index\" href=\"download.php?id=$id&file=" . rawurlencode($row["filename"]) . "\">" . htmlspecialchars($row["filename"]) . "</a>", 1, $rowcount++);
+        tr("Filename", "<a class=\"index\" href=\"download.php?id=$id&amp;file=" . rawurlencode($row["filename"]) . "\">" . htmlspecialchars($row["filename"]) . "</a>", 1, $rowcount++);
         if (!empty($row["descr"])) {
             tr("Description", $row["descr"], 1, $rowcount++);
         }
@@ -158,9 +158,9 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
 
         if ($row["type"] == "multi") {
             if (!@$_GET["filelist"]) {
-                tr("Num files<br /><a href=\"details.php?id=$id&amp;filelist=1$keepget#filelist\" class=\"sublink\">[See full list]</a>", $row["numfiles"] . " files", 1, $rowcount++);
+                tr("Files<br><a href=\"details.php?id=$id&amp;filelist=1$keepget#filelist\" class=\"sublink\">View full list</a>", $row["numfiles"], 1, $rowcount++);
             } else {
-                tr("Num files", $row["numfiles"] . " files", 1, $rowcount++);
+                tr("Files", $row["numfiles"], 1, $rowcount++);
 
                 $s = "<table class=\"table3\" border=\"1\" cellpadding=\"1\" cellspacing=\"0\">\n";
 
@@ -170,12 +170,12 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
                 }
 
                 $s .= "</table>\n";
-                tr("<a name=\"filelist\">File List</a><br /><a href=\"details.php?id=$id$keepget\" class=\"sublink\">[Hide list]</a>", $s, 1, $rowcount++);
+                tr("<a name=\"filelist\">File List</a><br /><a href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", $s, 1, $rowcount++);
             }
         }
 
         if (!@$_GET["dllist"]) {
-            tr("Peers<br /><a href=\"details.php?id=$id&amp;dllist=1$keepget#seeds\" class=\"sublink\">[See full list]</a>", "Seeds: " . $row["seeders"] . "<br>Downloaders: " . $row["leechers"], 1, $rowcount++);
+            tr("Peers<br /><a href=\"details.php?id=$id&amp;dllist=1$keepget#seeds\" class=\"sublink\">View full list</a>", "Seeds: " . $row["seeders"] . "<br>Downloaders: " . $row["leechers"], 1, $rowcount++);
         } else {
             $downloaders = array();
             $seeders = array();
@@ -221,11 +221,11 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
             usort($seeders, "seed_sort");
             usort($downloaders, "leech_sort");
 
-            tr("<a name=\"seeds\">Seeds</a><br /><a href=\"details.php?id=$id$keepget\" class=\"sublink\">[Hide list]</a>", dltable("Seeds", $seeders, $row), 1, $rowcount++);
-            tr("<a name=\"leeches\">Leeches</a><br /><a href=\"details.php?id=$id$keepget\" class=\"sublink\">[Hide list]</a>", dltable("Leeches", $downloaders, $row), 1, $rowcount++);
+            tr("<a name=\"seeds\">Seeds</a><br /><a href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", dltable("Seeds", $seeders, $row), 1, $rowcount++);
+            tr("<a name=\"leeches\">Leeches</a><br /><a href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", dltable("Leeches", $downloaders, $row), 1, $rowcount++);
         }
 
-        print("</table></td>\n");
+        print("</table>\n");
 
         print("<hr />\n");
     } else {

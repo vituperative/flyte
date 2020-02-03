@@ -9,7 +9,7 @@ function bark($msg) {
 	genbark($msg, "Upload failed!");
 }
 
-dbconn(); 
+dbconn();
 
 loggedinorreturn();
 
@@ -149,7 +149,7 @@ $ret = mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO torrents (search_te
 
 if (!$ret) {
 	if (mysqli_errno($GLOBALS["___mysqli_ston"]) === 1062)
-		bark("torrent already uploaded!");
+		bark("Torrent already uploaded!");
 	bark("mysql puked: ".mysqli_error($GLOBALS["___mysqli_ston"]));
 }
 $id = ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);

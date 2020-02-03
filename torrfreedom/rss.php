@@ -48,8 +48,8 @@ while ($row = mysqli_fetch_assoc($res)) {
                 <category><?php echo htmlspecialchars($row['cat_name']); ?></category>
                 <description>
 				<![CDATA[
-					<center><img src="/pic/icon.png"/></center>
-					<center>New torrent for you!</center><br />
+					<img src="/pic/icon.png"/>
+					New torrent for you!<br />
 					<table border='1' cellspacing='0' width='100%'>
 						<tr>
 							<td>Name:</td>
