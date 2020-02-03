@@ -1,9 +1,9 @@
 <?php
 ini_set('default_charset', 'utf-8');
-function getmicrotime() { 
-    list($usec, $sec) = explode(" ",microtime()); 
-    return ((float)$usec + (float)$sec); 
-} 
+function getmicrotime() {
+    list($usec, $sec) = explode(" ",microtime());
+    return ((float)$usec + (float)$sec);
+}
 
 $time_start = getmicrotime();
 
@@ -27,7 +27,7 @@ $appname = "TorrFreedom";
 $version = "1.1.0";
 
 # the first one will be displayed on the pages
-$announce_urls = array();// 
+$announce_urls = array();//
 array_push($announce_urls, $tracker_url_name . "/announce.php", $tracker_url_key . "/announce.php", $tracker_url_name . "/announce",
 	$tracker_url_key . "/announce", $tracker_url_name . "/a", $tracker_url_key . "/a");
 
@@ -171,7 +171,7 @@ function tr($x,$y,$noesc=0,$count=0) {
     } else {
         $style = 'a';
     }
-	print("<tr><td valign=\"top\" align=\"left\" class=\"${style}1\"><font size=2><b>$x</b></td><td valign=\"top\" class=\"${style}2\" ><font size=2>$a</td></tr>\n");
+	print("<tr><td valign=\"top\" align=\"left\" class=\"${style}1\"><b>$x</b></td><td valign=\"top\" class=\"${style}2\" >$a</td></tr>\n");
 }
 
 function truncate($str, $length=10, $trailing='...') {
@@ -181,7 +181,7 @@ function truncate($str, $length=10, $trailing='...') {
       if (strlen($str) > $length) {
          // string exceeded length, truncate and add trailing dots
          return substr($str,0,$length).$trailing;
-      } else { 
+      } else {
          // string was already short enough, return the string
          $res = $str;
       }
@@ -233,9 +233,10 @@ function stdhead($title = "") {
 function stdfoot() {
 	global $pic_base_url, $version, $appname, $time_start;
         $time = round(getmicrotime() - $time_start,4);
-	print('</td></tr><tr><td width="100%" height="21" colspan="2">');
-	print('<div align="center"><font face=arial size=1>' . $appname . " v" . $version . ' -- Page generated in ' . $time . '</div>');
-	print('</td></tr></table></body></html>');
+//	print('</td></tr><tr><td width="100%" height="21" colspan="2">');
+//	print('<div align="center">' . $appname . " v" . $version . ' -- Page generated in ' . $time . '</div>');
+//	print('</td></tr></table></body></html>');
+	print("\n</body>\n</html>");
 }
 
 function genbark($x,$y) {
@@ -262,9 +263,9 @@ function httperr($code = 404) {
 
 function logincookie($id, $password, $secret, $updatedb = 1) {
 	$md5 = md5($secret . $password . $secret);
-	
+
 	$auth = implode("." , array($id, $md5));
-	
+
     setcookie("auth", $auth, 0x7fffffff, "/");
 
 	if ($updatedb)
@@ -502,7 +503,7 @@ function torrenttable($res, $variant = "index") {
 		print("</td>\n");
 
 		$dispname = "<b>" . htmlspecialchars($row["name"]) . "</b>";
-		print("<td class=\"".$styles[0]."1\" align=left><font size=2><a href=\"details.php?");
+		print("<td class=\"".$styles[0]."1\" align=left><a href=\"details.php?");
 		if ($variant == "mytorrents")
 			print("returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;");
 		print("id=$id");
@@ -515,7 +516,7 @@ function torrenttable($res, $variant = "index") {
         print("</td>\n");
 
 		if ($variant == "index") {
-			print("<td class=\"".$styles[0]."2\" align=center><div class=\"dlicons\"><a href=\"download.php?id=$id&file=" . htmlentities(urlencode($row["filename"])) . "\"><img src=\"../pic/download.png\" border=\"0\" width=24 height=24></a> <a href=\"magnet:?xt=urn:btih:" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "&dn=" .  htmlentities(urlencode($row["filename"])) . "&tr=" . $announce_urls[5] . "\"><img src=\"../pic/magnet.png\" border=\"0\" width=24 height=24></a></div></td>");
+			print("<td class=\"".$styles[0]."2\" align=center><div class=\"dlicons\"><a href=\"download.php?id=$id&amp;file=" . htmlentities(urlencode($row["filename"])) . "\"><img src=\"../pic/download.png\" border=\"0\" width=24 height=24></a> <a href=\"magnet:?xt=urn:btih:" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "&dn=" .  htmlentities(urlencode($row["filename"])) . "&tr=" . $announce_urls[5] . "\"><img src=\"../pic/magnet.png\" border=\"0\" width=24 height=24></a></div></td>");
 		} elseif ($variant == "mytorrents")
 			print("<td class=\"".$styles[0]."2\" align=center><a href=\"edit.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;id=" . $row["id"] . "\">edit</a></td>\n");
 
