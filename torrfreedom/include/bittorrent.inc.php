@@ -322,7 +322,7 @@ function pager($rpp, $count, $href, $opts = array()) {
 	$pager = "";
 
 	$mp = $pages - 1;
-	$as = "<b>&lt;&lt;&nbsp;Prev</b>";
+	$as = "<b>&lt;&lt;&nbsp;Previous</b>";
 	if ($page >= 1) {
 		$pager .= "<a href=\"{$href}page=" . ($page - 1) . "\">";
 		$pager .= $as;
@@ -359,19 +359,22 @@ function pager($rpp, $count, $href, $opts = array()) {
 			$end = $start + $rpp - 1;
 			if ($end > $count)
 				$end = $count;
-			$text = "$start&nbsp;-&nbsp;$end";
+			$text = "$start / $end";
 			if ($i != $page)
 				$pagerarr[] = "<a href=\"{$href}page=$i\">$text</a>";
 			else
 				$pagerarr[] = "<b>$text</b>";
 		}
-		$pagerstr = join(" | ", $pagerarr);
-		$pagertop = "<p align=\"center\">$pager<br />$pagerstr</p>\n";
-		$pagerbottom = "<p align=\"center\">$pagerstr<br />$pager</p>\n";
+		$pagerstr = join(" ", $pagerarr);
+		$pagertop = "<p hidden align=\"center\">$pager<br />$pagerstr</p>\n";
+		if ($i != $page)
+			$pagerbottom = "<p id=pager>$pagerstr</p>\n";
+		else
+			$pagerbottom = "<p id=pager>$pagerstr<br />$pager</p>\n";
 	}
 	else {
-		$pagertop = "<p align=\"center\">$pager</p>\n";
-		$pagerbottom = $pagertop;
+		$pagertop = "<p hidden align=\"center\">$pager</p>\n";
+		$pagerbottom = "<p id=pager>$pager</p>\n";
 	}
 
 	$start = $page * $rpp;
