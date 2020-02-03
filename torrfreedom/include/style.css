@@ -133,11 +133,11 @@ p, div[align="center"] {
     border: 1px solid #222;
 }
 
-.table1 tr:nth-child(odd), .table1 tr:nth-child(odd) td {
+.table1 tr:nth-child(odd), .table1 tr:nth-child(odd) td, #details tr:nth-child(odd) td {
     background: #454242 !important;
 }
 
-.table1 tr:nth-child(even), .table1 tr:nth-child(even) td {
+.table1 tr:nth-child(even), .table1 tr:nth-child(even) td, #details tr:nth-child(even) td {
     background: #343131 !important;
 }
 
@@ -145,7 +145,7 @@ form + br, form + br + p[align="center"], .tablenews + br {
     display: none;
 }
 
-.td1, .borderTable + center > .table1[width="60%"]  tr:first-child td {
+.td1, th {
     padding: 6px !important;
     font-size: 9.5pt;
     font-weight: 600 !important;
@@ -154,19 +154,6 @@ form + br, form + br + p[align="center"], .tablenews + br {
 
 .table1 tr:first-child td:nth-child(2), .borderTable + center > .table1[width="60%"]  tr:first-child td {
     text-align: left;
-}
-
-.borderTable + center > .table1[width="60%"]  tr:first-child td {
-    border-top: none !important;
-    border-bottom: 1px solid #111 !important;
-    font-size: 110% !important;
-    font-weight: 700 !important;
-}
-
-.borderTable + center > .table1[width="60%"]  tr:first-child td::before {
-    content: "Torrent: ";
-    display: inline;
-    vertical-align: middle;
 }
 
 .title table td:first-child {
@@ -478,7 +465,7 @@ div[align="center"] font[size="1"] {
     background: #311;
 }
 
-.table1 + p[align="center"], .table1 + hr + p + .important + p {
+.table1 + p[align="center"], .table1 + hr + p + .important + p, #addcomment {
     margin-top: -1px !important;
     padding: 10px !important;
     font-size: 110%;
@@ -797,7 +784,7 @@ td:first-child {
     filter: drop-shadow(0 0 1px #181717);
 }
 
-#topnav a, .username, p[align="center"] a[href*="?page="], .table1 + hr + p + .important + p a {
+#topnav a, .username, p[align="center"] a[href*="?page="], #addcomment a {
     margin: 8px -6px;
     padding: 3px 24px 5px;
     display: inline-block;
@@ -817,11 +804,11 @@ td:first-child {
     border-radius: 0 2px 2px 0;
 }
 
-#topnav a:hover, p[align="center"] a[href*="?page="]:hover, .table1 + hr + p + .important + p a:hover {
+#topnav a:hover, p[align="center"] a[href*="?page="]:hover, .#addcomment a:hover {
     color: #f60;
 }
 
-#topnav a:active, p[align="center"] a[href*="?page="]:active, .table1 + hr + p + .important + p a:active {
+#topnav a:active, p[align="center"] a[href*="?page="]:active, #addcomment a:active {
    box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050, inset 2px 2px 2px #121010;
 }
 
@@ -935,4 +922,40 @@ p[align="center"] a[href*="?page="] b {
 #installer input[type="submit"] {
     float: right;
     text-transform: capitalize;
+}
+
+/* tables */
+
+#details, #addcomment {
+    width: 800px !important;
+    box-sizing: border-box;
+    border: 1px solid #111 !important;
+}
+
+#details th {
+    padding: 8px 14px !important;
+    font-size: 110% !important;
+    font-weight: 700 !important;
+    text-align: left;
+    border-top: none !important;
+    border-bottom: 1px solid #111 !important;
+}
+
+#details th a {
+    float: right;
+}
+
+#details tr:first-child th::before {
+    content: "Torrent: ";
+    display: inline;
+    vertical-align: middle;
+}
+
+#details td:first-child {
+    padding: 6px;
+    text-align: right;
+}
+
+#nocomments {
+    display: none;
 }
