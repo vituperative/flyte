@@ -1046,4 +1046,8 @@ p[align="center"] a[href*="?page="] b {
     border: 1px solid #343030 !important;
     border-radius: 3px;
     background: #454040;
+    font-size: 110% !important;
+    font-weight: 600 !important;
+    border: 1px solid #111;
+    background: linear-gradient(to bottom, #343431, #232020);
 }
