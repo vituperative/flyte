@@ -109,12 +109,9 @@ $cats = genrelist();
 
 ?>
 <form method="get" action="./">
-<table align="center"><tr><td style="border: 1px #333 solid; background-color: #E9F8FF;">
-Search:
-<input name="search" type="text" value="<?= htmlspecialchars($searchstr) ?>" size="40" class="input">
-in
-<select class="input" name="cat">
-<option value="0">(all types)</option>
+<div id=search>
+Search: <input name="search" type="text" value="<?= htmlspecialchars($searchstr) ?>" size="40" class="input"> in
+<select class="input" name="cat"><option value="0">(all types)</option>
 <?php
 
 $catdropdown = "";
@@ -135,31 +132,23 @@ $deadchkbox .= " /> ... and include dead torrents\n";
 </select>
 <?= $deadchkbox ?>
 <input type="submit" value="Search!" class="input"/>
-</td></tr></table>
+</div>
 </form>
-
-<br>
-<div align="center">
+<div id=torrentshow>
 <?php
 if ($additionals) {
 	$time_end = getmicrotime();
 	$time = round($time_end - $time_start,4);
-	include('news.php');
 }
 ?>
-<br>
 <form method="get" action="./">
-<table align="center"><tr><td style="border: 1px #333 solid; background-color: #E9F8FF;">
-Show all of:
-<select class="input" name="cat">
-<option value="0">(any type)</option>
+Show all of: <select class="input" name="cat"><option value="0">(any type)</option>
 <?= $catdropdown ?>
 </select>
 <?= $deadchkbox ?>
 <input type="submit" value="Go!" class="input"/>
-</td></tr></table>
 </form>
-<br>
+</div>
 <?php
 
 if (isset($cleansearchstr))

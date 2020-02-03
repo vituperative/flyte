@@ -10,20 +10,17 @@ unset($returnto);
 if (!empty($_GET["returnto"])) {
 	$returnto = $_GET["returnto"];
 	if (!isset($_GET["nowarn"])) {
-		print("Error: Please login before attempting to view this page...</p>\n");
+		print("<p id=fail>Error: Login required to view the page...</p>\n");
 	}
 }
 
 ?>
-<table id=dologin>
-<tr>
-
-<th colspan=2>Login</th>
-</tr>
 <form method="post" action="takelogin.php">
-<tr><td align="center" class="r2"><BR>Username:<input class="input" type="text" size="20" name="username" /><BR><BR></td></tr>
-<tr><td align="center" class="r1"><BR>Password:<input class="input" type="password" size="20" name="password" /><BR><BR></span></td></tr>
-<tr><td colspan="2" align="center" class="r2"><br><input type="submit" value="Log in!" class="input" /><br><br></td></tr>
+<table id=dologin>
+<tr><th colspan=2>Login</th></tr>
+<tr><td>Username</td><td><input class="input" type="text" size="20" name="username" /></td></tr>
+<tr><td>Password</td><td><input class="input" type="password" size="20" name="password" /></td></tr>
+<tr id=dostuff><td colspan="2"><input type="submit" value="Log in!" class="input" /></td></tr>
 </table>
 <?php
 
@@ -32,7 +29,7 @@ if (isset($returnto))
 
 ?>
 </form>
-<BR><b>Don't have an account?</b> <a href="signup.php">Sign up</a> right now!
+<b>Don't have an account?</b> <a href="signup.php">Sign up</a> right now!
 <?php
 
 stdfoot();
