@@ -137,11 +137,11 @@ p, div[align="center"] {
     border: 1px solid #222;
 }
 
-.table1 tr:nth-child(odd), .table1 tr:nth-child(odd) td, #details tr:nth-child(odd) td {
+.table1 tr:nth-child(odd), .table1 tr:nth-child(odd) td, #details tr:nth-child(odd) td, #dologin tr:nth-child(odd) td, #signup tr:nth-child(odd) td {
     background: #454242 !important;
 }
 
-.table1 tr:nth-child(even), .table1 tr:nth-child(even) td, #details tr:nth-child(even) td {
+.table1 tr:nth-child(even), .table1 tr:nth-child(even) td, #details tr:nth-child(even) td, #dologin tr:nth-child(even) td, #signup tr:nth-child(even) td {
     background: #343131 !important;
 }
 
@@ -150,13 +150,13 @@ form + br, form + br + p[align="center"], .tablenews + br {
 }
 
 .td1, th {
-    padding: 6px !important;
-    font-size: 9.5pt;
+    padding: 8px !important;
+    font-size: 110%;
     font-weight: 600 !important;
     background: linear-gradient(to bottom, #343431, #232020) !important;
 }
 
-.table1 tr:first-child td:nth-child(2), .borderTable + center > .table1[width="60%"]  tr:first-child td {
+.table1 tr:first-child td:nth-child(2), .borderTable + center > .table1[width="60%"] tr:first-child td {
     text-align: left;
 }
 
@@ -929,7 +929,7 @@ p[align="center"] a[href*="?page="] b {
 
 /* details */
 
-#details, #addcomment, #uploader, .note, #upload.note, #success, #account {
+#details, #addcomment, #uploader, .note, #upload.note, #success, #account, #dologin, #signup {
     margin: 0 auto 10px !important;
     width: 800px !important;
     box-sizing: border-box;
@@ -940,7 +940,7 @@ p[align="center"] a[href*="?page="] b {
     margin-top: -11px !important;
 }
 
-#details th {
+#details th, #dologin th, #signup th {
     padding: 8px 14px !important;
     font-size: 110% !important;
     font-weight: 600 !important;
@@ -970,21 +970,17 @@ p[align="center"] a[href*="?page="] b {
     text-align: right;
 }
 
-#details td:last-child {
-    text-align: left;
-}
-
 #nocomments {
     display: none;
 }
 
 /* uploader */
 
-#uploader td:last-child {
+#details td:last-child, #uploader td:last-child, #dologin td:last-child, #signup td:last-child {
     text-align: left;
 }
 
-#uploader td {
+#uploader td, #dologin td, #signup td {
     padding: 9px;
 }
 
@@ -1020,4 +1016,13 @@ p[align="center"] a[href*="?page="] b {
 
 #siteinfo {
     text-align: center;
+}
+
+#dologin, #signup {
+    margin-top: 20px !important;
+}
+
+#dologin td:first-child, #signup td:first-child {
+    text-align: right;
+    font-weight: 700;
 }

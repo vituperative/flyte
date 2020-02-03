@@ -10,25 +10,21 @@ unset($returnto);
 if (!empty($_GET["returnto"])) {
 	$returnto = $_GET["returnto"];
 	if (!isset($_GET["nowarn"])) {
-		print("<h1>Not logged in!</h1>\n");
-		print("<p><b>Error:</b> The page you tried to view can only be used when you're logged in.</p>\n");
+		print("Error: Please login before attempting to view this page...</p>\n");
 	}
 }
 
 ?>
-
-<table class="table1" align=center cellpadding="0" cellspacing="0" width="35%">
-<td>
-<table class="table1" align=center cellpadding="0" cellspacing="0" width="100%">
+<table id=dologin>
 <tr>
 
-<td align=left class="td1"><span class="text1">Please Login (You need cookies enabled to log in.)</span></td>
+<th colspan=2>Login</th>
 </tr>
 <form method="post" action="takelogin.php">
 <tr><td align="center" class="r2"><BR>Username:<input class="input" type="text" size="20" name="username" /><BR><BR></td></tr>
 <tr><td align="center" class="r1"><BR>Password:<input class="input" type="password" size="20" name="password" /><BR><BR></span></td></tr>
 <tr><td colspan="2" align="center" class="r2"><br><input type="submit" value="Log in!" class="input" /><br><br></td></tr>
-</table></table>
+</table>
 <?php
 
 if (isset($returnto))
