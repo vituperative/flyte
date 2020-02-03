@@ -36,6 +36,5 @@ tr("Type password again", "<input type=\"password\" name=\"passagain\" size=\"40
 </table>
 </form>
 <?php
-require_once "include/footer.inc.php";
 stdfoot();
 ?>
