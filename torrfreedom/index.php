@@ -96,6 +96,7 @@ else {
 	//if ($_SERVER["QUERY_STRING"] == "") {
 		//$additionals = 0;
 		// motd
+require_once "include/siteinfo.inc.php";
 ?>
 <table cellpadding="4" cellspacing="0" border="0" width="100%">
 
@@ -175,16 +176,17 @@ if ($count) {
 }
 else {
 	if (isset($cleansearchstr)) {
-		print("<h2>Nothing found!</h2>\n");
-		print("<p>Try again with a refined search string.</p>\n");
+		print("<p class=note id=fail>Nothing found!<br>");
+		print("Try again with a refined search string.</p>\n");
 	}
 	else {
-		print("<h2>No live torrents!</h2>\n");
+		print("<p class=note id=fail>No live torrents!</p>\n");
 	}
 }
 ?>
 
 </div>
 <?php
+ require_once "include/footer.inc.php";
  stdfoot(); 
 ?>

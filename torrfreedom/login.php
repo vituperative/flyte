@@ -36,7 +36,7 @@ if (isset($returnto))
 
 ?>
 </form>
-<BR><center><b>Don't have an account?</b> <a href="signup.php">Sign up</a> right now!</center>
+<BR><b>Don't have an account?</b> <a href="signup.php">Sign up</a> right now!
 <?php
 
 stdfoot();
