@@ -32,7 +32,7 @@ tr("Change password", "<input type=\"password\" name=\"chpassword\" size=\"40\" 
 tr("Type password again", "<input type=\"password\" name=\"passagain\" size=\"40\" />", 1);
 
 ?>
-<tr><td id=dostuff colspan="2"><input type="submit" value="Submit changes!" /> <input type="reset" value="Revert changes!" /></td></tr>
+<tr id=dostuff><td colspan="2"><input type="submit" value="Submit changes!" /> <input type="reset" value="Revert changes!" /></td></tr>
 </table>
 </form>
 <?php

@@ -236,6 +236,7 @@ function stdfoot() {
 //	print('</td></tr><tr><td width="100%" height="21" colspan="2">');
 //	print('<div align="center">' . $appname . " v" . $version . ' -- Page generated in ' . $time . '</div>');
 //	print('</td></tr></table></body></html>');
+    print('<p id="footer"><span id="blurb">SiteAdmin: <a href=\"mailto:torrfreedom@mail.i2p\">torrfreedom@mail.i2p</a> &bullet; Design by <a href=\"http:\/\/skank.i2p/\">dr|z3d</a> &bullet; Est. 2017</span></p>');
 	print("\n</body>\n</html>");
 }
 
@@ -421,7 +422,7 @@ function commenttable($rows) {
 			print("<td class=\"td1\"><span class=\"text1\"><a name=\"comm" . $row["id"] . "\">" . htmlspecialchars($row["username"]) . "</a></span></td>\n");
 		else
 			print("<td class=\"td1\"><span class=\"text1\"><a name=\"comm" . $row["id"] . "\"><i>(orphaned)</i></a></span></td>\n");
-		print("<td class=\"td1\" align=\"right\"><span class=\"text1\">" . htmlspecialchars($row["added"]) . "</span></td>\n");
+		print("<td class=\"td1\" align=\"right\"><span class=\"text1\">" . htmlspecialchars($row["added"]) . "</td>\n");
 		print("</tr>\n");
 		print("<tr>\n");
 		print("<td colspan=\"2\">" . $row["text"] . "</td>\n");
@@ -456,31 +457,31 @@ function torrenttable($res, $variant = "index") {
 	global $announce_urls;
 ?>
 
-<table align="center" cellpadding="0" cellspacing="0" width="95%" border="0" class="table1">
+<table id=torrents>
 <tr>
 
-<td align=center class="td1"><span class="text1">Type</span></td>
-<td align=center class="td1"><span class="text1">Name</span></td>
-<td align=center class="td1"><span class="text1">Torrent</span></td>
+<th><span class="text1">Type</span></th>
+<th><span class="text1">Name</span></th>
+<th><span class="text1">Torrent</span></th>
 <?php
 
 	if ($variant == "mytorrents")
 		print("<td align=center class=\"td1\"><span class=\"text1\">Visible</span></td>\n");
 
 ?>
-<td align=center class="td1"><span class="text1">Files</span></td>
-<td align=center class="td1"><span class="text1">Comments</span></td>
-<td align=center class="td1"><span class="text1">Added</span></td>
-<td align=center class="td1"><span class="text1">Size</span></td>
-<td align=center class="td1"><span class="text1">Views</span></td>
-<td align=center class="td1"><span class="text1">Hits</span></td>
-<td align=center class="td1"><span class="text1">DL's</span></td>
-<td align=center class="td1"><span class="text1">Seeds</span></td>
-<td align=center class="td1"><span class="text1">Leech</span></td>
+<th><span class="text1">Files</span></th>
+<th><span class="text1">Comments</span></th>
+<th><span class="text1">Added</span></th>
+<th><span class="text1">Size</span></th>
+<th><span class="text1">Views</span></th>
+<th><span class="text1">Hits</span></th>
+<th><span class="text1">DL's</span></th>
+<th><span class="text1">Seeds</span></th>
+<th><span class="text1">Leech</span></th>
 <?php
 
 	if ($variant != "mytorrents")
-		print("<td align=center class=\"td1\"><span class=\"text1\">Uploader</span></td>\n");
+		print("<th>Uploader</th>\n");
 
 ?>
 
@@ -497,7 +498,7 @@ function torrenttable($res, $variant = "index") {
 		$id = $row["id"];
 		print("<tr>\n");
 
-		print("<td class=\"".$styles[0]."2\" align=center>");
+		print("<td>");
 		if (isset($row["cat_name"])) {
 			print("<a href=\"./?cat=" . $row["category"] . "\" class=\"catlink\" data-tooltip=\"" . $row["cat_name"] . "\"><img src=\"../pic/" . $row["category"] . ".png\" width=24 height=24></a>");
 		}
@@ -519,9 +520,9 @@ function torrenttable($res, $variant = "index") {
         print("</td>\n");
 
 		if ($variant == "index") {
-			print("<td class=\"".$styles[0]."2\" align=center><div class=\"dlicons\"><a href=\"download.php?id=$id&amp;file=" . htmlentities(urlencode($row["filename"])) . "\"><img src=\"../pic/download.png\" border=\"0\" width=24 height=24></a> <a href=\"magnet:?xt=urn:btih:" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "&dn=" .  htmlentities(urlencode($row["filename"])) . "&tr=" . $announce_urls[5] . "\"><img src=\"../pic/magnet.png\" border=\"0\" width=24 height=24></a></div></td>");
+			print("<td class=dlicons><a href=\"download.php?id=$id&amp;file=" . htmlentities(urlencode($row["filename"])) . "\"><img src=\"../pic/download.png\" border=\"0\" width=24 height=24></a> <a href=\"magnet:?xt=urn:btih:" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "&amp;dn=" .  htmlentities(urlencode($row["filename"])) . "&amp;tr=" . $announce_urls[5] . "\"><img src=\"../pic/magnet.png\" border=\"0\" width=24 height=24></a></td>");
 		} elseif ($variant == "mytorrents")
-			print("<td class=\"".$styles[0]."2\" align=center><a href=\"edit.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;id=" . $row["id"] . "\">edit</a></td>\n");
+			print("<td><a href=\"edit.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;id=" . $row["id"] . "\">edit</a></td>\n");
 
 		if ($variant == "mytorrents") {
 			print("<td class=\"".$styles[0]."1\" align=center>");
@@ -533,49 +534,50 @@ function torrenttable($res, $variant = "index") {
 		}
 
 		if ($row["type"] == "shashgle")
-			print("<td class=\"".$styles[0]."2\" align=center><font size=2 face=arial>" . $row["numfiles"] . "</td>\n");
+			print("<td>" . $row["numfiles"] . "</td>\n");
 		else {
 			if ($variant == "index")
-				print("<td class=\"".$styles[0]."2\" align=center><b><font size=2 face=arial><a href=\"details.php?id=$id&amp;hit=1&amp;filelist=1\">" . $row["numfiles"] . "</a></b></td>\n");
+				print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;filelist=1\">" . $row["numfiles"] . "</a></td>\n");
 			else
-				print("<td class=\"".$styles[0]."2\" align=center><b><font size=2 face=arial><a href=\"details.php?id=$id&amp;filelist=1#filelist\">" . $row["numfiles"] . "</a></b></td>\n");
+				print("<td><a href=\"details.php?id=$id&amp;filelist=1#filelist\">" . $row["numfiles"] . "</a></td>\n");
 		}
 
 		if (!$row["comments"])
-			print("<td class=\"".$styles[0]."1\" align=center><font size=2 face=arial>" . $row["comments"] . "</td>\n");
+			print("<td>" . $row["comments"] . "</td>\n");
 		else {
 			if ($variant == "index")
-				print("<td class=\"".$styles[0]."1\" align=center><b><font size=2 face=arial><a href=\"details.php?id=$id&amp;hit=1&amp;tocomm=1\">" . $row["comments"] . "</a></b></td>\n");
+				print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;tocomm=1\">" . $row["comments"] . "</a></b></td>\n");
 			else
-				print("<td class=\"".$styles[0]."1\" align=center><b><font size=2 face=arial><a href=\"details.php?id=$id&amp;page=0#startcomments\">" . $row["comments"] . "</a></b></td>\n");
+				print("<td><a href=\"details.php?id=$id&amp;page=0#startcomments\">" . $row["comments"] . "</a></b></td>\n");
 		}
 
-		print("<td class=\"".$styles[0]."1\" align=center><font size=2 face=arial>" . str_replace(" ", "<br />", $row["added"]) . "</td>\n");
-		print("<td class=\"".$styles[0]."2\" align=center><font size=2 face=arial>" . mksize($row["size"]) . "</td>\n");
-		print("<td class=\"".$styles[0]."1\" align=center><font size=2 face=arial>" . $row["views"] . "</td>\n");
-		print("<td class=\"".$styles[0]."2\" align=center><font size=2 face=arial>" . $row["hits"] . "</td>\n");
-		print("<td class=\"".$styles[0]."1\" align=center><font size=2 face=arial>" . $row["times_completed"] . "</td>\n");
+//		print("<td>" . str_replace(" ", "<br />", $row["added"]) . "</td>\n");
+		print("<td>" . preg_replace("/ .*/", "", $row["added"]) . "</td>\n");
+		print("<td>" . mksize($row["size"]) . "</td>\n");
+		print("<td>" . $row["views"] . "</td>\n");
+		print("<td>" . $row["hits"] . "</td>\n");
+		print("<td>" . $row["times_completed"] . "</td>\n");
 
 		if ($row["seeders"]) {
 			if ($variant == "index")
-				print("<td class=\"".$styles[0]."2\" align=center><b><font size=2 face=arial><a class=\"" . linkcolor($row["seeders"]) . "\" href=\"details.php?id=$id&amp;hit=1&amp;toseeders=1\">" . $row["seeders"] . "</a></b></td>\n");
+				print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;toseeders=1\">" . $row["seeders"] . "</a></b></td>\n");
 			else
-				print("<td class=\"".$styles[0]."2\" align=center><b><font size=2 face=arial><a class=\"" . linkcolor($row["seeders"]) . "\" href=\"details.php?id=$id&amp;dllist=1#seeds\">" . $row["seeders"] . "</a></b></td>\n");
+				print("<td><a href=\"details.php?id=$id&amp;dllist=1#seeds\">" . $row["seeders"] . "</a></b></td>\n");
 		}
 		else
-			print("<td class=\"".$styles[0]."2\" align=center><font size=2 face=arial><span class=\"" . linkcolor($row["seeders"]) . "\">" . $row["seeders"] . "</span></td>\n");
+			print("<td>" . $row["seeders"] . "</td>\n");
 
 		if ($row["leechers"]) {
 			if ($variant == "index")
-				print("<td class=\"".$styles[0]."1\" align=center><font size=2 face=arial><b><a class=\"" . linkcolor($row["leechers"]) . "\" href=\"details.php?id=$id&amp;hit=1&amp;todlers=1\">" . $row["leechers"] . "</a></b></td>\n");
+				print("<td><b><a href=\"details.php?id=$id&amp;hit=1&amp;todlers=1\">" . $row["leechers"] . "</a></b></td>\n");
 			else
-				print("<td class=\"".$styles[0]."1\" align=center><font size=2 face=arial><b><a class=\"" . linkcolor($row["leechers"]) . "\" href=\"details.php?id=$id&amp;dllist=1#leeches\">" . $row["leechers"] . "</a></b></td>\n");
+				print("<td><b><a href=\"details.php?id=$id&amp;dllist=1#leeches\">" . $row["leechers"] . "</a></b></td>\n");
 		}
 		else
-			print("<td class=\"".$styles[0]."1\" align=center><font size=2 face=arial><span class=\"" . linkcolor($row["leechers"]) . "\">" . $row["leechers"] . "</span></td>\n");
+			print("<td>" . $row["leechers"] . "</td>\n");
 
 		if ($variant == "index")
-			print("<td class=\"".$styles[0]."2\" align=center><font size=2 face=arial>" . (isset($row["username"]) ? htmlspecialchars($row["username"]) : "<i>(unknown)</i>") . "</td>\n");
+			print("<td>" . (isset($row["username"]) ? htmlspecialchars($row["username"]) : "<i>(unknown)</i>") . "</td>\n");
 
 		print("</tr>\n");
 	}
