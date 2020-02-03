@@ -359,11 +359,11 @@ function pager($rpp, $count, $href, $opts = array()) {
 			$end = $start + $rpp - 1;
 			if ($end > $count)
 				$end = $count;
-			$text = "$start / $end";
+			$text = "$start - $end";
 			if ($i != $page)
-				$pagerarr[] = "<a href=\"{$href}page=$i\">$text</a>";
+				$pagerarr[] = "<a class=pagelinks href=\"{$href}page=$i\">$text</a>";
 			else
-				$pagerarr[] = "<b>$text</b>";
+				$pagerarr[] = "<span id=pagenow>$text</span>";
 		}
 		$pagerstr = join(" ", $pagerarr);
 		$pagertop = "<p hidden align=\"center\">$pager<br />$pagerstr</p>\n";
