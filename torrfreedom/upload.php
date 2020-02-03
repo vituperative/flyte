@@ -10,7 +10,7 @@ stdhead("Upload");
 
 ?>
 
-<center>
+<div class=main>
 <form enctype="multipart/form-data" action="takeupload.php" method="post" accept-charset="utf-8">
 <input type="hidden" name="MAX_FILE_SIZE" value="<?=$max_torrent_size?>" />
 <!--
@@ -45,9 +45,9 @@ tr("Category", $s, 1);
 <tr><td align="center" colspan="2"><input class="input" type="submit" value="Upload Torrent" /></td></tr>
 </table>
 </form>
-</center>
+</div>
 <?php
-
+require_once "include/footer.inc.php";
 stdfoot();
 
 ?>
