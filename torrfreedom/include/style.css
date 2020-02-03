@@ -137,19 +137,17 @@ p, div[align="center"] {
     border: 1px solid #222;
 }
 
-.table1 tr:nth-child(odd), .table1 tr:nth-child(odd) td, #details tr:nth-child(odd) td, #dologin tr:nth-child(odd) td, #signup tr:nth-child(odd) td {
+.table1 tr:nth-child(odd), .table1 tr:nth-child(odd) td, #details tr:nth-child(odd) td, #dologin tr:nth-child(odd) td,
+#signup tr:nth-child(odd) td, #myaccount tr:nth-child(odd) td {
     background: #454242 !important;
 }
 
-.table1 tr:nth-child(even), .table1 tr:nth-child(even) td, #details tr:nth-child(even) td, #dologin tr:nth-child(even) td, #signup tr:nth-child(even) td {
+.table1 tr:nth-child(even), .table1 tr:nth-child(even) td, #details tr:nth-child(even) td, #dologin tr:nth-child(even) td,
+#signup tr:nth-child(even) td, #myaccount tr:nth-child(even) td {
     background: #343131 !important;
 }
 
-form + br, form + br + p[align="center"], .tablenews + br {
-    display: none;
-}
-
-.td1, th {
+th, #dostuff {
     padding: 8px !important;
     font-size: 110%;
     font-weight: 600 !important;
@@ -217,7 +215,7 @@ table[cellpadding="4"][border="0"] td[colspan="2"][valign="top"] {
     padding-top: 8px !important;
 }
 
-input[type="submit"], input[type="reset"], input[type="file"], input[type="text"], textarea, input[type="password"], select, button, a.biglink {
+input[type="submit"], input[type="reset"], input[type="file"], input[type="text"], textarea, input[type="password"], select, button {
     margin: 0 6px;
     padding: 3px 8px;
     border: none !important;
@@ -929,7 +927,7 @@ p[align="center"] a[href*="?page="] b {
 
 /* details */
 
-#details, #addcomment, #uploader, .note, #upload.note, #success, #account, #dologin, #signup {
+#details, #addcomment, #uploader, .note, #upload.note, #success, #myaccount, #dologin, #signup {
     margin: 0 auto 10px !important;
     width: 800px !important;
     box-sizing: border-box;
@@ -940,7 +938,7 @@ p[align="center"] a[href*="?page="] b {
     margin-top: -11px !important;
 }
 
-#details th, #dologin th, #signup th {
+#details th, #dologin th, #signup th, #myaccount th {
     padding: 8px 14px !important;
     font-size: 110% !important;
     font-weight: 600 !important;
@@ -949,7 +947,7 @@ p[align="center"] a[href*="?page="] b {
     border-bottom: 1px solid #111 !important;
 }
 
-#details th a {
+th a {
     float: right;
 }
 
@@ -964,7 +962,7 @@ p[align="center"] a[href*="?page="] b {
     vertical-align: text-top;
 }
 
-#details td:first-child, #uploader td:first-child {
+#details td:first-child, #uploader td:first-child, #myaccount td:first-child {
     padding: 6px;
     white-space: nowrap;
     text-align: right;
@@ -976,15 +974,16 @@ p[align="center"] a[href*="?page="] b {
 
 /* uploader */
 
-#details td:last-child, #uploader td:last-child, #dologin td:last-child, #signup td:last-child {
+#details td:last-child, #uploader td:last-child, #dologin td:last-child, #signup td:last-child, #myaccount td:last-child {
     text-align: left;
 }
 
-#uploader td, #dologin td, #signup td {
+#uploader td, #dologin td, #signup td, #myaccount td {
     padding: 9px;
 }
 
-#uploader input, #uploader input[type="text"], #uploader input[type="file"], #uploader textarea {
+#uploader input, #uploader input[type="text"], #uploader input[type="file"], #uploader textarea,
+#myaccount input[type="text"], #myaccount input[type="password"] {
     width: calc(100% - 6px);
     max-width: calc(100% - 6px);
     box-sizing: border-box;
@@ -1050,4 +1049,18 @@ p[align="center"] a[href*="?page="] b {
     font-weight: 600 !important;
     border: 1px solid #111;
     background: linear-gradient(to bottom, #343431, #232020);
+}
+
+#pagenow, .pagelinks {
+    padding: 2px 5px;
+    display: inline-block;
+    border: 1px solid #343030 !important;
+    border-radius: 3px;
+    background: #454040;
+}
+
+#dostuff {
+    padding: 12px !important;
+    text-align: center !important;
+    border-top: 1px solid #111 !important;
 }
