@@ -47,7 +47,6 @@ tr("Category", $s, 1);
 </form>
 </div>
 <?php
-require_once "include/footer.inc.php";
 stdfoot();
 
 ?>

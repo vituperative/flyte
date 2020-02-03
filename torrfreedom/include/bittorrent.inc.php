@@ -466,7 +466,7 @@ function torrenttable($res, $variant = "index") {
 <?php
 
 	if ($variant == "mytorrents")
-		print("<td align=center class=\"td1\"><span class=\"text1\">Visible</span></td>\n");
+		print("<th><span class=\"text1\">Visible</span></th>\n");
 
 ?>
 <th><span class="text1">Files</span></th>
