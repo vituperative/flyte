@@ -1,2 +1,1 @@
-<p id="footer"><span id="blurb">Est. 2017 | Theme design by <a href="http://skank.i2p/">dr|z3d</a></span></p>
-</div>
+<p id="footer"><span id="blurb">SiteAdmin: <a href="mailto:torrfreedom@mail.i2p">torrfreedom@mail.i2p</a> &bullet; Design by <a href="http://skank.i2p/">dr|z3d</a> &bullet; Est. 2017</span></p>
