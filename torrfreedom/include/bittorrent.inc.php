@@ -171,7 +171,7 @@ function tr($x,$y,$noesc=0,$count=0) {
     } else {
         $style = 'a';
     }
-    print("<tr><td valign=\"top\" align=\"left\" class=\"${style}1\"><b>$x</b></td><td valign=\"top\" class=\"${style}2\" >$a</td></tr>\n");
+    print("<tr><td><b>$x</b></td><td>$a</td></tr>\n");
 }
 
 function truncate($str, $length=10, $trailing='...') {
@@ -546,9 +546,9 @@ function torrenttable($res, $variant = "index") {
             print("<td>" . $row["comments"] . "</td>\n");
         else {
             if ($variant == "index")
-                print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;tocomm=1\">" . $row["comments"] . "</a></b></td>\n");
+                print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;tocomm=1\">" . $row["comments"] . "</a></td>\n");
             else
-                print("<td><a href=\"details.php?id=$id&amp;page=0#startcomments\">" . $row["comments"] . "</a></b></td>\n");
+                print("<td><a href=\"details.php?id=$id&amp;page=0#startcomments\">" . $row["comments"] . "</a></td>\n");
         }
 
 //        print("<td>" . str_replace(" ", "<br />", $row["added"]) . "</td>\n");
@@ -560,18 +560,18 @@ function torrenttable($res, $variant = "index") {
 
         if ($row["seeders"]) {
             if ($variant == "index")
-                print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;toseeders=1\">" . $row["seeders"] . "</a></b></td>\n");
+                print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;toseeders=1\">" . $row["seeders"] . "</a></td>\n");
             else
-                print("<td><a href=\"details.php?id=$id&amp;dllist=1#seeds\">" . $row["seeders"] . "</a></b></td>\n");
+                print("<td><a href=\"details.php?id=$id&amp;dllist=1#seeds\">" . $row["seeders"] . "</a></td>\n");
         }
         else
             print("<td>" . $row["seeders"] . "</td>\n");
 
         if ($row["leechers"]) {
             if ($variant == "index")
-                print("<td><b><a href=\"details.php?id=$id&amp;hit=1&amp;todlers=1\">" . $row["leechers"] . "</a></b></td>\n");
+                print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;todlers=1\">" . $row["leechers"] . "</a></td>\n");
             else
-                print("<td><b><a href=\"details.php?id=$id&amp;dllist=1#leeches\">" . $row["leechers"] . "</a></b></td>\n");
+                print("<td><a href=\"details.php?id=$id&amp;dllist=1#leeches\">" . $row["leechers"] . "</a></td>\n");
         }
         else
             print("<td>" . $row["leechers"] . "</td>\n");
