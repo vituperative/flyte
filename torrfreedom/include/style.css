@@ -820,9 +820,9 @@ p[align="center"] a[href*="?page="] b {
     padding: 0;
 }
 
-.table1 + p[align="center"] {
+/*.table1 + p[align="center"] {
     color: transparent;
-}
+}*/
 
 .table1 + p[align="center"] br {
     display: none;
@@ -929,7 +929,7 @@ p[align="center"] a[href*="?page="] b {
 
 /* details */
 
-#details, #addcomment, #uploader, .note, #upload.note, #success {
+#details, #addcomment, #uploader, .note, #upload.note, #success, #account {
     margin: 0 auto 10px !important;
     width: 800px !important;
     box-sizing: border-box;
@@ -1016,4 +1016,8 @@ p[align="center"] a[href*="?page="] b {
 
 #fail {
     margin-top: 30px !important;
+}
+
+#siteinfo {
+    text-align: center;
 }
