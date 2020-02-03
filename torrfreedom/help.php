@@ -1,7 +1,9 @@
 <?php
-require_once("include/bittorrent.inc.php");
+require_once "include/bittorrent.inc.php";
 require_once "include/page_header.inc.php";
 require_once "include/siteinfo.inc.php";
+
+dbconn();
 ?>
 <div id="help">
 
