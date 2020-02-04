@@ -517,7 +517,7 @@ function torrenttable($res, $variant = "index") {
             print("&amp;hit=1");
         print("\">$dispname</a>\n");
         if (isset($row["descr"])) {
-            print("<br>".truncate(htmlspecialchars($row["ori_descr"]),150));
+            print("<br>".truncate(htmlspecialchars($row["ori_descr"]), 100));
         }
         print("</td>\n");
 
