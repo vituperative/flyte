@@ -5,8 +5,9 @@ html {
 }
 
 body, html {
-    min-height: 100%;
+    min-height: 100% !important;
     background: #232020;
+    background: #151414 !important;
 }
 
 body {
@@ -15,12 +16,11 @@ body {
     position: relative;
     min-width: 900px;
     color: #bbb;
-    box-shadow: inset 0 0 0 1px #212020;
     opacity: 1 !important;
     overflow-x: hidden;
 }
 
-body, input, select, textarea, button, a.biglink, table, table[class], table[class] td, td, font[face], .td1 .text1 {
+body, input, select, textarea, button {
     font-family: Open Sans, Droid Sans, Noto Sans, Segoe UI, sans serif !important;
     font-size: 10pt !important;
     vertical-align: middle;
@@ -49,15 +49,53 @@ code::-moz-selection, code::selection {
     color: #fff;
 }
 
-input[type="submit"], input[type="reset"], input[type="radio"], input[type="file"], input[type="checkbox"], select {
+input[type="submit"], input[type="reset"], input[type="radio"], input[type="file"], input[type="checkbox"], select, label {
     cursor: pointer;
 }
 
-.main {
+#sitename a {
+    line-height: 1;
+    word-spacing: -0.05em;
+    letter-spacing: 0.1em;
+    font-weight: 900 !important;
+    font-size: 44pt !important;
+    color: #f2f2f2 !important;
+    text-align: center !important;
+    text-transform: uppercase;
+    text-shadow: 0 0 1px #000;
+    user-select: none;
+}
+
+#sitename {
+    text-align: center;
+}
+
+#sitename a:hover {
+    text-decoration: none !important;
+}
+
+@supports (-webkit-background-clip: text) {
+    .title table td:nth-child(2), #sitename a {
+        text-shadow: none;
+        background: linear-gradient(to bottom, #210, #310 15%, #fff 50%, #310 80%) !important;
+        background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .5) 2px),
+                    linear-gradient(to bottom, rgba(255, 96, 0, .5), rgba(0, 0, 0, .4) 100%),
+                    linear-gradient(to bottom, #740, #520 10%, #fff 35%, #310 75%) !important;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        -webkit-text-stroke-color: #fff;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-fill-color: transparent !important;
+        filter: drop-shadow(0 0 1px #300) drop-shadow(0 0 2px #200) drop-shadow(0 0 3px rgba(0,0,0,.1));
+    }
+}
+
+.main, form {
     text-align: center;
 }
 
 table {
+    margin: auto;
     width: 100%;
     border-collapse: collapse !important;
 }
@@ -98,7 +136,7 @@ td a:hover img, td a:focus img {
     opacity: 1;
 }
 
-a, b {
+a, b, label {
     font-weight: 600 !important;
 }
 
@@ -111,11 +149,6 @@ ul {
    list-style: none;
 }
 
-p, div[align="center"] {
-    margin: 5px 0 !important;
-    padding: 0 !important;
-}
-
 #uploader {
     margin-top: 8px;
     border: 1px solid #222;
@@ -123,13 +156,15 @@ p, div[align="center"] {
 
 #details tr:not(#dostuff):nth-child(odd) td, #dologin tr:not(#dostuff):nth-child(odd) td,
 #signup tr:not(#dostuff):nth-child(odd) td, #myaccount tr:not(#dostuff):nth-child(odd) td,
-#torrents tr:not(#dostuff):nth-child(odd) {
+#torrents tr:not(#dostuff):nth-child(odd), #uploader tr:not(#dostuff):nth-child(odd),
+#torrentedit tr:not(#dostuff):nth-child(odd) {
     background: #454242 !important;
 }
 
 #details tr:nth-child(even) td, #dologin tr:not(#dostuff):nth-child(even) td,
 #signup tr:not(#dostuff):nth-child(even) td, #myaccount tr:not(#dostuff):nth-child(even) td,
-#torrents tr:not(#dostuff):nth-child(even) {
+#torrents tr:not(#dostuff):nth-child(even), #uploader tr:not(#dostuff):nth-child(even),
+#torrentedit tr:not(#dostuff):nth-child(even) {
     background: #343131 !important;
 }
 
@@ -166,7 +201,7 @@ th, #dostuff td {
 #torrents td:first-child::before {
     content: "";
     display: inline-block;
-    height: 32px;
+    height: 36px;
     vertical-align: middle;
 }
 
@@ -195,15 +230,8 @@ th, #dostuff td {
     font-weight: 700 !important;
 }
 
-#torrents td:nth-child(2) {
-    line-height: 1;
-    vertical-align: middle;
-}
-
-#torrents a {
-    display: inline-block;
-    line-height: 1.1 !important;
-    vertical-align: middle !important;
+#torrents td:nth-child(2), #torrents td:nth-child(2) a {
+    line-height: 1.05;
 }
 
 #torrents td:nth-child(even) {
@@ -224,44 +252,6 @@ th, #dostuff td {
 
 #torrents .dlicons img {
     margin: 0 2px;
-}
-
-#sitename a {
-    padding: 8px 0 0 !important;
-    line-height: 1;
-    word-spacing: -0.05em;
-    letter-spacing: 0.1em;
-    font-weight: 900 !important;
-    font-size: 44pt !important;
-    color: #f2f2f2 !important;
-    text-align: center !important;
-    text-transform: uppercase;
-    text-shadow: 0 0 1px #000;
-    user-select: none;
-}
-
-#sitename {
-    text-align: center;
-}
-
-#sitename a:hover {
-    text-decoration: none !important;
-}
-
-@supports (-webkit-background-clip: text) {
-    .title table td:nth-child(2), #sitename a {
-        text-shadow: none;
-        background: linear-gradient(to bottom, #210, #310 15%, #fff 50%, #310 80%) !important;
-        background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .5) 2px),
-                    linear-gradient(to bottom, rgba(255, 96, 0, .5), rgba(0, 0, 0, .4) 100%),
-                    linear-gradient(to bottom, #740, #520 10%, #fff 35%, #310 75%) !important;
-        -webkit-background-clip: text !important;
-        background-clip: text !important;
-        -webkit-text-stroke-color: #fff;
-        -webkit-text-stroke-width: 1px;
-        -webkit-text-fill-color: transparent !important;
-        filter: drop-shadow(0 0 1px #300) drop-shadow(0 0 2px #200) drop-shadow(0 0 3px rgba(0,0,0,.1));
-    }
 }
 
 input[type="submit"], input[type="reset"], input[type="file"], input[type="text"], textarea, input[type="password"], select, button {
@@ -445,43 +435,6 @@ form[action="takesignup.php"] .table1 .table1 tr:last-child td {
     padding: 20px 0 0 !important;
 }
 
-@media screen and (max-width: 1200px) {
-    body, input, select, textarea, button, a.biglink, table, table[class], table[class] td, td, font[face], .td1 .text1, a  {
-        font-size: 9pt !important;
-    }
-
-    body {
-        padding: 0 4px;
-    }
-
-    .title table td:nth-child(2) {
-        font-size: 40pt !important;
-    }
-
-    td[style="background-color: #E9F8FF;"] a {
-        font-size: 110% !important;
-    }
-
-    form[action="./"] + br + p + .table1[width="95%"] td:nth-child(8),
-    form[action="./"] + br + p + .table1[width="95%"] td:nth-child(9),
-    form[action="./"] + br + p + .table1[width="95%"] td:nth-child(10),
-    br + h2 + p[align="center"] + .table1 td:nth-child(8),
-    br + h2 + p[align="center"] + .table1 td:nth-child(9),
-    br + h2 + p[align="center"] + .table1 td:nth-child(10) {
-        display: none;
-    }
-}
-
-@media screen and (min-width: 1800px) {
-    body, input, select, textarea, button, a.biglink, table, table[class], table[class] td, td, font[face], .td1 .text1, a {
-        font-size: 10pt !important;
-    }
-
-    #sitename a {
-        font-size: 46pt !important;
-    }
-}
-
 hr.separator {
     margin: 10px 10%;
     display: block;
@@ -506,7 +459,7 @@ hr.separator {
 }
 
 #topnav {
-    padding-bottom: 10px;
+    padding-bottom: 6px;
     margin: 0 -10% 10px;
     color: transparent;
     filter: drop-shadow(0 0 1px #181717);
@@ -542,9 +495,13 @@ hr.separator {
 }
 
 #footer {
-    margin: 20px 10% 0 !important;
+    margin: 8px -10% 0 !important;
     padding: 0 !important;
-    border-top: 1px solid #323030;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-weight: 600;
 }
 
 #footer, #footer a {
@@ -554,12 +511,13 @@ hr.separator {
 
 #blurb {
     margin-top: -1px !important;
-    padding: 7px 10%;
+    padding: 4px 7px 7px;
+    width: 100%;
     display: inline-block;
     line-height: 1;
     color: #9a9090;
-    border-radius: 0 0 5px 5px;
-    background: #323030;
+    border-top: 1px solid #343232;
+    background: #121010;
 }
 
 #installer {
@@ -591,30 +549,45 @@ hr.separator {
     text-transform: capitalize;
 }
 
-#addcomment, .note, #upload.note, #success, #fail {
+#addcomment, .note, #upload.note, #success, #warn {
     margin-bottom: 10px;
-    padding: 15px !important;
+    padding: 15px;
     font-size: 110%;
     font-weight: 700 !important;
-    border: 1px solid #111 !important;
+    border: 1px solid #111;
     background: #343232;
     background: linear-gradient(to bottom, #343232, #232020);
 }
 
-/* details */
+#addcomment {
+    padding: 10px;
+}
 
-#details, #addcomment, #uploader, .note, #upload.note, #success, #myaccount, #dologin, #signup, #fail, #help {
+#details, #addcomment, #uploader, .note, #upload.note, #success, #myaccount, #dologin, #signup, #warn, #help {
     margin: 0 auto 10px !important;
     width: 800px !important;
     box-sizing: border-box;
     border: 1px solid #111 !important;
 }
 
+#dologin, #signup, #warn.cookies {
+    width: 600px !important;
+}
+
+#details, #details + #addcomment, #torrentedit {
+    width: 900px !important;
+    border: 1px solid #111;
+}
+
 #addcomment {
     margin-top: -11px !important;
 }
 
-#details th, #dologin th, #signup th, #myaccount th, #torrents th {
+#details {
+    margin-top: 30px !important;
+}
+
+#details th, #dologin th, #signup th, #myaccount th, #torrents th, #torrentedit th {
     padding: 8px 14px !important;
     font-size: 110% !important;
     font-weight: 600 !important;
@@ -644,6 +617,20 @@ th a {
     text-align: right;
 }
 
+#filelist {
+    border: 1px solid #333;
+    border-right: none;
+}
+
+#filelist td:first-child {
+    text-align: left !important;
+}
+
+#filelist td:last-child {
+    padding-right: 8px;
+    text-align: right !important;
+}
+
 #nocomments {
     display: none;
 }
@@ -659,7 +646,8 @@ th a {
 }
 
 #uploader input, #uploader input[type="text"], #uploader input[type="file"], #uploader textarea,
-#myaccount input[type="text"], #myaccount input[type="password"] {
+#myaccount input[type="text"], #myaccount input[type="password"],
+#torrentedit textarea, #torrentedit input[type="text"] {
     width: calc(100% - 6px);
     max-width: calc(100% - 6px);
     box-sizing: border-box;
@@ -677,7 +665,7 @@ th a {
     min-height: 120px;
 }
 
-#upload.note, #fail {
+#upload.note, #warn {
     box-shadow: inset 0 0 0 1px #232020, inset 0 0 1px 1px #900;
 }
 
@@ -685,7 +673,7 @@ th a {
     box-shadow: inset 0 0 0 1px #232020, inset 0 0 1px 1px #090;
 }
 
-#fail {
+#warn, #torrentedit {
     margin-top: 30px !important;
 }
 
@@ -697,13 +685,31 @@ th a {
     margin-top: 20px !important;
 }
 
-#dologin td:first-child, #signup td:first-child {
+#dologin td:first-child, #signup td:first-child, #torrentedit td:first-child {
+    white-space: nowrap;
     text-align: right;
     font-weight: 700;
 }
 
-#pager, #pager a {
-    font-size: 110% !important;
+#torrentedit td {
+    padding: 8px 10px;
+}
+
+#torrentedit td:first-child {
+    text-align: right;
+}
+
+#torrentedit td:last-child {
+    text-align: left;
+}
+
+#torrentedit p {
+    margin-right: 10px;
+    text-align: justify;
+}
+
+#pagenow, #pager, #pager a {
+    font-size: 105% !important;
 }
 
 #pager {
@@ -730,21 +736,35 @@ th a {
     background: linear-gradient(to bottom, #343431, #232020) !important;
 }
 
-#sitename, #torrentshow {
-    margin-top: 12px;
+#sitename {
+    margin-top: 8px;
 }
 
-#torrentshow {
-    margin: 15px 0 20px !important;
+#searchandshow {
+    margin: 0 -5% -10px;
+    background: #212020;
+    background: linear-gradient(to bottom, #212020, #181817);
 }
 
 #search, #torrentshow {
     font-weight: 600;
 }
 
+#search {
+    margin-top: -11px;
+    padding-top: 11px;
+}
+
+#torrentshow {
+    margin: 15px 0 20px !important;
+    padding-bottom: 11px;
+    border-bottom: 1px solid #343232;
+}
+
 #help {
     margin: 20px auto 30px !important;
     width: 660px !important;
+    line-height: 160%;
     text-align: justify;
     font-size: 105%;
     border: none !important;
@@ -765,10 +785,30 @@ th a {
 }
 
 #howtoupload li {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 @media screen and (max-width: 1200px) {
+    body, input, select, textarea, button, td, a, .topnav a  {
+        font-size: 9pt !important;
+    }
+
+    body {
+        padding: 0 4px;
+    }
+
+    #torrents td, #torrents td a {
+        font-size: 8.5pt !important;
+    }
+
+    #sitename a {
+        font-size: 34pt !important;
+    }
+
+#searchandshow {
+    margin-bottom: -14px;
+}
+
 .catlink:hover:after {
     min-width: 60px;
 }
@@ -786,23 +826,48 @@ th a {
     padding: 2px 4px !important;
 }
 
+#torrents td:first-child::before {
+    content: "";
+    display: inline-block;
+    height: 32px;
+    vertical-align: middle;
+}
+
 #torrents img {
     width: 20px;
     height: 20px;
 }
 }
 
-@media screen and (min-width: 1200px) {
-    p[align="center"] a[href*="?page="] {
-        padding: 5px 18px 7px;
+@media screen and (max-width: 1200px) {
+    body, input, select, textarea, button, td, a  {
+        font-size: 9pt !important;
     }
 
-    .table1 + p[align="center"] a + b + a {
-        margin-left: -24px !important;
+    body {
+        padding: 0 4px;
     }
 
-    .table1 + p[align="center"] br + a + a {
-        margin: 0 -20px !important;
+    #topnav a {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    #torrents td, #torrents td a {
+        font-size: 8.5pt !important;
+    }
+
+    #sitename a {
+        font-size: 40pt !important;
     }
 }
 
+@media screen and (min-width: 1800px) {
+    body, input, select, textarea, button {
+        font-size: 10pt !important;
+    }
+
+    #sitename a {
+        font-size: 48pt !important;
+    }
+}
