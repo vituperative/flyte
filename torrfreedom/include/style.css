@@ -828,7 +828,7 @@ th a {
 #header {
   margin: -12px -10% 0;
   padding-top: 8px;
-  background: linear-gradient(to bottom, #232020, #121010);&viewcomm=12#comm12
+  background: linear-gradient(to bottom, #232020, #121010);
   position: sticky;
   top: -10px;
   z-index: 999;
