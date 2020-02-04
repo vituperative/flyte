@@ -60,15 +60,19 @@ while ($row = mysqli_fetch_assoc($res)) {
                 <![CDATA[
                     <style type="text/css">
                         body {background: #343030; font-family: Open Sans, Segoe UI, sans-serif;}
-                        table {border: 1px solid #bbb; border-collapse: collapse; border-spacing: 1px;}
+                        table {border-collapse: collapse; border-spacing: 1px;}
+                        a:visited {color: #d50;}
+                        a:link {font-weight: 600; color: #f60; text-decoration: none; outline: none;}
+                        a:hover, a:focus {color: #f90;}
                         tr {border: 1px solid #bbb;}
                         tr:nth-child(odd) {background: #ddd;}
                         tr:nth-child(even) {background: #f2f2f2;}
-                        tr:last-child td:last-child {text-align: center;}
+                        tr:nth-last-child(n+2) td:first-child {text-align: right; border-right: 1px solid #bbb; background: rgba(0,0,0,.1);}
+                        tr:first-child, tr:first-child td {text-align: center; background: none !important; border: none !important;}
+                        tr:last-child td {text-align: center;}
                         td {padding: 4px 8px;}
-                        td:first-child {text-align: right; border-right: 1px solid #bbb; background: rgba(0,0,0,.1);}
                         footer {display: none;}
-                        #sitename {font-size: 28pt; font-weight: 900; letter-spacing: 0.1em; color: #898080; white-space: nowrap;}
+                        #sitename a {font-size: 28pt; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; color: #898080; white-space: nowrap;}
                         @supports (-webkit-background-clip: text) {
                             #sitename {
                                 text-shadow: none;
@@ -77,16 +81,17 @@ while ($row = mysqli_fetch_assoc($res)) {
                                             linear-gradient(to bottom, rgba(255, 96, 0, .5), rgba(0, 0, 0, .6) 100%),
                                             linear-gradient(to bottom, #740, #520 10%, #fff 35%, #310 65%) !important;
                                            -webkit-background-clip: text !important;
-                               background-clip: text !important;
-                               -webkit-text-stroke-color: rgba(255,255,255,.7);
-                               -webkit-text-stroke-width: 1px;
-                               -webkit-text-fill-color: transparent !important;
-                               filter: drop-shadow(0 0 1px #300) drop-shadow(0 0 2px #200) drop-shadow(0 0 3px rgba(0, 0, 0, .1));
+                                background-clip: text !important;
+                                -webkit-text-stroke-color: rgba(255,255,255,.7);
+                                -webkit-text-stroke-width: 1px;
+                                -webkit-text-fill-color: transparent !important;
+                                filter: drop-shadow(0 0 1px #300) drop-shadow(0 0 2px #200) drop-shadow(0 0 3px rgba(0, 0, 0, .1));
                             }
                         }
                     </style>
-                    <div id=sitename><?php echo "$tracker_title"; ?></div>
+
                     <table>
+                        <tr><td colspan=2><div id=sitename><a href='<?php echo "$tracker_url_name"; ?>'><?php echo "$tracker_title"; ?></a></div></td></tr>
                         <tr><td>Name:</td><td><?php echo htmlspecialchars($row['name']); ?></td></tr>
                         <tr><td>Hash:</td><td><?php echo preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])); ?></td></tr>
                         <tr><td>Desc:</td><td><?php echo htmlspecialchars($row['ori_descr']); ?></td></tr>
@@ -103,7 +108,7 @@ if (isset($row["cat_name"])) {
                         <tr><td>Size:</td><td><?php echo mksize($row["size"]) . " (" . $row["size"] . " Bytes)"; ?></td></tr>
                         <tr><td>When:</td><td><?php echo gmdate("D, d M Y H:i:s \G\M\T", dttm2unixtime($row['added'])); ?></td></tr>
                         <tr><td>From:</td><td><?php echo $row["username"]; ?></td></tr>
-                        <tr><td>Links:</td><td><a href='<?=$tracker_url_name?>/download.php?id=<?php echo $row['id']; ?>&amp;file=<?php echo rawurlencode($row["filename"]); ?>'>Download Torrent</a> | <a href='<?=$tracker_url_name?>/details.php?id=<?php echo $row['id']; ?>&amp;hit=1'>View Details</a><?php if ($count) { ?> | <a href='<?=$tracker_url_name?>/details.php?id=<?php echo $row['id']; ?>&amp;hit=1&amp;tocomm=1'>View Comments</a><?php } ?></td></tr>
+                        <tr><td colspan=2><a href='<?=$tracker_url_name?>/download.php?id=<?php echo $row['id']; ?>&amp;file=<?php echo rawurlencode($row["filename"]); ?>'>Download Torrent</a> | <a href='<?=$tracker_url_name?>/details.php?id=<?php echo $row['id']; ?>&amp;hit=1'>View Details</a><?php if ($count) { ?> | <a href='<?=$tracker_url_name?>/details.php?id=<?php echo $row['id']; ?>&amp;hit=1&amp;tocomm=1'>View Comments</a><?php } ?></td></tr>
                     </table>
                 ]]>
                 </description>
