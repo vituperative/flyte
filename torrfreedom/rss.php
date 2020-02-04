@@ -68,7 +68,7 @@ while ($row = mysqli_fetch_assoc($res)) {
                         td {padding: 4px 8px;}
                         td:first-child {text-align: right; border-right: 1px solid #bbb; background: rgba(0,0,0,.1);}
                         footer {display: none;}
-                        #sitename {font-size: 28pt; font-weight: 900; letter-spacing: 0.1em; color: #898080;}
+                        #sitename {font-size: 28pt; font-weight: 900; letter-spacing: 0.1em; color: #898080; white-space: nowrap;}
                         @supports (-webkit-background-clip: text) {
                             #sitename {
                                 text-shadow: none;
@@ -107,6 +107,7 @@ if (isset($row["cat_name"])) {
                     </table>
                 ]]>
                 </description>
+                <link><?=$tracker_url_name?>/details.php?id=<?php echo $row['id']; ?>&amp;hit=1</link>
                 <pubDate><?php echo gmdate('r', dttm2unixtime($row['added'])); ?></pubDate>
             </item>
 <?php
