@@ -231,12 +231,14 @@ function stdhead($title = "") {
 }
 
 function stdfoot() {
-    global $pic_base_url, $version, $appname, $time_start;
+    global $pic_base_url, $version, $appname, $time_start, $contact;
         $time = round(getmicrotime() - $time_start,4);
 //	print('</td></tr><tr><td width="100%" height="21" colspan="2">');
 //	print('<div align="center">' . $appname . " v" . $version . ' -- Page generated in ' . $time . '</div>');
 //	print('</td></tr></table></body></html>');
-    print('<p id="footer"><span id="blurb">SiteAdmin: <a href="mailto:torrfreedom@mail.i2p">torrfreedom@mail.i2p</a> &bullet; Design by <a href="http://skank.i2p">dr|z3d</a> &bullet; Est. 2017</span></p>');
+    print('<p id="footer"><span id="blurb">SiteAdmin: <code>');
+    echo "$contact";
+    print('</code> &bullet; Design by <a href="http://skank.i2p">dr|z3d</a> &bullet; Est. 2017</span></p>');
     print("\n</body>\n</html>");
 }
 
@@ -506,7 +508,7 @@ function torrenttable($res, $variant = "index") {
             print("-");
         print("</td>\n");
 
-        $dispname = "<b>" . htmlspecialchars($row["name"]) . "</b>";
+        $dispname = htmlspecialchars($row["name"]);
         print("<td><a href=\"details.php?");
         if ($variant == "mytorrents")
             print("returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;");
@@ -520,7 +522,7 @@ function torrenttable($res, $variant = "index") {
         print("</td>\n");
 
         if ($variant == "index") {
-            print("<td class=dlicons><a href=\"download.php?id=$id&amp;file=" . htmlentities(urlencode($row["filename"])) . "\"><img src=\"../pic/download.png\" border=\"0\" width=24 height=24></a> <a href=\"magnet:?xt=urn:btih:" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "&amp;dn=" .  htmlentities(urlencode($row["filename"])) . "&amp;tr=" . $announce_urls[5] . "\"><img src=\"../pic/magnet.png\" border=\"0\" width=24 height=24></a></td>");
+            print("<td class=dlicons><a href=\"download.php?id=$id&amp;file=" . htmlentities(urlencode($row["filename"])) . "\"><img src=\"../pic/download.png\" border=0 width=24 height=24></a> <a href=\"magnet:?xt=urn:btih:" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "&amp;dn=" .  htmlentities(urlencode($row["filename"])) . "&amp;tr=" . $announce_urls[5] . "\"><img src=\"../pic/magnet.png\" border=0 width=24 height=24></a></td>");
         } elseif ($variant == "mytorrents")
             print("<td><a href=\"edit.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;id=" . $row["id"] . "\">edit</a></td>\n");
 

@@ -21,17 +21,18 @@ if (!$row)
 stdhead("Edit torrent \"" . $row["name"] . "\"");
 
 if (!isset($CURUSER) || ($CURUSER["id"] != $row["owner"] && $CURUSER["admin"] != "yes")) {
-	print("<h1>Can't edit this torrent</h1>\n");
-	print("<p>You're not the rightful owner, or you're not <a href=\"login.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;nowarn=1\">logged in</a> properly.</p>\n");
+	print("<p id=warn>Sorry, you can't edit this torrent. ");
+	print("You're not the rightful owner, or you're not <a href=\"login.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;nowarn=1\">logged in</a>.</p>\n");
 }
 else {
 	print("<form method=\"post\" action=\"takeedit.php\">\n");
 	print("<input type=\"hidden\" name=\"id\" value=\"$id\">\n");
 	if (isset($_GET["returnto"]))
 		print("<input type=\"hidden\" name=\"returnto\" value=\"" . htmlspecialchars($_GET["returnto"]) . "\" />\n");
-	print("<table class=\"table1\" border=\"1\" cellspacing=\"0\" cellpadding=\"2\">\n");
-	tr("Torrent name", "<input type=\"text\" class=\"input\" name=\"name\" value=\"" . htmlspecialchars($row["name"]) . "\" size=\"80\" />", 1);
-	tr("Description<br />(no html allowed)", "<textarea name=\"descr\" class=\"input\" rows=\"10\" cols=\"80\">" . htmlspecialchars($row["ori_descr"]) . "</textarea>", 1);
+	print("<table id=torrentedit>\n");
+	print("<tr><th colspan=2>Edit Torrent</th></tr>\n");
+	tr("Name", "<input type=\"text\" class=\"input\" name=\"name\" value=\"" . htmlspecialchars($row["name"]) . "\" size=\"80\" />", 1);
+	tr("Description", "<textarea name=\"descr\" class=\"input\" rows=\"10\" cols=\"80\">" . htmlspecialchars($row["ori_descr"]) . "</textarea>", 1);
 
 	$s = "<select name=\"type\">\n";
 
@@ -44,13 +45,15 @@ else {
 	}
 
 	$s .= "</select>\n";
-	tr("Type", $s, 1);
-	tr("Visible", "<input type=\"checkbox\" name=\"visible\"" . (($row["visible"] == "yes") ? " checked=\"checked\"" : "" ) . " value=\"1\" /> Visible on main page<br />Note that the torrent will automatically become visible when there's a seeder, and will become automatically invisible (dead) when there has been no seeder for a while. Use this switch to speed the process up manually. Also note that invisible (dead) torrents can still be viewed or searched for, it's just not the default.", 1);
+	tr("Category", $s, 1);
+	tr("Visible", "<label><input type=\"checkbox\" name=\"visible\"" . (($row["visible"] == "yes") ? " checked=\"checked\"" : "" ) . " value=\"1\" /> Visible on main page</label>\n<p>Note: the torrent will automatically become visible when there's a seeder, and will be hidden automatically when there has been no seeder for a while. Use this switch to speed the process up manually.</p>", 1);
 
 	if ($CURUSER["admin"] == "yes")
 		tr("Banned", "<input type=\"checkbox\" name=\"banned\"" . (($row["banned"] == "yes") ? " checked=\"checked\"" : "" ) . " value=\"1\" /> Banned", 1);
 
-	print("<tr><td colspan=\"2\" align=\"center\"><input type=\"submit\" value=\"Edit it!\" /> <input type=\"reset\" value=\"Revert changes\"></td></tr>\n");
+	print("<tr id=dostuff><td colspan=\"2\" align=\"center\"><input type=\"submit\" value=\"Update Torrent\" /> ");
+	print("<input type=\"submit\" value=\"Delete Torrent\" />\n");
+	print("<input type=\"checkbox\" name=\"sure\" value=\"1\" /> Confirm delete</td></tr>\n");
 	print("</table>\n");
 	print("</form>\n");
 	print("<hr />\n");
@@ -59,8 +62,6 @@ else {
 	print("<input type=\"hidden\" name=\"id\" value=\"$id\">\n");
 	if (isset($_GET["returnto"]))
 		print("<input type=\"hidden\" name=\"returnto\" value=\"" . htmlspecialchars($_GET["returnto"]) . "\" />\n");
-	print("Don't edit it, but <input type=\"submit\" value=\"delete it!\" />\n");
-	print("(Yes I'm sure about that: <input type=\"checkbox\" name=\"sure\" value=\"1\" />)\n");
 	print("</form>\n");
 	print("</p>\n");
 }

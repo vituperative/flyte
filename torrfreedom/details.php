@@ -15,8 +15,8 @@ function dltable($name, $arr, $torrent)
     }
 
     $s .= "\n";
-    $s .= "<table class=\"table3\" border=\"1\" cellpadding=\"1\" cellspacing=\"0\" width=\"100%\">\n";
-    $s .= "<tr><td>destination</td><td align=\"right\">uploaded</td><td align=\"right\">downloaded</td><td align=\"right\">complete</td><td align=\"right\">time connected</td><td align=\"right\">idle</td></tr>\n";
+    $s .= "<table id=peerinfo>\n";
+    $s .= "<tr><td>Destination</td><td align=\"right\">Uploaded</td><td align=\"right\">Downloaded</td><td align=\"right\">Complete</td><td align=\"right\">Time connected</td><td align=\"right\">idle</td></tr>\n";
     $now = time();
     $admin = (isset($CURUSER) && $CURUSER["admin"] == "yes");
 
@@ -162,7 +162,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
             } else {
                 tr("Files", $row["numfiles"], 1, $rowcount++);
 
-                $s = "<table class=\"table3\" border=\"1\" cellpadding=\"1\" cellspacing=\"0\">\n";
+                $s = "<table id=filelist>\n";
 
                 $subres = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM files WHERE torrent = $id ORDER BY id");
                 while ($subrow = mysqli_fetch_array($subres)) {
@@ -227,7 +227,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
 
         print("</table>\n");
 
-        print("<hr />\n");
+//        print("<hr />\n");
     } else {
         stdhead("Comments for torrent \"" . $row["name"] . "\"");
         print("<p><a href=\"details.php?id=$id\">Back to full details</a></p><hr />\n");
@@ -242,7 +242,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
     $count = $subrow[0];
 
     if (!$count) {
-        print("<p id=\"nocomments\" class=\"important\" align=\"center\">No comments yet</p>\n");
+//        print("<p id=\"nocomments\" class=\"important\" align=\"center\">No comments yet</p>\n");
     } else {
         list($pagertop, $pagerbottom, $limit) = pager(20, $count, "details.php?id=$id&", array("lastpagedefault" => 1));
 
