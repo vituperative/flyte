@@ -154,11 +154,17 @@ ul {
   border: 1px solid #222;
 }
 
-#details tr:not(#dostuff):nth-child(odd) td, #dologin tr:not(#dostuff):nth-child(odd) td, #signup tr:not(#dostuff):nth-child(odd) td, #myaccount tr:not(#dostuff):nth-child(odd) td, #torrents tr:not(#dostuff):nth-child(odd), #uploader tr:not(#dostuff):nth-child(odd), #torrentedit tr:not(#dostuff):nth-child(odd) {
+#details tr:not(#dostuff):nth-child(odd) td, #dologin tr:not(#dostuff):nth-child(odd) td,
+#signup tr:not(#dostuff):nth-child(odd) td, #myaccount tr:not(#dostuff):nth-child(odd) td,
+#torrents tr:not(#dostuff):nth-child(odd), #uploader tr:not(#dostuff):nth-child(odd),
+#torrentedit tr:not(#dostuff):nth-child(odd), #details #filelist tr:nth-child(odd) td {
   background: #454242 !important;
 }
 
-#details tr:nth-child(even) td, #dologin tr:not(#dostuff):nth-child(even) td, #signup tr:not(#dostuff):nth-child(even) td, #myaccount tr:not(#dostuff):nth-child(even) td, #torrents tr:not(#dostuff):nth-child(even), #uploader tr:not(#dostuff):nth-child(even), #torrentedit tr:not(#dostuff):nth-child(even) {
+#details tr:nth-child(even) td, #dologin tr:not(#dostuff):nth-child(even) td,
+#signup tr:not(#dostuff):nth-child(even) td, #myaccount tr:not(#dostuff):nth-child(even) td,
+#torrents tr:not(#dostuff):nth-child(even), #uploader tr:not(#dostuff):nth-child(even),
+#torrentedit tr:not(#dostuff):nth-child(even), #details #filelist tr:nth-child(odd) td {
   background: #343131 !important;
 }
 
@@ -597,16 +603,16 @@ th a {
   text-align: right;
 }
 
-#filelist {
-  border: 1px solid #333;
+#details #filelist {
+  border: 3px solid #333 !important;
   border-right: none;
 }
 
-#filelist td:first-child {
+#details #filelist td:first-child {
   text-align: left !important;
 }
 
-#filelist td:last-child {
+#details #filelist td:last-child {
   padding-right: 8px;
   text-align: right !important;
 }
@@ -749,7 +755,7 @@ th a {
    display: none !important;
 }
 
-#peerinfo {
+#peerinfom, #details #filelist {
   margin: 5px auto 5px;
   width: calc(100% - 8px);
   border: 1px solid #111;
