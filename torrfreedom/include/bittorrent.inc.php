@@ -421,10 +421,10 @@ function commenttable($rows) {
     foreach ($rows as $row) {
         print("<tr>\n");
         if (isset($row["username"]))
-            print("<td><a name=\"comm" . $row["id"] . "\">" . htmlspecialchars($row["username"]) . "</a>\n");
+            print("<th>User: " . htmlspecialchars($row["username"]));
         else
-            print("<td><a name=\"comm" . $row["id"] . "\"><i>(orphaned)</i></a>\n");
-        print("<td>" . htmlspecialchars($row["added"]) . "</td>\n");
+            print("<th><i>User no longer exists</i>\n");
+        print("<th>Posted: " . htmlspecialchars($row["added"]) . "</th>\n");
         print("</tr>\n");
         print("<tr>\n");
         print("<td colspan=\"2\">" . $row["text"] . "</td>\n");
@@ -517,7 +517,7 @@ function torrenttable($res, $variant = "index") {
             print("&amp;hit=1");
         print("\">$dispname</a>\n");
         if (isset($row["descr"])) {
-            print("<br>".truncate(htmlspecialchars($row["ori_descr"]), 100));
+            print("<br>".truncate(htmlspecialchars($row["ori_descr"]),150));
         }
         print("</td>\n");
 

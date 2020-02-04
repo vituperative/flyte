@@ -157,14 +157,16 @@ ul {
 #details tr:not(#dostuff):nth-child(odd) td, #dologin tr:not(#dostuff):nth-child(odd) td,
 #signup tr:not(#dostuff):nth-child(odd) td, #myaccount tr:not(#dostuff):nth-child(odd) td,
 #torrents tr:not(#dostuff):nth-child(odd), #uploader tr:not(#dostuff):nth-child(odd),
-#torrentedit tr:not(#dostuff):nth-child(odd), #details #filelist tr:nth-child(odd) td {
+#torrentedit tr:not(#dostuff):nth-child(odd), #details #filelist tr:nth-child(odd) td,
+#comments tr:nth-child(odd) {
   background: #454242 !important;
 }
 
 #details tr:nth-child(even) td, #dologin tr:not(#dostuff):nth-child(even) td,
 #signup tr:not(#dostuff):nth-child(even) td, #myaccount tr:not(#dostuff):nth-child(even) td,
 #torrents tr:not(#dostuff):nth-child(even), #uploader tr:not(#dostuff):nth-child(even),
-#torrentedit tr:not(#dostuff):nth-child(even), #details #filelist tr:nth-child(odd) td {
+#torrentedit tr:not(#dostuff):nth-child(even), #details #filelist tr:nth-child(odd) td,
+#comments tr:nth-child(even) {
   background: #343131 !important;
 }
 
@@ -545,10 +547,6 @@ hr.separator {
   background: linear-gradient(to bottom, #343232, #232020);
 }
 
-#addcomment {
-  padding: 10px;
-}
-
 #details, #addcomment, #uploader, .note, #upload.note, #success, #myaccount, #dologin, #signup, #warn, #help {
   margin: 0 auto 10px !important;
   width: 800px !important;
@@ -560,13 +558,19 @@ hr.separator {
   width: 600px !important;
 }
 
-#details, #details+#addcomment, #torrentedit {
+#details, #details+#addcomment, #torrentedit, #comments, #comments + #pager, #pager + #addcomment {
   width: 900px !important;
   border: 1px solid #111;
 }
 
 #addcomment {
   margin-top: -11px !important;
+  padding: 10px;
+}
+
+#pager + #addcomment {
+  margin-top: -1px !important;
+  display: none; // no need for dupe, displayed below torrent details
 }
 
 #details {
@@ -580,6 +584,25 @@ hr.separator {
   text-align: left;
   border-top: none !important;
   border-bottom: 1px solid #111 !important;
+}
+
+#comments th {
+    font-size: 100% !important;
+    padding: 4px 8px !important;
+    border-bottom: 1px solid #111;
+}
+
+#comments th:first-child {
+    text-align: left;
+}
+
+#comments th:last-child {
+    text-align: right;
+}
+#comments td {
+    padding: 10px !important;
+    vertical-align: middle;
+    text-align: justify;
 }
 
 th a {
@@ -701,12 +724,13 @@ th a {
 }
 
 #pager {
-  margin: -1px 0 0 !important;
+  margin: -1px auto 0 !important;
   padding: 8px 14px !important;
   text-align: center;
   font-weight: 600 !important;
   border: 1px solid #111;
   background: linear-gradient(to bottom, #343131, #232020);
+  box-sizing: border-box;
 }
 
 #pagenow, .pagelinks {
