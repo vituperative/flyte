@@ -26,4 +26,8 @@ $tracker_url_key = "http://nfrjvknwcw47itotkzmk6mdlxmxfxsxhbhlr5ozhlsuavcogv4hq.
 // use forward slashes for windows paths eg. C:/path/to/torrents
 $torrent_dir = "/path/to/torrents";
 
+// siteadmin contact e-mail
+$contact_url = "<a href=mailto:yourname@mail.i2p>yourname@mail.i2p</a>";
+$contact = "yourname@mail.i2p";
+
 ?>
