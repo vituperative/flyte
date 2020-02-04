@@ -230,7 +230,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
 //        print("<hr />\n");
     } else {
         stdhead("Comments for torrent \"" . $row["name"] . "\"");
-        print("<p><a href=\"details.php?id=$id\">Back to full details</a></p><hr />\n");
+        print("<p class=note id=return><a href=\"details.php?id=$id\">Return to details page</a></p>\n");
     }
 
 //    print("<p><a name=\"startcomments\"></a></p>\n");
