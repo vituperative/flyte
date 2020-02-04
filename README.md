@@ -13,3 +13,4 @@ TF Website
 - [ ] Optional automatic torrent upload to torrent.ano
 - [ ] Configuration panel for administrator
 - [ ] More configuration options during installation
+- [ ] Optional hiding of torrent uploader on torrents page
