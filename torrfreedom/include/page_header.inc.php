@@ -13,7 +13,7 @@
     <div id=header>
         <div id=sitename><a href="/"><?php echo $tracker_title; ?></a></div>
         <div id="topnav">
-            <a href="./">Torrents</a> | <a href="upload.php">Upload</a> | <a href="help.php">Help</a> | <a href="rss.php">RSS Feed</a> | <a href="i2psnark-standalone.zip">I2PSnark Client</a> |
+            <a href="./">Torrents</a> | <a href="rss.php">RSS Feed</a> <?php if ($CURUSER) {?> | <a href="upload.php">Upload</a><?php }?> | <a href="help.php">Help</a> | <a href="i2psnark-standalone.zip">I2PSnark Client</a> |
             <?php if (!$CURUSER) {?>
             <a href="login.php">Login</a> | <a href="signup.php">Signup</a>
             <?php } else {?>

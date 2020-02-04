@@ -16,20 +16,20 @@ function dltable($name, $arr, $torrent)
 
     $s .= "\n";
     $s .= "<table id=peerinfo>\n";
-    $s .= "<tr><td>Destination</td><td align=\"right\">Uploaded</td><td align=\"right\">Downloaded</td><td align=\"right\">Complete</td><td align=\"right\">Time connected</td><td align=\"right\">idle</td></tr>\n";
+    $s .= "<tr><th>Destination</th><th>Uploaded</th><th>Downloaded</th><th>Complete</th><th>Time connected</th><th>Idle</th></tr>\n";
     $now = time();
     $admin = (isset($CURUSER) && $CURUSER["admin"] == "yes");
 
     foreach ($arr as $e) {
         $s .= "<tr>\n";
         $s .= "<td>" . truncate($e["ip"]) . "</td>\n";
-        $s .= "<td align=\"right\">" . mksize($e["uploaded"]) . "</td>\n";
-        $s .= "<td align=\"right\">" . mksize($e["downloaded"]) . "</td>\n";
+        $s .= "<td>" . mksize($e["uploaded"]) . "</td>\n";
+        $s .= "<td>" . mksize($e["downloaded"]) . "</td>\n";
         $ps = sprintf("%.3f%%", 100 * (1 - ($e["to_go"] / $torrent["size"])));
         $ps = ($ps < 0) ? "0.000%" : $ps;
-        $s .= "<td align=\"right\">" . $ps . "</td>\n";
-        $s .= "<td align=\"right\">" . mkprettytime($now - $e["st"]) . "</td>\n";
-        $s .= "<td align=\"right\">" . mkprettytime($now - $e["la"]) . "</td>\n";
+        $s .= "<td>" . $ps . "</td>\n";
+        $s .= "<td>" . mkprettytime($now - $e["st"]) . "</td>\n";
+        $s .= "<td>" . mkprettytime($now - $e["la"]) . "</td>\n";
         $s .= "</tr>\n";
     }
     $s .= "</table>\n";
@@ -166,7 +166,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
 
                 $subres = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM files WHERE torrent = $id ORDER BY id");
                 while ($subrow = mysqli_fetch_array($subres)) {
-                    $s .= "<tr><td>" . preg_replace(',[^/]+$,', '<b>$0</b>', htmlspecialchars($subrow["filename"])) . "</td><td align=\"right\">" . mksize($subrow["size"]) . "</td></tr>\n";
+                    $s .= "<tr><td>" . preg_replace(',[^/]+$,', '<b>$0</b>', htmlspecialchars($subrow["filename"])) . "</td><td>" . mksize($subrow["size"]) . "</td></tr>\n";
                 }
 
                 $s .= "</table>\n";

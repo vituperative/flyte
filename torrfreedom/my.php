@@ -28,11 +28,11 @@ $res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) FROM comments W
 $row = mysqli_fetch_array($res);
 tr("Comments posted", $row[0]);
 
-tr("Change password", "<input type=\"password\" name=\"chpassword\" size=\"40\" />", 1);
-tr("Type password again", "<input type=\"password\" name=\"passagain\" size=\"40\" />", 1);
+tr("New password", "<input type=\"password\" name=\"chpassword\" size=\"40\" />", 1);
+tr("Confirm password", "<input type=\"password\" name=\"passagain\" size=\"40\" />", 1);
 
 ?>
-<tr id=dostuff><td colspan="2"><input type="submit" value="Submit changes!" /> <input type="reset" value="Revert changes!" /></td></tr>
+<tr id=dostuff><td colspan="2"><input type="submit" value="Update Password" /></td></tr>
 </table>
 </form>
 <?php

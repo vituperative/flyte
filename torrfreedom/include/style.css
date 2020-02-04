@@ -12,7 +12,7 @@ body, html {
 
 body {
   margin: 0 0 5px;
-  padding: 0 8px 32px;
+  padding: 0 8px 28px;
   position: relative;
   min-width: 900px;
   color: #bbb;
@@ -70,7 +70,7 @@ input[type="submit"], input[type="reset"], input[type="radio"], input[type="file
   text-align: center;
 }
 
-#sitename a:hover {
+#sitename a:hover, #sitename a:focus, #sitename a:active {
   text-decoration: none !important;
 }
 
@@ -78,7 +78,9 @@ input[type="submit"], input[type="reset"], input[type="radio"], input[type="file
   .title table td:nth-child(2), #sitename a {
     text-shadow: none;
     background: linear-gradient(to bottom, #210, #310 15%, #fff 50%, #310 80%) !important;
-    background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .5) 2px), linear-gradient(to bottom, rgba(255, 96, 0, .5), rgba(0, 0, 0, .4) 100%), linear-gradient(to bottom, #740, #520 10%, #fff 35%, #310 75%) !important;
+    background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .5) 2px),
+                linear-gradient(to bottom, rgba(255, 96, 0, .5), rgba(0, 0, 0, .6) 100%),
+                linear-gradient(to bottom, #740, #520 10%, #fff 35%, #310 65%) !important;
     -webkit-background-clip: text !important;
     background-clip: text !important;
     -webkit-text-stroke-color: #fff;
@@ -164,7 +166,7 @@ th, #dostuff td {
   padding: 8px !important;
   font-size: 110%;
   font-weight: 600 !important;
-  background: linear-gradient(to bottom, #343431, #232020) !important;
+  background: linear-gradient(to bottom, #343131, #232020) !important;
 }
 
 #torrents {
@@ -444,7 +446,7 @@ hr.separator {
   border-bottom: 1px solid #343232;
 }
 
-#topnav a, .username, p[align="center"] a[href*="?page="], #addcomment a {
+#topnav a, .username, #addcomment a {
   margin: 8px -6px;
   padding: 3px 24px 5px;
   display: inline-block;
@@ -464,11 +466,11 @@ hr.separator {
   border-radius: 0 2px 2px 0;
 }
 
-#topnav a:hover, p[align="center"] a[href*="?page="]:hover, .#addcomment a:hover {
+#topnav a:hover, #topnav a:focus, #addcomment a:hover, #addcomment a:focus, #pager a:hover, #pager a:focus {
   color: #f60;
 }
 
-#topnav a:active, p[align="center"] a[href*="?page="]:active, #addcomment a:active {
+#topnav a:active, #addcomment a:active {
   box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050, inset 2px 2px 2px #121010;
 }
 
@@ -623,7 +625,11 @@ th a {
   padding: 9px;
 }
 
-#uploader input, #uploader input[type="text"], #uploader input[type="file"], #uploader textarea, #myaccount input[type="text"], #myaccount input[type="password"], #torrentedit textarea, #torrentedit input[type="text"] {
+#uploader input, #uploader input[type="text"], #uploader input[type="file"], #uploader textarea,
+#myaccount input[type="text"], #myaccount input[type="password"],
+#torrentedit textarea, #torrentedit input[type="text"],
+#dologin input[type="text"], #dologin input[type="password"],
+#signup input[type="text"], #signup input[type="password"] {
   width: calc(100% - 6px);
   max-width: calc(100% - 6px);
   box-sizing: border-box;
@@ -694,22 +700,24 @@ th a {
   text-align: center;
   font-weight: 600 !important;
   border: 1px solid #111;
-  background: linear-gradient(to bottom, #343431, #232020);
+  background: linear-gradient(to bottom, #343131, #232020);
 }
 
 #pagenow, .pagelinks {
-  padding: 2px 5px;
+  padding: 2px 10px;
   display: inline-block;
-  border: 1px solid #343030 !important;
+  border: 1px solid #181616 !important;
   border-radius: 3px;
+  box-shadow: inset 0 0 0 1px #565050;
   background: #454040;
+  background: linear-gradient(to bottom, #454040, #343030);
 }
 
 #dostuff td {
   padding: 12px !important;
   text-align: center !important;
   border-top: 1px solid #111 !important;
-  background: linear-gradient(to bottom, #343431, #232020) !important;
+  background: linear-gradient(to bottom, #343131, #232020) !important;
 }
 
 #sitename {
@@ -728,7 +736,7 @@ th a {
 
 #search {
   margin-top: -11px;
-  padding-top: 11px;
+  padding-top: 15px;
 }
 
 #torrentshow {
@@ -737,17 +745,46 @@ th a {
   border-bottom: 1px solid #343232;
 }
 
+#details #peerinfo tr:first-child th::before {
+   display: none !important;
+}
+
+#peerinfo {
+  margin: 5px auto 5px;
+  width: calc(100% - 8px);
+  border: 1px solid #111;
+}
+
+#details #peerinfo th, #peerinfo td {
+  text-align: center !important;
+}
+
+#peerinfo th {
+  padding: 3px 8px !important;
+  line-height: 1.1;
+  font-size: 85% !important;
+}
+
+#peerinfo td {
+  padding: 3px 8px !important;
+}
+
 #help {
-  margin: 20px auto 30px !important;
+  margin: 30px auto !important;
+  padding: 15px 30px;
   width: 660px !important;
   line-height: 160%;
   text-align: justify;
   font-size: 105%;
   border: none !important;
+  border-radius: 4px;
+  background: rgba(48,40,40,.3);
 }
 
 #help h3 {
   margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #777;
 }
 
 #header {
@@ -757,6 +794,7 @@ th a {
   position: sticky;
   top: -10px;
   z-index: 999;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.4));
 }
 
 #howtoupload {
@@ -813,7 +851,7 @@ th a {
     font-size: 9pt !important;
   }
   body {
-    padding: 0 4px 32px !important;
+    padding: 0 4px 23px !important;
   }
   #topnav a {
     padding-left: 16px;
