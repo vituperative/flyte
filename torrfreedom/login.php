@@ -10,12 +10,13 @@ unset($returnto);
 if (!empty($_GET["returnto"])) {
 	$returnto = $_GET["returnto"];
 	if (!isset($_GET["nowarn"])) {
-		print("<p id=fail>Error: Login required to view the page...</p>\n");
+		print("<p id=warn>Error: Login required to view the page...</p>\n");
 	}
 }
 
 ?>
 <form method="post" action="takelogin.php">
+<p id=warn class=cookies>Please ensure cookies are enabled in your browser.</a>
 <table id=dologin>
 <tr><th colspan=2>Login</th></tr>
 <tr><td>Username</td><td><input class="input" type="text" size="20" name="username" /></td></tr>

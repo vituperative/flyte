@@ -115,6 +115,7 @@ if (isset($cleansearchstr)) {
 $cats = genrelist();
 
 ?>
+<div id="searchandshow">
 <form method="get" action="./">
 <div id=search>
 Search: <input name="search" type="text" value="<?=htmlspecialchars($searchstr)?>" size="40" class="input"> in
@@ -160,6 +161,7 @@ Show all of: <select class="input" name="cat"><option value="0">(any type)</opti
 <input type="submit" value="Go!" class="input"/>
 </form>
 </div>
+</div>
 <?php
 
 if (isset($cleansearchstr)) {
@@ -174,10 +176,10 @@ if ($count) {
     print($pagerbottom);
 } else {
     if (isset($cleansearchstr)) {
-        print("<p class=note id=fail>Nothing found!<br>");
+        print("<p class=note id=warn>Nothing found!<br>");
         print("Try again with a refined search string.</p>\n");
     } else {
-        print("<p class=note id=fail>No live torrents!</p>\n");
+        print("<p class=note id=warn>No live torrents!</p>\n");
     }
 }
 ?>

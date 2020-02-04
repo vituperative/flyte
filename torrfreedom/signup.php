@@ -10,8 +10,9 @@ stdhead("Signup");
 
 ?>
 <form method="post" action="takesignup.php">
+<p id=warn class=cookies>Please ensure cookies are enabled in your browser.</a>
 <table id=signup>
-<tr><th colspan=2>Register an Account (Please ensure cookies are enabled in your browser)</th></tr>
+<tr><th colspan=2>Register an Account on <?php echo"$tracker_title";?></th></tr>
 <tr><td>Desired username</td><td><input class="input" type="text" size="40" name="wantusername" /></td></tr>
 <tr><td>Pick a password</td><td><input class="input" type="password" size="40" name="wantpassword" /></td></tr>
 <tr><td>Enter password again</td><td><input class="input" type="password" size="40" name="passagain" /></td></tr>
