@@ -12,7 +12,7 @@ body, html {
 
 body {
     margin: 0 0 5px;
-    padding: 0 8px;
+    padding: 0 8px 32px;
     position: relative;
     min-width: 900px;
     color: #bbb;
