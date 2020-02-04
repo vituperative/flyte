@@ -558,9 +558,13 @@ hr.separator {
   width: 600px !important;
 }
 
-#details, #details+#addcomment, #torrentedit, #comments, #comments + #pager, #pager + #addcomment {
+#details, #details+#addcomment, #torrentedit, #comments, #comments + #pager, #pager + #addcomment, #return.note, #return.note + #addcomment {
   width: 900px !important;
   border: 1px solid #111;
+}
+
+#return.note {
+    margin-top: 30px !important;
 }
 
 #addcomment {
@@ -590,6 +594,10 @@ hr.separator {
     font-size: 100% !important;
     padding: 4px 8px !important;
     border-bottom: 1px solid #111;
+}
+
+#comments tr:nth-child(n+2) th {
+    border-top: 1px solid #111;
 }
 
 #comments th:first-child {
