@@ -609,7 +609,7 @@ function torrenttable($res, $variant = "index")
 
         print("\">$dispname</a>\n");
         if (isset($row["descr"])) {
-            print("<br>" . truncate(htmlspecialchars($row["ori_descr"]), 150));
+            print("<br>" . truncate(htmlspecialchars($row["ori_descr"], ENT_NOQUOTES), 150));
         }
         print("</td>\n");
 
