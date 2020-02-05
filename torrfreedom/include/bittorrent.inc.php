@@ -161,19 +161,43 @@ function mkprettytime($s)
         $t[$y[1]] = $v;
     }
 
+    if ($t["day"] > 1) {
+        $day = " days ";
+    } else {
+        $day = " day ";
+    }
+
+    if ($t["hour"] > 1) {
+        $hour = " hours ";
+    } else {
+        $hour = " hour ";
+    }
+
+    if ($t["min"] > 1) {
+        $minute = " minutes ";
+    } else {
+        $minute = " minute ";
+    }
+
     if ($t["day"]) {
-        return $t["day"] . " day(s), " . sprintf("%02d:%02d:%02d", $t["hour"], $t["min"], $t["sec"]);
+        return $t["day"] . $day . sprintf("%02d" . $hour, $t["hour"]);
     }
 
     if ($t["hour"]) {
-        return sprintf("%d:%02d:%02d", $t["hour"], $t["min"], $t["sec"]);
+        return sprintf("%d" . $hour . "%02d" . $minute, $t["hour"], $t["min"]);
     }
 
     if ($t["min"]) {
-        return sprintf("%d:%02d", $t["min"], $t["sec"]);
+        return sprintf("%d" . $minute, $t["min"]);
     }
 
-    return $t["sec"] . " secs";
+    if ($t["sec"] > 1) {
+        $second = " seconds ";
+    } else {
+        $second = " second ";
+    }
+
+    return $t["sec"] . $second;
 }
 
 function mkglobal($vars)
@@ -211,7 +235,7 @@ function tr($x, $y, $noesc = 0, $count = 0)
     print("<tr><td><b>$x</b></td><td>$a</td></tr>\n");
 }
 
-function truncate($str, $length = 10, $trailing = '...')
+function truncate($str, $length = 15, $trailing = '&hellip;')
 {
     // take off chars for the trailing
     $length -= strlen($trailing);
@@ -267,12 +291,12 @@ function parsedescr($d)
 
 function stdhead($title = "")
 {
-    global $CURUSER, $pic_base_url, $tracker_title;
+    global $CURUSER, $pic_base_url, $tracker_title, $tracker_url_name;
     header("Content-Type: text/html; charset=utf-8");
     if ($title == "") {
-        $title = $tracker_title . " BitTracker";
+        $title = $tracker_title . " BitTorrent Tracker";
     } else {
-        $title = $tracker_title . " BitTracker - " . htmlspecialchars($title);
+        $title = $tracker_title . " BitTorrent Tracker - " . htmlspecialchars($title);
     }
 
     $trackertitle = $title;
@@ -314,8 +338,9 @@ function mksecret($len = 20)
 function httperr($code = 404)
 {
     header("HTTP/1.0 404 Not found");
-    print("<h1>Not Found</h1>\n");
-    print("<p>Sorry pal :(</p>\n");
+    print("<body style=\"background: #111; color: #f00;\">");
+    print("<table width=100% height=100%><tr><td align=center><h1>Not Found</h1>\n");
+    print("<p>The requested file or resource was not found on the server.</p></td></tr></table></body>\n");
     exit();
 }
 
@@ -507,7 +532,7 @@ function commenttable($rows)
             print("<th><i>User vanished!</i>\n");
         }
 
-        print("<th>Posted: " . htmlspecialchars($row["added"]) . "</th>\n");
+        print("<th class=posted>Posted: " . htmlspecialchars($row["added"]) . "</th>\n");
         print("</tr>\n");
         print("<tr>\n");
         print("<td colspan=\"2\">" . $row["text"] . "</td>\n");

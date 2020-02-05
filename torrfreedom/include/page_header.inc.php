@@ -7,11 +7,11 @@
     <style type="text/css"> html {background: #232020;} body {opacity: 0; text-align: center;} </style>
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="alternate" type="application/rss+xml" title="<?php echo $tracker_title; ?> RSS Feed" href=rss.php />
-    <title><?php echo $tracker_title; ?></title>
+    <title><?php echo $tracker_title; ?> | </title>
 </head>
 <body>
     <div id=header>
-        <div id=sitename><a href="/"><?php echo $tracker_title; ?></a></div>
+        <div id=sitename><a href="<?php echo $tracker_url_name; ?>"><?php echo $tracker_title; ?></a></div>
         <div id="topnav">
             <a href="./">Torrents</a> | <a href="rss.php">RSS Feed</a> <?php if ($CURUSER) {?> | <a href="upload.php">Upload</a><?php }?> | <a href="help.php">Help</a> | <a href="i2psnark-standalone.zip">I2PSnark Client</a> |
             <?php if (!$CURUSER) {?>
