@@ -44,7 +44,7 @@ if (!isset($id) || !$id) {
     die();
 }
 
-$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT torrents.seeders, torrents.banned, torrents.leechers, torrents.info_hash, torrents.filename, UNIX_TIMESTAMP() - UNIX_TIMESTAMP(torrents.last_action) AS lastseed, torrents.name, torrents.owner, torrents.save_as, torrents.descr, torrents.visible, torrents.size, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%d.%m.%y %T') as added, torrents.views, torrents.hits, torrents.times_completed, torrents.id, torrents.type, torrents.numfiles, categories.name AS cat_name, users.username FROM torrents LEFT JOIN categories ON torrents.category = categories.id LEFT JOIN users ON torrents.owner = users.id WHERE torrents.id = $id")
+$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT torrents.seeders, torrents.banned, torrents.leechers, torrents.info_hash, torrents.filename, UNIX_TIMESTAMP() - UNIX_TIMESTAMP(torrents.last_action) AS lastseed, torrents.name, torrents.owner, torrents.save_as, torrents.descr, torrents.visible, torrents.size, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%H:%i, %a %D %M %Y') as added, torrents.views, torrents.hits, torrents.times_completed, torrents.id, torrents.type, torrents.numfiles, categories.name AS cat_name, users.username FROM torrents LEFT JOIN categories ON torrents.category = categories.id LEFT JOIN users ON torrents.owner = users.id WHERE torrents.id = $id")
 or die();
 $row = mysqli_fetch_array($res);
 
@@ -95,11 +95,11 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
         } elseif (isset($_GET["edited"])) {
             print("<p id=success>Torrent successfully edited!<br>");
             if (isset($_GET["returnto"])) {
-                print("<p><b>Go back to <a href=\"" . htmlspecialchars($_GET["returnto"]) . "\">whence you came</a>.</b>");
+                print("<p><b>Return to <a href=\"" . htmlspecialchars($_GET["returnto"]) . "\">previous page</a>.</b>");
             }
             print("</p>\n");
         } elseif (isset($_GET["searched"])) {
-            print("<h2>Your search for \"" . htmlspecialchars($_GET["searched"]) . "\" gave a single result:</h2>\n");
+            print("<h2>Your search for \"" . htmlspecialchars($_GET["searched"]) . "\" returned a single result:</h2>\n");
         }
 
         echo '';
@@ -115,7 +115,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
 
         $s = "<b>" . htmlspecialchars($row["name"]) . "</b>";
         if ($owned) {
-            $s .= " $spacer<$editlink>Edit torrent</a>";
+            $s .= " $spacer<$editlink><span class=edit title=\"Edit torrent\">Edit torrent</span></a>";
         }
 
         echo '<tr><th colspan="2"><span class=text1>' . $s . '</span></th></tr>';
@@ -134,7 +134,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
         }
 
         tr("Size", mksize($row["size"]) . " (" . $row["size"] . " Bytes)", 0, $rowcount++);
-        tr("Info hash", preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])), $rowcount++);
+        tr("Info hash", "<code>" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "</code>", $rowcount++);
 
         if ($row["visible"] == "no") {
             tr("Visible", "<b>no</b> (dead)", 1, $rowcount++);
@@ -151,7 +151,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
         tr("Downloads", $row["times_completed"], 0, $rowcount++);
 
         $keepget = "";
-        $uprow = isset($row["username"]) ? htmlspecialchars($row["username"]) : "<i>unknown</i>";
+        $uprow = isset($row["username"]) ? htmlspecialchars($row["username"]) : "<i>Unknown</i>";
         if (!$owned) {
             tr("Uploader", $uprow, 1, $rowcount++);
         }
@@ -235,7 +235,11 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
 
 //    print("<p><a name=\"startcomments\"></a></p>\n");
 
-    $commentbar = "<p id=\"addcomment\"><a class=\"index\" href=\"addcomment.php?id=$id\">Add a comment</a></p>\n";
+    if ($CURUSER) {
+        $commentbar = "<p id=addcomment><a class=index href=addcomment.php?id=$id>Add a comment</a></p>\n";
+    } else {
+        $commentbar = "<p id=needlogin class=note>Please <a href=login.php>login</a> to add a comment to this torrent.</p>";
+    }
 
     $subres = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) FROM comments WHERE torrent = $id");
     $subrow = mysqli_fetch_array($subres);
@@ -246,7 +250,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
     } else {
         list($pagertop, $pagerbottom, $limit) = pager(20, $count, "details.php?id=$id&", array("lastpagedefault" => 1));
 
-        $subres = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT comments.id, text, DATE_FORMAT(CONVERT_TZ(comments.added, @@session.time_zone, '+00:00'), '%d.%m.%y %T') as added, username FROM comments LEFT JOIN users ON comments.user = users.id WHERE torrent = $id ORDER BY comments.id $limit");
+        $subres = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT comments.id, text, DATE_FORMAT(CONVERT_TZ(comments.added, @@session.time_zone, '+00:00'), '%H:%i, %a %D %M %Y') as added, username FROM comments LEFT JOIN users ON comments.user = users.id WHERE torrent = $id ORDER BY comments.id $limit");
         $allrows = array();
         while ($subrow = mysqli_fetch_array($subres)) {
             $allrows[] = $subrow;
