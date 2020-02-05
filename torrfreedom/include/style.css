@@ -78,9 +78,7 @@ input[type="submit"], input[type="reset"], input[type="radio"], input[type="file
   .title table td:nth-child(2), #sitename a {
     text-shadow: none;
     background: linear-gradient(to bottom, #210, #310 15%, #fff 50%, #310 80%) !important;
-    background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .5) 2px),
-                linear-gradient(to bottom, rgba(255, 96, 0, .5), rgba(0, 0, 0, .6) 100%),
-                linear-gradient(to bottom, #740, #520 10%, #fff 35%, #310 65%) !important;
+    background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .5) 2px), linear-gradient(to bottom, rgba(255, 96, 0, .5), rgba(0, 0, 0, .6) 100%), linear-gradient(to bottom, #740, #520 10%, #fff 35%, #310 65%) !important;
     -webkit-background-clip: text !important;
     background-clip: text !important;
     -webkit-text-stroke-color: #fff;
@@ -154,19 +152,11 @@ ul {
   border: 1px solid #222;
 }
 
-#details tr:not(#dostuff):nth-child(odd) td, #dologin tr:not(#dostuff):nth-child(odd) td,
-#signup tr:not(#dostuff):nth-child(odd) td, #myaccount tr:not(#dostuff):nth-child(odd) td,
-#torrents tr:not(#dostuff):nth-child(odd), #uploader tr:not(#dostuff):nth-child(odd),
-#torrentedit tr:not(#dostuff):nth-child(odd), #details #filelist tr:nth-child(odd) td,
-#comments tr:nth-child(odd) {
+#details tr:not(#dostuff):nth-child(odd) td, #dologin tr:not(#dostuff):nth-child(odd) td, #signup tr:not(#dostuff):nth-child(odd) td, #myaccount tr:not(#dostuff):nth-child(odd) td, #torrents tr:not(#dostuff):nth-child(odd), #uploader tr:not(#dostuff):nth-child(odd), #torrentedit tr:not(#dostuff):nth-child(odd), #details #filelist tr:nth-child(odd) td, #comments tr:nth-child(odd) {
   background: #454242 !important;
 }
 
-#details tr:nth-child(even) td, #dologin tr:not(#dostuff):nth-child(even) td,
-#signup tr:not(#dostuff):nth-child(even) td, #myaccount tr:not(#dostuff):nth-child(even) td,
-#torrents tr:not(#dostuff):nth-child(even), #uploader tr:not(#dostuff):nth-child(even),
-#torrentedit tr:not(#dostuff):nth-child(even), #details #filelist tr:nth-child(odd) td,
-#comments tr:nth-child(even) {
+#details tr:nth-child(even) td, #dologin tr:not(#dostuff):nth-child(even) td, #signup tr:not(#dostuff):nth-child(even) td, #myaccount tr:not(#dostuff):nth-child(even) td, #torrents tr:not(#dostuff):nth-child(even), #uploader tr:not(#dostuff):nth-child(even), #torrentedit tr:not(#dostuff):nth-child(even), #details #filelist tr:nth-child(odd) td, #comments tr:nth-child(even) {
   background: #343131 !important;
 }
 
@@ -558,14 +548,13 @@ hr.separator {
   width: 600px !important;
 }
 
-#details, #details+#addcomment, #torrentedit, #comments, #comments + #pager,
-#pager + #addcomment, #return.note, #return.note + #addcomment, #needlogin {
+#details, #details+#addcomment, #torrentedit, #comments, #comments+#pager, #pager+#addcomment, #return.note, #return.note+#addcomment, #needlogin {
   width: 900px !important;
   border: 1px solid #111;
 }
 
 #return.note {
-    margin-top: 30px !important;
+  margin-top: 30px !important;
 }
 
 #addcomment {
@@ -573,7 +562,7 @@ hr.separator {
   padding: 10px;
 }
 
-#pager + #addcomment, #details + #needlogin {
+#pager+#addcomment, #details+#needlogin, #return+#needlogin {
   margin-top: -1px !important;
   display: none; // no need for dupe, displayed below torrent details
 }
@@ -592,26 +581,27 @@ hr.separator {
 }
 
 #comments th {
-    font-size: 100% !important;
-    padding: 4px 8px !important;
-    border-bottom: 1px solid #111;
+  font-size: 100% !important;
+  padding: 4px 8px !important;
+  border-bottom: 1px solid #111;
 }
 
 #comments tr:nth-child(n+2) th {
-    border-top: 1px solid #111;
+  border-top: 1px solid #111;
 }
 
 #comments th:first-child {
-    text-align: left;
+  text-align: left;
 }
 
 #comments th:last-child {
-    text-align: right;
+  text-align: right;
 }
+
 #comments td {
-    padding: 10px !important;
-    vertical-align: middle;
-    text-align: justify;
+  padding: 10px !important;
+  vertical-align: middle;
+  text-align: justify;
 }
 
 th a {
@@ -663,11 +653,7 @@ th a {
   padding: 9px;
 }
 
-#uploader input, #uploader input[type="text"], #uploader input[type="file"], #uploader textarea,
-#myaccount input[type="text"], #myaccount input[type="password"],
-#torrentedit textarea, #torrentedit input[type="text"],
-#dologin input[type="text"], #dologin input[type="password"],
-#signup input[type="text"], #signup input[type="password"] {
+#uploader input, #uploader input[type="text"], #uploader input[type="file"], #uploader textarea, #myaccount input[type="text"], #myaccount input[type="password"], #torrentedit textarea, #torrentedit input[type="text"], #dologin input[type="text"], #dologin input[type="password"], #signup input[type="text"], #signup input[type="password"] {
   width: calc(100% - 6px);
   max-width: calc(100% - 6px);
   box-sizing: border-box;
@@ -785,7 +771,7 @@ th a {
 }
 
 #details #peerinfo tr:first-child th::before {
-   display: none !important;
+  display: none !important;
 }
 
 #peerinfom, #details #filelist {
@@ -817,7 +803,7 @@ th a {
   font-size: 105%;
   border: none !important;
   border-radius: 4px;
-  background: rgba(48,40,40,.3);
+  background: rgba(48, 40, 40, .3);
 }
 
 #help h3 {
@@ -833,7 +819,7 @@ th a {
   position: sticky;
   top: -10px;
   z-index: 999;
-  filter: drop-shadow(0 2px 2px rgba(0,0,0,.4));
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .4));
 }
 
 #howtoupload {
