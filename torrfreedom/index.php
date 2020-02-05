@@ -106,9 +106,6 @@ if (isset($cleansearchstr)) {
 } else {
     stdhead();
     ?>
-<table>
-
-<tr><td width="100%" valign="top" colspan="2">
 <?php
 }
 
