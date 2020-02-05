@@ -9,10 +9,10 @@ function dltable($name, $arr, $torrent)
 {
     global $CURUSER;
 
-    $s = "<b>" . count($arr) . " $name</b>";
-    if (!count($arr)) {
-        return $s;
-    }
+//    $s = "<b>" . count($arr) . " $name</b>";
+    //    if (!count($arr)) {
+    //        return $s;
+    //    }
 
     $s .= "\n";
     $s .= "<table id=peerinfo>\n";
@@ -22,12 +22,12 @@ function dltable($name, $arr, $torrent)
 
     foreach ($arr as $e) {
         $s .= "<tr>\n";
-        $s .= "<td>" . truncate($e["ip"]) . "</td>\n";
+        $s .= "<td><code class=dest>" . truncate($e["ip"], 4, "") . "</code></td>\n";
         $s .= "<td>" . mksize($e["uploaded"]) . "</td>\n";
         $s .= "<td>" . mksize($e["downloaded"]) . "</td>\n";
-        $ps = sprintf("%.3f%%", 100 * (1 - ($e["to_go"] / $torrent["size"])));
+        $ps = sprintf("%.0f%%", 100 * (1 - ($e["to_go"] / $torrent["size"])));
         $ps = ($ps < 0) ? "0.000%" : $ps;
-        $s .= "<td>" . $ps . "</td>\n";
+        $s .= "<td class=downloadbar><span class=barOuter title=\"" . $ps . " complete\"><span class=barInner style=width:" . $ps . ">" . $ps . "</span></span></td>\n";
         $s .= "<td>" . mkprettytime($now - $e["st"]) . "</td>\n";
         $s .= "<td>" . mkprettytime($now - $e["la"]) . "</td>\n";
         $s .= "</tr>\n";
@@ -103,7 +103,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
         }
 
         echo '';
-        echo '<table id="details">';
+        echo '<table id=details>';
 
         $url = "edit.php?id=" . $row["id"];
         if (isset($_GET["returnto"])) {
@@ -111,18 +111,18 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
             $url .= $addthis;
             @$keepget .= $addthis;
         }
-        $editlink = "a href=\"$url\" class=\"sublink\"";
+        $editlink = "a href=$url class=edit";
 
-        $s = "<b>" . htmlspecialchars($row["name"]) . "</b>";
+        $s = "<span class=titletorrent title=\"" . htmlspecialchars($row["name"]) . "\">Torrent: " . htmlspecialchars($row["name"]) . "</span>";
         if ($owned) {
-            $s .= " $spacer<$editlink><span class=edit title=\"Edit torrent\">Edit torrent</span></a>";
+            $s .= " $spacer<$editlink><span title=\"Edit torrent\">Edit torrent</span></a>";
         }
 
-        echo '<tr><th colspan="2"><span class=text1>' . $s . '</span></th></tr>';
+        echo '<tr><th colspan=2>' . $s . '&nbsp;&nbsp;<a  class=download href=download.php?id=$id&amp;file=' . rawurlencode($row["filename"]) . "><span>" . htmlspecialchars($row["filename"]) . '</span></a></th></tr>';
 
         $rowcount = 0;
 
-        tr("Filename", "<a class=\"index\" href=\"download.php?id=$id&amp;file=" . rawurlencode($row["filename"]) . "\">" . htmlspecialchars($row["filename"]) . "</a>", 1, $rowcount++);
+//        tr("Filename", "<a class=\"index\" href=\"download.php?id=$id&amp;file=" . rawurlencode($row["filename"]) . "\">" . htmlspecialchars($row["filename"]) . "</a>", 1, $rowcount++);
         if (!empty($row["descr"])) {
             tr("Description", $row["descr"], 1, $rowcount++);
         }
@@ -137,14 +137,13 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
         tr("Info hash", "<code>" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "</code>", $rowcount++);
 
         if ($row["visible"] == "no") {
-            tr("Visible", "<b>no</b> (dead)", 1, $rowcount++);
+            tr("Visible", "<span class=\"no small\" title=\"No peers currently connected to this torrent\">No</span>", 1, $rowcount++);
         }
 
         if ($admin) {
             tr("Banned", $row["banned"], 0, $rowcount++);
         }
 
-        tr("Last seeder seen", mkprettytime($row["lastseed"]) . " ago", 0, $rowcount++);
         tr("Added", $row["added"] . " UTC", 0, $rowcount++);
         if ($CURUSER) {
             tr("Views", $row["views"], 0, $rowcount++);
@@ -160,9 +159,9 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
 
         if ($row["type"] == "multi") {
             if (!@$_GET["filelist"]) {
-                tr("Files<br><a href=\"details.php?id=$id&amp;filelist=1$keepget#filelist\" class=\"sublink\">View full list</a>", $row["numfiles"], 1, $rowcount++);
+                tr("Files", $row["numfiles"] . '&nbsp;&nbsp;&nbsp;<a href=details.php?id=' . $id . '&amp;filelist=1$keepget#filelist>Show list</a>', 1, $rowcount++);
             } else {
-                tr("Files", $row["numfiles"], 1, $rowcount++);
+//                tr("Files", $row["numfiles"], 1, $rowcount++);
 
                 $s = "<table id=filelist>\n";
 
@@ -172,12 +171,20 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
                 }
 
                 $s .= "</table>\n";
-                tr("<a name=\"filelist\">File List</a><br /><a href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", $s, 1, $rowcount++);
+                tr("<a name=\"filelist\">File List</a><br /><a href=\"details.php?id=$id$keepget\">Hide list</a>", $s, 1, $rowcount++);
             }
         }
 
+        tr("Last seeder seen", mkprettytime($row["lastseed"]) . " ago", 0, $rowcount++);
+
         if (!@$_GET["dllist"]) {
-            tr("Peers<br /><a href=\"details.php?id=$id&amp;dllist=1$keepget#seeds\" class=\"sublink\">View full list</a>", "Seeds: " . $row["seeders"] . "<br>Downloaders: " . $row["leechers"], 1, $rowcount++);
+            if ($row["seeders"] || $row["leechers"]) {
+                $showpeers = "&nbsp;&nbsp;&nbsp;<a href=details.php?id=" . $id . "&amp;dllist=1" . $keepget . "#seeds>View full list</a>";
+            } else {
+                $showpeers = "";
+            }
+
+            tr("Peers", "Seeds: " . $row["seeders"] . "&nbsp;&nbsp;&nbsp;Downloaders: " . $row["leechers"] . $showpeers, 1, $rowcount++);
         } else {
             $downloaders = array();
             $seeders = array();
@@ -188,7 +195,6 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
                 } else {
                     $downloaders[] = $subrow;
                 }
-
             }
 
             function leech_sort($a, $b)
@@ -223,8 +229,14 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
             usort($seeders, "seed_sort");
             usort($downloaders, "leech_sort");
 
-            tr("<a name=\"seeds\">Seeds</a><br /><a href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", dltable("Seeds", $seeders, $row), 1, $rowcount++);
-            tr("<a name=\"leeches\">Leeches</a><br /><a href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", dltable("Leeches", $downloaders, $row), 1, $rowcount++);
+            if ($seeders) {
+                tr("<a name=\"seeds\">Seeds</a><br /><a href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", dltable("Seeds", $seeders, $row), 1, $rowcount++);
+            }
+
+            if ($downloaders) {
+                tr("<a name=\"leeches\">Leechers</a><br /><a href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", dltable("Leechers", $downloaders, $row), 1, $rowcount++);
+            }
+
         }
 
         print("</table>\n");

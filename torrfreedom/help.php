@@ -4,7 +4,7 @@ dbconn();
 stdhead();
 require_once 'include/siteinfo.inc.php';
 ?>
-<table height=100% valign=center>
+<table id=helpwrapper height=100%>
 <tr><td>
 <div id=help>
 
