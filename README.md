@@ -15,3 +15,4 @@ TF Website
 - [ ] More configuration options during installation
 - [ ] Optional hiding of torrent uploader on torrents page
 - [ ] Support avatar icons for users with upload and default fall-back icon
+- [ ] Add option to delete account when logged in (with optional removal of all uploaded torrents and comments)
