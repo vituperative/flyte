@@ -146,13 +146,15 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
 
         tr("Last seeder seen", mkprettytime($row["lastseed"]) . " ago", 0, $rowcount++);
         tr("Added", $row["added"] . " UTC", 0, $rowcount++);
-        tr("Views", $row["views"], 0, $rowcount++);
-        tr("Hits", $row["hits"], 0, $rowcount++);
+        if ($CURUSER) {
+            tr("Views", $row["views"], 0, $rowcount++);
+            tr("Hits", $row["hits"], 0, $rowcount++);
+        }
         tr("Downloads", $row["times_completed"], 0, $rowcount++);
 
         $keepget = "";
         $uprow = isset($row["username"]) ? htmlspecialchars($row["username"]) : "<i>Unknown</i>";
-        if (!$owned) {
+        if (!$owned && $CURUSER) {
             tr("Uploader", $uprow, 1, $rowcount++);
         }
 
