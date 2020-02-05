@@ -152,11 +152,11 @@ ul {
   border: 1px solid #222;
 }
 
-#details tr:not(#dostuff):nth-child(odd) td, #dologin tr:not(#dostuff):nth-child(odd) td, #signup tr:not(#dostuff):nth-child(odd) td, #myaccount tr:not(#dostuff):nth-child(odd) td, #torrents tr:not(#dostuff):nth-child(odd), #uploader tr:not(#dostuff):nth-child(odd), #torrentedit tr:not(#dostuff):nth-child(odd), #details #filelist tr:nth-child(odd) td, #comments tr:nth-child(odd) {
+tr:nth-child(odd), table tr:nth-child(odd) {
   background: #454242 !important;
 }
 
-#details tr:nth-child(even) td, #dologin tr:not(#dostuff):nth-child(even) td, #signup tr:not(#dostuff):nth-child(even) td, #myaccount tr:not(#dostuff):nth-child(even) td, #torrents tr:not(#dostuff):nth-child(even), #uploader tr:not(#dostuff):nth-child(even), #torrentedit tr:not(#dostuff):nth-child(even), #details #filelist tr:nth-child(odd) td, #comments tr:nth-child(even) {
+tr:nth-child(even), table tr:nth-child(even) {
   background: #343131 !important;
 }
 
@@ -846,6 +846,10 @@ th a {
 
 .edit {
   background: url(../pic/edit.png) no-repeat;
+}
+
+#comments .posted {
+    font-size: 90% !important;
 }
 
 @media screen and (max-width: 1200px) {
