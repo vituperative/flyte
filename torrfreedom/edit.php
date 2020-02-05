@@ -51,7 +51,6 @@ if (!isset($CURUSER) || ($CURUSER["id"] != $row["owner"] && $CURUSER["admin"] !=
         tr("Banned", "<input type=\"checkbox\" name=\"banned\"" . (($row["banned"] == "yes") ? " checked=\"checked\"" : "") . " value=\"1\" /> Banned", 1);
     }
 
-    print("<tr id=dostuff><td colspan=\"2\" align=\"center\"><input type=\"submit\" value=\"Update Torrent\" /> </td></tr>");
     print("</table>\n");
     print("</form>\n");
     print("<hr />\n");
@@ -61,8 +60,10 @@ if (!isset($CURUSER) || ($CURUSER["id"] != $row["owner"] && $CURUSER["admin"] !=
     if (isset($_GET["returnto"])) {
         print("<input type=\"hidden\" name=\"returnto\" value=\"" . htmlspecialchars($_GET["returnto"]) . "\" />\n");
     }
+
+    print("<tr id=dostuff><td colspan=\"2\" align=\"center\"><input type=\"submit\" value=\"Update Torrent\" /> ");
     print("<input type=\"submit\" value=\"Delete Torrent\" />\n");
-    print("<input type=\"checkbox\" name=\"sure\" value=\"1\" /> Confirm delete\n");
+    print("<input type=\"checkbox\" name=\"sure\" value=\"1\" /> Confirm delete</td></tr>\n");
     print("</form>\n");
     print("</p>\n");
 }
