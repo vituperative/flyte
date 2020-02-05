@@ -558,7 +558,8 @@ hr.separator {
   width: 600px !important;
 }
 
-#details, #details+#addcomment, #torrentedit, #comments, #comments + #pager, #pager + #addcomment, #return.note, #return.note + #addcomment {
+#details, #details+#addcomment, #torrentedit, #comments, #comments + #pager,
+#pager + #addcomment, #return.note, #return.note + #addcomment, #needlogin {
   width: 900px !important;
   border: 1px solid #111;
 }
@@ -572,7 +573,7 @@ hr.separator {
   padding: 10px;
 }
 
-#pager + #addcomment {
+#pager + #addcomment, #details + #needlogin {
   margin-top: -1px !important;
   display: none; // no need for dupe, displayed below torrent details
 }
@@ -841,6 +842,24 @@ th a {
 
 #howtoupload li {
   margin-bottom: 8px;
+}
+
+.yes, .no, .edit {
+  font-size: 0;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: url(../pic/yes.png) no-repeat;
+  background-size: 16px 16px !important;
+  vertical-align: middle;
+}
+
+.no {
+  background: url(../pic/no.png) no-repeat;
+}
+
+.edit {
+  background: url(../pic/edit.png) no-repeat;
 }
 
 @media screen and (max-width: 1200px) {

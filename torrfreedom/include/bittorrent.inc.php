@@ -616,15 +616,15 @@ function torrenttable($res, $variant = "index")
         if ($variant == "index") {
             print("<td class=dlicons><a href=\"download.php?id=$id&amp;file=" . htmlentities(urlencode($row["filename"])) . "\"><img src=\"../pic/download.png\" border=0 width=24 height=24></a> <a href=\"magnet:?xt=urn:btih:" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "&amp;dn=" . htmlentities(urlencode($row["filename"])) . "&amp;tr=" . $announce_urls[5] . "\"><img src=\"../pic/magnet.png\" border=0 width=24 height=24></a></td>");
         } elseif ($variant == "mytorrents") {
-            print("<td><a href=\"edit.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;id=" . $row["id"] . "\">edit</a></td>\n");
+            print("<td><a href=\"edit.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;id=" . $row["id"] . "\"><span class=edit title=\"Edit torrent\">edit</span></a></td>\n");
         }
 
         if ($variant == "mytorrents") {
             print("<td>");
             if ($row["visible"] == "no") {
-                print("<b>no</b>");
+                print("<span class=no>no</span>");
             } else {
-                print("yes");
+                print("<span class=yes>yes</span>");
             }
 
             print("</td>\n");
