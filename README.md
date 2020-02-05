@@ -14,3 +14,4 @@ TF Website
 - [ ] Configuration panel for administrator
 - [ ] More configuration options during installation
 - [ ] Optional hiding of torrent uploader on torrents page
+- [ ] Support avatar icons for users with upload and default fall-back icon
