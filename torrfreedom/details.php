@@ -9,25 +9,31 @@ function dltable($name, $arr, $torrent)
 {
     global $CURUSER;
 
-    $s = "<b>" . count($arr) . " $name</b>";
-    if (!count($arr)) {
-        return $s;
-    }
+//    $s = "<b>" . count($arr) . " $name</b>";
+    //    if (!count($arr)) {
+    //        return $s;
+    //    }
 
     $s .= "\n";
     $s .= "<table id=peerinfo>\n";
-    $s .= "<tr><th>Destination</th><th>Uploaded</th><th>Downloaded</th><th>Complete</th><th>Time connected</th><th>Idle</th></tr>\n";
+    if ($CURUSER)
+        $s .= "<tr><th>Destination</th><th>Uploaded</th><th>Downloaded</th><th>Completed</th><th>Time connected</th><th>Idle</th></tr>\n";
+    else
+        $s .= "<tr><th>Peer</th><th>Uploaded</th><th>Downloaded</th><th>Completed</th><th>Time connected</th><th>Idle</th></tr>\n";
     $now = time();
     $admin = (isset($CURUSER) && $CURUSER["admin"] == "yes");
 
     foreach ($arr as $e) {
         $s .= "<tr>\n";
-        $s .= "<td>" . truncate($e["ip"]) . "</td>\n";
+        if ($CURUSER)
+            $s .= "<td><code class=dest>" . truncate($e["ip"], 4, "") . "</code></td>\n";
+        else
+            $s .= "<td class=peer title=\"Peer destinations can only been seen when logged in\"></td>\n";
         $s .= "<td>" . mksize($e["uploaded"]) . "</td>\n";
         $s .= "<td>" . mksize($e["downloaded"]) . "</td>\n";
-        $ps = sprintf("%.3f%%", 100 * (1 - ($e["to_go"] / $torrent["size"])));
+        $ps = sprintf("%.0f%%", 100 * (1 - ($e["to_go"] / $torrent["size"])));
         $ps = ($ps < 0) ? "0.000%" : $ps;
-        $s .= "<td>" . $ps . "</td>\n";
+        $s .= "<td class=downloadbar><span class=barOuter title=\"" . $ps . " complete\"><span class=barInner style=width:" . $ps . ">" . $ps . "</span></span></td>\n";
         $s .= "<td>" . mkprettytime($now - $e["st"]) . "</td>\n";
         $s .= "<td>" . mkprettytime($now - $e["la"]) . "</td>\n";
         $s .= "</tr>\n";
@@ -44,7 +50,7 @@ if (!isset($id) || !$id) {
     die();
 }
 
-$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT torrents.seeders, torrents.banned, torrents.leechers, torrents.info_hash, torrents.filename, UNIX_TIMESTAMP() - UNIX_TIMESTAMP(torrents.last_action) AS lastseed, torrents.name, torrents.owner, torrents.save_as, torrents.descr, torrents.visible, torrents.size, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%d.%m.%y %T') as added, torrents.views, torrents.hits, torrents.times_completed, torrents.id, torrents.type, torrents.numfiles, categories.name AS cat_name, users.username FROM torrents LEFT JOIN categories ON torrents.category = categories.id LEFT JOIN users ON torrents.owner = users.id WHERE torrents.id = $id")
+$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT torrents.seeders, torrents.banned, torrents.leechers, torrents.info_hash, torrents.filename, UNIX_TIMESTAMP() - UNIX_TIMESTAMP(torrents.last_action) AS lastseed, torrents.name, torrents.owner, torrents.save_as, torrents.descr, torrents.visible, torrents.size, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%H:%i, %a %D %M %Y') as added, torrents.views, torrents.hits, torrents.times_completed, torrents.id, torrents.type, torrents.numfiles, categories.name AS cat_name, users.username FROM torrents LEFT JOIN categories ON torrents.category = categories.id LEFT JOIN users ON torrents.owner = users.id WHERE torrents.id = $id")
 or die();
 $row = mysqli_fetch_array($res);
 
@@ -95,15 +101,15 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
         } elseif (isset($_GET["edited"])) {
             print("<p id=success>Torrent successfully edited!<br>");
             if (isset($_GET["returnto"])) {
-                print("<p><b>Go back to <a href=\"" . htmlspecialchars($_GET["returnto"]) . "\">whence you came</a>.</b>");
+                print("<p><b>Return to <a href=\"" . htmlspecialchars($_GET["returnto"]) . "\">previous page</a>.</b>");
             }
             print("</p>\n");
         } elseif (isset($_GET["searched"])) {
-            print("<h2>Your search for \"" . htmlspecialchars($_GET["searched"]) . "\" gave a single result:</h2>\n");
+            print("<h2>Your search for \"" . htmlspecialchars($_GET["searched"]) . "\" returned a single result:</h2>\n");
         }
 
         echo '';
-        echo '<table id="details">';
+        echo '<table id=details>';
 
         $url = "edit.php?id=" . $row["id"];
         if (isset($_GET["returnto"])) {
@@ -111,18 +117,18 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
             $url .= $addthis;
             @$keepget .= $addthis;
         }
-        $editlink = "a href=\"$url\" class=\"sublink\"";
+        $editlink = "a href=$url class=edit";
 
-        $s = "<b>" . htmlspecialchars($row["name"]) . "</b>";
+        $s = "<span class=titletorrent title=\"" . htmlspecialchars($row["name"]) . "\">Torrent: " . htmlspecialchars($row["name"]) . "</span>";
         if ($owned) {
-            $s .= " $spacer<$editlink>Edit torrent</a>";
+            $s .= " $spacer<$editlink><span title=\"Edit torrent\">Edit torrent</span></a>";
         }
 
-        echo '<tr><th colspan="2"><span class=text1>' . $s . '</span></th></tr>';
+        echo '<tr><th colspan=2>' . $s . '&nbsp;&nbsp;<a  class=download href=download.php?id=$id&amp;file=' . rawurlencode($row["filename"]) . "><span>" . htmlspecialchars($row["filename"]) . '</span></a></th></tr>';
 
         $rowcount = 0;
 
-        tr("Filename", "<a class=\"index\" href=\"download.php?id=$id&amp;file=" . rawurlencode($row["filename"]) . "\">" . htmlspecialchars($row["filename"]) . "</a>", 1, $rowcount++);
+//        tr("Filename", "<a class=\"index\" href=\"download.php?id=$id&amp;file=" . rawurlencode($row["filename"]) . "\">" . htmlspecialchars($row["filename"]) . "</a>", 1, $rowcount++);
         if (!empty($row["descr"])) {
             tr("Description", $row["descr"], 1, $rowcount++);
         }
@@ -134,33 +140,34 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
         }
 
         tr("Size", mksize($row["size"]) . " (" . $row["size"] . " Bytes)", 0, $rowcount++);
-        tr("Info hash", preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])), $rowcount++);
+        tr("Info hash", "<code>" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "</code>", $rowcount++);
 
         if ($row["visible"] == "no") {
-            tr("Visible", "<b>no</b> (dead)", 1, $rowcount++);
+            tr("Visible", "<span class=\"no small\" title=\"No seeds currently connected to this torrent\">No</span>", 1, $rowcount++);
         }
 
         if ($admin) {
             tr("Banned", $row["banned"], 0, $rowcount++);
         }
 
-        tr("Last seeder seen", mkprettytime($row["lastseed"]) . " ago", 0, $rowcount++);
         tr("Added", $row["added"] . " UTC", 0, $rowcount++);
-        tr("Views", $row["views"], 0, $rowcount++);
-        tr("Hits", $row["hits"], 0, $rowcount++);
+        if ($CURUSER) {
+            tr("Views", $row["views"], 0, $rowcount++);
+            tr("Hits", $row["hits"], 0, $rowcount++);
+        }
         tr("Downloads", $row["times_completed"], 0, $rowcount++);
 
         $keepget = "";
-        $uprow = isset($row["username"]) ? htmlspecialchars($row["username"]) : "<i>unknown</i>";
-        if (!$owned) {
+        $uprow = isset($row["username"]) ? htmlspecialchars($row["username"]) : "<i>Unknown</i>";
+        if (!$owned && $CURUSER) {
             tr("Uploader", $uprow, 1, $rowcount++);
         }
 
         if ($row["type"] == "multi") {
             if (!@$_GET["filelist"]) {
-                tr("Files<br><a href=\"details.php?id=$id&amp;filelist=1$keepget#filelist\" class=\"sublink\">View full list</a>", $row["numfiles"], 1, $rowcount++);
+                tr("Files", $row["numfiles"] . '&nbsp;&nbsp;&nbsp;<a href=details.php?id=' . $id . '&amp;filelist=1$keepget#filelist>Show list</a>', 1, $rowcount++);
             } else {
-                tr("Files", $row["numfiles"], 1, $rowcount++);
+//                tr("Files", $row["numfiles"], 1, $rowcount++);
 
                 $s = "<table id=filelist>\n";
 
@@ -170,12 +177,20 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
                 }
 
                 $s .= "</table>\n";
-                tr("<a name=\"filelist\">File List</a><br /><a href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", $s, 1, $rowcount++);
+                tr("<a name=\"filelist\">File List</a><br /><a href=\"details.php?id=$id$keepget\">Hide list</a>", $s, 1, $rowcount++);
             }
         }
 
+        tr("Last seeder seen", mkprettytime($row["lastseed"]) . " ago", 0, $rowcount++);
+
         if (!@$_GET["dllist"]) {
-            tr("Peers<br /><a href=\"details.php?id=$id&amp;dllist=1$keepget#seeds\" class=\"sublink\">View full list</a>", "Seeds: " . $row["seeders"] . "<br>Downloaders: " . $row["leechers"], 1, $rowcount++);
+            if ($row["seeders"] || $row["leechers"]) {
+                $showpeers = "&nbsp;&nbsp;&nbsp;<a href=details.php?id=" . $id . "&amp;dllist=1" . $keepget . "#seeds>View full list</a>";
+            } else {
+                $showpeers = "";
+            }
+
+            tr("Peers", "Seeds: " . $row["seeders"] . "&nbsp;&nbsp;&nbsp;Downloaders: " . $row["leechers"] . $showpeers, 1, $rowcount++);
         } else {
             $downloaders = array();
             $seeders = array();
@@ -186,7 +201,6 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
                 } else {
                     $downloaders[] = $subrow;
                 }
-
             }
 
             function leech_sort($a, $b)
@@ -221,8 +235,14 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
             usort($seeders, "seed_sort");
             usort($downloaders, "leech_sort");
 
-            tr("<a name=\"seeds\">Seeds</a><br /><a href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", dltable("Seeds", $seeders, $row), 1, $rowcount++);
-            tr("<a name=\"leeches\">Leeches</a><br /><a href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", dltable("Leeches", $downloaders, $row), 1, $rowcount++);
+            if ($seeders) {
+                tr("<a name=\"seeds\">Seeds</a><br /><a href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", dltable("Seeds", $seeders, $row), 1, $rowcount++);
+            }
+
+            if ($downloaders) {
+                tr("<a name=\"leeches\">Leechers</a><br /><a href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", dltable("Leechers", $downloaders, $row), 1, $rowcount++);
+            }
+
         }
 
         print("</table>\n");
@@ -235,7 +255,11 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
 
 //    print("<p><a name=\"startcomments\"></a></p>\n");
 
-    $commentbar = "<p id=\"addcomment\"><a class=\"index\" href=\"addcomment.php?id=$id\">Add a comment</a></p>\n";
+    if ($CURUSER) {
+        $commentbar = "<p id=addcomment><a class=index href=addcomment.php?id=$id>Add a comment</a></p>\n";
+    } else {
+        $commentbar = "<p id=needlogin class=note>Please <a href=login.php>login</a> to add a comment to this torrent.</p>";
+    }
 
     $subres = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) FROM comments WHERE torrent = $id");
     $subrow = mysqli_fetch_array($subres);
@@ -246,7 +270,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
     } else {
         list($pagertop, $pagerbottom, $limit) = pager(20, $count, "details.php?id=$id&", array("lastpagedefault" => 1));
 
-        $subres = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT comments.id, text, DATE_FORMAT(CONVERT_TZ(comments.added, @@session.time_zone, '+00:00'), '%d.%m.%y %T') as added, username FROM comments LEFT JOIN users ON comments.user = users.id WHERE torrent = $id ORDER BY comments.id $limit");
+        $subres = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT comments.id, text, DATE_FORMAT(CONVERT_TZ(comments.added, @@session.time_zone, '+00:00'), '%H:%i, %a %D %M %Y') as added, username FROM comments LEFT JOIN users ON comments.user = users.id WHERE torrent = $id ORDER BY comments.id $limit");
         $allrows = array();
         while ($subrow = mysqli_fetch_array($subres)) {
             $allrows[] = $subrow;

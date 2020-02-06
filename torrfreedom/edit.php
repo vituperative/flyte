@@ -51,20 +51,19 @@ if (!isset($CURUSER) || ($CURUSER["id"] != $row["owner"] && $CURUSER["admin"] !=
         tr("Banned", "<input type=\"checkbox\" name=\"banned\"" . (($row["banned"] == "yes") ? " checked=\"checked\"" : "") . " value=\"1\" /> Banned", 1);
     }
 
-    print("<tr id=dostuff><td colspan=\"2\" align=\"center\"><input type=\"submit\" value=\"Update Torrent\" /> </td></tr>");
+    print("<tr id=dostuff><td colspan=\"2\" align=\"center\"><input type=\"submit\" value=\"Update Torrent\" /> ");
     print("</table>\n");
     print("</form>\n");
-    print("<hr />\n");
-    print("<p>\n");
     print("<form method=\"post\" action=\"delete.php\">\n");
+    print("<p id=nuke>\n");
     print("<input type=\"hidden\" name=\"id\" value=\"$id\">\n");
     if (isset($_GET["returnto"])) {
         print("<input type=\"hidden\" name=\"returnto\" value=\"" . htmlspecialchars($_GET["returnto"]) . "\" />\n");
     }
     print("<input type=\"submit\" value=\"Delete Torrent\" />\n");
-    print("<input type=\"checkbox\" name=\"sure\" value=\"1\" /> Confirm delete\n");
-    print("</form>\n");
+    print("<input type=\"checkbox\" name=\"sure\" value=\"1\" /> Confirm delete</td></tr>\n");
     print("</p>\n");
+    print("</form>\n");
 }
 
 stdfoot();

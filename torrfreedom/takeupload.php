@@ -24,7 +24,7 @@ if (!isset($_FILES["file"]))
 $f = $_FILES["file"];
 $fname = unesc($f["name"]);
 if (empty($fname))
-	bark("Empty filename!");
+	bark("Please supply a filename!");
 if (!validfilename($f["name"]))
 	bark("Invalid filename! $fname");
 if (!preg_match('/^(.+)\.torrent$/si', $fname, $matches))

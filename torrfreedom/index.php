@@ -106,9 +106,6 @@ if (isset($cleansearchstr)) {
 } else {
     stdhead();
     ?>
-<table>
-
-<tr><td width="100%" valign="top" colspan="2">
 <?php
 }
 
@@ -118,7 +115,7 @@ $cats = genrelist();
 <div id="searchandshow">
 <form method="get" action="./">
 <div id=search>
-Search: <input name="search" type="text" value="<?=htmlspecialchars($searchstr)?>" size="40" class="input"> in
+<input name="search" type="text" value="<?=htmlspecialchars($searchstr)?>" size="40" class="input">
 <select class="input" name="cat"><option value="0">(all types)</option>
 <?php
 
@@ -132,12 +129,12 @@ foreach ($cats as $cat) {
     $catdropdown .= ">" . htmlspecialchars($cat["name"]) . "</option>\n";
 }
 
-$deadchkbox = "<input type=\"checkbox\" name=\"incldead\" value=\"1\"";
+$deadchkbox = "<label><input type=\"checkbox\" name=\"incldead\" value=\"1\"";
 if (isset($_GET["incldead"])) {
     $deadchkbox .= " checked=\"checked\"";
 }
 
-$deadchkbox .= " /> ... and include dead torrents\n";
+$deadchkbox .= " /> include dead torrents</label>&nbsp; \n";
 
 ?>
 <?=$catdropdown?>
@@ -154,7 +151,7 @@ if ($additionals) {
 }
 ?>
 <form method="get" action="./">
-Show all of: <select class="input" name="cat"><option value="0">(any type)</option>
+Show: <select class="input" name="cat"><option value="0">(any type)</option>
 <?=$catdropdown?>
 </select>
 <?=$deadchkbox?>
