@@ -60,7 +60,6 @@ if (!isset($CURUSER) || ($CURUSER["id"] != $row["owner"] && $CURUSER["admin"] !=
     if (isset($_GET["returnto"])) {
         print("<input type=\"hidden\" name=\"returnto\" value=\"" . htmlspecialchars($_GET["returnto"]) . "\" />\n");
     }
-
     print("<tr id=dostuff><td colspan=\"2\" align=\"center\"><input type=\"submit\" value=\"Update Torrent\" /> ");
     print("<input type=\"submit\" value=\"Delete Torrent\" />\n");
     print("<input type=\"checkbox\" name=\"sure\" value=\"1\" /> Confirm delete</td></tr>\n");

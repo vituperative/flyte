@@ -137,7 +137,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
         tr("Info hash", "<code>" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "</code>", $rowcount++);
 
         if ($row["visible"] == "no") {
-            tr("Visible", "<span class=\"no small\" title=\"No peers currently connected to this torrent\">No</span>", 1, $rowcount++);
+            tr("Visible", "<span class=\"no small\" title=\"No seeds currently connected to this torrent\">No</span>", 1, $rowcount++);
         }
 
         if ($admin) {
