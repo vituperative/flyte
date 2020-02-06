@@ -22,6 +22,10 @@ $tracker_url_name = "http://torrfreedom.i2p";
 // remember to append the .i2p suffix after your key
 $tracker_url_key = "http://nfrjvknwcw47itotkzmk6mdlxmxfxsxhbhlr5ozhlsuavcogv4hq.b32.i2p"; 
 
+// absolute path to the tracker, excluding the domain name or ip address, with a trailing /
+// if the tracker software is being served from the document root, specify / as the path
+$tracker_path = "/";
+
 // Complete server path to the torrents directory on your server.
 // use forward slashes for windows paths eg. C:/path/to/torrents
 $torrent_dir = "/path/to/torrents";
