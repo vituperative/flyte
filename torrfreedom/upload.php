@@ -14,9 +14,9 @@ stdhead("Upload");
 
 tr("Upload file", "<input class=input type=file name=file size=60 required />\n", 1);
 tr("Torrent name", "<input class=input type=text name=name size=80 placeholder=\"Taken from filename if not specified.\"/>", 1);
-tr("Description", "<textarea class=input name=descr rows=10 cols=80></textarea>", 1);
+tr("Description", "<textarea class=input name=descr rows=10 cols=80 required></textarea>", 1);
 
-$s = "<select class=input name=type required>\n<option value=0>(choose one)</option>\n";
+$s = "<select class=input name=type required>\n<option value=\"\">Select category&hellip;</option>\n";
 
 $cats = genrelist();
 foreach ($cats as $row) {

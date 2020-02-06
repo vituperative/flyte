@@ -14,7 +14,7 @@ if (!empty($_GET["returnto"])) {
 <p id=warn class=cookies>Please ensure cookies are enabled in your browser.</a>
 <table id=dologin>
 <tr><th colspan=2>Login to <?php echo "$tracker_title"; ?></th></tr>
-<tr><td>Username</td><td><input class="input" type="text" size="20" name="username" /></td></tr>
+<tr><td>Username</td><td><input id="username" class="input" type="text" size="20" name="username" /></td></tr>
 <tr><td>Password</td><td><input class="input" type="password" size="20" name="password" /></td></tr>
 <tr id=dostuff><td colspan="2"><input type="submit" value="Log in!" class="input" /></td></tr>
 </table>

@@ -26,7 +26,7 @@ if (!isset($CURUSER) || ($CURUSER["id"] != $row["owner"] && $CURUSER["admin"] !=
 	bark("You're not the owner! How did that happen?\n");
 
 if (!@$_POST["sure"])
-	bark("Can't delete anything unless you're really sure.\n");
+	bark("Please confirm that you wish to delete the torrent!\n");
 
 deletetorrent($id);
 
@@ -38,8 +38,7 @@ else
 	$ret = "<a href=\"./\">Back to index</a>";
 
 ?>
-<h2>Torrent deleted!</h2>
-<p><?= $ret ?></p>
+<p class=toast id=success>Torrent deleted! <?= $ret ?></p>
 <?php
 
 stdfoot();
