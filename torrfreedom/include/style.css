@@ -131,10 +131,6 @@ a:active {
   color: #d30;
 }
 
-a.biglink {
-  text-decoration: none;
-}
-
 td a img {
   opacity: .7;
 }
@@ -147,18 +143,8 @@ a, b, label {
   font-weight: 600 !important;
 }
 
-.borderTable tr:last-child td {
-  text-align: center;
-  border-bottom: 1px solid #222;
-}
-
 ul {
   list-style: none;
-}
-
-#uploader {
-  margin-top: 8px;
-  border: 1px solid #222;
 }
 
 tr:nth-child(odd) {
@@ -280,7 +266,7 @@ input[type="submit"], input[type="reset"], input[type="file"], input[type="text"
   box-shadow: 0 0 0 1px #121010;
   border-radius: 2px !important;
   background: #343232;
-  color: #eee;
+  color: #bbb;
   outline: none;
 }
 
@@ -342,6 +328,14 @@ textarea {
   padding: 4px 6px;
   border-radius: 3px !important;
   box-shadow: inset 1px 1px 1px #222, 0 0 0 1px #121010;
+}
+
+label {
+  color: #999;
+}
+
+label:hover {
+  color: #bbb;
 }
 
 @supports (background-blend-mode: luminosity) {
@@ -494,6 +488,8 @@ hr.separator {
 
 #topnav a:hover, #topnav a:focus, #addcomment a:hover, #addcomment a:focus, #pager a:hover, #pager a:focus {
   color: #f60;
+  background: linear-gradient(to bottom, #232020, #454040);
+  text-decoration: none;
 }
 
 #topnav a:active, #addcomment a:active {
@@ -555,7 +551,7 @@ hr.separator {
   text-transform: capitalize;
 }
 
-#addcomment, .note, #upload.note, #success, #warn {
+#addcomment, .note, #upload.note, #success, #warn, #nuke {
   margin-bottom: 10px;
   padding: 15px;
   font-size: 110%;
@@ -565,7 +561,7 @@ hr.separator {
   background: linear-gradient(to bottom, #343232, #232020);
 }
 
-#details, #addcomment, #uploader, .note, #upload.note, #success, #myaccount, #dologin, #signup, #warn, #help {
+#details, #addcomment, #uploader, .note, #upload.note, #success, #myaccount, #dologin, #signup, #warn, #help, #nuke {
   margin: 0 auto 10px !important;
   width: 800px !important;
   box-sizing: border-box;
@@ -576,9 +572,14 @@ hr.separator {
   width: 600px !important;
 }
 
-#details, #details+#addcomment, #torrentedit, #comments, #comments+#pager, #pager+#addcomment, #return.note, #return.note+#addcomment, #needlogin {
+#details, #details+#addcomment, #torrentedit, #comments, #comments+#pager, #pager+#addcomment, #return.note, #return.note+#addcomment, #needlogin, #nuke {
   width: 900px !important;
   border: 1px solid #111;
+}
+
+#uploader {
+  margin-top: 8px;
+  border: 1px solid #222;
 }
 
 #return.note {
@@ -673,7 +674,7 @@ table table {
   padding-right: 8px;
   text-align: right !important;
 }
-
+#
 #nocomments {
   display: none;
 }
@@ -687,11 +688,11 @@ table table {
 }
 
 #uploader td:first-child b {
-    margin: 0 8px;
+  margin: 0 8px;
 }
 
 #uploader td:last-child {
-    padding-left: 4px !important;
+  padding-left: 4px !important;
 }
 
 #uploader input, #uploader input[type="text"], #uploader input[type="file"], #uploader textarea, #myaccount input[type="text"], #myaccount input[type="password"], #torrentedit textarea, #torrentedit input[type="text"], #dologin input[type="text"], #dologin input[type="password"], #signup input[type="text"], #signup input[type="password"] {
@@ -712,7 +713,7 @@ table table {
   min-height: 120px;
 }
 
-#upload.note, #warn {
+#upload.note, #warn, #nuke {
   box-shadow: inset 0 0 0 1px #232020, inset 0 0 1px 1px #900;
 }
 
@@ -807,6 +808,20 @@ table table {
   padding-top: 15px;
 }
 
+#search input[type="text"] {
+  width: 160px;
+  padding-left: 28px;
+  background-image: url(../pic/search.png);
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  background-position: 6px center;
+  background-blend-mode: luminosity;
+}
+
+#search input[type="text"]:hover, #search input[type="text"]:focus {
+  background-blend-mode: normal;
+}
+
 #torrentshow {
   margin: 15px 0 20px !important;
   padding-bottom: 11px;
@@ -828,8 +843,16 @@ table table {
   font-size: 85% !important;
 }
 
-#peerinfo td {
+#peerinfo td:not(:nth-child(4)) {
   padding: 3px 8px !important;
+  font-size: 95% !important;
+}
+
+#peerinfo .peer {
+  background-image: url(../pic/peer.png) !important;
+  background-size: 16px 16px !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
 }
 
 code.dest {
@@ -906,7 +929,7 @@ code.dest {
 }
 
 #details .titletorrent {
-  max-width: 500px;
+  max-width: 750px;
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;
@@ -920,6 +943,7 @@ code.dest {
   display: inline-block;
   height: 20px !important;
   width: 20px !important;
+  font-size: 0 !important;
   border-radius: 2px;
   box-shadow: inset 0 0 0 1px #454040, 0 0 0 1px #121010;
   background: linear-gradient(to bottom, #454040, #232020);
@@ -958,7 +982,7 @@ th a:nth-child(2) {
   display: inline-block;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .6);
   background: #151;
-  background: linear-gradient(to bottom, #151 50%, #121);
+  background: linear-gradient(to bottom, #151, #121);
 }
 
 #comments .posted {
