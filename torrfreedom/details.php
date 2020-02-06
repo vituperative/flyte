@@ -16,13 +16,19 @@ function dltable($name, $arr, $torrent)
 
     $s .= "\n";
     $s .= "<table id=peerinfo>\n";
-    $s .= "<tr><th>Destination</th><th>Uploaded</th><th>Downloaded</th><th>Complete</th><th>Time connected</th><th>Idle</th></tr>\n";
+    if ($CURUSER)
+        $s .= "<tr><th>Destination</th><th>Uploaded</th><th>Downloaded</th><th>Completed</th><th>Time connected</th><th>Idle</th></tr>\n";
+    else
+        $s .= "<tr><th>Peer</th><th>Uploaded</th><th>Downloaded</th><th>Completed</th><th>Time connected</th><th>Idle</th></tr>\n";
     $now = time();
     $admin = (isset($CURUSER) && $CURUSER["admin"] == "yes");
 
     foreach ($arr as $e) {
         $s .= "<tr>\n";
-        $s .= "<td><code class=dest>" . truncate($e["ip"], 4, "") . "</code></td>\n";
+        if ($CURUSER)
+            $s .= "<td><code class=dest>" . truncate($e["ip"], 4, "") . "</code></td>\n";
+        else
+            $s .= "<td class=peer title=\"Peer destinations can only been seen when logged in\"></td>\n";
         $s .= "<td>" . mksize($e["uploaded"]) . "</td>\n";
         $s .= "<td>" . mksize($e["downloaded"]) . "</td>\n";
         $ps = sprintf("%.0f%%", 100 * (1 - ($e["to_go"] / $torrent["size"])));
