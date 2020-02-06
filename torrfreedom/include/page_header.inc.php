@@ -8,7 +8,7 @@
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="alternate" type="application/rss+xml" title="<?php echo $tracker_title; ?> RSS Feed" href=rss.php />
     <title>
-        <?php echo $tracker_title;
+        <?php echo strtoupper($tracker_title);
         echo (" | ");
         $page = basename($_SERVER['PHP_SELF']);
         $page = str_replace("index", "home", $page);
