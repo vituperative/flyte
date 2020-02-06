@@ -35,13 +35,15 @@ body, input, select, textarea, button {
   background: #563232;
 }
 
+#pager, #header, #searchandshow, #footer, .toast, th {
+    user-select: none;
+}
+
 code {
   margin-left: 2px;
   font-family: Noto Sans Mono, DejaVu Sans Mono, Consolas, monospace;
   font-weight: 600;
   color: #393;
-  -moz-user-select: all;
-  -webkit-user-select: all;
   user-select: all;
 }
 
@@ -84,9 +86,8 @@ input[type="submit"], input[type="reset"], input[type="radio"], input[type="file
 }
 
 @supports (-webkit-background-clip: text) {
-  .title table td:nth-child(2), #sitename a {
+  #sitename a, #sitename a:hover, #sitename a:focus {
     text-shadow: none;
-    background: linear-gradient(to bottom, #210, #310 15%, #fff 50%, #310 80%) !important;
     background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .5) 2px), linear-gradient(to bottom, rgba(255, 96, 0, .5), rgba(0, 0, 0, .6) 100%), linear-gradient(to bottom, #740, #520 10%, #fff 35%, #310 65%) !important;
     -webkit-background-clip: text !important;
     background-clip: text !important;
@@ -94,6 +95,12 @@ input[type="submit"], input[type="reset"], input[type="radio"], input[type="file
     -webkit-text-stroke-width: 1px;
     -webkit-text-fill-color: transparent !important;
     filter: drop-shadow(0 0 1px #300) drop-shadow(0 0 2px #200) drop-shadow(0 0 3px rgba(0, 0, 0, .1));
+  }
+  #sitename a:hover, #sitename a:focus, #sitename a:active {
+    background: repeating-linear-gradient(to bottom, rgba(128, 64, 0, .2), rgba(0, 0, 0, .3) 2px), linear-gradient(to bottom, rgba(255, 96, 0, .1), rgba(0, 0, 0, .7) 100%), linear-gradient(to top, #f60, #520 10%, #000 35%, #f60 65%) !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    filter: opacity(.8);
   }
 }
 
@@ -147,11 +154,11 @@ ul {
   list-style: none;
 }
 
-tr:nth-child(odd) {
+tr:nth-child(odd), #server tr:nth-child(odd) {
   background: #454242 !important;
 }
 
-tr:nth-child(even) {
+tr:nth-child(even), #server tr:nth-child(even) {
   background: #343131 !important;
 }
 
@@ -200,7 +207,7 @@ th, #dostuff td {
   text-align: center;
 }
 
-#torrents td:first-child::before {
+#torrents td:first-child::after {
   content: "";
   display: inline-block;
   height: 36px;
@@ -230,8 +237,22 @@ th, #dostuff td {
   font-weight: 700 !important;
 }
 
-#torrents td:nth-child(2), #torrents td:nth-child(2) a {
-  line-height: 1.05;
+#torrents td:nth-child(2), #torrents td:nth-child(2) a, #torrents .briefdesc {
+  line-height: 1;
+}
+
+#torrents .briefdesc {
+  margin-top: 2px;
+  display: inline-block;
+}
+
+.briefdesc::after {
+  margin-bottom: 2px;
+  width: 100%;
+  height: 1px;
+  display: block;
+  vertical-align: bottom;
+  content: "";
 }
 
 #torrents td:nth-child(odd) {
@@ -322,6 +343,10 @@ input[type="text"], input[type="password"] {
   max-width: 220px;
   border-radius: 3px !important;
   box-shadow: inset 1px 1px 1px #222, 0 0 0 1px #121010;
+}
+
+#restricted input[type="password"] {
+  box-shadow: inset 1px 1px 1px #222, 0 0 0 1px #565050;
 }
 
 textarea {
@@ -468,7 +493,7 @@ hr.separator {
 
 #topnav a, .username, #addcomment a {
   margin: 8px -6px;
-  padding: 3px 24px 5px;
+  padding: 4px 24px 6px;
   display: inline-block;
   line-height: 1;
   box-shadow: inset 0 0 0 1px #454040, 0 0 0 1px #121010;
@@ -476,6 +501,15 @@ hr.separator {
   font-size: 105% !important;
   color: #9a9090;
   text-decoration: none !important;
+}
+
+#addcomment a {
+  margin: 2px;
+  font-size: 90% !important;
+}
+
+#topnav a {
+  min-width: 90px;
 }
 
 #topnav a:first-child {
@@ -561,7 +595,7 @@ hr.separator {
   background: linear-gradient(to bottom, #343232, #232020);
 }
 
-#details, #addcomment, #uploader, .note, #upload.note, #success, #myaccount, #dologin, #signup, #warn, #help, #nuke {
+#details, #addcomment, #uploader, .note, #upload.note, #success, #myaccount, #dologin, #signup, #warn, #help, #nuke, #comment {
   margin: 0 auto 10px !important;
   width: 800px !important;
   box-sizing: border-box;
@@ -572,7 +606,8 @@ hr.separator {
   width: 600px !important;
 }
 
-#details, #details+#addcomment, #torrentedit, #comments, #comments+#pager, #pager+#addcomment, #return.note, #return.note+#addcomment, #needlogin, #nuke {
+#details, #details+#addcomment, #torrentedit, #comments, #comments+#pager, #pager+#addcomment,
+#return.note, #return.note+#addcomment, #needlogin, #nuke, #success.details {
   width: 900px !important;
   border: 1px solid #111;
 }
@@ -586,12 +621,12 @@ hr.separator {
   margin-top: 30px !important;
 }
 
-#addcomment {
+#addcomment, #details+#needlogin {
   margin-top: -11px !important;
   padding: 10px;
 }
 
-#pager+#addcomment, #details+#needlogin, #return+#needlogin {
+#pager+#addcomment, #return+#needlogin {
   margin-top: -1px !important;
   display: none; // no need for dupe, displayed below torrent details
 }
@@ -607,6 +642,54 @@ hr.separator {
   text-align: left;
   border-top: none !important;
   border-bottom: 1px solid #111 !important;
+}
+
+#success.toast {
+  padding: 10px 20px;
+  position: fixed;
+  top: -600px;
+  right: 10px;
+  z-index: 1000;
+  width: auto !important;
+  animation: ease toast 15s forwards;
+}
+
+@keyframes toast {
+  0, 100% {
+    top: -1000px;
+  }
+  5%, 90% {
+    top: 10px;
+  }
+}
+
+#description td:first-child {
+  padding-top: 8px !important;
+  vertical-align: top;
+}
+
+#description div {
+  margin: 6px 2px;
+  padding: 10px 16px 15px;
+  text-align: justify;
+  background: #454040;
+  box-shadow: 0 0 0 1px #111, 0 0 2px 2px rgba(0, 0, 0, .1), inset 0 0 0 1px #585050;
+}
+
+#description div b {
+  font-weight: 700 !important;
+}
+
+#description div hr, .torrentname hr {
+  margin: 15px 10% -5px;
+  background: linear-gradient(to right, #454040, #565050, #454040);
+  display: block !important;
+}
+
+.torrentname hr {
+  /*    display: inline-block !important;*/
+  background: rgba(255, 255, 255, .01);
+  margin: 3px 0 1px;
 }
 
 #comments th {
@@ -644,10 +727,10 @@ th a {
 }
 
 #details td, #details td:first-child {
-  padding: 3px 10px;
+  padding: 6px 10px;
 }
 
-#details td:first-child b, #uploader td:first-child b {
+#details td:first-child b, #uploader td:first-child b, #myaccount td:first-child b {
   font-weight: 700 !important;
 }
 
@@ -672,9 +755,11 @@ table table {
 
 #details #filelist td:last-child {
   padding-right: 8px;
+  width: 1%;
+  white-space: nowrap;
   text-align: right !important;
 }
-#
+
 #nocomments {
   display: none;
 }
@@ -707,10 +792,18 @@ table table {
   float: right;
 }
 
-#uploader textarea {
-  resize: vertical;
+#uploader textarea, #comment textarea {
   height: 120px;
   min-height: 120px;
+  resize: vertical;
+}
+
+#comment textarea {
+    width: calc(100% - 22px);
+}
+
+#comment td {
+    padding: 20px 15px;
 }
 
 #upload.note, #warn, #nuke {
@@ -723,6 +816,10 @@ table table {
 
 #warn, #torrentedit {
   margin-top: 30px !important;
+}
+
+#warn.note {
+    padding: 50px 15px;
 }
 
 #siteinfo {
@@ -808,18 +905,29 @@ table table {
   padding-top: 15px;
 }
 
-#search input[type="text"] {
-  width: 160px;
-  padding-left: 28px;
-  background-image: url(../pic/search.png);
-  background-repeat: no-repeat;
-  background-size: 16px 16px;
-  background-position: 6px center;
-  background-blend-mode: luminosity;
+input#username, input[type="password"], #search input[type="text"] {
+  padding-left: 28px !important;
+  background-repeat: no-repeat !important;
+  background-size: 16px 16px !important;
+  background-position: 6px center !important;
+  background-blend-mode: luminosity !important;
 }
 
-#search input[type="text"]:hover, #search input[type="text"]:focus {
-  background-blend-mode: normal;
+#search input[type="text"] {
+  width: 160px;
+  background-image: url(../pic/search.png);
+}
+
+input#username {
+  background-image: url(../pic/user.png);
+}
+
+input[type="password"] {
+  background-image: url(../pic/password.png);
+}
+
+#search input[type="text"]:hover, #search input[type="text"]:focus, input#username:hover, input#username:focus, input[type="password"]:hover, input[type="password"]:focus {
+  background-blend-mode: normal !important;
 }
 
 #torrentshow {
@@ -828,7 +936,7 @@ table table {
   border-bottom: 1px solid #343232;
 }
 
-#peerinfom, #details #filelist {
+#peerinfo, #details #filelist {
   margin: 5px auto 5px;
   width: calc(100% - 8px);
   border: 1px solid #111;
@@ -848,11 +956,33 @@ table table {
   font-size: 95% !important;
 }
 
+#peerinfo th:nth-child(4), #peerinfo td:nth-child(4) {
+  padding: 3px 0 !important;
+}
+
 #peerinfo .peer {
   background-image: url(../pic/peer.png) !important;
   background-size: 16px 16px !important;
   background-position: center center !important;
   background-repeat: no-repeat !important;
+}
+
+#peerinfo td:first-child:not(.peer) code::before {
+  width: 18px;
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url(../pic/peer.png) left center no-repeat;
+  background-size: 16px 16px;
+  content: "";
+}
+
+#peerinfo td:nth-last-child(n+3) {
+  width: 14%;
+}
+
+#peerinfo td:nth-child(n+5) {
+  width: 22%;
 }
 
 code.dest {
@@ -863,7 +993,7 @@ code.dest {
   background: none !important;
 }
 
-#help {
+#help, #server, #restricted {
   margin: 30px auto !important;
   padding: 15px 30px;
   width: 660px !important;
@@ -876,10 +1006,30 @@ code.dest {
   background: rgba(48, 40, 40, .3);
 }
 
+#server {
+  width: 820px !important;
+}
+
+#server td {
+  padding: 3px 10px;
+  border: 1px solid #111;
+}
+
+#server td:first-child {
+  text-align: right;
+  background: rgba(0, 0, 0, .2);
+  color: #bbb;
+}
+
 #help h3 {
   margin-bottom: 10px;
   padding-bottom: 8px;
   border-bottom: 2px solid #777;
+}
+
+#help i, #trackername {
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
 #header {
@@ -972,8 +1122,10 @@ th a:nth-child(2) {
   width: 60px;
   height: 12px;
   display: inline-block;
+  text-align: left;
   font-size: 0;
-  box-shadow: 0 0 0 1px #000;
+  box-shadow: 0 0 0 1px #000, inset 0 0 0 1px #787070, inset 3px 3px 3px #333;
+  background: #787070;
   opacity: .85;
 }
 
@@ -989,52 +1141,12 @@ th a:nth-child(2) {
   font-size: 90% !important;
 }
 
-@media screen and (max-width: 1200px) {
-  body, input, select, textarea, button, td, a, .topnav a {
-    font-size: 9pt !important;
-  }
-  body {
-    padding: 0 4px;
-  }
-  .downloadbar {
-    font-size: 0 !important;
-  }
-  #torrents td, #torrents td a {
-    font-size: 8.5pt !important;
-  }
-  #sitename a {
-    font-size: 34pt !important;
-  }
-  #searchandshow {
-    margin-bottom: -14px;
-  }
-  .catlink:hover:after {
-    min-width: 60px;
-  }
-  #torrents {
-    margin-top: -5px;
-  }
-  #torrents th {
-    padding: 6px 4px !important;
-    font-size: 85% !important;
-  }
-  #torrents td {
-    padding: 2px 4px !important;
-  }
-  #torrents td:first-child::before {
-    content: "";
-    display: inline-block;
-    height: 32px;
-    vertical-align: middle;
-  }
-  #torrents img {
-    width: 20px;
-    height: 20px;
-  }
+#top + table:not(#torrents), #top + form, #top + p + form {
+    margin-top: 40px !important;
 }
 
 @media screen and (max-width: 1200px) {
-  body, input, select, textarea, button, td, a {
+  body, input, select, textarea, button, td, a, .topnav a {
     font-size: 9pt !important;
   }
   body {
@@ -1043,12 +1155,45 @@ th a:nth-child(2) {
   #topnav a {
     padding-left: 16px;
     padding-right: 16px;
+    min-width: 76px;
+  }
+  #sitename a {
+    font-size: 38pt !important;
+  }
+  #searchandshow {
+    margin-bottom: -14px;
+  }
+  #torrents {
+    margin-top: -5px;
+  }
+  #torrents th {
+    padding: 6px 4px !important;
+    font-size: 85% !important;
+  }
+  #torrents td:first-child::before {
+    content: "";
+    display: inline-block;
+    height: 32px;
+    vertical-align: middle;
   }
   #torrents td, #torrents td a {
     font-size: 8.5pt !important;
   }
-  #sitename a {
-    font-size: 40pt !important;
+  #torrents td {
+    padding: 2px 4px !important;
+  }
+  #torrents .briefdesc {
+    margin-top: 1px;
+  }
+  #torrents img {
+    width: 20px;
+    height: 20px;
+  }
+  .catlink:hover:after {
+    min-width: 60px;
+  }
+  .downloadbar {
+    font-size: 0 !important;
   }
 }
 

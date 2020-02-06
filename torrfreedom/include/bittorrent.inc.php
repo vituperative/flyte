@@ -25,7 +25,7 @@ $pic_base_url = "pic/";
 ##########################
 
 $appname = "TorrFreedom";
-$version = "1.1.0";
+$version = "1.2";
 
 # the first one will be displayed on the pages
 $announce_urls = array(); //
@@ -161,19 +161,19 @@ function mkprettytime($s)
         $t[$y[1]] = $v;
     }
 
-    if ($t["day"] > 1) {
+    if ($t["day"] == 0 || $t["day"] > 1) {
         $day = " days ";
     } else {
         $day = " day ";
     }
 
-    if ($t["hour"] > 1) {
+    if ($t["hour"] == 0 || $t["hour"] > 1) {
         $hour = " hours ";
     } else {
         $hour = " hour ";
     }
 
-    if ($t["min"] > 1) {
+    if ($t["min"] == 0 || $t["min"] > 1) {
         $minute = " minutes ";
     } else {
         $minute = " minute ";
@@ -191,7 +191,7 @@ function mkprettytime($s)
         return sprintf("%d" . $minute, $t["min"]);
     }
 
-    if ($t["sec"] > 1) {
+    if ($t["sec"] == 0 || $t["sec"] > 1) {
         $second = " seconds ";
     } else {
         $second = " second ";
@@ -283,7 +283,8 @@ function urlparse($m)
 function parsedescr($d)
 {
     #Security: remove any html tags.
-    $pd = preg_replace('/<[^>]*>/', "", $d);
+//    $pd = preg_replace('/<[^>]*>/', "", $d);
+    $pd = strip_tags($d, '<b></i><ul><ol><li><strong><hr><br>');
     #Interface: Add breaklines
     $pd = str_replace(array("\n", "\r"), array("<br />\n", ""), htmlspecialchars($pd));
     return $pd;
@@ -306,21 +307,19 @@ function stdhead($title = "")
 function stdfoot()
 {
     global $pic_base_url, $version, $appname, $time_start, $contact;
-    $time = round(getmicrotime() - $time_start, 4);
-//    print('</td></tr><tr><td width="100%" height="21" colspan="2">');
-    //    print('<div align="center">' . $appname . " v" . $version . ' -- Page generated in ' . $time . '</div>');
-    //    print('</td></tr></table></body></html>');
-    print('<p id="footer"><span id="blurb">SiteAdmin: <code>');
-    echo "$contact";
-    print('</code> &bullet; Design by <a href="http://skank.i2p">dr|z3d</a> &bullet; Est. 2017</span></p>');
+    $time = round(getmicrotime() - $time_start, 1);
+    $bullet = '&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;&nbsp;';
+//    print('<p id="footer"><span id="blurb">Running: ' . $appname . ' v. ' . $version . '</code></p>');
+//    print('<p id="footer"><span id="blurb">Running: ' . $appname . ' v. ' . $version . '</code>' . $bullet . 'Page spawned in ' . $time . ' seconds</span></p>');
+    print('<p id=footer><span id="blurb">Site Admin: <code>' . $contact . '</code>' . $bullet . 'Design by <a href="http://skank.i2p">dr|z3d</a>' . $bullet . 'Est. 2017</span></p>');
     print("\n</body>\n</html>");
 }
 
 function genbark($x, $y)
 {
     stdhead($y);
-    print("<h2>" . htmlspecialchars($y) . "</h2>\n");
-    print("<p>" . htmlspecialchars($x) . "</p>\n");
+    print("<p id=warn class=note>" . htmlspecialchars($y) . " ");
+    print(htmlspecialchars($x) . "</p>\n");
     stdfoot();
     exit();
 }
@@ -576,6 +575,8 @@ function torrenttable($res, $variant = "index")
     global $pic_base_url;
     global $announce_urls;
     global $CURUSER;
+    global $tracker_url_name;
+    global $tracker_path;
     ?>
 
 <table id=torrents>
@@ -614,15 +615,15 @@ function torrenttable($res, $variant = "index")
 
         print("<td>");
         if (isset($row["cat_name"])) {
-            print("<a href=\"./?cat=" . $row["category"] . "\" class=\"catlink\" data-tooltip=\"" . $row["cat_name"] . "\"><img src=\"../pic/" . $row["category"] . ".png\" width=24 height=24></a>");
+            print("<a href=\"./?cat=" . $row["category"] . "\" class=\"catlink\" data-tooltip=\"" . $row["cat_name"] . "\"><img src=\"" . $tracker_url_name . "/pic/" . $row["category"] . ".png\" width=24 height=24></a>");
         } else {
-            print("-");
+            print("<span class=\"catlink\" data-tooltip=\"Uncategorized\"><img src=\"" . $tracker_url_name . "/pic/unknown.png\" width=24 height=24></span>");
         }
 
         print("</td>\n");
 
         $dispname = htmlspecialchars($row["name"]);
-        print("<td><a href=\"details.php?");
+        print("<td class=torrentname><a href=\"details.php?");
         if ($variant == "mytorrents") {
             print("returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;");
         }
@@ -633,13 +634,15 @@ function torrenttable($res, $variant = "index")
         }
 
         print("\">$dispname</a>\n");
-        if (isset($row["descr"])) {
-            print("<br>" . truncate(htmlspecialchars($row["ori_descr"], ENT_NOQUOTES), 150));
+        if (isset($row["descr"]) && $row["descr"]) {
+//            print("<br>" . truncate(htmlspecialchars($row["ori_descr"], ENT_NOQUOTES), 150));
+            $description = strip_tags($row["ori_descr"]);
+            print("<br><span class=briefdesc>" . substr($description, 0, 100) . "</span>");
         }
         print("</td>\n");
 
         if ($variant == "index") {
-            print("<td class=dlicons><a href=\"download.php?id=$id&amp;file=" . htmlentities(urlencode($row["filename"])) . "\"><img src=\"../pic/download.png\" border=0 width=24 height=24></a> <a href=\"magnet:?xt=urn:btih:" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "&amp;dn=" . htmlentities(urlencode($row["filename"])) . "&amp;tr=" . $announce_urls[5] . "\"><img src=\"../pic/magnet.png\" border=0 width=24 height=24></a></td>");
+            print("<td class=dlicons><a href=\"download.php?id=$id&amp;file=" . htmlentities(urlencode($row["filename"])) . "\"><img src=\"" . $tracker_path . "pic/download.png\" border=0 width=24 height=24></a> <a href=\"magnet:?xt=urn:btih:" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "&amp;dn=" . htmlentities(urlencode($row["filename"])) . "&amp;tr=" . $announce_urls[5] . "\"><img src=\"" . $tracker_path . "pic/magnet.png\" border=0 width=24 height=24></a></td>");
         } elseif ($variant == "mytorrents") {
             print("<td><a href=\"edit.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;id=" . $row["id"] . "\"><span class=edit title=\"Edit torrent\">edit</span></a></td>\n");
         }
@@ -734,4 +737,5 @@ function hash_where($name, $hash)
     $shhash = preg_replace('/ *$/s', "", $hash);
     return "($name = " . sqlesc($hash) . " OR $name = " . sqlesc($shhash) . ")";
 }
+
 ?>
