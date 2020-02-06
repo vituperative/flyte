@@ -595,7 +595,7 @@ hr.separator {
   background: linear-gradient(to bottom, #343232, #232020);
 }
 
-#details, #addcomment, #uploader, .note, #upload.note, #success, #myaccount, #dologin, #signup, #warn, #help, #nuke, #comment {
+#details, #addcomment, #uploader, .note, #upload.note, #success, #myaccount, #dologin, #signup, #warn.note, #help, #nuke, #comment {
   margin: 0 auto 10px !important;
   width: 800px !important;
   box-sizing: border-box;
@@ -604,6 +604,10 @@ hr.separator {
 
 #dologin, #signup, #warn.cookies {
   width: 600px !important;
+}
+
+#warn.toast {
+    margin: 0 !important;
 }
 
 #details, #details+#addcomment, #torrentedit, #comments, #comments+#pager, #pager+#addcomment,
@@ -644,7 +648,7 @@ hr.separator {
   border-bottom: 1px solid #111 !important;
 }
 
-#success.toast {
+.toast {
   padding: 10px 20px;
   position: fixed;
   top: -600px;
