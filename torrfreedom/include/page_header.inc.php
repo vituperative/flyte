@@ -7,7 +7,14 @@
     <style type="text/css"> html {background: #232020;} body {opacity: 0; text-align: center;} </style>
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="alternate" type="application/rss+xml" title="<?php echo $tracker_title; ?> RSS Feed" href=rss.php />
-    <title><?php echo $tracker_title; ?> | </title>
+    <title>
+        <?php echo $tracker_title;
+        echo (" | ");
+        $page = basename($_SERVER['PHP_SELF']);
+        $page = str_replace("index", "home", $page);
+        $pagename = rtrim($page, "php");
+        echo strtoupper(rtrim($pagename, ".")); ?>
+    </title>
 </head>
 <body>
     <div id=header>
