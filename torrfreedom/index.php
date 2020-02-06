@@ -112,11 +112,11 @@ if (isset($cleansearchstr)) {
 $cats = genrelist();
 
 ?>
-<div id="searchandshow">
+<div id=searchandshow>
 <form method="get" action="./">
 <div id=search>
 <input name="search" type="text" value="<?=htmlspecialchars($searchstr)?>" size="40" class="input">
-<select class="input" name="cat"><option value="0">(all types)</option>
+<select class="input" name="cat"><option value="0">All Categories</option>
 <?php
 
 $catdropdown = "";
@@ -151,7 +151,7 @@ if ($additionals) {
 }
 ?>
 <form method="get" action="./">
-Show: <select class="input" name="cat"><option value="0">(any type)</option>
+Show: <select class="input" name="cat"><option value="0">All Categories</option>
 <?=$catdropdown?>
 </select>
 <?=$deadchkbox?>

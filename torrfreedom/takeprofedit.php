@@ -11,7 +11,7 @@ dbconn();
 loggedinorreturn();
 
 if (!mkglobal("chpassword:passagain"))
-	bark("missing form data");
+	bark("Submission failed! Please ensure you have correctly filled in the form!");
 
 $set = array();
 

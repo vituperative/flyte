@@ -9,15 +9,15 @@ loggedinorreturn();
 stdhead($CURUSER["username"] . "'s private page");
 
 if (isset($_GET["edited"])) {
-	print("<p id=success>Profile updated!</p>\n");
+	print("<p id=success class=toast>Your profile has been updated.</p>\n");
 }
 else
-	print("<p id=success>Welcome, " . htmlspecialchars($CURUSER["username"]) . "!</p>\n");
+	print("<p id=success class=toast>Welcome back, " . htmlspecialchars($CURUSER["username"]) . "! We've missed you!</p>\n");
 
 ?>
 <form method="post" action="takeprofedit.php">
 <table id=myaccount>
-<tr><th colspan="2">Your profile&nbsp;&nbsp;<a href="mytorrents.php">View or edit your torrents</a></th></tr>
+<tr><th colspan="2">Profile for: <?php echo $CURUSER["username"] ?>&nbsp;&nbsp;<a href="mytorrents.php">View or edit your torrents</a></th></tr>
 <?php
 
 $res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) FROM torrents WHERE owner=" . $CURUSER["id"]);

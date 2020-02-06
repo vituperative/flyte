@@ -21,13 +21,13 @@ if (!$torrow)
 stdhead("Add a comment to \"" . $torrow["name"] . "\"");
 
 ?>
-<p class=note>Add a comment to torrent: "<?= htmlspecialchars($torrow["name"]) ?>"</p>
-<p>
 <form method="post" action="takecomment.php">
 <input type="hidden" name="id" value="<?= $id ?>" />
-<textarea class="input" name="main" rows="20" cols="60"></textarea>
-</p>
-<p><input class="input" type="submit" value="Post Comment" /></p>
+<table id=comment>
+<tr><th>Add a comment to torrent: "<?= htmlspecialchars($torrow["name"]) ?>"</th></tr>
+<tr><td><textarea class="input" name="main" rows="20" cols="60" required></textarea></td></tr>
+<tr id=dostuff><td><input class="input" type="submit" value="Post Comment" /></td></tr>
+</table>
 </form>
 <?php
 
