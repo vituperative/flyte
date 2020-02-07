@@ -4,9 +4,9 @@ dbconn();
 stdhead();
 require_once 'include/siteinfo.inc.php';
 ?>
-<table id=helpwrapper height=100%>
+<table id=wrapper class=help>
 <tr><td>
-<div id=help>
+<div>
 
 <h3>How do I download a torrent?</h3>
 <p>Choose the torrent you like and right click on the magnet or torrent icon and select <i>Copy Link Location</i>, paste the link into your I2P-capable BitTorrent client, and then start the torrent.</p>
