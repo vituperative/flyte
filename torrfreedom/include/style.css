@@ -35,8 +35,8 @@ body, input, select, textarea, button {
   background: #563232;
 }
 
-#pager, #header, #searchandshow, #footer, .toast, th {
-    user-select: none;
+#pager, #header, #searchandshow, #footer, #toast, th {
+  user-select: none;
 }
 
 code {
@@ -95,12 +95,23 @@ input[type="submit"], input[type="reset"], input[type="radio"], input[type="file
     -webkit-text-stroke-width: 1px;
     -webkit-text-fill-color: transparent !important;
     filter: drop-shadow(0 0 1px #300) drop-shadow(0 0 2px #200) drop-shadow(0 0 3px rgba(0, 0, 0, .1));
+    animation: linear powercycle 180s alternate infinite;
   }
   #sitename a:hover, #sitename a:focus, #sitename a:active {
     background: repeating-linear-gradient(to bottom, rgba(128, 64, 0, .2), rgba(0, 0, 0, .3) 2px), linear-gradient(to bottom, rgba(255, 96, 0, .1), rgba(0, 0, 0, .7) 100%), linear-gradient(to top, #f60, #520 10%, #000 35%, #f60 65%) !important;
     background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     filter: opacity(.8);
+    animation: linear powercycle 10s alternate infinite;
+  }
+}
+
+@keyframes powercycle {
+  from {
+    filter: hue-rotate(0) opacity(1) saturate(0);
+  }
+  to {
+    filter: hue-rotate(360deg) opacity(1) saturate(1);
   }
 }
 
@@ -115,12 +126,10 @@ table {
 }
 
 a:visited {
-  color: #686;
   color: #a61;
 }
 
 a:link {
-  color: #494;
   color: #c83;
   text-shadow: 0 1px 1px #222;
   text-decoration: none;
@@ -128,13 +137,11 @@ a:link {
 }
 
 a:hover, a:focus {
-  color: #3b3;
   color: #f60;
   text-decoration: underline;
 }
 
 a:active {
-  color: #3f3;
   color: #d30;
 }
 
@@ -228,7 +235,7 @@ th, #dostuff td {
   border-bottom: 1px solid #222 !important;
 }
 
-#torrents td:first-child {
+#torrents td:first-child, #torrents td:nth-child(2) {
   position: relative;
   vertical-align: middle !important;
 }
@@ -241,9 +248,17 @@ th, #dostuff td {
   line-height: 1;
 }
 
+#torrents td:nth-child(2) {
+  max-width: 500px;
+}
+
 #torrents .briefdesc {
   margin-top: 2px;
+  max-width: 500px;
   display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .briefdesc::after {
@@ -280,15 +295,20 @@ th, #dostuff td {
   margin: 0 2px;
 }
 
-input[type="submit"], input[type="reset"], input[type="file"], input[type="text"], textarea, input[type="password"], select, button {
+input[type="submit"], input[type="reset"], input[type="file"], input[type="text"], textarea, input[type="password"], select, button, .button {
   margin: 0 6px;
   padding: 3px 8px;
   border: none !important;
   box-shadow: 0 0 0 1px #121010;
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #333;
   border-radius: 2px !important;
   background: #343232;
   color: #bbb;
   outline: none;
+}
+
+#nuke input[type="submit"] {
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #342323, inset 0 0 0 2px rgba(255, 0, 0, .1);
 }
 
 select {
@@ -309,7 +329,7 @@ input[type="submit"]::-moz-focus-inner, input[type="file"]::-moz-focus-inner, in
   outline: none;
 }
 
-input[type="submit"], input[type="file"], input[type="reset"] {
+input[type="submit"], input[type="file"], input[type="reset"], .button {
   padding: 3px 12px;
   min-width: 80px;
   font-weight: 700;
@@ -318,18 +338,25 @@ input[type="submit"], input[type="file"], input[type="reset"] {
   background: linear-gradient(to bottom, #343232, #232121);
 }
 
-input[type="submit"]:hover, input[type="file"]:hover, input[type="reset"]:hover, input[type="submit"]:focus, input[type="file"]:focus, input[type="reset"]:focus {
-  color: #cdcbcb;
+.button {
+  font-weight: 700 !important;
+  color: #9a9898 !important;
+  vertical-align: middle;
+  text-decoration: none !important;
+}
+
+input[type="submit"]:hover, input[type="file"]:hover, input[type="reset"]:hover, input[type="submit"]:focus, input[type="file"]:focus, input[type="reset"]:focus, .button:hover, .button:focus {
+  color: #cdcbcb !important;
   background: linear-gradient(to bottom, #232121, #343232);
 }
 
-input[type="submit"]:focus, input[type="reset"]:focus, input[type="text"]:focus, input[type="password"]:focus {
+input[type="submit"]:focus, input[type="reset"]:focus, input[type="text"]:focus, input[type="password"]:focus, .button:focus {
   box-shadow: 0 0 0 1px #121010, 0 0 0 2px rgba(255, 96, 0, .3);
-  color: #eee;
+  color: #eee !important;
 }
 
-input[type="submit"]:active, input[type="reset"]:active, select:active, select:focus {
-  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232, inset 2px 2px 2px #111;
+input[type="submit"]:active, input[type="reset"]:active, select:active, select:focus, .button:active, #details th a:nth-child(n+2):active {
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232, inset 2px 2px 2px #111 !important;
 }
 
 select:hover, select:focus {
@@ -487,8 +514,8 @@ hr.separator {
   padding-bottom: 6px;
   margin: 0 -10% 10px;
   color: transparent;
-  filter: drop-shadow(0 0 1px #181717);
   border-bottom: 1px solid #343232;
+  filter: drop-shadow(0 0 1px #181717);
 }
 
 #topnav a, .username, #addcomment a {
@@ -522,12 +549,13 @@ hr.separator {
 
 #topnav a:hover, #topnav a:focus, #addcomment a:hover, #addcomment a:focus, #pager a:hover, #pager a:focus {
   color: #f60;
-  background: linear-gradient(to bottom, #232020, #454040);
   text-decoration: none;
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050;
+  background: linear-gradient(to bottom, #232020, #454040);
 }
 
 #topnav a:active, #addcomment a:active {
-  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050, inset 2px 2px 2px #121010;
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050, inset 3px 3px 3px #121010;
 }
 
 #footer {
@@ -537,6 +565,7 @@ hr.separator {
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 1000;
   font-weight: 600;
 }
 
@@ -554,38 +583,10 @@ hr.separator {
   color: #9a9090;
   border-top: 1px solid #343232;
   background: #121010;
+  background: repeating-linear-gradient(to right, rgba(0, 0, 0, 0), #121010 2px), linear-gradient(to right, #232020, #121010, #232020);
 }
 
-#installer {
-  margin: 50px auto;
-  padding: 20px 20px 40px;
-  width: 30%;
-  min-width: 400px;
-  max-width: 500px;
-  border: 1px solid #121010;
-  background: #212020;
-}
-
-#installer label span {
-  margin-right: 10px;
-  min-width: 140px;
-  display: inline-block;
-  vertical-align: middle;
-  font-weight: 600;
-  text-align: right;
-}
-
-#installer hr {
-  display: block !important;
-  background: linear-gradient(to right, #121010, #232020);
-}
-
-#installer input[type="submit"] {
-  float: right;
-  text-transform: capitalize;
-}
-
-#addcomment, .note, #upload.note, #success, #warn, #nuke {
+#toast, #addcomment, .note, #upload.note, .success, .warn, #nuke {
   margin-bottom: 10px;
   padding: 15px;
   font-size: 110%;
@@ -595,23 +596,18 @@ hr.separator {
   background: linear-gradient(to bottom, #343232, #232020);
 }
 
-#details, #addcomment, #uploader, .note, #upload.note, #success, #myaccount, #dologin, #signup, #warn.note, #help, #nuke, #comment {
+#details, #addcomment, #uploader, .note, #upload.note, .success, #myaccount, #dologin, #signup, .warn.note, #wrapper.help div, #nuke, #comment {
   margin: 0 auto 10px !important;
   width: 800px !important;
   box-sizing: border-box;
   border: 1px solid #111 !important;
 }
 
-#dologin, #signup, #warn.cookies {
+#dologin, #signup, #myaccount, .warn.cookies {
   width: 600px !important;
 }
 
-#warn.toast {
-    margin: 0 !important;
-}
-
-#details, #details+#addcomment, #torrentedit, #comments, #comments+#pager, #pager+#addcomment,
-#return.note, #return.note+#addcomment, #needlogin, #nuke, #success.details {
+#details, #details+#addcomment, #torrentedit, #comments, #comments+#pager, #pager+#addcomment, #return.note, #return.note+#addcomment, #needlogin, #nuke, .success.details {
   width: 900px !important;
   border: 1px solid #111;
 }
@@ -648,13 +644,49 @@ hr.separator {
   border-bottom: 1px solid #111 !important;
 }
 
-.toast {
-  padding: 10px 20px;
+#details tr:not(#description) td:first-child {
+  text-align: right;
+}
+
+#details .catlink, #details .catlink img {
+  display: inline-block;
+  vertical-align: middle;
+  opacity: .8;
+}
+
+#details .catlink img {
+  height: 20px;
+  width: 20px;
+}
+
+#details .catlink {
+  margin: 0 6px 0 -6px;
+}
+
+#details a.catlink:hover {
+  opacity: 1;
+}
+
+#details .catlink::after {
+  top: -24px;
+  text-align: center;
+}
+
+#toast {
+  margin: 0 !important;
+  padding: 10px 20px 12px;
   position: fixed;
+  top: 10px;
   top: -600px;
   right: 10px;
   z-index: 1000;
-  width: auto !important;
+  width: 280px !important;
+  font-size: 95% !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 1px #000;
+  color: #bab0b0;
+  box-sizing: border-box;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .4));
   animation: ease toast 15s forwards;
 }
 
@@ -667,9 +699,35 @@ hr.separator {
   }
 }
 
-#description td:first-child {
-  padding-top: 8px !important;
-  vertical-align: top;
+#toast .title {
+  color: #cbc0c0;
+  border-bottom: 1px solid #232020;
+  display: inline-block;
+  width: 100%;
+  padding: 0 0 7px;
+  margin: 0 0 6px;
+  text-align: center;
+  font-weight: 700 !important;
+  font-size: 110% !important;
+}
+
+#uawarn {
+  margin: 8px -10px -2px;
+  padding: 2px 4px 6px;
+  display: block;
+  background: #232020;
+  border: 1px solid #511;
+}
+
+#uawarn b {
+  margin: 0 -6px 4px;
+  padding: 0 2px 3px;
+  display: inline-block;
+  width: 100%;
+  font-size: 110% !important;
+  font-weight: 700 !important;
+  color: #911;
+  border-bottom: 1px solid #511;
 }
 
 #description div {
@@ -680,7 +738,7 @@ hr.separator {
   box-shadow: 0 0 0 1px #111, 0 0 2px 2px rgba(0, 0, 0, .1), inset 0 0 0 1px #585050;
 }
 
-#description div b {
+#description div b, #details tr:not(#description) td:first-child b {
   font-weight: 700 !important;
 }
 
@@ -691,7 +749,6 @@ hr.separator {
 }
 
 .torrentname hr {
-  /*    display: inline-block !important;*/
   background: rgba(255, 255, 255, .01);
   margin: 3px 0 1px;
 }
@@ -724,17 +781,17 @@ th a {
   float: right;
 }
 
-#details td:first-child, #uploader td:first-child, #myaccount td:first-child {
+#uploader td:first-child, #myaccount td:first-child {
   padding: 6px;
   white-space: nowrap;
   text-align: right;
 }
 
-#details td, #details td:first-child {
+#details td {
   padding: 6px 10px;
 }
 
-#details td:first-child b, #uploader td:first-child b, #myaccount td:first-child b {
+#uploader td:first-child b, #myaccount td:first-child b {
   font-weight: 700 !important;
 }
 
@@ -803,27 +860,27 @@ table table {
 }
 
 #comment textarea {
-    width: calc(100% - 22px);
+  width: calc(100% - 22px);
 }
 
 #comment td {
-    padding: 20px 15px;
+  padding: 20px 15px;
 }
 
-#upload.note, #warn, #nuke {
+#upload.note, .warn, #nuke {
   box-shadow: inset 0 0 0 1px #232020, inset 0 0 1px 1px #900;
 }
 
-#success {
+.success {
   box-shadow: inset 0 0 0 1px #232020, inset 0 0 1px 1px #090;
 }
 
-#warn, #torrentedit {
+.warn, #torrentedit {
   margin-top: 30px !important;
 }
 
-#warn.note {
-    padding: 50px 15px;
+.warn.note {
+  padding: 50px 15px;
 }
 
 #siteinfo {
@@ -894,10 +951,52 @@ table table {
   margin-top: 8px;
 }
 
-#searchandshow {
+#searchandshow, #installshim {
   margin: 0 -5% -10px;
   background: #212020;
   background: linear-gradient(to bottom, #212020, #181817);
+}
+
+#installshim {
+  margin-top: 10px;
+  height: 10px;
+}
+
+#installer {
+  margin: 50px auto;
+  padding: 20px 20px 46px;
+  width: 400px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #212020, inset 0 0 1px 1px #565050;
+  background: #212020;
+  background: repeating-linear-gradient(to bottom, #212020, #121010 2px);
+  will-change: transform;
+}
+
+#installer label span {
+  margin-right: 10px;
+  padding: 3px 8px;
+  min-width: 140px;
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: 600;
+  text-align: right;
+  background: linear-gradient(to bottom, #454040, #343030);
+  border-radius: 15px 3px 3px 15px;
+}
+
+#installer hr {
+  display: block !important;
+  background: linear-gradient(to right, #212020, #343030, #212020);
+}
+
+#installer input[type="submit"] {
+  float: right;
+  text-transform: capitalize;
+  margin-top: 6px;
+  will-change: transform;
+  position: relative;
+  z-index: 10;
 }
 
 #search, #torrentshow {
@@ -928,6 +1027,11 @@ input#username {
 
 input[type="password"] {
   background-image: url(../pic/password.png);
+}
+
+#installer input[type="password"] {
+  padding: 4px 6px !important;
+  background-image: none !important;
 }
 
 #search input[type="text"]:hover, #search input[type="text"]:focus, input#username:hover, input#username:focus, input[type="password"]:hover, input[type="password"]:focus {
@@ -972,7 +1076,7 @@ input[type="password"] {
 }
 
 #peerinfo td:first-child:not(.peer) code::before {
-  width: 18px;
+  width: 20px;
   height: 16px;
   display: inline-block;
   vertical-align: middle;
@@ -993,11 +1097,21 @@ code.dest {
   color: #ccc;
 }
 
-#helpwrapper tr {
+#wrapper {
+  margin: 0 !important;
+  width: 100%;
+  height: 100%;
+}
+
+#wrapper tr {
   background: none !important;
 }
 
-#help, #server, #restricted {
+#wrapper td {
+  padding: calc(120px + .3vh) 1vw .3vh;
+}
+
+#wrapper.help div, #server, #restricted {
   margin: 30px auto !important;
   padding: 15px 30px;
   width: 660px !important;
@@ -1025,15 +1139,23 @@ code.dest {
   color: #bbb;
 }
 
-#help h3 {
+#wrapper.help div h3 {
   margin-bottom: 10px;
   padding-bottom: 8px;
   border-bottom: 2px solid #777;
 }
 
-#help i, #trackername {
+#wrapper.help div i, #trackername {
   font-weight: 600;
   text-transform: capitalize;
+}
+
+#wrapper.help div {
+  margin: 0 auto !important;
+}
+
+#wrapper.help td {
+  padding: .1vh 0 !important;
 }
 
 #header {
@@ -1113,9 +1235,16 @@ code.dest {
   background: url(../pic/download.png) no-repeat;
 }
 
-th a:nth-child(2) {
+#details th a:nth-child(3) {
   margin-right: -12px !important;
-  margin-left: 4px !important;
+}
+
+#details th a:nth-child(n+2) {
+  transform: scale(.8);
+}
+
+#details th a:nth-child(n+2):hover {
+  transform: scale(1);
 }
 
 .downloadbar {
@@ -1145,8 +1274,8 @@ th a:nth-child(2) {
   font-size: 90% !important;
 }
 
-#top + table:not(#torrents), #top + form, #top + p + form {
-    margin-top: 40px !important;
+#top+table:not(#torrents), #top+form, #top+p+form, #toast+table {
+  margin-top: 40px !important;
 }
 
 @media screen and (max-width: 1200px) {
@@ -1185,13 +1314,21 @@ th a:nth-child(2) {
   }
   #torrents td {
     padding: 2px 4px !important;
+    border: 1px solid #222 !important;
+  }
+  #torrents td:nth-child(2) {
+    padding-left: 8px !important;
   }
   #torrents .briefdesc {
     margin-top: 1px;
+    max-width: 350px;
   }
   #torrents img {
     width: 20px;
     height: 20px;
+  }
+  #torrents .dlicons img {
+    margin: 0;
   }
   .catlink:hover:after {
     min-width: 60px;
@@ -1199,13 +1336,26 @@ th a:nth-child(2) {
   .downloadbar {
     font-size: 0 !important;
   }
+  #toast {
+    width: 210px !important;
+  }
+  #installshim {
+    margin-top: 6px;
+    height: 10px;
+  }
 }
 
 @media screen and (min-width: 1800px) {
-  body, input, select, textarea, button {
+  body, input, select, textarea, button, .button, label {
     font-size: 10pt !important;
   }
   #sitename a {
     font-size: 48pt !important;
+  }
+}
+
+@media screen and (max-height: 800px) {
+  #wrapper td {
+    padding: calc(60px + .3vh) 1vw .3vh;
   }
 }

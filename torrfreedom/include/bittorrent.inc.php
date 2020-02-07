@@ -292,7 +292,7 @@ function parsedescr($d)
 
 function stdhead($title = "")
 {
-    global $CURUSER, $pic_base_url, $tracker_title, $tracker_url_name;
+    global $CURUSER, $pic_base_url, $tracker_title, $tracker_url_name, $tracker_path;
     header("Content-Type: text/html; charset=utf-8");
     if ($title == "") {
         $title = $tracker_title . " BitTorrent Tracker";
@@ -318,7 +318,7 @@ function stdfoot()
 function genbark($x, $y)
 {
     stdhead($y);
-    print("<p id=warn class=note>" . htmlspecialchars($y) . " ");
+    print("<p id=toast class=warn><span class=title>" . htmlspecialchars($y) . "</span><br>");
     print(htmlspecialchars($x) . "</p>\n");
     stdfoot();
     exit();
@@ -580,26 +580,21 @@ function torrenttable($res, $variant = "index")
     ?>
 
 <table id=torrents>
-<tr>
-
-<th>Type</th>
-<th>Name</th>
-<th>Torrent</th>
+<tr><th>Type</th><th>Name</th><th>Torrent</th>
 <?php
-
     if ($variant == "mytorrents") {
         print("<th>Visible</th>");
     }
 
     print("<th>Files</th><th>Comments</th><th>Added</th><th>Size</th>");
     if ($CURUSER) {
-        print("<th>Views</th><th>Hits</th><th>DL's</th>");
+//        print("<th>Views</th><th>Hits</th><th>DL's</th>");
+        print("<th>Views</th><th>DL's</th>");
     }
 
     print("<th>Seeds</th><th>Leech</th>");
-
     if ($variant != "mytorrents" && $CURUSER) {
-        print("<th>Uploader</th>\n");
+        print("<th>Uploader</th>");
     }
 
     print("</tr>\n");
@@ -686,7 +681,7 @@ function torrenttable($res, $variant = "index")
 
         if (isset($CURUSER)) {
             print("<td>" . $row["views"] . "</td>\n");
-            print("<td>" . $row["hits"] . "</td>\n");
+//            print("<td>" . $row["hits"] . "</td>\n");
             print("<td>" . $row["times_completed"] . "</td>\n");
         }
 
@@ -737,5 +732,3 @@ function hash_where($name, $hash)
     $shhash = preg_replace('/ *$/s', "", $hash);
     return "($name = " . sqlesc($hash) . " OR $name = " . sqlesc($shhash) . ")";
 }
-
-?>
