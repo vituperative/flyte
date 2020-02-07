@@ -27,6 +27,6 @@ logincookie($row["id"], $hashpass, $row["secret"]);
 if (!empty($_POST["returnto"]))
 	header("Refresh: 0; url=" . $_POST["returnto"]);
 else
-	header("Refresh: 0; url=my.php");
+	header("Location: my.php");
 
 ?>

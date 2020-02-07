@@ -134,7 +134,7 @@ if (isset($_GET["incldead"])) {
     $deadchkbox .= " checked=\"checked\"";
 }
 
-$deadchkbox .= " /> include dead torrents</label>&nbsp; \n";
+$deadchkbox .= " /> include inactive torrents</label>&nbsp; \n";
 
 ?>
 <?=$catdropdown?>
@@ -173,13 +173,16 @@ if ($count) {
     print($pagerbottom);
 } else {
     if (isset($cleansearchstr)) {
-        print("<p class=note id=warn>Nothing found!<br>");
+        print("<p id=toast class=warn><span class=title>Search Results</span>Nothing found!<br>");
         print("Try again with a refined search string.</p>\n");
     } else {
-        print("<p class=note id=warn>No live torrents!</p>\n");
+        print("<p id=toast class=warn><span class=title>Warning!</span>No active torrents currently available.</p>\n");
     }
 }
-?>
-<?php
+$referrer = $_SERVER['HTTP_REFERER'];
+$cookie = $_COOKIE["auth"];
+if (strpos($referrer, 'my') !== false && strpos($referrer, 'returnto') == false && $cookie == false) {
+    print("<p id=toast class=success><span class=title>Logout Complete</span>You have been successfully logged out!</p>\n");
+}
 stdfoot();
 ?>
