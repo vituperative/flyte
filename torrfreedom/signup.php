@@ -5,7 +5,7 @@ loggedoutorreturn();
 stdhead("Signup");
 ?>
 <form method="post" action="takesignup.php">
-<p id=warn class=cookies>Please ensure cookies are enabled in your browser.</a></p>
+<p id=toast class=warn>Please ensure cookies are enabled in your browser.</a></p>
 <table id=signup>
 <tr><th colspan=2>Register an Account on <?php echo"$tracker_title";?></th></tr>
 <tr><td>Desired username</td><td><input id="username" class="input" type="text" size="40" name="wantusername" required /></td></tr>
