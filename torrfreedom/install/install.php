@@ -43,7 +43,7 @@ function installDB($file, $link)
         //echo "do"; //https://stackoverflow.com/questions/19751354/how-to-import-sql-file-in-mysql-database-using-php thx author; because source db.sql sdont works
         if (substr(trim($query), -1, 1) == ';') {
             // Perform the query
-            $link->query($templine) or print('Error performing query \'<strong>' . $templine . '\': ' . $link->error . '<br /><br />');
+            $link->query($templine) or print('Error performing query \'<strong>' . $templine . '\': ' . $link->error . '<br><br>');
             // Reset temp variable to empty
             //echo ("I did ".$templine);
             $templine = '';
