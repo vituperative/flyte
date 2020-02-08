@@ -10,6 +10,7 @@ stdhead($CURUSER["username"] . "'s private page");
 
 $referrer = $_SERVER['HTTP_REFERER'];
 $UA = $_SERVER['HTTP_USER_AGENT'];
+$request = $_SERVER["REQUEST_URI"];
 
 if (isset($_GET["edited"])) {
     print("<p id=toast class=success>Your profile has been updated.</p>\n");
@@ -17,7 +18,11 @@ if (isset($_GET["edited"])) {
     print("<p id=toast class=success><span class=title>Welcome back, " . htmlspecialchars($CURUSER["username"]) . "!</span><br>We've missed you!\n");
     if (strpos($UA, 'MYOB') === false)
         print("<span id=uawarn><b>Warning!</b>\nYour browser's user agent is leaking!<br>" . $UA . "</span>");
+    else
+        print("<span id=uawarn class=good><b>User Agent OK</b>" . $UA . "</span>");
     print("</p>\n");
+} elseif (strpos($request, 'fail') !== false) {
+    print("<p id=toast class=warn><span class=title>Password change failed!</span><br>The passwords you supplied did not match.</p>\n");
 }
 
 ?>

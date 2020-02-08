@@ -8,7 +8,7 @@ stdhead("Upload");
 <div class=main>
 <form enctype=multipart/form-data action=takeupload.php method=post accept-charset=utf-8>
 <input type=hidden name=MAX_FILE_SIZE value=<?=$max_torrent_size?> />
-<p id=toast class=warn><span class=title>Please note</span>Only upload torrents you're going to seed!<br>Uploaded torrents won't be visible on the main page until you start seeding them.</p>
+<p id=toast class=warn><span class=title>Please note</span>Only upload torrents you intend to seed!<br>Uploaded torrents won't be visible on the main page until you start seeding them.</p>
 <table id=uploader>
 <?php
 

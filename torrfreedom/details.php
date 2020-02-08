@@ -187,7 +187,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
                 }
 
                 $s .= "</table>\n";
-                tr("<b>File List</b><br /><a id=files href=\"details.php?id=$id$keepget\">Hide list</a>", $s, 1, $rowcount++);
+                tr("<b>File List</b><br><a id=files href=\"details.php?id=$id$keepget\">Hide list</a>", $s, 1, $rowcount++);
             }
         }
 
@@ -244,18 +244,18 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
             usort($downloaders, "leech_sort");
 
             if ($seeders) {
-                tr("<b>Seeds</b><br /><a id=seeds href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", dltable("Seeds", $seeders, $row), 1, $rowcount++);
+                tr("<b>Seeds</b><br><a id=seeds href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", dltable("Seeds", $seeders, $row), 1, $rowcount++);
             }
 
             if ($downloaders) {
-                tr("<b>Leechers</b><br /><a id=leeches href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", dltable("Leechers", $downloaders, $row), 1, $rowcount++);
+                tr("<b>Leechers</b><br><a id=leeches href=\"details.php?id=$id$keepget\" class=\"sublink\">Hide list</a>", dltable("Leechers", $downloaders, $row), 1, $rowcount++);
             }
 
         }
 
         print("</table>\n");
 
-//        print("<hr />\n");
+//        print("<hr>\n");
     } else {
         stdhead("Comments for torrent \"" . $row["name"] . "\"");
         print("<p class=note id=return><a href=\"details.php?id=$id\">Return to details page</a></p>\n");

@@ -3,11 +3,11 @@
 require_once("include/bittorrent.inc.php");
 
 if (!mkglobal("id"))
-	die();
+    die();
 
 $id = intval($id);
 if (!$id)
-	die();
+    die();
 
 dbconn();
 
@@ -16,7 +16,7 @@ loggedinorreturn();
 $res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT name FROM torrents WHERE id = $id");
 $torrow = mysqli_fetch_array($res);
 if (!$torrow)
-	die();
+    die();
 
 stdhead("Add a comment to \"" . $torrow["name"] . "\"");
 
@@ -24,7 +24,7 @@ stdhead("Add a comment to \"" . $torrow["name"] . "\"");
 <form method="post" action="takecomment.php">
 <input type="hidden" name="id" value="<?= $id ?>" />
 <table id=comment>
-<tr><th>Add a comment to torrent: "<?= htmlspecialchars($torrow["name"]) ?>"</th></tr>
+<tr><th>Add comment to torrent: <?= htmlspecialchars($torrow["name"]) ?></th></tr>
 <tr><td><textarea class="input" name="main" rows="20" cols="60" required></textarea></td></tr>
 <tr id=dostuff><td><input class="input" type="submit" value="Post Comment" /></td></tr>
 </table>
@@ -35,12 +35,12 @@ $res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT comments.id, text, comme
 
 $allrows = array();
 while ($row = mysqli_fetch_array($res))
-	$allrows[] = $row;
+    $allrows[] = $row;
 
 if (count($allrows)) {
-	print("<hr />\n");
-	print("<h2>Most recent comments, in reverse order</h2>\n");
-	commenttable($allrows);
+    print("<hr>\n");
+    print("<h3 id=recentcomments>Recent Comments</h3>\n");
+    commenttable($allrows);
 }
 
 stdfoot();

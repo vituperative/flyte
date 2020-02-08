@@ -39,7 +39,7 @@ echo "<?xml version=\"1.0\"?>\n";
     <channel>
         <title><?php echo $tracker_title; ?></title>
         <link><?=$tracker_url_name?>/</link>
-        <description>Torrent Freedom</description>
+        <description><?php echo $tracker_title; ?> - Recent Torrent Uploads</description>
         <language>en-us</language>
 <?php
 
@@ -68,10 +68,11 @@ while ($row = mysqli_fetch_assoc($res)) {
                         tr:nth-child(odd) {background: #ddd;}
                         tr:nth-child(even) {background: #f2f2f2;}
                         tr:nth-last-child(n+2) td:first-child {text-align: right; border-right: 1px solid #bbb; background: rgba(0,0,0,.1);}
-                        tr:first-child, tr:first-child td {text-align: center; background: none !important; border: none !important;}
+                        tr:first-child, tr:first-child td {padding-left: 0 !important; text-align: left !important; background: none !important; border: none !important;}
                         tr:last-child td {text-align: center;}
                         td {padding: 4px 8px;}
                         footer {display: none;}
+                        hr + b {display: block;}
                         #sitename a {font-size: 28pt; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; color: #898080; white-space: nowrap;}
                         @supports (-webkit-background-clip: text) {
                             #sitename {
@@ -94,7 +95,7 @@ while ($row = mysqli_fetch_assoc($res)) {
                         <tr><td colspan=2><div id=sitename><a href='<?php echo "$tracker_url_name"; ?>'><?php echo "$tracker_title"; ?></a></div></td></tr>
                         <tr><td>Name:</td><td><?php echo htmlspecialchars($row['name']); ?></td></tr>
                         <tr><td>Hash:</td><td><?php echo preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])); ?></td></tr>
-                        <tr><td>Desc:</td><td><?php echo htmlspecialchars($row['ori_descr']); ?></td></tr>
+                        <tr><td>Desc:</td><td><?php echo strip_tags($row['ori_descr'], '<br><br><b><hr><p>'); ?></td></tr>
                         <tr><td>Type:</td><td>
                                 <?php
 if (isset($row["cat_name"])) {
