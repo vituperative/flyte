@@ -12,7 +12,7 @@
     <meta http-equiv=Content-Language content=en-us>
     <META HTTP-EQUIV=Content-Type content=text/html; charset=UTF-8>
     <link rel=stylesheet href=include/style.css type=text/css>
-    <style type=text/css>html{background: #232020;} body{opacity: 0; text-align: center;}</style>
+    <style type=text/css>html{background: #151414;} body{opacity: 0; text-align: center;}</style>
     <link rel=shortcut icon href=<?php echo $tracker_path ?>favicon.ico>
     <link rel=alternate type=application/rss+xml title="<?php echo $tracker_title; ?> RSS Feed" href=rss.php>
     <title><?php echo strtoupper($tracker_title);
@@ -20,7 +20,7 @@
         $page = basename($_SERVER['PHP_SELF']);
         $page = str_replace("index", "", $page);
         $page = str_replace("my.php", "$username's account settings", $page);
-        $page = str_replace("mytorrents", "$username's uploads", $page);
+        $page = str_replace("mytorrents", "$username's torrents", $page);
         $page = str_replace("takeprofedit", "update profile", $page);
         $pagename = rtrim($page, "php");
         if ($pagename != ".")
@@ -29,6 +29,7 @@
 </head>
 <body>
 <div id=header>
+<div class="shim top"></div>
 <?php
 $request = $_SERVER["REQUEST_URI"];
 if ($tracker_title == "") {
@@ -53,19 +54,28 @@ function topnav() {
 if (strpos($request, "install") == false)
     topnav();
 else
-    print("<div id=installshim></div>");
+    print("<div id=installation class=shim></div>");
 
 print("</div>\n<hr id=top hidden>");
 
 // debugging
 /**
+$server = $server = $_SERVER['HTTP_HOST'];
  $referrer = $_SERVER['HTTP_REFERER'];
  $request = $_SERVER["REQUEST_URI"];
  $cookie = $_COOKIE["auth"];
  $spacer = "&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;&nbsp;";
  if (!$referrer) {$referrer = "???";}
- print("<p><b>Referring URL:</b> " . $referrer . $spacer);
- print("<b>Request URI:</b> " . $request . $spacer);
- print("<b>Auth cookie:</b> " . truncate($cookie, 8, 0) . "&hellip;</p>");
-**/
+ if (!$cookie) {$referrer = "???";}
+ print("<p id=toast class=fixed>" . $spacer . "<b>Server:</b> <i>" . $server . "</i><br>");
+ print($spacer . "<b>Referring URL:</b> <i>" . $referrer . "</i><br>");
+ print($spacer . "<b>Request URI:</b> <i>" . $request . "</i><br>");
+ print($spacer . "<b>Auth cookie:</b> <i>");
+ if ($cookie) {
+     $cookie = truncate($cookie, 8, 0);
+ } else{
+     $cookie = "Not logged in";
+ }
+ print($cookie . "&hellip;</i></p>");
+ **/
 ?>

@@ -6,12 +6,12 @@ unset($returnto);
 if (!empty($_GET["returnto"])) {
     $returnto = $_GET["returnto"];
     if (!isset($_GET["nowarn"])) {
-        print("<p id=toast class=warn>Error: Login required to view the page...</p>\n");
+        print("<p id=toast class=warn>Error: Login required to view that page&hellip;</p>\n");
     }
 }
 ?>
 <form method=post action=takelogin.php>
-<p id=toast class=warn>Please ensure cookies are enabled in your browser.</a>
+<p id=toast class=warn>Please ensure cookies are enabled in your browser.</p>
 <table id=dologin>
 <tr><th colspan=2>Login to <?php echo "$tracker_title"; ?></th></tr>
 <tr><td>Username</td><td><input id=username class=input type=text size=20 name=username /></td></tr>

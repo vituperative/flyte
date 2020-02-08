@@ -2,7 +2,7 @@
 require_once 'include/bittorrent.inc.php';
 dbconn();
 stdhead();
-require_once 'include/siteinfo.inc.php';
+//require_once 'include/siteinfo.inc.php';
 ?>
 <table id=wrapper class=help>
 <tr><td>
@@ -21,6 +21,19 @@ require_once 'include/siteinfo.inc.php';
 
 <h3>Can I be notified of new torrents?</h3>
 <p>Yes! Use the <a href=rss.php>RSS Feed</a> feature to track new uploads.</p>
+
+<h3>What's the announce address for this tracker?</h3>
+<p>You can use any of the following addresses:<br>
+<div id=announcelist>
+<span class=spacer>&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;</span><code><?php echo "$tracker_url_name" ?>/a</code><br>
+<span class=spacer>&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;</span><code><?php echo "$tracker_url_name" ?>/announce</code><br>
+<span class=spacer>&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;</span><code><?php echo "$tracker_url_name" ?>/announce.php</code><br>
+<span class=spacer>&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;</span><code><?php echo "$tracker_url_key" ?>/a</code><br>
+<span class=spacer>&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;</span><code><?php echo "$tracker_url_key" ?>/announce</code><br>
+<span class=spacer>&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;</span><code><?php echo "$tracker_url_key" ?>/announce.php</code>
+</div>
+</p>
+<p>Note: If you use the domain name in preference to the .b32 address, be sure you have the domain in your addressbook.</p>
 
 <h3>Is the tracker software available to download?</h3>
 <p>The tracker software (a fork of Byte Monsoon) is currently in heavy development. When it's ready for release, it will be available as a torrent on the site. Watch this space!</p>

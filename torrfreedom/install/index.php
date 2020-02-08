@@ -11,7 +11,6 @@
   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
   <link rel="stylesheet" href="../include/style.css" type="text/css">
   <link rel="shortcut icon" href="favicon.ico" />
-  <title> Installer of that tracker </title>
 </head>
 <body>
 <table id=wrapper>

@@ -102,7 +102,7 @@ if ($count) {
 $additionals = 1;
 
 if (isset($cleansearchstr)) {
-    stdhead("Search results for \"$searchstr\"");
+    stdhead("Search results for: $searchstr");
 } else {
     stdhead();
     ?>
@@ -112,7 +112,9 @@ if (isset($cleansearchstr)) {
 $cats = genrelist();
 
 ?>
+
 <div id=searchandshow>
+<input type=checkbox name=togglepanel id=togglepanel><label for=togglepanel><span id=toggle>Show/Hide</span></label>
 <form method="get" action="./">
 <div id=search>
 <input name="search" type="text" value="<?=htmlspecialchars($searchstr)?>" size="40" class="input">
@@ -181,7 +183,7 @@ if ($count) {
 }
 $referrer = $_SERVER['HTTP_REFERER'];
 $cookie = $_COOKIE["auth"];
-if (strpos($referrer, 'my') !== false && strpos($referrer, 'returnto') == false && $cookie == false) {
+if (strpos($referrer, 'my') !== false && strpos($referrer, 'returnto') === false && $cookie === null) {
     print("<p id=toast class=success><span class=title>Logout Complete</span>You have been successfully logged out!</p>\n");
 }
 stdfoot();

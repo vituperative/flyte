@@ -225,7 +225,7 @@ function tr($x, $y, $noesc = 0, $count = 0)
         $a = $y;
     } else {
         $a = htmlspecialchars($y);
-        $a = str_replace("\n", "<br />\n", $a);
+        $a = str_replace("\n", "<br>\n", $a);
     }
     if ($count % 2 == 0) {
         $style = 'r';
@@ -286,13 +286,14 @@ function parsedescr($d)
 //    $pd = preg_replace('/<[^>]*>/', "", $d);
     $pd = strip_tags($d, '<b></i><ul><ol><li><strong><hr><br>');
     #Interface: Add breaklines
-    $pd = str_replace(array("\n", "\r"), array("<br />\n", ""), htmlspecialchars($pd));
+    $pd = str_replace(array("\n", "\r"), array("<br>\n", ""), htmlspecialchars($pd));
     return $pd;
 }
 
 function stdhead($title = "")
 {
     global $CURUSER, $pic_base_url, $tracker_title, $tracker_url_name, $tracker_path;
+/**
     header("Content-Type: text/html; charset=utf-8");
     if ($title == "") {
         $title = $tracker_title . " BitTorrent Tracker";
@@ -301,6 +302,7 @@ function stdhead($title = "")
     }
 
     $trackertitle = $title;
+**/
     include "page_header.inc.php";
 }
 
@@ -367,6 +369,7 @@ function loggedinorreturn()
     global $CURUSER;
     if (!$CURUSER) {
         header("Refresh: 0; url=login.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]));
+//        header("Refresh: 0; url=login.php?returnto=" . $_SERVER["REQUEST_URI"]);
         exit();
     }
 }
@@ -469,11 +472,11 @@ function pager($rpp, $count, $href, $opts = array())
 
         }
         $pagerstr = join(" ", $pagerarr);
-        $pagertop = "<p hidden align=\"center\">$pager<br />$pagerstr</p>\n";
+        $pagertop = "<p hidden align=\"center\">$pager<br>$pagerstr</p>\n";
         if ($i != $page) {
             $pagerbottom = "<p id=pager>$pagerstr</p>\n";
         } else {
-            $pagerbottom = "<p id=pager>$pagerstr<br />$pager</p>\n";
+            $pagerbottom = "<p id=pager>$pagerstr<br>$pager</p>\n";
         }
 
     } else {
@@ -524,18 +527,20 @@ function commenttable($rows)
     print("<table id=comments>\n");
     $count = 0;
     foreach ($rows as $row) {
-        print("<tr>\n");
-        if (isset($row["username"])) {
-            print("<th>User: " . htmlspecialchars($row["username"]));
-        } else {
-            print("<th><i>User vanished!</i>\n");
-        }
+        if ($row["text"] != null) {
+            print("<tr>\n");
+            if (isset($row["username"])) {
+                print("<th class=user>" . htmlspecialchars($row["username"]));
+            } else {
+                print("<th><i>User vanished!</i>\n");
+           }
 
-        print("<th class=posted>Posted: " . htmlspecialchars($row["added"]) . "</th>\n");
-        print("</tr>\n");
-        print("<tr>\n");
-        print("<td colspan=\"2\">" . $row["text"] . "</td>\n");
-        print("</tr>\n");
+            print("<th class=posted>Posted: " . htmlspecialchars($row["added"]) . "</th>\n");
+            print("</tr>\n");
+            print("<tr>\n");
+            print("<td colspan=\"2\">" . $row["text"] . "</td>\n");
+            print("</tr>\n");
+        }
         $count++;
     }
     print("</table>");
@@ -610,15 +615,15 @@ function torrenttable($res, $variant = "index")
 
         print("<td>");
         if (isset($row["cat_name"])) {
-            print("<a href=\"./?cat=" . $row["category"] . "\" class=\"catlink\" data-tooltip=\"" . $row["cat_name"] . "\"><img src=\"" . $tracker_url_name . "/pic/" . $row["category"] . ".png\" width=24 height=24></a>");
+            print("<a href=\"./?cat=" . $row["category"] . "\" class=\"catlink\" data-tooltip=\"" . $row["cat_name"] . "\"><img src=\"" . $tracker_path . "pic/" . $row["category"] . ".png\" width=24 height=24></a>");
         } else {
-            print("<span class=\"catlink\" data-tooltip=\"Uncategorized\"><img src=\"" . $tracker_url_name . "/pic/unknown.png\" width=24 height=24></span>");
+            print("<span class=\"catlink\" data-tooltip=\"Uncategorized\"><img src=\"" . $tracker_path . "pic/unknown.png\" width=24 height=24></span>");
         }
 
         print("</td>\n");
 
         $dispname = htmlspecialchars($row["name"]);
-        print("<td class=torrentname><a href=\"details.php?");
+        print("<td class=torrentname><a title=\"View details for: " . $dispname . "\" href=\"details.php?");
         if ($variant == "mytorrents") {
             print("returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;");
         }
@@ -632,7 +637,15 @@ function torrenttable($res, $variant = "index")
         if (isset($row["descr"]) && $row["descr"]) {
 //            print("<br>" . truncate(htmlspecialchars($row["ori_descr"], ENT_NOQUOTES), 150));
             $description = strip_tags($row["ori_descr"]);
-            print("<br><span class=briefdesc>" . substr($description, 0, 100) . "</span>");
+            print("<br><span class=briefdesc");
+            if (strlen($description) > 120) {
+                print(" title=\"" . substr($description, 0, 1000));
+                if (strlen($description) > 1000) {
+                    print(" &hellip; [more information available on the details page]");
+                }
+                print("\"");
+            }
+            print(">" . substr($description, 0, 100) . "</span>");
         }
         print("</td>\n");
 
@@ -675,7 +688,7 @@ function torrenttable($res, $variant = "index")
 
         }
 
-//        print("<td>" . str_replace(" ", "<br />", $row["added"]) . "</td>\n");
+//        print("<td>" . str_replace(" ", "<br>", $row["added"]) . "</td>\n");
         print("<td>" . preg_replace("/ .*/", "", $row["added"]) . "</td>\n");
         print("<td>" . mksize($row["size"]) . "</td>\n");
 
