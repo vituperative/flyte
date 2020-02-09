@@ -31,7 +31,7 @@ function dltable($name, $arr, $torrent)
         $s .= "<td>" . mksize($e["uploaded"]) . "</td>\n";
         $s .= "<td>" . mksize($e["downloaded"]) . "</td>\n";
         $ps = sprintf("%.0f%%", 100 * (1 - ($e["to_go"] / $torrent["size"])));
-        $ps = ($ps < 0) ? "0.000%" : $ps;
+        $ps = ($ps < 0) ? "0%" : $ps;
         $s .= "<td class=downloadbar><span class=barOuter title=\"" . $ps . " complete\"><span class=barInner style=width:" . $ps . ">" . $ps . "</span></span></td>\n";
         $s .= "<td>" . mkprettytime($now - $e["st"]) . "</td>\n";
         $s .= "<td>" . mkprettytime($now - $e["la"]) . "</td>\n";
@@ -118,9 +118,9 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
         $editlink = "a href=\"$url\" title=\"Edit torrent details\" class=edit";
 
         if (isset($row["cat_name"])) {
-            $s = "<a style=float:none href=\"./?cat=" . $row["category"] . "\" class=\"catlink\" data-tooltip=\"" . $row["cat_name"] . "\"><img src=\"" . $tracker_url_name . "/pic/" . $row["category"] . ".png\" width=24 height=24></a><span class=titletorrent title=\"" . htmlspecialchars($row["name"]) . "\">Torrent: " . htmlspecialchars($row["name"]) . "</span>";
+            $s = "<a style=float:none href=\"./?cat=" . $row["category"] . "\" class=\"catlink\" data-tooltip=\"" . $row["cat_name"] . "\"><img src=\"" . $tracker_path . "pic/" . $row["category"] . ".png\" width=24 height=24></a><span class=titletorrent title=\"" . htmlspecialchars($row["name"]) . "\">Torrent: " . htmlspecialchars($row["name"]) . "</span>";
         } else {
-            $s = "<span class=\"catlink\" data-tooltip=\"Uncategorized\"><img src=\"" . $tracker_url_name . "/pic/unknown.png\" width=24 height=24></span><span class=titletorrent title=\"" . htmlspecialchars($row["name"]) . "\">Torrent: " . htmlspecialchars($row["name"]) . "</span>";
+            $s = "<span class=\"catlink\" data-tooltip=\"Uncategorized\"><img src=\"" . $tracker_path . "pic/unknown.png\" width=24 height=24></span><span class=titletorrent title=\"" . htmlspecialchars($row["name"]) . "\">Torrent: " . htmlspecialchars($row["name"]) . "</span>";
         }
         if ($owned) {
             $s .= " $spacer<$editlink><span>Edit torrent</span></a>";
@@ -177,7 +177,8 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
             if (!@$_GET["filelist"]) {
                 tr("Files", $row["numfiles"] . '&nbsp;&nbsp;&nbsp;<a href="details.php?id=' . $id . '&amp;filelist=1$keepget#filelist">Show list</a>', 1, $rowcount++);
             } else {
-//                tr("Files", $row["numfiles"], 1, $rowcount++);
+                if (intval($row["numfiles"]) > 1)
+                    tr("Files", $row["numfiles"], 1, $rowcount++);
 
                 $s = "<table id=filelist>\n";
 
