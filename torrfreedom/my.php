@@ -36,10 +36,8 @@ $mytorrents = $row[0];
 if (!$mytorrents)
     print("No torrents uploaded!");
 else
-    print("<a href=mytorrents.php>My Torrents</a> (" . count($mytorrents) . ")");
+    print("<a href=mytorrents.php>My Torrents</a> (" . $mytorrents . ")");
 print("</th></tr>");
-if ($mytorrents)
-    tr("Uploaded torrents", $row[0]);
 tr("Comments posted", $row[0]);
 
 tr("New password", "<input type=password name=chpassword size=40 required />", 1);
