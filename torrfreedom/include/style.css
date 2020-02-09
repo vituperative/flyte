@@ -11,7 +11,7 @@ body, html {
 
 body {
   margin: 0 0 5px;
-  padding: 0 8px 28px;
+  padding: 0 0 28px;
   position: relative;
   min-width: 900px;
   color: #bbb;
@@ -193,6 +193,7 @@ th, #dostuff td {
 
 #torrents {
   margin-top: -2px;
+  width: calc(100% - 16px);
   border: 1px solid #111 !important;
 }
 
@@ -359,13 +360,17 @@ input[type="submit"]:focus, input[type="reset"]:focus, input[type="text"]:focus,
   color: #eee !important;
 }
 
-input[type="submit"]:active, input[type="reset"]:active, select:active, select:focus, .button:active, #details th a:nth-child(n+2):active {
-  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232, inset 2px 2px 2px #111 !important;
+input[type="submit"]:active, input[type="reset"]:active, select:active, select:focus, .button:active,
+#details th a:nth-child(n+2):active, .edit:active, .download:active {
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232,
+              inset 2px 2px 2px #111 !important;
 }
 
 select:hover, select:focus {
   color: #eee;
-  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232, inset 2px 2px 2px #111, 0 0 0 2px rgba(255, 96, 0, .3) !important;
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232,
+              inset 2px 2px 2px #111,
+              0 0 0 2px rgba(255, 96, 0, .3) !important;
   background-blend-mode: normal;
 }
 
@@ -516,7 +521,7 @@ hr.separator {
 
 #topnav {
   padding-bottom: 6px;
-  margin: 0 -10% 10px;
+  margin: 0 0 10px;
   color: transparent;
   border-bottom: 1px solid #343232;
   filter: drop-shadow(0 0 1px #181717);
@@ -999,6 +1004,7 @@ table table {
 #pager {
   margin: -1px auto 0 !important;
   padding: 8px 14px !important;
+  width: calc(100% - 16px);
   position: relative;
   z-index: 10;
   text-align: center;
@@ -1030,17 +1036,18 @@ table table {
 }
 
 #searchandshow {
-  margin: 0 -5% -10px;
+  margin: 0 0 -10px;
   background: #212020;
-  background: linear-gradient(to bottom, #212020, #181817);
+  background: radial-gradient(at top, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, #212020, #181817);
 }
 
 .shim {
   height: 8px;
   background: #212020;
-  background: linear-gradient(to bottom, #212020, #181817);
-  border-bottom: 1px solid #383636;
-  border-top: 1px solid #383636;
+  background: repeating-linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, .1) 2px), linear-gradient(to bottom, #343030 5%, #242020);
+  border-bottom: 1px solid #434040;
+  border-top: 1px solid #434040;
+  will-change: transform;
 }
 
 .shim.top {
@@ -1048,8 +1055,8 @@ table table {
   top: 0;
   z-index: 1000;
   border-top: 1px solid #343030;
-  background: linear-gradient(to bottom, #313030, #212020);
-  will-change: transform;
+  border-bottom: 1px solid #403a3a;
+  background: repeating-linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, .1) 2px), linear-gradient(to bottom, #343030 5%, #242020);
 }
 
 #installation.shim {
@@ -1283,7 +1290,7 @@ code.dest {
 }
 
 #header {
-  margin: -12px -10% 0;
+  margin: -12px 0 0;
   padding-top: 8px;
   background: linear-gradient(to bottom, #232020, #121010);
   position: sticky;
@@ -1347,16 +1354,24 @@ code.dest {
   border-radius: 2px;
   box-shadow: inset 0 0 0 1px #454040, 0 0 0 1px #121010;
   background: linear-gradient(to bottom, #454040, #232020);
-  background-size: 18px 18px !important;
+  background-size: 18px 18px, 100% 100% !important;
 }
 
 .edit {
-  background: url(../pic/edit.png) no-repeat;
+  background: url(../pic/edit.png) no-repeat, linear-gradient(to bottom, #454040, #232020);
 }
 
 .download {
   font-size: 0 !important;
-  background: url(../pic/download.png) no-repeat;
+  background: url(../pic/download.png) no-repeat, linear-gradient(to bottom, #454040, #232020);
+}
+
+.edit:hover, .edit:focus {
+  background: url(../pic/edit.png) no-repeat, linear-gradient(to bottom, #232020, #454040);
+}
+
+.download:hover, .download:focus {
+  background: url(../pic/download.png) no-repeat, linear-gradient(to bottom, #232020, #454040);
 }
 
 #details th a:nth-child(3) {
@@ -1447,32 +1462,46 @@ input#togglepanel {
   padding: 0;
   margin: -1px auto -2px;
   margin: -1px auto -3px;
-  width: calc(100% - 20px);
+  width: 100%;
   display: inline-block;
   color: transparent;
   border-bottom: 1px solid #383636;
   background: linear-gradient(to bottom, #212020, #181817);
   background: linear-gradient(to bottom, #313030 30%, #212020);
+  background: repeating-linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, .1) 2px), linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 255, 255, .01), rgba(0, 0, 0, 0)), linear-gradient(to bottom, #343030 30%, #242020);
   position: relative;
   z-index: 10;
+  will-change: transform;
+  cursor: pointer;
+}
+
+#togglepanel+label:hover {
+  background: repeating-linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, .1) 2px), linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 96, 0, .03), rgba(0, 0, 0, 0)), linear-gradient(to bottom, #383535 30%, #212020);
 }
 
 #togglepanel+label::after {
-  content: "";
+  margin-bottom: 1px;
   display: inline-block;
   width: 7px;
   height: 7px;
-  background: #454040;
-  border-radius: 50%;
   border: 1px solid #232020;
+  border-radius: 50%;
+  background: #484040;
+  background: linear-gradient(to bottom, #484040, #353030);
   box-shadow: inset 0 0 0 1px #454040, inset 0 -2px 2px #111;
-  margin-bottom: 1px;
+  content: "";
+  filter: drop-shadow(0 0 1px rgba(255, 220, 220, .1));
+  will-change: transform;
 }
 
 #togglepanel+label:hover::after {
   border: 1px solid #232020;
   box-shadow: inset 0 0 0 1px #454040, inset 0 2px 2px #111;
-  filter: drop-shadow(0 0 1px rgba(255, 96, 0, .5));
+  filter: drop-shadow(0 0 1px rgba(255, 96, 0, .8)) drop-shadow(0 0 2px rgba(128, 32, 0, .3));
+}
+
+#togglepanel+label:active {
+  box-shadow: inset 2px 2px 2px rgba(0, 0, 0, .7);
 }
 
 #togglepanel:not(:checked)+label {
@@ -1537,6 +1566,10 @@ input#togglepanel {
   }
   #torrents {
     margin-top: -5px;
+    width: 100%;
+  }
+  #pager {
+    width: 100%;
   }
   #torrents th {
     padding: 6px 4px !important;
@@ -1550,6 +1583,7 @@ input#togglepanel {
   }
   .catlink:hover:after {
     left: -10px;
+    min-width: 60px;
   }
   #torrents td, #torrents td a {
     font-size: 8.5pt !important;
@@ -1578,9 +1612,6 @@ input#togglepanel {
   }
   #torrents .dlicons img {
     margin: 0;
-  }
-  .catlink:hover:after {
-    min-width: 60px;
   }
   .downloadbar {
     font-size: 0 !important;
