@@ -25,12 +25,16 @@ stdhead();
 <h3>What's the announce address for this tracker?</h3>
 <p>You can use any of the following addresses:<br>
 <div id=announcelist>
-<span class=spacer>&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;</span><code><?php echo "$tracker_url_name" ?>/a</code><br>
-<span class=spacer>&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;</span><code><?php echo "$tracker_url_name" ?>/announce</code><br>
-<span class=spacer>&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;</span><code><?php echo "$tracker_url_name" ?>/announce.php</code><br>
-<span class=spacer>&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;</span><code><?php echo "$tracker_url_key" ?>/a</code><br>
-<span class=spacer>&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;</span><code><?php echo "$tracker_url_key" ?>/announce</code><br>
-<span class=spacer>&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;</span><code><?php echo "$tracker_url_key" ?>/announce.php</code>
+<?php
+$tooltip = "Click this link and copy - the full url will be selected for pasting";
+$spacer = "&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;";
+print("<span class=spacer>" . $spacer . "</span><code title=\"" . $tooltip . "\">"  . $tracker_url_name. "/a</code><br>");
+print("<span class=spacer>" . $spacer . "</span><code title=\"" . $tooltip . "\">"  . $tracker_url_name. "/announce</code><br>");
+print("<span class=spacer>" . $spacer . "</span><code title=\"" . $tooltip . "\">"  . $tracker_url_name. "/announce.php</code><br>");
+print("<span class=spacer>" . $spacer . "</span><code title=\"" . $tooltip . "\">"  . $tracker_url_key. "/a</code><br>");
+print("<span class=spacer>" . $spacer . "</span><code title=\"" . $tooltip . "\">"  . $tracker_url_key. "/announce</code><br>");
+print("<span class=spacer>" . $spacer . "</span><code title=\"" . $tooltip . "\">"  . $tracker_url_key. "/announce.php</code>");
+?>
 </div>
 </p>
 <p>Note: If you use the domain name in preference to the .b32 address, be sure you have the domain in your addressbook.</p>
