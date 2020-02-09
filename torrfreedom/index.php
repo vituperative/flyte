@@ -114,7 +114,7 @@ $cats = genrelist();
 ?>
 
 <div id=searchandshow>
-<input type=checkbox name=togglepanel id=togglepanel><label for=togglepanel><span id=toggle>Show/Hide</span></label>
+<input type=checkbox name=togglepanel id=togglepanel><label for=togglepanel title="Toggle Panel Visibility"><span id=toggle>&nbsp;</span></label>
 <form method="get" action="./">
 <div id=search>
 <input name="search" type="text" value="<?=htmlspecialchars($searchstr)?>" size="40" class="input">
@@ -183,7 +183,7 @@ if ($count) {
 }
 $referrer = $_SERVER['HTTP_REFERER'];
 $cookie = $_COOKIE["auth"];
-if (strpos($referrer, 'my') !== false && strpos($referrer, 'returnto') === false && $cookie === null) {
+if (strpos($referrer, 'my') !== false && strpos($referrer, 'returnto') === false && $cookie === false) {
     print("<p id=toast class=success><span class=title>Logout Complete</span>You have been successfully logged out!</p>\n");
 }
 stdfoot();

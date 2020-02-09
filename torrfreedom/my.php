@@ -25,18 +25,21 @@ if (isset($_GET["edited"])) {
     print("<p id=toast class=warn><span class=title>Password change failed!</span><br>The passwords you supplied did not match.</p>\n");
 }
 
+$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) FROM torrents WHERE owner=" . $CURUSER["id"]);
+$row = mysqli_fetch_array($res);
+$mytorrents = $row[0];
 ?>
 <form method=post action=takeprofedit.php>
 <table id=myaccount>
-<tr><th colspan=2>Profile for: <?php echo $CURUSER["username"] ?>&nbsp;&nbsp;<a href=mytorrents.php>View or edit your torrents</a></th></tr>
+<tr><th>Profile for: <?php echo $CURUSER["username"] ?></th><th>
 <?php
-
-$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) FROM torrents WHERE owner=" . $CURUSER["id"]);
-$row = mysqli_fetch_array($res);
-tr("Uploaded torrents", $row[0]);
-
-$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) FROM comments WHERE user=" . $CURUSER["id"]);
-$row = mysqli_fetch_array($res);
+if (!$mytorrents)
+    print("No torrents uploaded!");
+else
+    print("<a href=mytorrents.php>My Torrents</a> (" . count($mytorrents) . ")");
+print("</th></tr>");
+if ($mytorrents)
+    tr("Uploaded torrents", $row[0]);
 tr("Comments posted", $row[0]);
 
 tr("New password", "<input type=password name=chpassword size=40 required />", 1);

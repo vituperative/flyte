@@ -1,1573 +1,1613 @@
 /* http://torrfreedom.i2p theme by dr|z3d */
 
 html {
-    scrollbar-color: #454343 #212020;
+  scrollbar-color: #454343 #212020;
 }
 
 body, html {
-    min-height: 100% !important;
-    background: #151414 !important;
+  min-height: 100% !important;
+  background: #151414 !important;
 }
 
 body {
-    margin: 0 0 5px;
-    padding: 0 8px 28px;
-    position: relative;
-    min-width: 900px;
-    color: #bbb;
-    opacity: 1 !important;
-    overflow-x: hidden;
+  margin: 0 0 5px;
+  padding: 0 8px 28px;
+  position: relative;
+  min-width: 900px;
+  color: #bbb;
+  opacity: 1 !important;
+  overflow-x: hidden;
 }
 
 body, input, select, textarea, button {
-    font-family: Open Sans, Droid Sans, Noto Sans, Segoe UI, sans serif !important;
-    font-size: 10pt !important;
-    vertical-align: middle;
+  font-family: Open Sans, Droid Sans, Noto Sans, Segoe UI, sans serif !important;
+  font-size: 10pt !important;
+  vertical-align: middle;
 }
 
 *:focus {
-    outline: none !important;
+  outline: none !important;
 }
 
 ::-moz-selection, ::selection {
-    color: #fff;
-    background: #563232;
+  color: #fff;
+  background: #563232;
 }
 
 #pager, #header, #searchandshow, #footer, #toast, th {
-    user-select: none;
+  user-select: none;
 }
 
 code {
-    margin-left: 2px;
-    font-family: Noto Sans Mono, DejaVu Sans Mono, Consolas, monospace;
-    font-weight: 600;
-    color: #393;
-    user-select: all;
+  margin-left: 2px;
+  font-family: Noto Sans Mono, DejaVu Sans Mono, Consolas, monospace;
+  font-weight: 600;
+  color: #393;
+  user-select: all;
 }
 
 code::-moz-selection, code::selection {
-    background: #393;
-    color: #fff;
+  background: #393;
+  color: #fff;
 }
 
 #siteinfo code, #footer code {
-    opacity: .75;
+  opacity: .75;
 }
 
 #siteinfo code:hover, #footer code:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 input[type="submit"], input[type="reset"], input[type="radio"], input[type="file"], input[type="checkbox"], select, label {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #sitename a {
-    line-height: 1;
-    word-spacing: -0.05em;
-    letter-spacing: 0.1em;
-    font-weight: 900 !important;
-    font-size: 44pt !important;
-    color: #f2f2f2 !important;
-    text-align: center !important;
-    text-transform: uppercase;
-    text-shadow: 0 0 1px #000;
-    user-select: none;
+  line-height: 1;
+  word-spacing: -0.05em;
+  letter-spacing: 0.1em;
+  font-weight: 900 !important;
+  font-size: 44pt !important;
+  color: #f2f2f2 !important;
+  text-align: center !important;
+  text-transform: uppercase;
+  text-shadow: 0 0 1px #000;
+  user-select: none;
 }
 
 #sitename {
-    text-align: center;
+  text-align: center;
 }
 
 #sitename a:hover, #sitename a:focus, #sitename a:active {
-    text-decoration: none !important;
+  text-decoration: none !important;
 }
 
 @supports (-webkit-background-clip: text) {
-    #sitename a, #sitename a:hover, #sitename a:focus {
-        text-shadow: none;
-        background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .5) 2px), linear-gradient(to bottom, rgba(255, 96, 0, .5), rgba(0, 0, 0, .6) 100%), linear-gradient(to bottom, #740, #520 10%, #fff 35%, #310 65%) !important;
-        -webkit-background-clip: text !important;
-        background-clip: text !important;
-        -webkit-text-stroke-color: #fff;
-        -webkit-text-stroke-width: 1px;
-        -webkit-text-fill-color: transparent !important;
-        filter: drop-shadow(0 0 1px #300) drop-shadow(0 0 2px #200) drop-shadow(0 0 3px rgba(0, 0, 0, .1));
-        animation: linear powercycle 180s alternate infinite;
-    }
-    #sitename a:hover, #sitename a:focus, #sitename a:active {
-        background: repeating-linear-gradient(to bottom, rgba(128, 64, 0, .2), rgba(0, 0, 0, .3) 2px), linear-gradient(to bottom, rgba(255, 96, 0, .1), rgba(0, 0, 0, .7) 100%), linear-gradient(to top, #f60, #520 10%, #000 35%, #f60 65%) !important;
-        background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-        filter: opacity(.8);
-        animation: linear powercycle 10s alternate infinite;
-    }
+  #sitename a, #sitename a:hover, #sitename a:focus {
+    text-shadow: none;
+    background: repeating-linear-gradient(to bottom, rgba(0, 0, 0, .2), rgba(0, 0, 0, .5) 2px), linear-gradient(to bottom, rgba(255, 96, 0, .5), rgba(0, 0, 0, .6) 100%), linear-gradient(to bottom, #740, #520 10%, #fff 35%, #310 65%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-stroke-color: #fff;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-fill-color: transparent !important;
+    filter: drop-shadow(0 0 1px #300) drop-shadow(0 0 2px #200) drop-shadow(0 0 3px rgba(0, 0, 0, .1));
+    animation: linear powercycle 180s alternate infinite;
+  }
+  #sitename a:hover, #sitename a:focus, #sitename a:active {
+    background: repeating-linear-gradient(to bottom, rgba(128, 64, 0, .2), rgba(0, 0, 0, .3) 2px), linear-gradient(to bottom, rgba(255, 96, 0, .1), rgba(0, 0, 0, .7) 100%), linear-gradient(to top, #f60, #520 10%, #000 35%, #f60 65%) !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    filter: opacity(.8);
+    animation: linear powercycle 10s alternate infinite;
+  }
 }
 
 @keyframes powercycle {
-    from {
-        filter: hue-rotate(0) opacity(1) saturate(0);
-    }
-    to {
-        filter: hue-rotate(360deg) opacity(1) saturate(1);
-    }
+  from {
+    filter: hue-rotate(0) opacity(1) saturate(0);
+  }
+  to {
+    filter: hue-rotate(360deg) opacity(1) saturate(1);
+  }
 }
 
 .main, form {
-    text-align: center;
+  text-align: center;
 }
 
 table {
-    margin: auto;
-    width: 100%;
-    border-collapse: collapse !important;
+  margin: auto;
+  width: 100%;
+  border-collapse: collapse !important;
 }
 
 a:visited {
-    color: #a61;
+  color: #a61;
 }
 
 a:link {
-    color: #c83;
-    text-shadow: 0 1px 1px #222;
-    text-decoration: none;
-    outline: none;
+  color: #c83;
+  text-shadow: 0 1px 1px #222;
+  text-decoration: none;
+  outline: none;
 }
 
 a:hover, a:focus {
-    color: #f60;
-    text-decoration: underline;
+  color: #f60;
+  text-decoration: underline;
 }
 
 a:active {
-    color: #d30;
+  color: #d30;
 }
 
 td a img {
-    opacity: .7;
+  opacity: .7;
 }
 
 td a:hover img, td a:focus img {
-    opacity: 1;
+  opacity: 1;
 }
 
 a, b, label {
-    font-weight: 600 !important;
+  font-weight: 600 !important;
 }
 
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 tr:nth-child(odd), #server tr:nth-child(odd) {
-    background: #454242 !important;
+  background: #454242 !important;
 }
 
 tr:nth-child(even), #server tr:nth-child(even) {
-    background: #343131 !important;
+  background: #343131 !important;
 }
 
 table table tr:nth-child(odd) {
-    background: #676565 !important;
+  background: #676565 !important;
 }
 
 table table tr:nth-child(even) {
-    background: #565353 !important;
+  background: #565353 !important;
 }
 
 table table tr {
-    border: 1px solid #333;
+  border: 1px solid #333;
 }
 
 table table td {
-    color: #ddd;
+  color: #ddd;
 }
 
 th, #dostuff td {
-    padding: 8px !important;
-    font-size: 110%;
-    font-weight: 600 !important;
-    background: linear-gradient(to bottom, #343131, #232020) !important;
+  padding: 8px !important;
+  font-size: 110%;
+  font-weight: 600 !important;
+  background: linear-gradient(to bottom, #343131, #232020) !important;
 }
 
 #torrents {
-    margin-top: -2px;
-    border: 1px solid #111 !important;
+  margin-top: -2px;
+  border: 1px solid #111 !important;
 }
 
 #torrents th, #torrents td {
-    padding: 4px 12px;
+  padding: 4px 12px;
 }
 
 #torrents th {
-    font-size: 90% !important;
-    text-align: center !important;
+  font-size: 90% !important;
+  text-align: center !important;
 }
 
 #torrents th:nth-child(2), #torrents td:nth-child(2) {
-    text-align: left;
+  text-align: left;
 }
 
 #torrents th:nth-child(n+3), #torrents td:nth-child(n+3) {
-    text-align: center;
+  text-align: center;
 }
 
 #torrents td:first-child::after {
-    content: "";
-    display: inline-block;
-    height: 36px;
-    vertical-align: middle;
+  content: "";
+  display: inline-block;
+  height: 36px;
+  vertical-align: middle;
 }
 
 #torrents img {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 #torrents th:nth-child(2) {
-    text-align: left !important;
+  text-align: left !important;
 }
 
 #torrents td {
-    padding-top: 4px !important;
-    padding-bottom: 4px !important;
-    border-bottom: 1px solid #222 !important;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  border-bottom: 1px solid #222 !important;
 }
 
 #torrents td:first-child, #torrents td:nth-child(2) {
-    position: relative;
-    vertical-align: middle !important;
+  position: relative;
+  vertical-align: middle !important;
 }
 
 #torrents td:first-child {
-    width: 1%;
-    white-space: nowrap;
+  width: 1%;
+  white-space: nowrap;
 }
 
 #torrents td:first-child a {
-    font-weight: 700 !important;
+  font-weight: 700 !important;
 }
 
 #torrents td:nth-child(2), #torrents td:nth-child(2) a, #torrents .briefdesc {
-    line-height: 1;
+  line-height: 1;
 }
 
 #torrents td:nth-child(2) {
-    max-width: 500px;
+  max-width: 500px;
 }
 
 #torrents .briefdesc {
-    margin-top: 2px;
-    max-width: 500px;
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  margin-top: 2px;
+  max-width: 500px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .briefdesc::after {
-    margin-bottom: 2px;
-    width: 100%;
-    height: 1px;
-    display: block;
-    vertical-align: bottom;
-    content: "";
+  margin-bottom: 2px;
+  width: 100%;
+  height: 1px;
+  display: block;
+  vertical-align: bottom;
+  content: "";
 }
 
 #torrents td:nth-child(odd) {
-    background: rgba(0, 0, 0, .01) !important;
+  background: rgba(0, 0, 0, .01) !important;
 }
 
 #torrents td:nth-child(even) {
-    background: rgba(255, 255, 255, .01) !important;
+  background: rgba(255, 255, 255, .01) !important;
 }
 
 #torrents tr:nth-child(n+2):hover td {
-    background: #2a2525 !important;
-    border-color: transparent !important;
+  background: #2a2525 !important;
+  border-color: transparent !important;
 }
 
 #torrents td:nth-child(3), #torrents td:nth-child(7) {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 #torrents td:nth-child(7) {
-    word-spacing: -0.1em;
+  word-spacing: -0.1em;
 }
 
 #torrents .dlicons img {
-    margin: 0 2px;
+  margin: 0 2px;
 }
 
 input[type="submit"], input[type="reset"], input[type="file"], input[type="text"], textarea, input[type="password"], select, button, .button {
-    margin: 0 6px;
-    padding: 3px 8px;
-    border: none !important;
-    box-shadow: 0 0 0 1px #121010;
-    box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #333;
-    border-radius: 2px !important;
-    background: #343232;
-    color: #bbb;
-    outline: none;
+  margin: 0 6px;
+  padding: 3px 8px;
+  border: none !important;
+  box-shadow: 0 0 0 1px #121010;
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #333;
+  border-radius: 2px !important;
+  background: #343232;
+  color: #bbb;
+  outline: none;
 }
 
 #nuke input[type="submit"] {
-    box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #342323, inset 0 0 0 2px rgba(255, 0, 0, .1);
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #342323, inset 0 0 0 2px rgba(255, 0, 0, .1);
 }
 
 select {
-    padding-right: 22px;
-    min-width: 100px;
-    font-weight: 600 !important;
-    color: #9a9898;
-    text-shadow: 0 1px 1px #111;
-    background: url(../pic/down.png) right 8px center no-repeat, linear-gradient(to bottom, #343232, #232121) #343232;
-    background-size: 8px auto;
-    background-blend-mode: overlay, normal;
-    -moz-appearance: none;
-    -webkit-appearance: none;
+  padding-right: 22px;
+  min-width: 100px;
+  font-weight: 600 !important;
+  color: #9a9898;
+  text-shadow: 0 1px 1px #111;
+  background: url(../pic/down.png) right 8px center no-repeat, linear-gradient(to bottom, #343232, #232121) #343232;
+  background-size: 8px auto;
+  background-blend-mode: overlay, normal;
+  -moz-appearance: none;
+  -webkit-appearance: none;
 }
 
 input[type="submit"]::-moz-focus-inner, input[type="file"]::-moz-focus-inner, input[type="reset"]::-moz-focus-inner {
-    border: none;
-    outline: none;
+  border: none;
+  outline: none;
 }
 
 input[type="submit"], input[type="file"], input[type="reset"], .button {
-    padding: 3px 12px;
-    min-width: 80px;
-    font-weight: 700;
-    color: #9a9898;
-    text-shadow: 0 1px 1px #111;
-    background: linear-gradient(to bottom, #343232, #232121);
+  padding: 3px 12px;
+  min-width: 80px;
+  font-weight: 700;
+  color: #9a9898;
+  text-shadow: 0 1px 1px #111;
+  background: linear-gradient(to bottom, #343232, #232121);
 }
 
 .button {
-    font-weight: 700 !important;
-    color: #9a9898 !important;
-    vertical-align: middle;
-    text-decoration: none !important;
+  font-weight: 700 !important;
+  color: #9a9898 !important;
+  vertical-align: middle;
+  text-decoration: none !important;
 }
 
 input[type="submit"]:hover, input[type="file"]:hover, input[type="reset"]:hover, input[type="submit"]:focus, input[type="file"]:focus, input[type="reset"]:focus, .button:hover, .button:focus {
-    color: #cdcbcb !important;
-    background: linear-gradient(to bottom, #232121, #343232);
+  color: #cdcbcb !important;
+  background: linear-gradient(to bottom, #232121, #343232);
 }
 
 input[type="submit"]:focus, input[type="reset"]:focus, input[type="text"]:focus, input[type="password"]:focus, .button:focus {
-    box-shadow: 0 0 0 1px #121010, 0 0 0 2px rgba(255, 96, 0, .3);
-    color: #eee !important;
+  box-shadow: 0 0 0 1px #121010, 0 0 0 2px rgba(255, 96, 0, .3);
+  color: #eee !important;
 }
 
 input[type="submit"]:active, input[type="reset"]:active, select:active, select:focus, .button:active, #details th a:nth-child(n+2):active {
-    box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232, inset 2px 2px 2px #111 !important;
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232, inset 2px 2px 2px #111 !important;
 }
 
 select:hover, select:focus {
-    color: #eee;
-    box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232, inset 2px 2px 2px #111, 0 0 0 2px rgba(255, 96, 0, .3) !important;
-    background-blend-mode: normal;
+  color: #eee;
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232, inset 2px 2px 2px #111, 0 0 0 2px rgba(255, 96, 0, .3) !important;
+  background-blend-mode: normal;
 }
 
 input[type="text"], input[type="password"] {
-    padding: 4px 6px;
-    max-width: 220px;
-    border-radius: 3px !important;
-    box-shadow: inset 1px 1px 1px #222, 0 0 0 1px #121010;
+  padding: 4px 6px;
+  max-width: 220px;
+  border-radius: 3px !important;
+  box-shadow: inset 1px 1px 1px #222, 0 0 0 1px #121010;
 }
 
 #restricted input[type="password"] {
-    box-shadow: inset 1px 1px 1px #222, 0 0 0 1px #565050;
+  box-shadow: inset 1px 1px 1px #222, 0 0 0 1px #565050;
 }
 
 textarea {
-    padding: 4px 6px;
-    border-radius: 3px !important;
-    box-shadow: inset 1px 1px 1px #222, 0 0 0 1px #121010;
+  padding: 4px 6px;
+  border-radius: 3px !important;
+  box-shadow: inset 1px 1px 1px #222, 0 0 0 1px #121010;
 }
 
 label {
-    color: #999;
+  color: #999;
 }
 
 label:hover {
-    color: #bbb;
+  color: #bbb;
 }
 
 @supports (background-blend-mode: luminosity) {
-    /* exclude ms browsers */
-    input[type="checkbox"], input[type="checkbox"]:checked, input[type="checkbox"][disabled], input[type="checkbox"][disabled]:checked, input[type="radio"], input[type="radio"]:checked, input[type="radio"][disabled], input[type="radio"][disabled]:checked {
-        position: relative;
-        width: 19px !important;
-        height: 19px !important;
-        min-width: 19px !important;
-        outline: none;
-        vertical-align: middle !important;
-        box-sizing: border-box;
-        border: 1px solid #343232 !important;
-        background: #232121;
-        background: linear-gradient(to bottom, #343232, #232121);
-        -moz-appearance: none;
-        -webkit-appearance: inherit;
-        will-change: transform;
-    }
-    input[type="checkbox"], input[type="checkbox"]:checked, input[type="checkbox"][disabled], input[type="checkbox"][disabled]:checked {
-        border-radius: 2px;
-        box-shadow: inset 3px 3px 3px 1px #111;
-    }
-    input[type="radio"], input[type="radio"]:checked, input[type="radio"][disabled], input[type="radio"][disabled]:checked {
-        border-radius: 50%;
-        box-shadow: inset 3px 3px 3px 1px #111;
-    }
-    input[type="checkbox"]:checked::before, input[type="radio"]:checked::before, input[type="checkbox"]:not(:checked)::before, input[type="radio"]:not(:checked)::before {
-        position: absolute;
-        transition: linear all 0.05s;
-        transform: scale(1);
-    }
-    input[type="checkbox"]:checked::before, input[type="checkbox"]:not(:checked)::before {
-        content: "";
-        top: 3px;
-        left: 3px;
-        width: 11px;
-        height: 11px;
-        border-radius: 1px;
-        background: #565454;
-    }
-    input[type="radio"]:checked::before {
-        content: "";
-        border-radius: 50%;
-        left: 25%;
-        top: 25%;
-        width: 9px;
-        height: 9px;
-        background: #5a5;
-    }
-    input[type="checkbox"]:checked:hover::before {
-        color: #676565;
-    }
-    input[type="radio"]:checked:hover::before {
-        background: #6b6;
-    }
-    input[type="checkbox"]:not(:checked)::before, input[type="radio"]:not(:checked)::before {
-        transform: scale(0);
-        color: transparent;
-        background: transparent;
-    }
-    input[type="checkbox"]:hover, input[type="radio"]:hover, input[type="checkbox"]:focus, input[type="radio"]:focus {
-        background: #282727;
-        width: 19px !important;
-        height: 19px !important;
-        border: 1px solid #676565 !important;
-        box-shadow: 0 0 1px #f60 !important;
-    }
-    input[type="checkbox"][disabled], input[type="radio"][disabled], input[type="checkbox"][disabled]:hover, input[type="radio"][disabled]:hover, input[type="checkbox"][disabled]:checked, input[type="radio"][disabled]:checked, input[type="checkbox"][disabled]:checked:hover, input[type="radio"][disabled]:checked:hover {
-        border: 1px solid #111 !important;
-        box-shadow: none !important;
-        opacity: 0.5 !important;
-        background: #000;
-        filter: none !important;
-    }
+  /* exclude ms browsers */
+  input[type="checkbox"], input[type="checkbox"]:checked, input[type="checkbox"][disabled], input[type="checkbox"][disabled]:checked, input[type="radio"], input[type="radio"]:checked, input[type="radio"][disabled], input[type="radio"][disabled]:checked {
+    position: relative;
+    width: 19px !important;
+    height: 19px !important;
+    min-width: 19px !important;
+    outline: none;
+    vertical-align: middle !important;
+    box-sizing: border-box;
+    border: 1px solid #343232 !important;
+    background: #232121;
+    background: linear-gradient(to bottom, #343232, #232121);
+    -moz-appearance: none;
+    -webkit-appearance: inherit;
+    will-change: transform;
+  }
+  input[type="checkbox"], input[type="checkbox"]:checked, input[type="checkbox"][disabled], input[type="checkbox"][disabled]:checked {
+    border-radius: 2px;
+    box-shadow: inset 3px 3px 3px 1px #111;
+  }
+  input[type="radio"], input[type="radio"]:checked, input[type="radio"][disabled], input[type="radio"][disabled]:checked {
+    border-radius: 50%;
+    box-shadow: inset 3px 3px 3px 1px #111;
+  }
+  input[type="checkbox"]:checked::before, input[type="radio"]:checked::before, input[type="checkbox"]:not(:checked)::before, input[type="radio"]:not(:checked)::before {
+    position: absolute;
+    transition: linear all 0.05s;
+    transform: scale(1);
+  }
+  input[type="checkbox"]:checked::before, input[type="checkbox"]:not(:checked)::before {
+    content: "";
+    top: 3px;
+    left: 3px;
+    width: 11px;
+    height: 11px;
+    border-radius: 1px;
+    background: #565454;
+  }
+  input[type="radio"]:checked::before {
+    content: "";
+    border-radius: 50%;
+    left: 25%;
+    top: 25%;
+    width: 9px;
+    height: 9px;
+    background: #5a5;
+  }
+  input[type="checkbox"]:checked:hover::before {
+    color: #676565;
+  }
+  input[type="radio"]:checked:hover::before {
+    background: #6b6;
+  }
+  input[type="checkbox"]:not(:checked)::before, input[type="radio"]:not(:checked)::before {
+    transform: scale(0);
+    color: transparent;
+    background: transparent;
+  }
+  input[type="checkbox"]:hover, input[type="radio"]:hover, input[type="checkbox"]:focus, input[type="radio"]:focus {
+    background: #282727;
+    width: 19px !important;
+    height: 19px !important;
+    border: 1px solid #676565 !important;
+    box-shadow: 0 0 1px #f60 !important;
+  }
+  input[type="checkbox"][disabled], input[type="radio"][disabled], input[type="checkbox"][disabled]:hover, input[type="radio"][disabled]:hover, input[type="checkbox"][disabled]:checked, input[type="radio"][disabled]:checked, input[type="checkbox"][disabled]:checked:hover, input[type="radio"][disabled]:checked:hover {
+    border: 1px solid #111 !important;
+    box-shadow: none !important;
+    opacity: 0.5 !important;
+    background: #000;
+    filter: none !important;
+  }
 }
 
 /* end custom radios/checkboxes */
 
 hr {
-    color: transparent;
-    border: none;
-    background: #333;
-    height: 1px;
-    display: none;
+  color: transparent;
+  border: none;
+  background: #333;
+  height: 1px;
+  display: none;
 }
 
 form[action="takesignup.php"] .table1, .table1[width="35%"] {
-    margin: 0 auto 10px !important;
+  margin: 0 auto 10px !important;
 }
 
 form[action="takesignup.php"] .table1 td {
-    padding: 10px !important;
+  padding: 10px !important;
 }
 
 form[action="takesignup.php"] .table1 .table1 tr:last-child td {
-    padding: 20px 0 0 !important;
+  padding: 20px 0 0 !important;
 }
 
 hr.separator {
-    margin: 10px 10%;
-    display: block;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0), #343232, rgba(0, 0, 0, 0));
+  margin: 10px 10%;
+  display: block;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0), #343232, rgba(0, 0, 0, 0));
 }
 
 .catlink:hover:after {
-    padding: 2px 8px;
-    min-width: 76px;
-    display: inline;
-    position: absolute;
-    top: -10px;
-    left: -15px;
-    z-index: 20;
-    white-space: nowrap;
-    font-weight: normal !important;
-    color: #fff;
-    border-radius: 2px;
-    box-shadow: 0 0 0 1px #232121;
-    background: #565454;
-    content: attr(data-tooltip);
+  padding: 2px 8px;
+  min-width: 76px;
+  display: inline;
+  position: absolute;
+  top: -10px;
+  left: -15px;
+  z-index: 20;
+  white-space: nowrap;
+  font-weight: normal !important;
+  color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px #232121;
+  background: #565454;
+  content: attr(data-tooltip);
 }
 
 #topnav {
-    padding-bottom: 6px;
-    margin: 0 -10% 10px;
-    color: transparent;
-    border-bottom: 1px solid #343232;
-    filter: drop-shadow(0 0 1px #181717);
+  padding-bottom: 6px;
+  margin: 0 -10% 10px;
+  color: transparent;
+  border-bottom: 1px solid #343232;
+  filter: drop-shadow(0 0 1px #181717);
 }
 
 #topnav a, .username, #addcomment a {
-    margin: 8px -6px;
-    padding: 4px 24px 6px;
-    display: inline-block;
-    line-height: 1;
-    box-shadow: inset 0 0 0 1px #454040, 0 0 0 1px #121010;
-    background: linear-gradient(to bottom, #454040, #232020);
-    font-size: 105% !important;
-    color: #9a9090;
-    text-decoration: none !important;
+  margin: 8px -6px;
+  padding: 4px 24px 6px;
+  display: inline-block;
+  line-height: 1;
+  box-shadow: inset 0 0 0 1px #454040, 0 0 0 1px #121010;
+  background: linear-gradient(to bottom, #454040, #232020);
+  font-size: 105% !important;
+  color: #9a9090;
+  text-decoration: none !important;
 }
 
 #addcomment a {
-    margin: 2px;
-    font-size: 90% !important;
+  margin: 2px;
+  font-size: 90% !important;
 }
 
 #topnav a {
-    min-width: 100px;
+  min-width: 100px;
 }
 
 #topnav a:first-child {
-    border-radius: 2px 0 0 2px;
+  border-radius: 2px 0 0 2px;
 }
 
 #topnav a:last-child {
-    border-radius: 0 2px 2px 0;
+  border-radius: 0 2px 2px 0;
 }
 
 #topnav a:hover, #topnav a:focus, #addcomment a:hover, #addcomment a:focus, #pager a:hover, #pager a:focus {
-    color: #f60;
-    text-decoration: none;
-    box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050;
-    background: linear-gradient(to bottom, #232020, #454040);
+  color: #f60;
+  text-decoration: none;
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050;
+  background: linear-gradient(to bottom, #232020, #454040);
 }
 
 #topnav a:active, #addcomment a:active, #toggle:active {
-    box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050, inset 3px 3px 3px #121010;
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050, inset 3px 3px 3px #121010;
 }
 
 #footer {
-    margin: 8px -10% 0 !important;
-    padding: 0 !important;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    font-weight: 600;
+  margin: 8px -10% 0 !important;
+  padding: 0 !important;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  font-weight: 600;
 }
 
 #footer, #footer a {
-    text-align: center;
-    font-size: 9pt !important;
+  text-align: center;
+  font-size: 9pt !important;
 }
 
 #blurb {
-    margin-top: -1px !important;
-    padding: 4px 7px 7px;
-    width: 100%;
-    display: inline-block;
-    line-height: 1;
-    color: #9a9090;
-    border-top: 1px solid #343232;
-    background: #121010;
-    background: repeating-linear-gradient(to right, rgba(0, 0, 0, 0), #121010 2px), linear-gradient(to right, #232020, #121010, #232020);
+  margin-top: -1px !important;
+  padding: 4px 7px 7px;
+  width: 100%;
+  display: inline-block;
+  line-height: 1;
+  color: #9a9090;
+  border-top: 1px solid #343232;
+  background: #121010;
+  background: repeating-linear-gradient(to right, rgba(0, 0, 0, 0), #121010 2px), linear-gradient(to right, #232020, #121010, #232020);
 }
 
 #toast, #addcomment, .note, #upload.note, .success, .warn, #nuke, #recentcomments {
-    margin-bottom: 10px;
-    padding: 15px;
-    font-size: 110%;
-    font-weight: 700 !important;
-    border: 1px solid #111;
-    background: #343232;
-    background: linear-gradient(to bottom, #343232, #232020);
+  margin-bottom: 10px;
+  padding: 15px;
+  font-size: 110%;
+  font-weight: 700 !important;
+  border: 1px solid #111;
+  background: #343232;
+  background: linear-gradient(to bottom, #343232, #232020);
 }
 
 #details, #addcomment, #uploader, .note, #upload.note, .success, #myaccount, #dologin, #signup, .warn.note, #wrapper.help div, #nuke, #comment, #recentcomments {
-    margin: 0 auto 10px !important;
-    width: 800px !important;
-    box-sizing: border-box;
-    border: 1px solid #111 !important;
+  margin: 0 auto 10px !important;
+  width: 800px !important;
+  box-sizing: border-box;
+  border: 1px solid #111 !important;
 }
 
 #dologin, #signup, #myaccount, .warn.cookies {
-    width: 600px !important;
+  width: 600px !important;
 }
 
 #details, #details+#addcomment, #torrentedit, #comments, #comment, #comments+#pager, #pager+#addcomment, #return.note, #return.note+#addcomment, #needlogin, #nuke, .success.details, #recentcomments {
-    width: 900px !important;
-    border: 1px solid #111;
+  width: 900px !important;
+  border: 1px solid #111;
 }
 
 #uploader {
-    margin-top: 8px;
-    border: 1px solid #222;
+  margin-top: 8px;
+  border: 1px solid #222;
 }
 
 #return.note {
-    margin-top: 30px !important;
+  margin-top: 30px !important;
 }
 
 #addcomment, #details+#needlogin {
-    margin-top: -11px !important;
-    padding: 10px;
+  margin-top: -11px !important;
+  padding: 10px;
 }
 
 #comments th.user {
-    padding-left: 25px !important;
-    background: url(../pic/user.png) 6px center no-repeat, linear-gradient(to bottom, #343131, #232020) !important;
-    background-size: 16px 16px, 100% 100% !important;
+  padding-left: 25px !important;
+  background: url(../pic/user.png) 6px center no-repeat, linear-gradient(to bottom, #343131, #232020) !important;
+  background-size: 16px 16px, 100% 100% !important;
 }
 
 #recentcomments {
-    padding: 8px !important;
-    margin-bottom: -1px !important;
-    text-align: left;
+  padding: 8px !important;
+  margin-bottom: -1px !important;
+  text-align: left;
 }
 
 #pager+#addcomment, #return+#needlogin, #pager+#needlogin {
-    margin-top: -1px !important;
-    display: none; // no need for dupe, displayed below torrent details
+  margin-top: -1px !important;
+  display: none; // no need for dupe, displayed below torrent details
 }
 
 #details {
-    margin-top: 30px !important;
+  margin-top: 30px !important;
 }
 
 #details th, #dologin th, #signup th, #myaccount th, #torrents th, #torrentedit th {
-    padding: 8px 14px !important;
-    font-size: 110% !important;
-    font-weight: 600 !important;
-    text-align: left;
-    border-top: none !important;
-    border-bottom: 1px solid #111 !important;
+  padding: 8px 14px !important;
+  font-size: 110% !important;
+  font-weight: 600 !important;
+  text-align: left;
+  border-top: none !important;
+  border-bottom: 1px solid #111 !important;
 }
 
 #details tr:not(#description) td:first-child {
-    text-align: right;
+  text-align: right;
 }
 
 #details .catlink, #details .catlink img {
-    display: inline-block;
-    vertical-align: middle;
-    opacity: .8;
+  display: inline-block;
+  vertical-align: middle;
+  opacity: .8;
 }
 
 #details .catlink img {
-    height: 20px;
-    width: 20px;
+  height: 20px;
+  width: 20px;
 }
 
 #details .catlink {
-    margin: 0 6px 0 -6px;
+  margin: 0 6px 0 -6px;
 }
 
 #details a.catlink:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 #details .catlink::after {
-    top: -24px;
-    text-align: center;
+  top: -24px;
+  text-align: center;
 }
 
 #toast {
-    margin: 0 !important;
-    padding: 10px 20px 12px;
-    position: fixed;
-    top: 20px;
-    top: -600px;
-    right: 10px;
-    z-index: 1000;
-    width: 290px !important;
-    font-size: 95% !important;
-    font-weight: 600 !important;
-    text-shadow: 0 1px 1px #000;
-    color: #bab0b0;
-    box-sizing: border-box;
-    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .4));
-    animation: ease toast 15s forwards;
+  margin: 0 !important;
+  padding: 10px 20px 12px;
+  position: fixed;
+  top: 20px;
+  top: -600px;
+  right: 10px;
+  z-index: 1000;
+  width: 290px !important;
+  font-size: 95% !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 1px #000;
+  color: #bab0b0;
+  box-sizing: border-box;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .4));
+  animation: ease toast 15s forwards;
 }
 
 @keyframes toast {
-    0, 100% {
-        top: -1000px;
-    }
-    5%, 90% {
-        top: 20px;
-    }
+  0, 100% {
+    top: -1000px;
+  }
+  5%, 90% {
+    top: 20px;
+  }
 }
 
 #toast.fixed {
-    padding: 8px 4px 10px !important;
-    width: 380px !important;
-    top: 20px !important;
-    left: 10px !important;
-    text-align: left;
-    animation: none;
-    word-break: break-all;
+  padding: 8px 4px 10px !important;
+  width: 380px !important;
+  top: 20px !important;
+  left: 10px !important;
+  text-align: left;
+  animation: none;
+  word-break: break-all;
 }
 
 #toast.fixed b {
-    font-weight: 700 !important;
+  font-weight: 700 !important;
 }
 
 #toast.fixed i {
-    color: #393;
+  color: #393;
 }
 
 #toast .title {
-    color: #cbc0c0;
-    border-bottom: 1px solid #232020;
-    display: inline-block;
-    width: 100%;
-    padding: 0 0 7px;
-    margin: 0 0 6px;
-    text-align: center;
-    font-weight: 700 !important;
-    font-size: 110% !important;
+  color: #cbc0c0;
+  border-bottom: 1px solid #232020;
+  display: inline-block;
+  width: 100%;
+  padding: 0 0 7px;
+  margin: 0 0 6px;
+  text-align: center;
+  font-weight: 700 !important;
+  font-size: 110% !important;
 }
 
 #uawarn {
-    margin: 8px -10px -2px;
-    padding: 2px 4px 6px;
-    display: block;
-    background: #232020;
-    border: 1px solid #511;
+  margin: 8px -10px -2px;
+  padding: 2px 4px 6px;
+  display: block;
+  background: #232020;
+  border: 1px solid #511;
 }
 
 #uawarn.good {
-    border: 1px solid #353;
+  border: 1px solid #353;
 }
 
 #uawarn b {
-    margin: 0 -6px 4px;
-    padding: 0 2px 3px;
-    display: inline-block;
-    width: 100%;
-    font-size: 110% !important;
-    font-weight: 700 !important;
-    color: #911;
-    border-bottom: 1px solid #511;
+  margin: 0 -6px 4px;
+  padding: 0 2px 3px;
+  display: inline-block;
+  width: 100%;
+  font-size: 110% !important;
+  font-weight: 700 !important;
+  color: #911;
+  border-bottom: 1px solid #511;
 }
 
 #uawarn.good b {
-    color: #373;
-    border-bottom: 1px solid #353;
+  color: #373;
+  border-bottom: 1px solid #353;
 }
 
 #description div {
-    margin: 6px 2px;
-    padding: 10px 16px 15px;
-    text-align: justify;
-    background: #454040;
-    box-shadow: 0 0 0 1px #111, 0 0 2px 2px rgba(0, 0, 0, .1), inset 0 0 0 1px #585050;
+  margin: 6px 2px;
+  padding: 10px 16px 15px;
+  text-align: justify;
+  background: #454040;
+  box-shadow: 0 0 0 1px #111, 0 0 2px 2px rgba(0, 0, 0, .1), inset 0 0 0 1px #585050;
 }
 
 #description div b, #details tr:not(#description) td:first-child b {
-    font-weight: 700 !important;
+  font-weight: 700 !important;
 }
 
 #description div hr, .torrentname hr {
-    margin: 15px 10% -5px;
-    background: linear-gradient(to right, #454040, #565050, #454040);
-    display: block !important;
+  margin: 15px 10% -5px;
+  background: linear-gradient(to right, #454040, #565050, #454040);
+  display: block !important;
 }
 
 #description ul {
-    margin: -10px 0 -30px;
+  margin: -10px 0 -30px;
 }
 
 #description li+br {
-    display: none;
+  display: none;
 }
 
 #description li::before {
-    content: "• ";
-    display: inline-block;
-    margin: -3px 5px 0 0;
-    font-size: 170%;
-    line-height: 0;
-    vertical-align: middle;
+  content: "• ";
+  display: inline-block;
+  margin: -3px 5px 0 0;
+  font-size: 170%;
+  line-height: 0;
+  vertical-align: middle;
 }
 
 .torrentname hr {
-    background: rgba(255, 255, 255, .01);
-    margin: 3px 0 1px;
+  background: rgba(255, 255, 255, .01);
+  margin: 3px 0 1px;
 }
 
 #comments th {
-    font-size: 100% !important;
-    padding: 4px 8px !important;
-    border-bottom: 1px solid #111;
+  font-size: 100% !important;
+  padding: 4px 8px !important;
+  border-bottom: 1px solid #111;
 }
 
 #comments tr:nth-child(n+2) th {
-    border-top: 1px solid #111;
+  border-top: 1px solid #111;
 }
 
 #comments th:first-child {
-    text-align: left;
+  text-align: left;
 }
 
 #comments th:last-child {
-    text-align: right;
+  text-align: right;
 }
 
 #comments td {
-    padding: 10px !important;
-    vertical-align: middle;
-    text-align: justify;
+  padding: 10px !important;
+  vertical-align: middle;
+  text-align: justify;
 }
 
 th a {
-    float: right;
+  float: right;
+}
+
+#myaccount th a {
+  float: none;
+}
+
+#myaccount th:last-child {
+  text-align: right;
 }
 
 #uploader td:first-child, #myaccount td:first-child {
-    padding: 6px;
-    white-space: nowrap;
-    text-align: right;
+  padding: 6px;
+  white-space: nowrap;
+  text-align: right;
+}
+
+#myaccount td:first-child {
+  min-width: 200px;
+}
+
+#myaccount input[type="text"], #myaccount input[type="password"] {
+  margin-left: 0;
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 #details td {
-    padding: 6px 10px;
+  padding: 6px 10px;
 }
 
 #uploader td:first-child b, #myaccount td:first-child b {
-    font-weight: 700 !important;
+  font-weight: 700 !important;
 }
 
 #details td:first-child, #uploader td:first-child, table table td:nth-child(odd) {
-    background: rgba(0, 0, 0, .1);
+  background: rgba(0, 0, 0, .1);
 }
 
 table table td:first-child {
-    background: none;
+  background: none;
 }
 
 table table {
-    margin: 7px auto !important;
-    width: 100%;
-    border: 4px solid #232020 !important;
-    box-shadow: 0 0 0 1px #111;
+  margin: 7px auto !important;
+  width: 100%;
+  border: 4px solid #232020 !important;
+  box-shadow: 0 0 0 1px #111;
 }
 
 #details #filelist td:first-child {
-    text-align: left !important;
+  text-align: left !important;
 }
 
 #details #filelist td:last-child {
-    padding-right: 8px;
-    width: 1%;
-    white-space: nowrap;
-    text-align: right !important;
+  padding-right: 8px;
+  width: 1%;
+  white-space: nowrap;
+  text-align: right !important;
 }
 
 #nocomments {
-    display: none;
+  display: none;
 }
 
 #details td:last-child, #uploader td:last-child, #dologin td:last-child, #signup td:last-child, #myaccount td:last-child {
-    text-align: left;
+  text-align: left;
 }
 
 #uploader td, #dologin td, #signup td, #myaccount td {
-    padding: 9px;
+  padding: 9px;
 }
 
 #uploader td:first-child b {
-    margin: 0 8px;
+  margin: 0 8px;
 }
 
 #uploader td:last-child {
-    padding-left: 4px !important;
+  padding-left: 4px !important;
 }
 
 #uploader input, #uploader input[type="text"], #uploader input[type="file"], #uploader textarea, #myaccount input[type="text"], #myaccount input[type="password"], #torrentedit textarea, #torrentedit input[type="text"], #dologin input[type="text"], #dologin input[type="password"], #signup input[type="text"], #signup input[type="password"] {
-    width: calc(100% - 6px);
-    max-width: calc(100% - 6px);
-    box-sizing: border-box;
+  width: calc(100% - 6px);
+  max-width: calc(100% - 6px);
+  box-sizing: border-box;
 }
 
 #uploader input[type="submit"] {
-    margin-right: 3px;
-    width: auto;
-    float: right;
+  margin-right: 3px;
+  width: auto;
+  float: right;
 }
 
 #uploader textarea, #comment textarea {
-    height: 120px;
-    min-height: 120px;
-    resize: vertical;
+  height: 120px;
+  min-height: 120px;
+  resize: vertical;
 }
 
 #comment textarea {
-    width: calc(100% - 22px);
+  width: calc(100% - 22px);
 }
 
 #comment td {
-    padding: 20px 15px;
+  padding: 20px 15px;
 }
 
 #upload.note, .warn, #nuke, #toast.fixed {
-    box-shadow: inset 0 0 0 1px #232020, inset 0 0 1px 1px #900;
+  box-shadow: inset 0 0 0 1px #232020, inset 0 0 1px 1px #900;
 }
 
 .success {
-    box-shadow: inset 0 0 0 1px #232020, inset 0 0 1px 1px #090;
+  box-shadow: inset 0 0 0 1px #232020, inset 0 0 1px 1px #090;
 }
 
 .warn, #torrentedit {
-    margin-top: 30px !important;
+  margin-top: 30px !important;
 }
 
 .warn.note {
-    padding: 50px 15px;
+  padding: 50px 15px;
 }
 
 #siteinfo {
-    text-align: center;
+  text-align: center;
 }
 
 #dologin, #signup {
-    margin-top: 20px !important;
+  margin-top: 20px !important;
 }
 
 #dologin td:first-child, #signup td:first-child, #torrentedit td:first-child {
-    white-space: nowrap;
-    text-align: right;
-    font-weight: 700;
+  white-space: nowrap;
+  text-align: right;
+  font-weight: 700;
 }
 
 #torrentedit td {
-    padding: 8px 10px;
+  padding: 8px 10px;
 }
 
 #torrentedit td:first-child {
-    text-align: right;
+  text-align: right;
 }
 
 #torrentedit td:last-child {
-    text-align: left;
+  text-align: left;
 }
 
 #torrentedit p {
-    margin-right: 10px;
-    text-align: justify;
+  margin-right: 10px;
+  text-align: justify;
 }
 
 #pagenow, #pager, #pager a {
-    font-size: 105% !important;
+  font-size: 105% !important;
 }
 
 #pager {
-    margin: -1px auto 0 !important;
-    padding: 8px 14px !important;
-    position: relative;
-    z-index: 10;
-    text-align: center;
-    font-weight: 600 !important;
-    border: 1px solid #111;
-    background: linear-gradient(to bottom, #343131, #232020);
-    box-sizing: border-box;
+  margin: -1px auto 0 !important;
+  padding: 8px 14px !important;
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  font-weight: 600 !important;
+  border: 1px solid #111;
+  background: linear-gradient(to bottom, #343131, #232020);
+  box-sizing: border-box;
 }
 
 #pagenow, .pagelinks {
-    padding: 2px 10px;
-    display: inline-block;
-    border: 1px solid #181616 !important;
-    border-radius: 3px;
-    box-shadow: inset 0 0 0 1px #565050;
-    background: #454040;
-    background: linear-gradient(to bottom, #454040, #343030);
+  padding: 2px 10px;
+  display: inline-block;
+  border: 1px solid #181616 !important;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px #565050;
+  background: #454040;
+  background: linear-gradient(to bottom, #454040, #343030);
 }
 
 #dostuff td {
-    padding: 12px !important;
-    text-align: center !important;
-    border-top: 1px solid #111 !important;
-    background: linear-gradient(to bottom, #343131, #232020) !important;
+  padding: 12px !important;
+  text-align: center !important;
+  border-top: 1px solid #111 !important;
+  background: linear-gradient(to bottom, #343131, #232020) !important;
 }
 
 #sitename {
-    margin-top: 8px;
+  margin-top: 8px;
 }
 
 #searchandshow {
-    margin: 0 -5% -10px;
-    background: #212020;
-    background: linear-gradient(to bottom, #212020, #181817);
+  margin: 0 -5% -10px;
+  background: #212020;
+  background: linear-gradient(to bottom, #212020, #181817);
 }
 
 .shim {
-    height: 10px;
-    background: #212020;
-    background: linear-gradient(to bottom, #212020, #181817);
-    border-bottom: 1px solid #383636;
-    border-top: 1px solid #383636;
+  height: 8px;
+  background: #212020;
+  background: linear-gradient(to bottom, #212020, #181817);
+  border-bottom: 1px solid #383636;
+  border-top: 1px solid #383636;
 }
 
 .shim.top {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    border-top: 1px solid #343030;
-    background: linear-gradient(to bottom, #313030, #212020);
-    will-change: transform;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-top: 1px solid #343030;
+  background: linear-gradient(to bottom, #313030, #212020);
+  will-change: transform;
 }
 
 #installation.shim {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 #installer {
-    margin: 50px auto;
-    padding: 20px 20px 46px;
-    width: 400px;
-    border-radius: 3px;
-    box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #212020, inset 0 0 1px 1px #565050;
-    background: #212020;
-    background: repeating-linear-gradient(to bottom, #212020, #121010 2px);
-    will-change: transform;
+  margin: 50px auto;
+  padding: 20px 20px 46px;
+  width: 400px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #212020, inset 0 0 1px 1px #565050;
+  background: #212020;
+  background: repeating-linear-gradient(to bottom, #212020, #121010 2px);
+  will-change: transform;
 }
 
 #installer label span {
-    margin-right: 10px;
-    padding: 3px 8px;
-    min-width: 140px;
-    display: inline-block;
-    vertical-align: middle;
-    font-weight: 600;
-    text-align: right;
-    background: linear-gradient(to bottom, #454040, #343030);
-    border-radius: 15px 3px 3px 15px;
+  margin-right: 10px;
+  padding: 3px 8px;
+  min-width: 140px;
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: 600;
+  text-align: right;
+  background: linear-gradient(to bottom, #454040, #343030);
+  border-radius: 15px 3px 3px 15px;
 }
 
 #installer hr {
-    display: block !important;
-    background: linear-gradient(to right, #212020, #343030, #212020);
+  display: block !important;
+  background: linear-gradient(to right, #212020, #343030, #212020);
 }
 
 #installer input[type="submit"] {
-    float: right;
-    text-transform: capitalize;
-    margin-top: 6px;
-    will-change: transform;
-    position: relative;
-    z-index: 10;
+  float: right;
+  text-transform: capitalize;
+  margin-top: 6px;
+  will-change: transform;
+  position: relative;
+  z-index: 10;
 }
 
 #search, #torrentshow {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 #search {
-    margin-top: -11px;
-    padding-top: 15px;
+  margin-top: -11px;
+  padding-top: 15px;
 }
 
 input#username, input[type="password"], #search input[type="text"] {
-    padding-left: 28px !important;
-    background-repeat: no-repeat !important;
-    background-size: 16px 16px !important;
-    background-position: 6px center !important;
-    background-blend-mode: luminosity !important;
+  padding-left: 28px !important;
+  background-repeat: no-repeat !important;
+  background-size: 16px 16px !important;
+  background-position: 6px center !important;
+  background-blend-mode: luminosity !important;
 }
 
 #search input[type="text"] {
-    width: 160px;
-    background-image: url(../pic/search.png);
+  width: 160px;
+  background-image: url(../pic/search.png);
 }
 
 input#username {
-    background-image: url(../pic/user.png);
+  background-image: url(../pic/user.png);
 }
 
 input[type="password"] {
-    background-image: url(../pic/password.png);
+  background-image: url(../pic/password.png);
 }
 
 #installer input[type="password"] {
-    padding: 4px 6px !important;
-    background-image: none !important;
+  padding: 4px 6px !important;
+  background-image: none !important;
 }
 
 #search input[type="text"]:hover, #search input[type="text"]:focus, input#username:hover, input#username:focus, input[type="password"]:hover, input[type="password"]:focus {
-    background-blend-mode: normal !important;
+  background-blend-mode: normal !important;
 }
 
 #torrentshow {
-    margin: 15px 0 20px !important;
-    padding-bottom: 11px;
-    border-bottom: 1px solid #343232;
+  margin: 15px 0 20px !important;
+  padding-bottom: 11px;
+  border-bottom: 1px solid #343232;
 }
 
 #peerinfo, #details #filelist {
-    margin: 5px auto 5px;
-    width: calc(100% - 8px);
-    border: 1px solid #111;
+  margin: 5px auto 5px;
+  width: calc(100% - 8px);
+  border: 1px solid #111;
 }
 
 #details #peerinfo th, #peerinfo td {
-    text-align: center !important;
+  text-align: center !important;
 }
 
 #peerinfo th {
-    padding: 3px 8px !important;
-    font-size: 85% !important;
+  padding: 3px 8px !important;
+  font-size: 85% !important;
 }
 
 #peerinfo td:not(:nth-child(4)) {
-    padding: 3px 8px !important;
-    font-size: 95% !important;
+  padding: 3px 8px !important;
+  font-size: 95% !important;
 }
 
 #peerinfo th:nth-child(4), #peerinfo td:nth-child(4) {
-    padding: 3px 0 !important;
+  padding: 3px 0 !important;
 }
 
 #peerinfo .peer {
-    background-image: url(../pic/peer.png) !important;
-    background-size: 16px 16px !important;
-    background-position: center center !important;
-    background-repeat: no-repeat !important;
+  background-image: url(../pic/peer.png) !important;
+  background-size: 16px 16px !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
 }
 
 #peerinfo td:first-child:not(.peer) code::before {
-    width: 20px;
-    height: 16px;
-    display: inline-block;
-    vertical-align: middle;
-    background: url(../pic/peer.png) left center no-repeat;
-    background-size: 16px 16px;
-    content: "";
+  width: 20px;
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  background: url(../pic/peer.png) left center no-repeat;
+  background-size: 16px 16px;
+  content: "";
 }
 
 #peerinfo td:nth-last-child(n+3) {
-    width: 14%;
+  width: 14%;
 }
 
 #peerinfo td:nth-child(n+5) {
-    width: 22%;
+  width: 22%;
 }
 
 code.dest {
-    color: #ccc;
+  color: #ccc;
 }
 
 #wrapper {
-    margin: 0 !important;
-    width: 100%;
-    height: 100%;
+  margin: 0 !important;
+  width: 100%;
+  height: 100%;
 }
 
 #wrapper tr {
-    background: none !important;
+  background: none !important;
 }
 
 #wrapper td {
-    padding: calc(120px + .3vh) 1vw .3vh;
+  padding: calc(120px + .3vh) 1vw .3vh;
 }
 
 #top+#wrapper.help {
-    margin-top: 0 !important;
+  margin-top: 0 !important;
 }
 
 #wrapper.help div h3 {
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #777;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #777;
 }
 
 #wrapper.help div i, #trackername {
-    font-weight: 600;
-    text-transform: capitalize;
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
 #wrapper.help #announcelist {
-    margin: 0 !important;
-    padding: 8px 6px 12px !important;
-    width: 100% !important;
-    font-size: 90%;
+  margin: 0 !important;
+  padding: 8px 6px 12px !important;
+  width: 100% !important;
+  font-size: 90%;
 }
 
 #wrapper.help td {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 
 #wrapper.help code {
-    display: inline-block;
-    max-width: 550px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    vertical-align: middle;
+  display: inline-block;
+  max-width: 550px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
 }
 
 #wrapper.help .spacer {
-    display: inline-block;
-    vertical-align: middle;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 #announcelist {
-    width: 500px;
+  width: 500px;
 }
 
 #wrapper.help div, #server, #restricted {
-    margin: 30px auto !important;
-    padding: 15px 30px;
-    width: 660px !important;
-    line-height: 160%;
-    text-align: justify;
-    font-size: 105%;
-    text-shadow: 0 1px 1px #000;
-    border: none !important;
-    border-radius: 4px;
-    background: rgba(48, 40, 40, .3);
+  margin: 30px auto !important;
+  padding: 15px 30px;
+  width: 660px !important;
+  line-height: 160%;
+  text-align: justify;
+  font-size: 105%;
+  text-shadow: 0 1px 1px #000;
+  border: none !important;
+  border-radius: 4px;
+  background: rgba(48, 40, 40, .3);
 }
 
 #wrapper.help div {
-    margin: 0 auto !important;
-    width: 800px !important;
+  margin: 0 auto !important;
+  width: 800px !important;
 }
 
 #server {
-    width: 820px !important;
+  width: 820px !important;
 }
 
 #server td {
-    padding: 3px 10px;
-    border: 1px solid #111;
+  padding: 3px 10px;
+  border: 1px solid #111;
 }
 
 #server td:first-child {
-    text-align: right;
-    background: rgba(0, 0, 0, .2);
-    color: #bbb;
+  text-align: right;
+  background: rgba(0, 0, 0, .2);
+  color: #bbb;
 }
 
 #header {
-    margin: -12px -10% 0;
-    padding-top: 8px;
-    background: linear-gradient(to bottom, #232020, #121010);
-    position: sticky;
-    top: -10px;
-    z-index: 999;
-    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .4));
+  margin: -12px -10% 0;
+  padding-top: 8px;
+  background: linear-gradient(to bottom, #232020, #121010);
+  position: sticky;
+  top: -10px;
+  z-index: 999;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .4));
 }
 
 #howtoupload {
-    margin-left: -15px;
+  margin-left: -15px;
 }
 
 #howtoupload li {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 .yes, .no, .edit, .download {
-    font-size: 0;
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    vertical-align: middle;
-    background: url(../pic/yes.png) no-repeat;
-    background-size: 16px 16px !important;
-    background-position: center center !important;
+  font-size: 0;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  background: url(../pic/yes.png) no-repeat;
+  background-size: 16px 16px !important;
+  background-position: center center !important;
 }
 
 .no {
-    background: url(../pic/no.png) no-repeat;
+  background: url(../pic/no.png) no-repeat;
 }
 
 .no.small {
-    height: 12px;
-    background-size: 12px 12px !important;
+  height: 12px;
+  background-size: 12px 12px !important;
 }
 
 #details th {
-    position: relative;
-    padding-top: 4px !important;
-    padding-bottom: 4px !important;
-    padding: 4px 16px !important;
-    line-height: 1.8;
+  position: relative;
+  padding-top: 4px !important;
+  padding-bottom: 4px !important;
+  padding: 4px 16px !important;
+  line-height: 1.8;
 }
 
 #details .titletorrent {
-    max-width: 750px;
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    vertical-align: middle;
+  max-width: 750px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
 }
 
 .edit, .download {
-    margin: 0 0 0 4px !important;
-    padding: 4px;
-    display: inline-block;
-    height: 20px !important;
-    width: 20px !important;
-    font-size: 0 !important;
-    border-radius: 2px;
-    box-shadow: inset 0 0 0 1px #454040, 0 0 0 1px #121010;
-    background: linear-gradient(to bottom, #454040, #232020);
-    background-size: 18px 18px !important;
+  margin: 0 0 0 4px !important;
+  padding: 4px;
+  display: inline-block;
+  height: 20px !important;
+  width: 20px !important;
+  font-size: 0 !important;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px #454040, 0 0 0 1px #121010;
+  background: linear-gradient(to bottom, #454040, #232020);
+  background-size: 18px 18px !important;
 }
 
 .edit {
-    background: url(../pic/edit.png) no-repeat;
+  background: url(../pic/edit.png) no-repeat;
 }
 
 .download {
-    font-size: 0 !important;
-    background: url(../pic/download.png) no-repeat;
+  font-size: 0 !important;
+  background: url(../pic/download.png) no-repeat;
 }
 
 #details th a:nth-child(3) {
-    margin-right: -12px !important;
+  margin-right: -12px !important;
 }
 
 #details th a:nth-child(n+2) {
-    transform: scale(.8);
+  transform: scale(.8);
 }
 
 #details th a:nth-child(n+2):hover {
-    transform: scale(1);
+  transform: scale(1);
 }
 
 .downloadbar {
-    font-size: 0 !important;
+  font-size: 0 !important;
 }
 
 .barOuter {
-    width: 60px;
-    height: 12px;
-    display: inline-block;
-    text-align: left;
-    font-size: 0;
-    box-shadow: 0 0 0 1px #000, inset 0 0 0 1px #787070, inset 3px 3px 3px #333;
-    background: #787070;
-    opacity: .85;
+  width: 60px;
+  height: 12px;
+  display: inline-block;
+  text-align: left;
+  font-size: 0;
+  box-shadow: 0 0 0 1px #000, inset 0 0 0 1px #787070, inset 3px 3px 3px #333;
+  background: #787070;
+  opacity: .85;
 }
 
 .barInner {
-    height: 12px;
-    display: inline-block;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .6);
-    background: #151;
-    background: linear-gradient(to bottom, #151, #121);
+  height: 12px;
+  display: inline-block;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .6);
+  background: #151;
+  background: linear-gradient(to bottom, #151, #121);
 }
 
 #comments .posted {
-    font-size: 90% !important;
+  font-size: 90% !important;
 }
 
 #top+table:not(#torrents), #top+form, #top+p+form, #toast+table {
-    margin-top: 40px !important;
+  margin-top: 40px !important;
 }
 
 #top+form[action="takelogin.php"], #toast+form[action="takeprofedit.php"] {
-    margin: 0 !important;
-    height: 100%;
-    display: block;
-    padding: 8vh 0 0;
-    overflow: hidden;
+  margin: 0 !important;
+  height: 100%;
+  display: block;
+  padding: 8vh 0 0;
+  overflow: hidden;
 }
 
 #togglepanel:not(:checked)+label+form, #togglepanel:not(:checked)+label+form+div, #togglepanel:not(:checked)+label+form+div+form {
-    display: none;
+  display: none;
 }
 
 #togglepanel:checked+label+form, #togglepanel:checked+label+form+div, #togglepanel:checked+label+form+div+form {
-    transform: translateY(-100px);
-    filter: opacity(0);
-    animation: ease fade-in .5s forwards;
+  transform: translateY(-100px);
+  filter: opacity(0);
+  animation: ease fade-in .5s forwards;
 }
 
 @keyframes fade-in {
-    0% {
-        transform: translateY(-100px);
-        filter: opacity(0) blur(5px);
-    }
-    30% {
-        filter: opacity(0);
-    }
-    90%, 100% {
-        transform: translateY(0);
-    }
-    100% {
-        filter: opacity(1);
-    }
+  0% {
+    transform: translateY(-100px);
+    filter: opacity(0) blur(5px);
+  }
+  30% {
+    filter: opacity(0);
+  }
+  90%, 100% {
+    transform: translateY(0);
+  }
+  100% {
+    filter: opacity(1);
+  }
 }
 
 input#togglepanel {
-    position: absolute;
-    z-index: -1;
-    top: -1000;
+  position: absolute;
+  z-index: -1;
+  top: -1000;
 }
 
 #togglepanel+label {
-    padding: 3px;
-    margin: -1px auto -2px;
-    width: calc(100% - 20px);
-    display: inline-block;
-    color: transparent;
-    border-bottom: 1px solid #383636;
-    background: linear-gradient(to bottom, #212020, #181817);
-    position: relative;
-    z-index: 10;
+  padding: 3px;
+  padding: 0;
+  margin: -1px auto -2px;
+  margin: -1px auto -3px;
+  width: calc(100% - 20px);
+  display: inline-block;
+  color: transparent;
+  border-bottom: 1px solid #383636;
+  background: linear-gradient(to bottom, #212020, #181817);
+  background: linear-gradient(to bottom, #313030 30%, #212020);
+  position: relative;
+  z-index: 10;
+}
+
+#togglepanel+label::after {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background: #454040;
+  border-radius: 50%;
+  border: 1px solid #232020;
+  box-shadow: inset 0 0 0 1px #454040, inset 0 -2px 2px #111;
+  margin-bottom: 1px;
+}
+
+#togglepanel+label:hover::after {
+  border: 1px solid #232020;
+  box-shadow: inset 0 0 0 1px #454040, inset 0 2px 2px #111;
+  filter: drop-shadow(0 0 1px rgba(255, 96, 0, .5));
 }
 
 #togglepanel:not(:checked)+label {
-    margin-bottom: 18px !important;
+  margin-bottom: 18px !important;
 }
 
 #togglepanel:checked+label {
-    margin-bottom: 7px;
+  margin-bottom: 7px;
 }
 
 #toggle {
-    padding: 0 100px;
-    margin: 3px;
-    display: inline-block;
-    background: url(../pic/expand.png) center center no-repeat, linear-gradient(to bottom, #343232, #232121);
-    background-size: 12px auto, 100% 100% !important;
-    border-radius: 3px;
-    box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #454040;
-    line-height: 24px;
-    font-size: 0;
+  padding: 0 100px;
+  margin: 3px;
+  display: inline-block;
+  background: url(../pic/expand.png) center center no-repeat, linear-gradient(to bottom, #343232, #232121);
+  background-size: 12px auto, 100% 100% !important;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #454040;
+  line-height: 24px;
+  font-size: 0;
+  display: none;
 }
 
 #togglepanel:not(:checked)+label:hover #toggle, #toggle:hover {
-    background: url(../pic/expand_hover.png) center center no-repeat, linear-gradient(to bottom, #232121, #343232);
+  background: url(../pic/expand_hover.png) center center no-repeat, linear-gradient(to bottom, #232121, #343232);
 }
 
 #togglepanel:checked+label #toggle {
-    background: url(../pic/collapse.png) center center no-repeat, linear-gradient(to bottom, #343232, #232121);
+  background: url(../pic/collapse.png) center center no-repeat, linear-gradient(to bottom, #343232, #232121);
 }
 
 #togglepanel:checked+label:hover #toggle, #togglepanel:checked+label #toggle:hover {
-    background: url(../pic/collapse_hover.png) center center no-repeat, linear-gradient(to bottom, #232121, #343232);
-    opacity: .9;
+  background: url(../pic/collapse_hover.png) center center no-repeat, linear-gradient(to bottom, #232121, #343232);
+  opacity: .9;
 }
 
 #searchandshow {
-    margin-top: -7px;
+  margin-top: -7px;
 }
 
 #togglepanel:checked~#torrentshow {
-    margin-bottom: 18px !important;
+  margin-bottom: 18px !important;
 }
 
 @media screen and (max-width: 1200px) {
-    body, input, select, textarea, button, td, a, .topnav a {
-        font-size: 9pt !important;
-    }
-    body {
-        padding: 0 4px 23px !important;
-    }
-    #topnav a {
-        padding-left: 16px;
-        padding-right: 16px;
-        min-width: 84px;
-    }
-    #sitename a {
-        font-size: 38pt !important;
-    }
-    #searchandshow {
-        margin-bottom: -14px;
-    }
-    #torrents {
-        margin-top: -5px;
-    }
-    #torrents th {
-        padding: 6px 4px !important;
-        font-size: 85% !important;
-    }
-    #torrents td:first-child::before {
-        content: "";
-        display: inline-block;
-        height: 32px;
-        vertical-align: middle;
-    }
-    .catlink:hover:after {
-        left: -10px;
-    }
-    #torrents td, #torrents td a {
-        font-size: 8.5pt !important;
-    }
-    #torrents td:nth-child(2) a {
-        display: inline-block;
-        max-width: 350px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-    #torrents td {
-        padding: 2px 4px !important;
-        border: 1px solid #222 !important;
-    }
-    #torrents td:nth-child(2) {
-        padding-left: 8px !important;
-    }
-    #torrents .briefdesc {
-        margin-top: 1px;
-        max-width: 350px;
-    }
-    #torrents img {
-        width: 20px;
-        height: 20px;
-    }
-    #torrents .dlicons img {
-        margin: 0;
-    }
-    .catlink:hover:after {
-        min-width: 60px;
-    }
-    .downloadbar {
-        font-size: 0 !important;
-    }
-    #toast {
-        width: 210px !important;
-    }
-    #toast.fixed {
-        width: 300px !important;
-    }
-    #installation.shim {
-        margin-top: 6px;
-        height: 10px;
-    }
+  body, input, select, textarea, button, td, a, .topnav a {
+    font-size: 9pt !important;
+  }
+  body {
+    padding: 0 4px 23px !important;
+  }
+  #topnav a {
+    padding-left: 16px;
+    padding-right: 16px;
+    min-width: 84px;
+  }
+  #sitename a {
+    font-size: 38pt !important;
+  }
+  #searchandshow {
+    margin-bottom: -14px;
+  }
+  #torrents {
+    margin-top: -5px;
+  }
+  #torrents th {
+    padding: 6px 4px !important;
+    font-size: 85% !important;
+  }
+  #torrents td:first-child::before {
+    content: "";
+    display: inline-block;
+    height: 32px;
+    vertical-align: middle;
+  }
+  .catlink:hover:after {
+    left: -10px;
+  }
+  #torrents td, #torrents td a {
+    font-size: 8.5pt !important;
+  }
+  #torrents td:nth-child(2) a {
+    display: inline-block;
+    max-width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #torrents td {
+    padding: 2px 4px !important;
+    border: 1px solid #222 !important;
+  }
+  #torrents td:nth-child(2) {
+    padding-left: 8px !important;
+  }
+  #torrents .briefdesc {
+    margin-top: 1px;
+    max-width: 350px;
+  }
+  #torrents img {
+    width: 20px;
+    height: 20px;
+  }
+  #torrents .dlicons img {
+    margin: 0;
+  }
+  .catlink:hover:after {
+    min-width: 60px;
+  }
+  .downloadbar {
+    font-size: 0 !important;
+  }
+  #toast {
+    width: 210px !important;
+  }
+  #toast.fixed {
+    width: 300px !important;
+  }
+  #installation.shim {
+    margin-top: 6px;
+    height: 10px;
+  }
 }
 
 @media screen and (min-width: 1800px) {
-    body, input, select, textarea, button, .button, label {
-        font-size: 10pt !important;
-    }
-    #sitename a {
-        font-size: 48pt !important;
-    }
+  body, input, select, textarea, button, .button, label {
+    font-size: 10pt !important;
+  }
+  #sitename a {
+    font-size: 48pt !important;
+  }
 }
 
 @media screen and (max-height: 800px) {
-    #wrapper td, #toast+form[action="takeprofedit.php"], #top+form[action="takelogin.php"] {
-        padding: calc(60px + .3vh) 1vw .3vh;
-    }
+  #wrapper td, #toast+form[action="takeprofedit.php"], #top+form[action="takelogin.php"] {
+    padding: calc(60px + .3vh) 1vw .3vh;
+  }
 }
