@@ -33,11 +33,15 @@ $mytorrents = $row[0];
 <table id=myaccount>
 <tr><th>Profile for: <?php echo $CURUSER["username"] ?></th><th>
 <?php
+
 if (!$mytorrents)
     print("No torrents uploaded!");
 else
     print("<a href=mytorrents.php>My Torrents</a> (" . $mytorrents . ")");
 print("</th></tr>");
+
+$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) FROM comments WHERE user=" . $CURUSER["id"]);
+$row = mysqli_fetch_array($res);
 tr("Comments posted", $row[0]);
 
 tr("New password", "<input type=password name=chpassword size=40 required />", 1);
