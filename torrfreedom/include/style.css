@@ -1642,7 +1642,7 @@ input#togglepanel {
     margin-top: 1px;
     max-width: 250px;
   }
-  #torrents td:first-child img {
+  #torrents td:first-child img, #torrents td:nth-child(3) a img {
     width: 20px !important;
     height: 20px !important;
   }
@@ -1657,7 +1657,7 @@ input#togglepanel {
     min-width: 60px;
   }
   #torrents .dlicons img {
-    margin: 0;
+    margin: 0 1px;
   }
   #torrents .uploadername {
     font-size: 90% !important;
