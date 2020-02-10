@@ -323,12 +323,13 @@ function stdhead($title = "")
 
 function stdfoot()
 {
-    global $pic_base_url, $version, $appname, $time_start, $contact;
+    global $pic_base_url, $version, $appname, $time_start, $contact, $tracker_title;
     $time = round(getmicrotime() - $time_start, 1);
+    $sitename = ucwords(strtolower($tracker_title));
     $bullet = '&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;&nbsp;';
 //    print('<p id="footer"><span id="blurb">Running: ' . $appname . ' v. ' . $version . '</code></p>');
 //    print('<p id="footer"><span id="blurb">Running: ' . $appname . ' v. ' . $version . '</code>' . $bullet . 'Page spawned in ' . $time . ' seconds</span></p>');
-    print('<p id=footer><span id="blurb">Site Admin: <code>' . $contact . '</code>' . $bullet . 'Design by <a href="http://skank.i2p">dr|z3d</a>' . $bullet . 'Est. 2017</span></p>');
+    print('<p id=footer><span id=blurb>' . $sitename . ' (Est. 2017)' . $bullet . 'Admin: <code>' . $contact . '</code>' . $bullet . 'Design by <a href="http://skank.i2p">dr|z3d</a></span></p>');
     print("<style type=text/css>body {opacity: 1 !important;}</style>");
     print("\n</body>\n</html>");
 }
@@ -659,7 +660,7 @@ function torrenttable($res, $variant = "index")
             $description = strip_tags($row["ori_descr"]);
             print("<br><span class=briefdesc");
             if (strlen($description) > 120) {
-                print(" title=\"" . substr($description, 0, 1000));
+                print(" title=\"" . htmlspecialchars(substr($description, 0, 1000)));
                 if (strlen($description) > 1000) {
                     print(" &hellip; [more information available on the details page]");
                 }
