@@ -39,6 +39,9 @@ print("<span class=spacer>" . $spacer . "</span><code title=\"" . $tooltip . "\"
 </p>
 <p>Note: If you use the domain name in preference to the .b32 address, be sure you have the domain in your addressbook.</p>
 
+<h3>Can I use html tags in the torrent descriptions and comments?</h3>
+Yes you can! There is support for a limited number of <a href=https://www.w3schools.com/TAGs/ target=_blank>html tags</a> to allow better presentation of your submitted text. The following tags are permitted: <code>&lt;b&gt; &lt;strong&gt; &lt;i&gt; &lt;ul&gt; &lt;ol&gt; &lt;li&gt; &lt;hr&gt; &lt;br&gt; &lt;p&gt;</code>
+
 <h3>Is the tracker software available to download?</h3>
 <p>The tracker software (a fork of Byte Monsoon) is currently in heavy development. When it's ready for release, it will be available as a torrent on the site. Watch this space!</p>
 </div>

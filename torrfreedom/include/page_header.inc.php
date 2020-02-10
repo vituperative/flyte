@@ -36,7 +36,7 @@ if ($tracker_title == "") {
     if (strpos($request, "install") !== false)
         $tracker_title = "FLYTE INSTALL";
     else
-        $tracker_title = "FLYTE TRACKER";
+        $tracker_title = "FLYTE";
 }
 print("<div id=sitename><a href=" . $tracker_path . ">" . $tracker_title . "</a></div>\n");
 

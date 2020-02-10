@@ -20,6 +20,7 @@ if (!isset($CURUSER) || ($CURUSER["id"] != $row["owner"] && $CURUSER["admin"] !=
     print("<p id=toast class=warn>Sorry, you do not have permission to edit this torrent!");
     print("You're not the rightful owner, or you're not <a href=\"login.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;nowarn=1\">logged in</a>.</p>\n");
 } else {
+    print("<div class=tablewrap>\n");
     print("<form method=\"post\" action=\"takeedit.php\">\n");
     print("<input type=\"hidden\" name=\"id\" value=\"$id\">\n");
     if (isset($_GET["returnto"])) {
@@ -62,9 +63,10 @@ if (!isset($CURUSER) || ($CURUSER["id"] != $row["owner"] && $CURUSER["admin"] !=
         print("<input type=hidden name=returnto value=\"" . htmlspecialchars($_GET["returnto"]) . "\" />\n");
     }
     print("<input type=submit value=\"Delete Torrent\" />\n");
-    print("<label><input type=checkbox name=sure value=1 /> Confirm delete</label></td></tr>\n");
+    print("<label><input type=checkbox name=sure value=1 /> Confirm</label></td></tr>\n");
     print("</p>\n");
     print("</form>\n");
+    print("</div>\n");
 }
 
 stdfoot();

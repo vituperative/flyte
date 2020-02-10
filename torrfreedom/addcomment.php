@@ -21,12 +21,13 @@ if (!$torrow)
 stdhead("Add a comment to \"" . $torrow["name"] . "\"");
 
 ?>
-<form method="post" action="takecomment.php">
-<input type="hidden" name="id" value="<?= $id ?>" />
+<form method=post action=takecomment.php>
+<input type=hidden name=id value="<?= $id ?>" />
+<div class=tablewrap>
 <table id=comment>
 <tr><th>Add comment to torrent: <?= htmlspecialchars($torrow["name"]) ?></th></tr>
-<tr><td><textarea class="input" name="main" rows="20" cols="60" required></textarea></td></tr>
-<tr id=dostuff><td><input class="input" type="submit" value="Post Comment" /></td></tr>
+<tr><td><textarea class=input name=main rows=20 cols=60 required></textarea></td></tr>
+<tr id=dostuff><td><input class=input type=submit value="Post Comment" /></td></tr>
 </table>
 </form>
 <?php
@@ -42,7 +43,7 @@ if (count($allrows)) {
     print("<h3 id=recentcomments>Recent Comments</h3>\n");
     commenttable($allrows);
 }
-
+print("</div>");
 stdfoot();
 
 ?>

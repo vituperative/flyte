@@ -232,7 +232,22 @@ function tr($x, $y, $noesc = 0, $count = 0)
     } else {
         $style = 'a';
     }
-    print("<tr><td><b>$x</b></td><td>$a</td></tr>\n");
+    print("<tr><td>$x</td><td>$a</td></tr>\n");
+}
+
+function tr2($y, $noesc = 0, $count = 0) {
+    if ($noesc) {
+        $a = $y;
+    } else {
+        $a = htmlspecialchars($y);
+        $a = str_replace("\n", "<br>\n", $a);
+    }
+    if ($count % 2 == 0) {
+        $style = 'r';
+    } else {
+        $style = 'a';
+    }
+    print("<tr><td colspan=2>$a</td></tr>\n");
 }
 
 function truncate($str, $length = 15, $trailing = '&hellip;')
@@ -284,7 +299,7 @@ function parsedescr($d)
 {
     #Security: remove any html tags.
 //    $pd = preg_replace('/<[^>]*>/', "", $d);
-    $pd = strip_tags($d, '<b></i><ul><ol><li><strong><hr><br>');
+    $pd = strip_tags($d, '<b><i><ul><ol><li><strong><hr><br><p>');
     #Interface: Add breaklines
     $pd = str_replace(array("\n", "\r"), array("<br>\n", ""), htmlspecialchars($pd));
     return $pd;
@@ -472,7 +487,8 @@ function pager($rpp, $count, $href, $opts = array())
 
         }
         $pagerstr = join(" ", $pagerarr);
-        $pagertop = "<p hidden align=\"center\">$pager<br>$pagerstr</p>\n";
+//        $pagertop = "<p hidden align=\"center\">$pager<br>$pagerstr</p>\n";
+        $pagertop = "";
         if ($i != $page) {
             $pagerbottom = "<p id=pager>$pagerstr</p>\n";
         } else {
@@ -480,13 +496,15 @@ function pager($rpp, $count, $href, $opts = array())
         }
 
     } else {
-        $pagertop = "<p hidden align=\"center\">$pager</p>\n";
-        $pagerbottom = "<p id=pager>$pager</p>\n";
+//        $pagertop = "<p hidden align=\"center\">$pager</p>\n";
+        $pagertop = "";
+        $pagerbottom = "<p id=pager>$pager</p>\n</div>\n";
     }
 
     $start = $page * $rpp;
 
-    return array($pagertop, $pagerbottom, "LIMIT $start,$rpp");
+//    return array($pagertop, $pagerbottom, "LIMIT $start,$rpp");
+    return array("", $pagerbottom, "LIMIT $start,$rpp");
 }
 
 function downloaderdata($res)
@@ -538,12 +556,12 @@ function commenttable($rows)
             print("<th class=posted>Posted: " . htmlspecialchars($row["added"]) . "</th>\n");
             print("</tr>\n");
             print("<tr>\n");
-            print("<td colspan=\"2\">" . $row["text"] . "</td>\n");
+            print("<td colspan=\"2\"><span class=commentwrap>" . strip_tags($row["text"], "<b><i><ul><ol><li><strong><hr><br><p>") . "</span></td>\n");
             print("</tr>\n");
         }
         $count++;
     }
-    print("</table>");
+    print("</table>\n");
 }
 
 function searchfield($s)
@@ -584,6 +602,7 @@ function torrenttable($res, $variant = "index")
     global $tracker_path;
     ?>
 
+<div class=tablewrap id=torrentlist>
 <table id=torrents>
 <tr><th>Type</th><th>Name</th><th>Torrent</th>
 <?php
@@ -721,7 +740,7 @@ function torrenttable($res, $variant = "index")
         }
 
         if ($variant == "index" && $CURUSER) {
-            print("<td>" . (isset($row["username"]) ? htmlspecialchars($row["username"]) : "<i>Unknown</i>") . "</td>\n");
+            print("<td class=uploadername>" . (isset($row["username"]) ? htmlspecialchars($row["username"]) : "<i>Unknown</i>") . "</td>\n");
         }
 
         print("</tr>\n");

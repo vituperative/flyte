@@ -7,7 +7,7 @@ function bark($msg) {
 }
 
 if (!mkglobal("id"))
-	bark("missing form data");
+	bark("Missing form data!");
 
 $id = intval($id);
 if (!$id)
@@ -26,19 +26,19 @@ if (!isset($CURUSER) || ($CURUSER["id"] != $row["owner"] && $CURUSER["admin"] !=
 	bark("You're not the owner! How did that happen?\n");
 
 if (!@$_POST["sure"])
-	bark("Please confirm that you wish to delete the torrent!\n");
+	bark("Please go back and confirm that you wish to delete the torrent!\n");
 
 deletetorrent($id);
 
 stdhead("Torrent deleted!");
 
 if (isset($_POST["returnto"]))
-	$ret = "<a href=\"" . htmlspecialchars($_POST["returnto"]) . "\">Go back to whence you came</a>";
+	$ret = "<a href=\"" . htmlspecialchars($_POST["returnto"]) . "\">Go back to previous page</a>";
 else
 	$ret = "<a href=\"./\">Back to index</a>";
 
 ?>
-<p class=toast id=success>Torrent deleted! <?= $ret ?></p>
+<p id=toast class=success>Torrent deleted! <?= $ret ?></p>
 <?php
 
 stdfoot();
