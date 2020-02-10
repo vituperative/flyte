@@ -329,6 +329,7 @@ function stdfoot()
 //    print('<p id="footer"><span id="blurb">Running: ' . $appname . ' v. ' . $version . '</code></p>');
 //    print('<p id="footer"><span id="blurb">Running: ' . $appname . ' v. ' . $version . '</code>' . $bullet . 'Page spawned in ' . $time . ' seconds</span></p>');
     print('<p id=footer><span id="blurb">Site Admin: <code>' . $contact . '</code>' . $bullet . 'Design by <a href="http://skank.i2p">dr|z3d</a>' . $bullet . 'Est. 2017</span></p>');
+    print("<style type=text/css>body {opacity: 1 !important;}</style>");
     print("\n</body>\n</html>");
 }
 

@@ -12,7 +12,7 @@
     <meta http-equiv=Content-Language content=en-us>
     <META HTTP-EQUIV=Content-Type content=text/html; charset=UTF-8>
     <link rel=stylesheet href=include/style.css type=text/css>
-    <style type=text/css>html{background: #151414;} body{opacity: 0; text-align: center;}</style>
+    <style type=text/css>html, body{background: #151414;} body{opacity: 0; text-align: center;}</style>
     <link rel=shortcut icon href=<?php echo $tracker_path ?>favicon.ico>
     <link rel=alternate type=application/rss+xml title="<?php echo $tracker_title; ?> RSS Feed" href=rss.php>
     <title><?php echo strtoupper($tracker_title);
