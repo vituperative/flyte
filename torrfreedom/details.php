@@ -30,7 +30,7 @@ function dltable($name, $arr, $torrent)
 
         $s .= "<td>" . mksize($e["uploaded"]) . "</td>\n";
         $s .= "<td>" . mksize($e["downloaded"]) . "</td>\n";
-        $ps = sprintf("%.0f%%", 100 * (1 - ($e["to_go"] / $torrent["size"])));
+        $ps = sprintf("%.1f%%", 100 * (1 - ($e["to_go"] / $torrent["size"])));
         $ps = ($ps < 0) ? "0%" : $ps;
         $s .= "<td class=downloadbar><span class=barOuter title=\"" . $ps . " complete\"><span class=barInner style=width:" . $ps . ">" . $ps . "</span></span></td>\n";
         $s .= "<td>" . mkprettytime($now - $e["st"]) . "</td>\n";
@@ -64,7 +64,7 @@ if (isset($CURUSER)) {
 }
 
 if (!$row || ($row["banned"] == "yes" && !$admin)) {
-    print("no such torrent");
+    print("<p id=toast class=warn><span class=title>Torrent does not exist!</span>The torrent you are trying to access has been blacklisted from this tracker.</p>");
 } else {
     if (isset($_GET["hit"])) {
         mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE torrents SET views = views + 1 WHERE id = $id");
@@ -107,7 +107,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
             print("<p id=toast class=success><span class=title>Search results</span><br>1 match found for: " . htmlspecialchars($_GET["searched"]) . "</p>\n");
         }
 
-        echo "<table id=details>\n";
+        echo "<div class=tablewrap>\n<table id=details>\n";
 
         $url = "edit.php?id=" . $row["id"];
         if (isset($_GET["returnto"])) {
@@ -144,7 +144,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
         }
 **/
 
-        print("<tr><td><b>Info hash</b></td><td><code>" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "</code></td></tr>");
+        print("<tr><td>Info hash</td><td><code>" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "</code></td></tr>");
         tr("Size", mksize($row["size"]) . " (" . $row["size"] . " Bytes)", 0, $rowcount++);
 
         if ($row["visible"] == "no" && !$CURUSER) {
@@ -157,7 +157,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
 
         tr("Added", $row["added"] . " UTC", 0, $rowcount++);
         if ($CURUSER) {
-            print("<tr><td><b>Stats</b></td><td><b>Downloads:</b> " . $row["times_completed"] . "&nbsp;&nbsp;&nbsp;<b>Views:</b> " . $row["views"] . "&nbsp;&nbsp;&nbsp;<b>Hits:</b> " . $row["hits"]);
+            print("<tr><td>Stats</td><td><b>Downloads:</b> " . $row["times_completed"] . "&nbsp;&nbsp;&nbsp;<b>Views:</b> " . $row["views"] . "&nbsp;&nbsp;&nbsp;<b>Hits:</b> " . $row["hits"]);
             if ($row["visible"] == "no") {
                 print("&nbsp;&nbsp;&nbsp;<b>Visible:</b> <span class=\"no small\" title=\"No seeders currently connected to this torrent\">No</span>");
             }
@@ -178,7 +178,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
                 tr("Files", $row["numfiles"] . '&nbsp;&nbsp;&nbsp;<a href="details.php?id=' . $id . '&amp;filelist=1$keepget#filelist">Show list</a>', 1, $rowcount++);
             } else {
                 if (intval($row["numfiles"]) > 1)
-                    tr("Files", $row["numfiles"], 1, $rowcount++);
+                    tr("Files", $row["numfiles"] . "&nbsp;&nbsp;<a id=files href=\"details.php?id=$id$keepget\">Hide list</a>", 1, $rowcount++);
 
                 $s = "<table id=filelist>\n";
 
@@ -188,7 +188,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
                 }
 
                 $s .= "</table>\n";
-                tr("<b>File List</b><br><a id=files href=\"details.php?id=$id$keepget\">Hide list</a>", $s, 1, $rowcount++);
+                tr2($s, 1, $rowcount++);
             }
         }
 
@@ -259,7 +259,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
 //        print("<hr>\n");
     } else {
         stdhead("Comments for torrent \"" . $row["name"] . "\"");
-        print("<p class=note id=return><a href=\"details.php?id=$id\">Return to details page</a></p>\n");
+        print("<div class=tablewrap><p class=note id=return><a href=\"details.php?id=$id\">Return to details page for torrent: " . $row["name"] . "</a></p>\n");
     }
 
 //    print("<p><a name=\"startcomments\"></a></p>\n");
@@ -267,16 +267,14 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
     if ($CURUSER) {
         $commentbar = "<p id=addcomment><a href=\"addcomment.php?id=$id\">Add a comment</a></p>\n";
     } else {
-        $commentbar = "<p id=needlogin class=note>Please <a href=\"login.php\">login</a> to add a comment to this torrent.</p>";
+        $commentbar = "<p id=needlogin class=note>Please <a href=\"login.php\">login</a> to add a comment to this torrent.</p>\n";
     }
 
     $subres = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) FROM comments WHERE torrent = $id");
     $subrow = mysqli_fetch_array($subres);
     $count = $subrow[0];
 
-    if (!$count) {
-//        print("<p id=\"nocomments\" class=\"important\" align=\"center\">No comments yet</p>\n");
-    } else {
+    if ($count) {
         list($pagertop, $pagerbottom, $limit) = pager(20, $count, "details.php?id=$id&", array("lastpagedefault" => 1));
 
         $subres = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT comments.id, text, DATE_FORMAT(CONVERT_TZ(comments.added, @@session.time_zone, '+00:00'), '%H:%i, %a %D %M %Y') as added, username FROM comments LEFT JOIN users ON comments.user = users.id WHERE torrent = $id ORDER BY comments.id $limit");
@@ -285,15 +283,16 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
             $allrows[] = $subrow;
         }
 
+//    print($commentbar); // kill dupe!
+//        print($pagertop);
+
         print($commentbar);
-        print($pagertop);
 
         commenttable($allrows);
 
         print($pagerbottom);
     }
-
-    print($commentbar);
+    print("</div>\n");
 }
 
 stdfoot();
