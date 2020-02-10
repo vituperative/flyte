@@ -659,7 +659,7 @@ function torrenttable($res, $variant = "index")
             $description = strip_tags($row["ori_descr"]);
             print("<br><span class=briefdesc");
             if (strlen($description) > 120) {
-                print(" title=\"" . substr($description, 0, 1000));
+                print(" title=\"" . htmlspecialchars(substr($description, 0, 1000)));
                 if (strlen($description) > 1000) {
                     print(" &hellip; [more information available on the details page]");
                 }
