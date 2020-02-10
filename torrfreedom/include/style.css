@@ -17,7 +17,6 @@ body {
   position: relative;
   min-width: 800px;
   color: #bbb;
-  opacity: 1 !important;
 }
 
 body, input, select, textarea, button {
