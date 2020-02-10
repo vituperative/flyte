@@ -30,7 +30,7 @@ function dltable($name, $arr, $torrent)
 
         $s .= "<td>" . mksize($e["uploaded"]) . "</td>\n";
         $s .= "<td>" . mksize($e["downloaded"]) . "</td>\n";
-        $ps = sprintf("%.0f%%", 100 * (1 - ($e["to_go"] / $torrent["size"])));
+        $ps = sprintf("%.1f%%", 100 * (1 - ($e["to_go"] / $torrent["size"])));
         $ps = ($ps < 0) ? "0%" : $ps;
         $s .= "<td class=downloadbar><span class=barOuter title=\"" . $ps . " complete\"><span class=barInner style=width:" . $ps . ">" . $ps . "</span></span></td>\n";
         $s .= "<td>" . mkprettytime($now - $e["st"]) . "</td>\n";
@@ -188,7 +188,6 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
                 }
 
                 $s .= "</table>\n";
-//                tr("<b>File List</b><br><a id=files href=\"details.php?id=$id$keepget\">Hide list</a>", $s, 1, $rowcount++);
                 tr2($s, 1, $rowcount++);
             }
         }

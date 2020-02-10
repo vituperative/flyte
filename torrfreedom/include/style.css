@@ -193,8 +193,6 @@ th, #dostuff td {
 }
 
 #torrents {
-  /*  margin-top: -2px;*/
-  /*  width: calc(100% - 16px);*/
   width: 100% !important;
   border: 1px solid #111 !important;
 }
@@ -368,7 +366,9 @@ input[type="submit"]:active, input[type="reset"]:active, select:active, select:f
 
 select:hover, select:focus {
   color: #eee;
-  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232, inset 2px 2px 2px #111, 0 0 0 2px rgba(255, 96, 0, .3) !important;
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232,
+              inset 2px 2px 2px #111,
+              0 0 0 2px rgba(255, 96, 0, .3) !important;
   background-blend-mode: normal;
 }
 
@@ -998,7 +998,6 @@ table table {
 #pager {
   margin: -1px auto 0 !important;
   padding: 8px 14px !important;
-  /*  width: calc(100% - 16px);*/
   width: 100%;
   position: relative;
   z-index: 10;
@@ -1034,7 +1033,6 @@ table table {
   margin: 0 0 -10px;
   background: #212020;
   background: radial-gradient(at top, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, #232020, rgba(0, 0, 0, 0));
-  /*  background: radial-gradient(at top, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%);*/
 }
 
 .shim {
@@ -1288,13 +1286,10 @@ code.dest {
 #header {
   margin: -12px 0 0;
   padding-top: 8px;
-  background: radial-gradient(at bottom, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, #232020, #121010);
-  /*  background: radial-gradient(at bottom, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%), url(../pic/wave.jpg) center center, linear-gradient(to bottom, #232020, #121010);
-  background-size: 100% 100%, cover, 100% 100%;
-  background-blend-mode: normal, multiply, normal;*/
   position: sticky;
   top: -10px;
   z-index: 999;
+  background: radial-gradient(at bottom, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, #232020, #121010);
   filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .4));
 }
 
@@ -1412,19 +1407,6 @@ code.dest {
   font-size: 90% !important;
 }
 
-/*#top+table:not(#torrents), #top+form, #top+p+form, #toast+table {
-  margin-top: 40px !important;
-}*/
-
-/*#top+form[action="takelogin.php"], #toast+form[action="takeprofedit.php"] {
-  margin: 0 !important;
-  height: 100%;
-  display: block;
-  padding: 8vh 0 0;
-  overflow: hidden;
-}
-*/
-
 #togglepanel:not(:checked)+label+form, #togglepanel:not(:checked)+label+form+div, #togglepanel:not(:checked)+label+form+div+form {
   display: none;
 }
@@ -1509,6 +1491,7 @@ input#togglepanel {
   to {
     filter: drop-shadow(0 0 2px rgba(255, 96, 0, .8)) drop-shadow(0 0 3px rgba(128, 32, 0, .5));
   }
+>>>>>>> master
 }
 
 #togglepanel+label:active {
@@ -1630,6 +1613,10 @@ input#togglepanel {
   }
   #pager {
     margin-top: -5px;
+    width: 100%;
+  }
+  #pager {
+    width: 100%;
   }
   #torrents th {
     padding: 6px 4px !important;
@@ -1639,7 +1626,6 @@ input#togglepanel {
     display: inline-block;
     height: 32px;
     vertical-align: middle;
-    content: "";
   }
   #torrents td, #torrents td a {
     font-size: 8.5pt !important;
