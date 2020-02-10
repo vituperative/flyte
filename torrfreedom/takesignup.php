@@ -13,7 +13,7 @@ if (empty($wantusername) || empty($wantpassword))
 	bark("Don't leave any fields blank.");
 
 if ($wantpassword != $passagain)
-	bark("The passwords didn't match! Must've typoed. Try again.");
+	bark("The passwords didn't match! Try again.");
 
 if (strlen($wantpassword) > 15)
 	bark("Sorry, password is too long (max is 15 chars)");
@@ -25,7 +25,7 @@ dbconn();
 
 $secret = mksecret();
 
-$hashpass = hash("sha256", $secret . $wantpassword . $secret);
+$hashpass = hash("sha3", $secret . $wantpassword . $secret);
 
 $ret = mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO users (username, password, secret, status, added) VALUES (" .
 		implode(",", array_map("sqlesc", array($wantusername, $hashpass, $secret, 'confirmed'))) .

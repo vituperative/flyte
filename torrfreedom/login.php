@@ -12,12 +12,14 @@ if (!empty($_GET["returnto"])) {
 ?>
 <form method=post action=takelogin.php>
 <p id=toast class=warn>Please ensure cookies are enabled in your browser.</p>
+<div class="tablewrap slim">
 <table id=dologin>
 <tr><th colspan=2>Login to <?php echo "$tracker_title"; ?></th></tr>
 <tr><td>Username</td><td><input id=username class=input type=text size=20 name=username /></td></tr>
 <tr><td>Password</td><td><input class=input type=password size=20 name=password /></td></tr>
 <tr id=dostuff><td colspan=2><input type=submit value="Log in!" class=input /></td></tr>
 </table>
+</div>
 <?php
 if (isset($returnto)) {
     print("<input type=hidden name=returnto value=\"" . htmlspecialchars($returnto) . "\" />\n");

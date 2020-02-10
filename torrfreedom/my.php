@@ -30,6 +30,7 @@ $row = mysqli_fetch_array($res);
 $mytorrents = $row[0];
 ?>
 <form method=post action=takeprofedit.php>
+<div class="tablewrap slim">
 <table id=myaccount>
 <tr><th>Profile for: <?php echo $CURUSER["username"] ?></th><th>
 <?php
@@ -50,6 +51,7 @@ tr("Confirm password", "<input type=password name=passagain size=40 required />"
 ?>
 <tr id=dostuff><td colspan=2><input type=submit value="Update Password" /></td></tr>
 </table>
+</div>
 </form>
 
 <?php stdfoot(); ?>
