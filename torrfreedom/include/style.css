@@ -537,7 +537,7 @@ hr.separator {
   display: inline-block;
   line-height: 1;
   box-shadow: inset 0 0 0 1px #454040, 0 0 0 1px #121010;
-  background: linear-gradient(to bottom, #454040, #232020);
+  background:  linear-gradient(to bottom, rgba(255,255,255,.1) 50%, rgba(0,0,0,.2) 50%), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px), linear-gradient(to bottom, #454040, #232020);
   font-size: 105% !important;
   color: #9a9090;
   text-decoration: none !important;
@@ -550,6 +550,9 @@ hr.separator {
 
 #topnav a {
   min-width: 100px;
+  color: #9f9090;
+  font-weight: 700 !important;
+  text-shadow: 0 1px 1px #000;
 }
 
 #topnav a:first-child {
@@ -567,8 +570,19 @@ hr.separator {
   background: linear-gradient(to bottom, #232020, #454040);
 }
 
+#topnav a:hover, #topnav a:focus {
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050, inset 0 0 0 1px rgba(0,0,0,0);
+  background: radial-gradient(at center 80px, rgba(255, 96, 0, .6) 0, rgba(0, 0, 0, 0) 70%), linear-gradient(to bottom, rgba(255,255,255,.1) 50%, rgba(0,0,0,.2) 50%), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px);
+}
+
 #topnav a:active, #addcomment a:active, #toggle:active {
   box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050, inset 3px 3px 3px #121010;
+}
+
+#topnav a:active {
+  color: rgba(255,96,0,.7);
+  background: radial-gradient(at center 80px, rgba(255, 96, 0, .6) 0, rgba(0, 0, 0, 0) 70%), linear-gradient(to bottom, rgba(255,255,255,.1), rgba(0,0,0,.2)), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px);
+  transition: ease box-shadow .1s;
 }
 
 #footer {
@@ -580,6 +594,7 @@ hr.separator {
   right: 0;
   z-index: 1000;
   font-weight: 600;
+  filter: drop-shadow(0 -1px 2px rgba(0,0,0,.5));
 }
 
 #footer, #footer a {
