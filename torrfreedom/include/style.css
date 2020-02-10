@@ -1,6 +1,8 @@
 /* http://torrfreedom.i2p theme by dr|z3d */
 
 html {
+  margin: 0;
+  padding: 0;
   scrollbar-color: #454343 #212020;
 }
 
@@ -13,10 +15,9 @@ body {
   margin: 0 0 5px;
   padding: 0 0 28px;
   position: relative;
-  min-width: 900px;
+  min-width: 800px;
   color: #bbb;
   opacity: 1 !important;
-  overflow-x: hidden;
 }
 
 body, input, select, textarea, button {
@@ -107,10 +108,10 @@ input[type="submit"], input[type="reset"], input[type="radio"], input[type="file
 
 @keyframes powercycle {
   from {
-    filter: hue-rotate(0) opacity(1) saturate(0);
+    filter: hue-rotate(0) opacity(1) saturate(0) drop-shadow(0 0 1px #300) drop-shadow(0 0 2px #200) drop-shadow(0 0 3px rgba(0, 0, 0, .1));
   }
   to {
-    filter: hue-rotate(360deg) opacity(1) saturate(1);
+    filter: hue-rotate(360deg) opacity(1) saturate(1) drop-shadow(0 0 2px #400) drop-shadow(0 0 3px rgba(255, 96, 0, .5)) drop-shadow(0 0 4px rgba(0, 0, 0, .5));
   }
 }
 
@@ -192,8 +193,7 @@ th, #dostuff td {
 }
 
 #torrents {
-  margin-top: -2px;
-  width: calc(100% - 16px);
+  width: 100% !important;
   border: 1px solid #111 !important;
 }
 
@@ -253,7 +253,7 @@ th, #dostuff td {
   line-height: 1;
 }
 
-#torrents td:nth-child(2) {
+#torrents .torrentname {
   max-width: 500px;
 }
 
@@ -360,10 +360,8 @@ input[type="submit"]:focus, input[type="reset"]:focus, input[type="text"]:focus,
   color: #eee !important;
 }
 
-input[type="submit"]:active, input[type="reset"]:active, select:active, select:focus, .button:active,
-#details th a:nth-child(n+2):active, .edit:active, .download:active {
-  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232,
-              inset 2px 2px 2px #111 !important;
+input[type="submit"]:active, input[type="reset"]:active, select:active, select:focus, .button:active, #details th a:nth-child(n+2):active, .edit:active, .download:active {
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232, inset 2px 2px 2px #111 !important;
 }
 
 select:hover, select:focus {
@@ -388,7 +386,13 @@ input[type="text"], input[type="password"] {
 textarea {
   padding: 4px 6px;
   border-radius: 3px !important;
-  box-shadow: inset 1px 1px 1px #222, 0 0 0 1px #121010;
+  box-shadow: inset 2px 2px 2px #222, 0 0 0 1px #121010;
+  background: #302b2b;
+}
+
+textarea:focus {
+  background: #2a2828;
+  box-shadow: inset 0 0 0 1px #222, inset 0 0 0 2px rgba(255, 96, 0, .3), 0 0 0 1px #121010;
 }
 
 label {
@@ -568,7 +572,7 @@ hr.separator {
 }
 
 #footer {
-  margin: 8px -10% 0 !important;
+  margin: 8px 0 0 !important;
   padding: 0 !important;
   position: fixed;
   bottom: 0;
@@ -606,10 +610,17 @@ hr.separator {
 }
 
 #details, #addcomment, #uploader, .note, #upload.note, .success, #myaccount, #dologin, #signup, .warn.note, #wrapper.help div, #nuke, #comment, #recentcomments {
-  margin: 0 auto 10px !important;
-  width: 800px !important;
+  margin: 0 auto !important;
   box-sizing: border-box;
   border: 1px solid #111 !important;
+}
+
+#uploader, #myaccount, #nuke {
+  margin: 0 !important;
+}
+
+#nuke {
+  margin-top: -1px !important;
 }
 
 #dologin, #signup, #myaccount, .warn.cookies {
@@ -617,7 +628,6 @@ hr.separator {
 }
 
 #details, #details+#addcomment, #torrentedit, #comments, #comment, #comments+#pager, #pager+#addcomment, #return.note, #return.note+#addcomment, #needlogin, #nuke, .success.details, #recentcomments {
-  width: 900px !important;
   border: 1px solid #111;
 }
 
@@ -626,13 +636,10 @@ hr.separator {
   border: 1px solid #222;
 }
 
-#return.note {
-  margin-top: 30px !important;
-}
-
 #addcomment, #details+#needlogin {
-  margin-top: -11px !important;
+  margin-top: -1px !important;
   padding: 10px;
+  width: 100%;
 }
 
 #comments th.user {
@@ -647,19 +654,15 @@ hr.separator {
   text-align: left;
 }
 
-#pager+#addcomment, #return+#needlogin, #pager+#needlogin {
+/*#pager+#addcomment, #return+#needlogin, #pager+#needlogin {
   margin-top: -1px !important;
   display: none; // no need for dupe, displayed below torrent details
-}
+}*/
 
-#details {
-  margin-top: 30px !important;
-}
-
-#details th, #dologin th, #signup th, #myaccount th, #torrents th, #torrentedit th {
+#details th, #dologin th, #signup th, #myaccount th, #torrents th, #torrentedit th, #uploader th, #comment th {
   padding: 8px 14px !important;
-  font-size: 110% !important;
-  font-weight: 600 !important;
+  font-size: 105% !important;
+  font-weight: 700 !important;
   text-align: left;
   border-top: none !important;
   border-bottom: 1px solid #111 !important;
@@ -778,15 +781,20 @@ hr.separator {
   border-bottom: 1px solid #353;
 }
 
-#description div {
+#description div, .commentwrap {
   margin: 6px 2px;
   padding: 10px 16px 15px;
+  display: block;
   text-align: justify;
   background: #454040;
   box-shadow: 0 0 0 1px #111, 0 0 2px 2px rgba(0, 0, 0, .1), inset 0 0 0 1px #585050;
 }
 
-#description div b, #details tr:not(#description) td:first-child b {
+.commentwrap {
+  margin: 2px;
+}
+
+#description div b, #details tr:not(#description) td:first-child, #uploader td:first-child {
   font-weight: 700 !important;
 }
 
@@ -862,6 +870,7 @@ th a {
 
 #myaccount td:first-child {
   min-width: 200px;
+  font-weight: 700;
 }
 
 #myaccount input[type="text"], #myaccount input[type="password"] {
@@ -958,34 +967,19 @@ table table {
   box-shadow: inset 0 0 0 1px #232020, inset 0 0 1px 1px #090;
 }
 
-.warn, #torrentedit {
-  margin-top: 30px !important;
-}
-
-.warn.note {
-  padding: 50px 15px;
-}
-
 #siteinfo {
   text-align: center;
 }
 
-#dologin, #signup {
-  margin-top: 20px !important;
-}
-
 #dologin td:first-child, #signup td:first-child, #torrentedit td:first-child {
   white-space: nowrap;
+  vertical-align: top;
   text-align: right;
   font-weight: 700;
 }
 
 #torrentedit td {
   padding: 8px 10px;
-}
-
-#torrentedit td:first-child {
-  text-align: right;
 }
 
 #torrentedit td:last-child {
@@ -1004,7 +998,7 @@ table table {
 #pager {
   margin: -1px auto 0 !important;
   padding: 8px 14px !important;
-  width: calc(100% - 16px);
+  width: 100%;
   position: relative;
   z-index: 10;
   text-align: center;
@@ -1038,7 +1032,7 @@ table table {
 #searchandshow {
   margin: 0 0 -10px;
   background: #212020;
-  background: radial-gradient(at top, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, #212020, #181817);
+  background: radial-gradient(at top, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, #232020, rgba(0, 0, 0, 0));
 }
 
 .shim {
@@ -1292,10 +1286,10 @@ code.dest {
 #header {
   margin: -12px 0 0;
   padding-top: 8px;
-  background: linear-gradient(to bottom, #232020, #121010);
   position: sticky;
   top: -10px;
   z-index: 999;
+  background: radial-gradient(at bottom, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, #232020, #121010);
   filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .4));
 }
 
@@ -1413,18 +1407,6 @@ code.dest {
   font-size: 90% !important;
 }
 
-#top+table:not(#torrents), #top+form, #top+p+form, #toast+table {
-  margin-top: 40px !important;
-}
-
-#top+form[action="takelogin.php"], #toast+form[action="takeprofedit.php"] {
-  margin: 0 !important;
-  height: 100%;
-  display: block;
-  padding: 8vh 0 0;
-  overflow: hidden;
-}
-
 #togglepanel:not(:checked)+label+form, #togglepanel:not(:checked)+label+form+div, #togglepanel:not(:checked)+label+form+div+form {
   display: none;
 }
@@ -1458,10 +1440,7 @@ input#togglepanel {
 }
 
 #togglepanel+label {
-  padding: 3px;
-  padding: 0;
-  margin: -1px auto -2px;
-  margin: -1px auto -3px;
+  padding: 1px 0;
   width: 100%;
   display: inline-block;
   color: transparent;
@@ -1475,15 +1454,16 @@ input#togglepanel {
   cursor: pointer;
 }
 
-#togglepanel+label:hover {
+#togglepanel+label:hover, #togglepanel:focus+label {
   background: repeating-linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, .1) 2px), linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255, 96, 0, .03), rgba(0, 0, 0, 0)), linear-gradient(to bottom, #383535 30%, #212020);
 }
 
 #togglepanel+label::after {
-  margin-bottom: 1px;
+  margin-top: -4px;
+  width: 10px;
+  height: 10px;
   display: inline-block;
-  width: 7px;
-  height: 7px;
+  vertical-align: middle;
   border: 1px solid #232020;
   border-radius: 50%;
   background: #484040;
@@ -1494,10 +1474,24 @@ input#togglepanel {
   will-change: transform;
 }
 
-#togglepanel+label:hover::after {
+#togglepanel+label:hover::after, #togglepanel:focus+label::after {
   border: 1px solid #232020;
   box-shadow: inset 0 0 0 1px #454040, inset 0 2px 2px #111;
-  filter: drop-shadow(0 0 1px rgba(255, 96, 0, .8)) drop-shadow(0 0 2px rgba(128, 32, 0, .3));
+  filter: drop-shadow(0 0 2px rgba(255, 96, 0, .4)) drop-shadow(0 0 2px rgba(128, 32, 0, .3));
+}
+
+#togglepanel+label:hover::after {
+  animation: ease-in-out throb .5s alternate infinite;
+}
+
+@keyframes throb {
+  from {
+    filter: drop-shadow(0 0 2px rgba(255, 96, 0, .4)) drop-shadow(0 0 2px rgba(128, 32, 0, .3));
+  }
+  to {
+    filter: drop-shadow(0 0 2px rgba(255, 96, 0, .8)) drop-shadow(0 0 3px rgba(128, 32, 0, .5));
+  }
+>>>>>>> master
 }
 
 #togglepanel+label:active {
@@ -1542,8 +1536,54 @@ input#togglepanel {
   margin-top: -7px;
 }
 
+.tablewrap {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding: 1px;
+  width: auto;
+  display: inline-block;
+  border: 1px solid #343030;
+  background: #423b3b;
+}
+
+.tablewrap#torrentlist {
+  margin: 0 auto;
+  width: calc(100% - 16px) !important;
+  display: block;
+}
+
 #togglepanel:checked~#torrentshow {
   margin-bottom: 18px !important;
+}
+
+#dologin, #signup, #myaccount, #invite {
+  width: 500px !important;
+  margin: 0 auto;
+}
+
+#invite {
+  margin-top: 4px;
+  padding: 10px 0;
+  font-size: 110%;
+  border: 1px solid #343030;
+  box-shadow: 0 0 0 1px #454040, inset 0 0 0 1px #111, inset 0 0 2px 1px #373;
+  background: #343030;
+  background: linear-gradient(to bottom, #343030, #232020);
+}
+
+@media screen and (max-width: 900px) {
+  .torrentname {
+    width: 1%;
+    min-width: 220px;
+  }
+  .torrentname a, .torrentname .briefdesc {
+    display: inline-block;
+    max-width: 400px;
+  }
+  .tablewrap:not(#torrentlist):not(.slim) {
+    margin: 0 !important;
+    width: calc(100% - 8px) !important;
+  }
 }
 
 @media screen and (max-width: 1200px) {
@@ -1551,7 +1591,7 @@ input#togglepanel {
     font-size: 9pt !important;
   }
   body {
-    padding: 0 4px 23px !important;
+    padding: 0 0 28px !important;
   }
   #topnav a {
     padding-left: 16px;
@@ -1564,7 +1604,14 @@ input#togglepanel {
   #searchandshow {
     margin-bottom: -14px;
   }
-  #torrents {
+  #torrents, #pager, #details, , #details+#addcomment, #pager+#addcomment {
+    width: calc(100% - 8px) !important;
+  }
+  .tablewrap {
+    margin-top: 4px !important;
+    margin-bottom: 4px !important;
+  }
+  #pager {
     margin-top: -5px;
     width: 100%;
   }
@@ -1576,42 +1623,44 @@ input#togglepanel {
     font-size: 85% !important;
   }
   #torrents td:first-child::before {
-    content: "";
     display: inline-block;
     height: 32px;
     vertical-align: middle;
   }
-  .catlink:hover:after {
-    left: -10px;
-    min-width: 60px;
-  }
   #torrents td, #torrents td a {
     font-size: 8.5pt !important;
-  }
-  #torrents td:nth-child(2) a {
-    display: inline-block;
-    max-width: 350px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
   #torrents td {
     padding: 2px 4px !important;
     border: 1px solid #222 !important;
   }
-  #torrents td:nth-child(2) {
+  #torrents .torrentname {
     padding-left: 8px !important;
+    max-width: 350px;
   }
   #torrents .briefdesc {
     margin-top: 1px;
-    max-width: 350px;
+    max-width: 250px;
   }
-  #torrents img {
-    width: 20px;
-    height: 20px;
+  #torrents td:first-child img {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  #torrents td:nth-child(n+4) span {
+    background-size: 12px 12px !important;
+  }
+  #torrents span.edit, #torrents span.download {
+    background-size: 12px 12px, 100% 100% !important;
+  }
+  .catlink:hover:after {
+    left: -10px;
+    min-width: 60px;
   }
   #torrents .dlicons img {
     margin: 0;
+  }
+  #torrents .uploadername {
+    font-size: 90% !important;
   }
   .downloadbar {
     font-size: 0 !important;
@@ -1626,6 +1675,15 @@ input#togglepanel {
     margin-top: 6px;
     height: 10px;
   }
+  .tablewrap:not(#torrentlist):not(.slim) {
+    width: 800px !important;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .tablewrap:not(#torrentlist):not(.slim) {
+    width: 900px !important;
+  }
 }
 
 @media screen and (min-width: 1800px) {
@@ -1634,11 +1692,5 @@ input#togglepanel {
   }
   #sitename a {
     font-size: 48pt !important;
-  }
-}
-
-@media screen and (max-height: 800px) {
-  #wrapper td, #toast+form[action="takeprofedit.php"], #top+form[action="takelogin.php"] {
-    padding: calc(60px + .3vh) 1vw .3vh;
   }
 }
