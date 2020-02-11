@@ -1,6 +1,7 @@
 <?php
 	//todo add cache, compiling and to .tpl.cache_saltforuser / put in template function raw some <?php getTITLE() instead in method parse maybe
 	//or if it is not problem use that
+	//$itInstalls=false;
 	require_once 'bittorrent.inc.php';
 	function getUsername($def="guest"){
 		$username=$def;
@@ -8,6 +9,7 @@
 		return $username;
 	}
 	function getTITLE(){
+			//global $itInstalls;
 			$request = $_SERVER["REQUEST_URI"];
 			$username=getUsername();
 		
@@ -16,12 +18,21 @@
         		$page = str_replace("my.php", "$username's account settings", $page);
         		$page = str_replace("mytorrents", "$username's torrents", $page);
         		$page = str_replace("takeprofedit", "update profile", $page);
-			if (strpos($request, "install") !== false) $page= "INSTALLER";
+			if (strpos($request, "install") !== false){
+		//		 $itInstalls=true;
+				 $page= "INSTALLER";
+			}
         		$pagename = rtrim($page, "php");
         		if ($pagename != ".")
          		   echo (" | ");
       			echo strtoupper(rtrim($pagename, "."));	
 			
+	}
+	function SLASHCKECK(){
+		$request = $_SERVER["REQUEST_URI"];
+		if (strpos($request, "install") !== false) return "../";
+		//if($itInstalls ) return "../"; // __DIR__ != catalog of TorrFreedom
+		return "";
 	}
 
 	class titler{
@@ -36,7 +47,8 @@
 				"{tracker_title_upper}"=>strtoupper($tracker_title),
 				"{tracker_title}"=>$tracker_title,
 				"{username}"=>htmlspecialchars(getUsername()),
-				"{tracker_path}"=>$tracker_path
+				"{tracker_path}"=>$tracker_path,
+				"{SLASHCKECK_FUN}"=>SLASHCKECK,
 				//"getTITLE_FUN"=>getTITLE
 			);
 		}
@@ -57,7 +69,7 @@
 				$code=fread($this->file,4096);
 				foreach($this->mObjects as $object=>$val){
 					//print( $object ." in:in ". $code );
-					if( strstr($object, "_FUN") !== FALSE) str_replace($object, $val(), $code);
+					if( strstr($object, "_FUN") !== FALSE) $code=str_replace($object, $val(), $code);
 					else $code=str_replace($object, $val, $code);
 				}
 				$returns.=$code;

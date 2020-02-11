@@ -3,16 +3,6 @@
     require_once "../include/bittorrent.inc.php";
     require_once "../include/page_header.inc.php";
 ?>
-
-<!DOCTYPE HTML>
-<html>
-<head>
-  <meta http-equiv="Content-Language" content="en-us">
-  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
-  <link rel="stylesheet" href="../include/style.css" type="text/css">
-  <link rel="shortcut icon" href="favicon.ico" />
-</head>
-<body>
 <table id=wrapper>
 <tr><td>
 
