@@ -1,14 +1,14 @@
 <?php
  require_once 'page_header_class.inc.php';
- $header = new page_header_headers(); // function __construct($stdhead=""); so if you need stdhead("...") stdfoot automatically;
- 
+ $header = new page_header_headers();
+
 ?>
 
 <body>
 <div id=header>
 <div class="shim top"></div>
 <?php
-
+$request = $_SERVER["REQUEST_URI"];
 print("<div id=sitename><a href=" . $tracker_path . ">" . $tracker_title . "</a></div>\n");
 
 function topnav() {

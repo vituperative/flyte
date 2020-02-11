@@ -14,14 +14,9 @@ class page_header_headers{
 			//print(":::: |".$header_name.": ".$header_value.";");
 		}
 	}
-	function __construct($stdhead=""){
+	function __construct(){
 		$this->sendDefaultHeaders();
 		$titler = new titler();
 		$titler->import("head");
-		dbconn();
-		stdhead($stdhead);
-	}
-	function __destruct(){
-		stdfoot();
 	}
 }

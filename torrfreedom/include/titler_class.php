@@ -2,9 +2,15 @@
 	//todo add cache, compiling and to .tpl.cache_saltforuser / put in template function raw some <?php getTITLE() instead in method parse maybe
 	//or if it is not problem use that
 	require_once 'bittorrent.inc.php';
+	function getUsername($def="guest"){
+		$username=$def;
+		if(isset( $CURUSER["username"] ) )htmlspecialchars($CURUSER["username"]);
+		return $username;
+	}
 	function getTITLE(){
 			$request = $_SERVER["REQUEST_URI"];
-			$username=htmlspecialchars($CURUSER["username"]);
+			$username=getUsername();
+		
        			$page = basename(htmlspecialchars($_SERVER['PHP_SELF']));
         		$page = str_replace("index", "", $page);
         		$page = str_replace("my.php", "$username's account settings", $page);
@@ -28,7 +34,8 @@
 			//$this->CURUSER=$CURUSER;
 			$this->mObjects = array(
 				"{tracker_title_upper}"=>strtoupper($tracker_title),
-				"{username}"=>htmlspecialchars($CURUSER["username"]),
+				"{tracker_title}"=>$tracker_title,
+				"{username}"=>htmlspecialchars(getUsername()),
 				"{tracker_path}"=>$tracker_path
 				//"getTITLE_FUN"=>getTITLE
 			);
