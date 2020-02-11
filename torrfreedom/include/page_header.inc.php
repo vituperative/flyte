@@ -1,7 +1,7 @@
 <?php
  require_once 'page_header_class.inc.php';
- $header = new page_header_headers();
-
+ $header = new page_header_headers(); // function __construct($stdhead=""); so if you need stdhead("...") stdfoot automatically;
+ 
 ?>
 
 <body>
