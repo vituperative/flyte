@@ -28,7 +28,7 @@
       			echo strtoupper(rtrim($pagename, "."));	
 			
 	}
-	function SLASHCKECK(){
+	function doSLASHCKECK(){
 		$request = $_SERVER["REQUEST_URI"];
 		if (strpos($request, "install") !== false) return "../";
 		//if($itInstalls ) return "../"; // __DIR__ != catalog of TorrFreedom
@@ -48,7 +48,7 @@
 				"{tracker_title}"=>$tracker_title,
 				"{username}"=>htmlspecialchars(getUsername()),
 				"{tracker_path}"=>$tracker_path,
-				"{SLASHCKECK_FUN}"=>SLASHCKECK,
+				"{SLASHCKECK_FUN}"=>doSLASHCKECK(),
 				//"getTITLE_FUN"=>getTITLE
 			);
 		}
@@ -69,8 +69,9 @@
 				$code=fread($this->file,4096);
 				foreach($this->mObjects as $object=>$val){
 					//print( $object ." in:in ". $code );
-					if( strstr($object, "_FUN") !== FALSE) $code=str_replace($object, $val(), $code);
-					else $code=str_replace($object, $val, $code);
+					//
+					//if( strstr($object, "_FUN") !== FALSE) $code=str_replace($object, $val(), $code);
+					/*else*/ $code=str_replace($object, $val, $code);
 				}
 				$returns.=$code;
 			}while(strlen($code) > 0);
