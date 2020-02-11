@@ -33,5 +33,6 @@ foreach ($need4conf as $element) {
     </form>
 </td></tr>
 </table>
+<style type=text/css>body{opacity: 1 !important;}</style>
 </body>
 </html>
