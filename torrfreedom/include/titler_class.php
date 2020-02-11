@@ -56,7 +56,7 @@
 			do{
 				$code=fread($this->file,4096);
 				foreach($this->mObjects as $object=>$val){
-					print( $object ." in:in ". $code );
+					//print( $object ." in:in ". $code );
 					if( strstr($object, "_FUN") !== FALSE) str_replace($object, $val(), $code);
 					else $code=str_replace($object, $val, $code);
 				}
@@ -78,6 +78,8 @@
 				
 				$this->compile($parsed, $defCacheDir, $page);
 				fclose($this->file);
+				header("Refresh:0");
+				exit(0);
 			}
 		}
 		function __destruct(){

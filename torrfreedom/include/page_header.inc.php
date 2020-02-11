@@ -1,6 +1,6 @@
 <?php
  require_once 'page_header_class.inc.php';
- $header = new page_header_headers();
+ $header = new page_header_headers();// oh no, its stdhead loL! its now code of stdhead... preinit some updates;
 
 ?>
 
