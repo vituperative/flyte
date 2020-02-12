@@ -41,8 +41,7 @@ array_push($announce_urls, $tracker_url_name . "/announce.php", $tracker_url_key
 
 function dbconn($autoclean = 1)
 {
-    if($connected) return true;
-    global $mysql_host, $mysql_user, $mysql_pass, $mysql_db, $connected;
+    global $mysql_host, $mysql_user, $mysql_pass, $mysql_db;
 
     @($GLOBALS["___mysqli_ston"] = mysqli_connect($mysql_host, $mysql_user, $mysql_pass, $mysql_db))
     or die(mysqli_error($GLOBALS["___mysqli_ston"]));
@@ -52,7 +51,7 @@ function dbconn($autoclean = 1)
     if ($autoclean) {
         register_shutdown_function("autoclean");
     }
-    $connected=true;
+
 }
 
 function userlogin()
