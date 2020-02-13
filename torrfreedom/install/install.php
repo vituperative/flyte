@@ -68,6 +68,7 @@ $mysql_host = $_POST['mysql_host'];
 $mysql_user = $_POST['mysql_user'];
 $mysql_pass = $_POST['mysql_pass'];
 $mysql_db = $_POST['mysql_db'];
+if (!function_exists('mysql_connect')) die("You will install phpX-mysql firstly");
 $link = mysqli_connect("$mysql_host", "$mysql_user", "$mysql_pass", "$mysql_db");
 
 if (!$link) {
