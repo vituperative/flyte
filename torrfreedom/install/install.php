@@ -81,7 +81,7 @@ if ($iDB > 0) {
 }
 
 $configFile = fopen($defPathToConfig, "w") or die("Can't open " . $defPathToConfig . " to write config file");
-fwrite($configFile, $config_raw);
+fwrite($configFile, $config_raw) or die("cant write to config, check permission on: " . $defPathToConfig);
 fclose($configFile);
 
 echo "If you don't see errors, delete install.php and use that";
