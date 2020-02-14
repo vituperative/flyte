@@ -25,7 +25,7 @@ dbconn(0);
 
 $secret = mksecret();
 
-$hashpass = hash("sha3", $secret . $wantpassword . $secret);
+$hashpass = hash("sha256", $secret . $wantpassword . $secret);
 
 $ret = mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO users (username, password, secret, status, added) VALUES (" .
 		implode(",", array_map("sqlesc", array($wantusername, $hashpass, $secret, 'confirmed'))) .
