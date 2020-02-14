@@ -1,6 +1,6 @@
 <?php
 require_once "include/bittorrent.inc.php";
-dbconn();
+dbconn(0);
 stdhead("Login");
 unset($returnto);
 if (!empty($_GET["returnto"])) {

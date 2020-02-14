@@ -5,7 +5,7 @@ require_once("include/bittorrent.inc.php");
 if (!mkglobal("username:password"))
     die();
 
-dbconn();
+dbconn(0);
 
 function bark() {
     genbark("Login failed!", "Username or password incorrect");

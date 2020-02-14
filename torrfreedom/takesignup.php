@@ -21,7 +21,7 @@ if (strlen($wantpassword) > 15)
 if (!preg_match('/^[a-z][\w.-]*$/is', $wantusername) || strlen($wantusername) > 15)
 	bark("Invalid username. Must not be more than 15 characters long and no weird characters");
 
-dbconn();
+dbconn(0);
 
 $secret = mksecret();
 

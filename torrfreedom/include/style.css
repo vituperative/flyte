@@ -20,7 +20,7 @@ body {
 }
 
 body, input, select, textarea, button {
-  font-family: Open Sans, Droid Sans, Noto Sans, Segoe UI, sans serif !important;
+  font-family: Open Sans, Ubuntu, Lato, Cabin, Droid Sans, Noto Sans, Segoe UI, sans serif !important;
   font-size: 10pt !important;
   vertical-align: middle;
 }
@@ -549,6 +549,7 @@ hr.separator {
 }
 
 #topnav a {
+  margin: 8px -.32em;
   min-width: 100px;
   color: #9f9090;
   font-weight: 700 !important;
@@ -990,7 +991,7 @@ table table {
 
 #dologin td:first-child, #signup td:first-child, #torrentedit td:first-child {
   white-space: nowrap;
-  vertical-align: top;
+/*  vertical-align: top;*/
   text-align: right;
   font-weight: 700;
 }
@@ -1070,6 +1071,11 @@ table table {
   background: repeating-linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, .1) 2px), linear-gradient(to bottom, #343030 5%, #242020);
 }
 
+#tracker.shim {
+    margin-top: -9px;
+    margin-bottom: 12px;
+}
+
 #installation.shim {
   margin-top: 10px;
 }
@@ -1109,6 +1115,17 @@ table table {
   will-change: transform;
   position: relative;
   z-index: 10;
+}
+
+.installfail {
+    margin: 5% auto 0;
+    padding: 40px 20px;
+    width: 600px;
+    line-height: 1.8;
+    font-weight: 700;
+    border: 1px solid #454040;
+    box-shadow: inset 0 0 0 1px #232020, inset 0 0 1px 1px #900;
+    background: linear-gradient(to bottom, #232020, #131010);
 }
 
 #search, #torrentshow {

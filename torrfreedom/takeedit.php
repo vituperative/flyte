@@ -16,7 +16,7 @@ if (!$id) {
     die();
 }
 
-dbconn();
+dbconn(0);
 
 loggedinorreturn();
 

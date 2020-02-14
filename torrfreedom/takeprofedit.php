@@ -4,7 +4,7 @@ global $tracker_path;
 function bark($msg) {
     genbark($msg, "Update failed!");
 }
-dbconn();
+dbconn(0);
 loggedinorreturn();
 
 if (!mkglobal("chpassword:passagain")) {

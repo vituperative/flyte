@@ -1,33 +1,7 @@
-
 <?php
-/*
-// Host of your mysql database (usually localhost)
-$mysql_host = "localhost";
-
-// Username to access the database
-$mysql_user = "test";
-
-// Password to access the database
-$mysql_pass = "test";
-
-// The name of the database you will use
-$mysql_db = "torrfreedom";
-
-// Name of your tracker
-$tracker_title = "Torrent Freedom";
-
-// Complete human url to tracker location. DO NOT trail with a /
-$tracker_url_name = "http://torrfreedom.i2p";
-
-// Complete b64 url to tracker location. DO NOT trail with a /
-// remember to append the .i2p suffix after your key
-$tracker_url_key = "http://nfrjvknwcw47itotkzmk6mdlxmxfxsxhbhlr5ozhlsuavcogv4hq.b32.i2p";
-
-// Complete server path to the torrents directory on your server.
-// use forward slashes for windows paths eg. C:/path/to/torrents
-$torrent_dir = "/path/to/torrents";
- */
-require_once "need.php"; //some shitcode
+    require_once "need.php";
+    require_once "../include/bittorrent.inc.php";
+    require_once "../include/page_header.inc.php";
 
 function installDB($file, $link)
 {
@@ -68,6 +42,7 @@ $mysql_host = $_POST['mysql_host'];
 $mysql_user = $_POST['mysql_user'];
 $mysql_pass = $_POST['mysql_pass'];
 $mysql_db = $_POST['mysql_db'];
+if (!function_exists('mysql_connect')) print("<p class=installfail>Cannot connect to configured MySQL or MariaDB database.<br>Please ensure your database server is installed and running!</p>");stdfoot();
 $link = mysqli_connect("$mysql_host", "$mysql_user", "$mysql_pass", "$mysql_db");
 
 if (!$link) {
@@ -81,9 +56,16 @@ if ($iDB > 0) {
 }
 
 $configFile = fopen($defPathToConfig, "w") or die("Can't open " . $defPathToConfig . " to write config file");
-fwrite($configFile, $config_raw);
+fwrite($configFile, $config_raw) or die("Cannot write to the config file; check access permissions on: " . $defPathToConfig);
 fclose($configFile);
 
 echo "If you don't see errors, delete install.php and use that";
 
 ?>
+
+
+</td></tr>
+</table>
+<style type=text/css>body{opacity: 1 !important;}</style>
+</body>
+</html>
