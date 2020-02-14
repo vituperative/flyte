@@ -68,6 +68,7 @@ $mysql_host = $_POST['mysql_host'];
 $mysql_user = $_POST['mysql_user'];
 $mysql_pass = $_POST['mysql_pass'];
 $mysql_db = $_POST['mysql_db'];
+if (!function_exists('mysql_connect')) die("You will install phpX-mysql firstly");
 $link = mysqli_connect("$mysql_host", "$mysql_user", "$mysql_pass", "$mysql_db");
 
 if (!$link) {
@@ -81,7 +82,7 @@ if ($iDB > 0) {
 }
 
 $configFile = fopen($defPathToConfig, "w") or die("Can't open " . $defPathToConfig . " to write config file");
-fwrite($configFile, $config_raw);
+fwrite($configFile, $config_raw) or die("cant write to config, check permission on: " . $defPathToConfig);
 fclose($configFile);
 
 echo "If you don't see errors, delete install.php and use that";
