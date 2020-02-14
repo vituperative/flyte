@@ -9,7 +9,7 @@ if (ob_get_level() == 0) {
 
 require_once "include/bittorrent.inc.php";
 require_once "include/benc.php";
-dbconn();
+dbconn(0);
 
 // Convert a mysql datetime value unto a unix timestamp (epoch)
 function dttm2unixtime($dttm2timestamp_in)
@@ -95,7 +95,7 @@ while ($row = mysqli_fetch_assoc($res)) {
                         <tr><td colspan=2><div id=sitename><a href='<?php echo "$tracker_url_name"; ?>'><?php echo "$tracker_title"; ?></a></div></td></tr>
                         <tr><td>Name:</td><td><?php echo htmlspecialchars($row['name']); ?></td></tr>
                         <tr><td>Hash:</td><td><?php echo preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])); ?></td></tr>
-                        <tr><td>Desc:</td><td><?php echo strip_tags($row['ori_descr'], '<br><br><b><hr><p>'); ?></td></tr>
+                        <tr><td>Desc:</td><td><?php echo strip_tags($row['ori_descr'], '<br><b><strong><hr><p><ul><ol><li><i>'); ?></td></tr>
                         <tr><td>Type:</td><td>
                                 <?php
 if (isset($row["cat_name"])) {

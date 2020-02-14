@@ -41,7 +41,7 @@ function dltable($name, $arr, $torrent)
     return $s;
 }
 
-dbconn();
+dbconn(0);
 
 $id = $_GET["id"];
 $id = intval($id);

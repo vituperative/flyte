@@ -5,7 +5,7 @@ require_once("include/bittorrent.inc.php");
 $id = intval($_GET['id']);
 $file = $_GET['file'];
 
-dbconn();
+dbconn(0);
 
 $res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT 1 FROM torrents WHERE id = $id");
 $row = mysqli_fetch_array($res);

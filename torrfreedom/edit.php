@@ -7,7 +7,7 @@ $id = intval($id);
 if (!$id) {
     die();
 }
-dbconn();
+dbconn(0);
 loggedinorreturn();
 $res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM torrents WHERE id = $id");
 $row = mysqli_fetch_array($res);
@@ -46,10 +46,10 @@ if (!isset($CURUSER) || ($CURUSER["id"] != $row["owner"] && $CURUSER["admin"] !=
 
     $s .= "</select>\n";
     tr("Category", $s, 1);
-    tr("Visible", "<label><input type=checkbox name=visible" . (($row["visible"] == "yes") ? " checked=checked" : "") . " value=1 /> Visible on main page</label>\n<p>Note: the torrent will automatically become visible when there's a seeder, and will be hidden automatically when there has been no seeder for a while. Use this switch to speed the process up manually.</p>", 1);
+    tr("Visible", "<label title=\"Note: the torrent will automatically become visible when there's a seeder, and will be hidden automatically when there has been no seeder for a while. Use this switch to speed the process up manually.\"><input type=checkbox name=visible" . (($row["visible"] == "yes") ? " checked=checked" : "") . " value=1 /> Visible on main page</label>\n", 1);
 
     if ($CURUSER["admin"] == "yes") {
-        tr("Banned", "<input type=checkbox name=banned" . (($row["banned"] == "yes") ? " checked=checked" : "") . " value=1 /> Banned", 1);
+        tr("Banned", "<label><input type=checkbox name=banned" . (($row["banned"] == "yes") ? " checked=checked" : "") . " value=1 /> Blacklist torrent</label>", 1);
     }
 
     $query = $_SERVER["QUERY_STRING"];

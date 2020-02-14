@@ -1,8 +1,6 @@
 <?php
 require_once 'include/bittorrent.inc.php';
-dbconn();
 stdhead();
-//require_once 'include/siteinfo.inc.php';
 ?>
 <table id=wrapper class=help>
 <tr><td>
