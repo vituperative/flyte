@@ -9,11 +9,6 @@ function dltable($name, $arr, $torrent)
 {
     global $CURUSER;
 
-//    $s = "<b>" . count($arr) . " $name</b>";
-    //    if (!count($arr)) {
-    //        return $s;
-    //    }
-
     $s .= "\n";
     $s .= "<table id=peerinfo>\n";
     $s .= "<tr><th>Peer</th><th>Uploaded</th><th>Downloaded</th><th>Completed</th><th>Time connected</th><th>Idle</th></tr>\n";
@@ -60,7 +55,6 @@ if (isset($CURUSER)) {
     } elseif ($CURUSER["id"] == $row["owner"]) {
         $owned = 1;
     }
-
 }
 
 if (!$row || ($row["banned"] == "yes" && !$admin)) {
@@ -99,10 +93,6 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
             print("Note: Until you start seeding, it will not be visible on the tracker.</p>\n");
         } elseif (isset($_GET["edited"])) {
             print("<p id=toast class=success><span class=title>Success!</span><br>Torrent details have been updated!</p>\n");
-//            if (isset($_GET["returnto"])) {
-            //                print("<p><b>Return to <a href=\"" . htmlspecialchars($_GET["returnto"]) . "\">previous page</a>.</b>");
-            //            }
-            //            print("</p>\n");
         } elseif (isset($_GET["searched"])) {
             print("<p id=toast class=success><span class=title>Search results</span><br>1 match found for: " . htmlspecialchars($_GET["searched"]) . "</p>\n");
         }
@@ -130,19 +120,9 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
 
         $rowcount = 0;
 
-//        tr("Filename", "<a class=\"index\" href=\"download.php?id=$id&amp;file=" . rawurlencode($row["filename"]) . "\">" . htmlspecialchars($row["filename"]) . "</a>", 1, $rowcount++);
         if (!empty($row["descr"])) {
-//            tr("Description", $row["descr"], 1, $rowcount++);
             print('<tr id=description><td colspan=2><div>' . htmlspecialchars_decode($row["descr"]) . '</div></td></tr>');
         }
-
-/**
-        if (isset($row["cat_name"])) {
-            tr("Category", $row["cat_name"], 0, $rowcount++);
-        } else {
-            tr("Category", "None selected", 0, $rowcount++);
-        }
-**/
 
         print("<tr><td>Info hash</td><td><code>" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "</code></td></tr>");
         tr("Size", mksize($row["size"]) . " (" . $row["size"] . " Bytes)", 0, $rowcount++);
@@ -256,13 +236,10 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
 
         print("</table>\n");
 
-//        print("<hr>\n");
     } else {
         stdhead("Comments for torrent \"" . $row["name"] . "\"");
         print("<div class=tablewrap><p class=note id=return><a href=\"details.php?id=$id\">Return to details page for torrent: " . $row["name"] . "</a></p>\n");
     }
-
-//    print("<p><a name=\"startcomments\"></a></p>\n");
 
     if ($CURUSER) {
         $commentbar = "<p id=addcomment><a href=\"addcomment.php?id=$id\">Add a comment</a></p>\n";
@@ -283,15 +260,12 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
             $allrows[] = $subrow;
         }
 
-//    print($commentbar); // kill dupe!
-//        print($pagertop);
-
-        print($commentbar);
-
         commenttable($allrows);
 
         print($pagerbottom);
     }
+
+    print($commentbar);
     print("</div>\n");
 }
 
