@@ -17,7 +17,7 @@ $row = mysqli_fetch_array($res);
 if (!$row)
     bark();
 
-$hashpass = hash("sha3", $row["secret"] . $password . $row["secret"]);
+$hashpass = hash("sha256", $row["secret"] . $password . $row["secret"]);
 
 if ($row["password"] != $hashpass)
     bark();
