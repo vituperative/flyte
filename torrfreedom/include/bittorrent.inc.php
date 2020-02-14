@@ -51,7 +51,6 @@ function dbconn($autoclean = 1)
     if ($autoclean) {
         register_shutdown_function("autoclean");
     }
-
 }
 
 function userlogin()
@@ -500,15 +499,15 @@ function pager($rpp, $count, $href, $opts = array())
 //        $pagertop = "<p hidden align=\"center\">$pager<br>$pagerstr</p>\n";
         $pagertop = "";
         if ($i != $page) {
-            $pagerbottom = "<p id=pager>$pagerstr</p>\n</div>\n";
+            $pagerbottom = "<p id=pager>$pagerstr</p>\n";
         } else {
-            $pagerbottom = "<p id=pager>$pagerstr<br>$pager</p>\n</div>\n";
+            $pagerbottom = "<p id=pager>$pagerstr<br>$pager</p>\n";
         }
 
     } else {
 //        $pagertop = "<p hidden align=\"center\">$pager</p>\n";
         $pagertop = "";
-        $pagerbottom = "<p id=pager>$pager</p>\n</div>\n";
+        $pagerbottom = "<p id=pager>$pager</p>\n";
     }
 
     $start = $page * $rpp;
