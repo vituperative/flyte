@@ -300,15 +300,18 @@ th, #dostuff td {
   margin: 0 2px;
 }
 
-input[type="submit"], input[type="reset"], input[type="file"], input[type="text"], textarea, input[type="password"], select, button, .button {
+input[type="submit"], input[type="reset"], input[type="file"], input[type="text"], textarea, input[type="password"], select, button, .button, #addcomment a {
   margin: 0 6px;
-  padding: 3px 8px;
+  padding: 3px 12px;
+  line-height: 1.5 !important;
+  font-weight: 700 !important;
   border: none !important;
   box-shadow: 0 0 0 1px #121010;
-  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #333;
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #454040;
   border-radius: 2px !important;
   background: #343232;
-  color: #bbb;
+  background: linear-gradient(to bottom, #343232, #232121) #343232;
+  color: #ccc;
   outline: none;
 }
 
@@ -319,7 +322,7 @@ input[type="submit"], input[type="reset"], input[type="file"], input[type="text"
 select {
   padding-right: 22px;
   min-width: 100px;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
   color: #9a9898;
   text-shadow: 0 1px 1px #111;
   background: url(../pic/down.png) right 8px center no-repeat, linear-gradient(to bottom, #343232, #232121) #343232;
@@ -334,13 +337,24 @@ input[type="submit"]::-moz-focus-inner, input[type="file"]::-moz-focus-inner, in
   outline: none;
 }
 
-input[type="submit"], input[type="file"], input[type="reset"], .button {
+input[type="submit"], input[type="file"], input[type="reset"], .button, #addcomment a {
   padding: 3px 12px;
   min-width: 80px;
   font-weight: 700;
   color: #9a9898;
   text-shadow: 0 1px 1px #111;
   background: linear-gradient(to bottom, #343232, #232121);
+}
+
+#addcomment {
+    text-align: right;
+}
+
+#addcomment a {
+  margin: 2px 2px 0 !important;
+  padding: 4px 12px;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .button {
@@ -350,7 +364,7 @@ input[type="submit"], input[type="file"], input[type="reset"], .button {
   text-decoration: none !important;
 }
 
-input[type="submit"]:hover, input[type="file"]:hover, input[type="reset"]:hover, input[type="submit"]:focus, input[type="file"]:focus, input[type="reset"]:focus, .button:hover, .button:focus {
+input[type="submit"]:hover, input[type="file"]:hover, input[type="reset"]:hover, input[type="submit"]:focus, input[type="file"]:focus, input[type="reset"]:focus, .button:hover, .button:focus, #addcomment a:hover, #addcomment a:focus {
   color: #cdcbcb !important;
   background: linear-gradient(to bottom, #232121, #343232);
 }
@@ -362,6 +376,16 @@ input[type="submit"]:focus, input[type="reset"]:focus, input[type="text"]:focus,
 
 input[type="submit"]:active, input[type="reset"]:active, select:active, select:focus, .button:active, #details th a:nth-child(n+2):active, .edit:active, .download:active {
   box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232, inset 2px 2px 2px #111 !important;
+}
+
+input::placeholder {
+    font-style: italic;
+    font-weight: 500;
+    opacity: .7;
+}
+
+input:focus::placeholder {
+    opacity: 0;
 }
 
 select:hover, select:focus {
@@ -531,7 +555,7 @@ hr.separator {
   filter: drop-shadow(0 0 1px #181717);
 }
 
-#topnav a, .username, #addcomment a {
+#topnav a, .username {
   margin: 8px -6px;
   padding: 4px 24px 6px;
   display: inline-block;
@@ -549,7 +573,7 @@ hr.separator {
 }
 
 #topnav a {
-  margin: 8px -6px;
+  margin: 8px -.45em;
   min-width: 100px;
   color: #9f9090;
   font-weight: 700 !important;
@@ -939,6 +963,7 @@ table table {
   width: 1%;
   white-space: nowrap;
   text-align: right !important;
+  font-weight: 600 !important;
 }
 
 #nocomments {
@@ -1379,6 +1404,7 @@ code.dest {
   overflow: hidden;
   text-overflow: ellipsis;
   vertical-align: middle;
+  font-size: 95%;
 }
 
 .edit, .download {
@@ -1735,8 +1761,8 @@ input#togglepanel {
 }
 
 @media screen and (min-width: 1800px) {
-  body, input, select, textarea, button, .button, label {
-    font-size: 10pt !important;
+  body, input, select, textarea, button, .button, label, #addcomment a {
+    font-size: 9.5pt !important;
   }
   #sitename a {
     font-size: 48pt !important;
