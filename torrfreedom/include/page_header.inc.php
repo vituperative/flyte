@@ -31,13 +31,13 @@
 <div id=header>
 <div class="shim top"></div>
 <?php
-
 $request = $_SERVER["REQUEST_URI"];
-if ($tracker_title == "") 
+if ($tracker_title == "") {
     if (strpos($request, "install") !== false)
-        $tracker_title .= " INSTALL"; // tracker_title from default config.php... or
-// $tracker_title = "NAMEOFTRACKERSOFK INSTALL" but when is not FLYTE, then is not FLYTE?
-
+        $tracker_title = "FLYTE INSTALL";
+    else
+        $tracker_title = "FLYTE";
+}
 print("<div id=sitename><a href=" . $tracker_path . ">" . $tracker_title . "</a></div>\n");
 
 function topnav() {
