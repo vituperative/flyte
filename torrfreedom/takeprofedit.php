@@ -27,7 +27,7 @@ if ($chpassword != "") {
         bark("The passwords didn't match. Please try again.");
     }
 
-    $hashpass = hash("sha256", $sec . $chpassword . $sec);
+    $hashpass = hash("sha3", $sec . $chpassword . $sec);
     $updateset[] = "password = " . sqlesc($hashpass);
     $newsecret = 1;
 

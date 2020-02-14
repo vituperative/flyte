@@ -9,7 +9,7 @@ if (ob_get_level() == 0) {
 
 require_once "include/bittorrent.inc.php";
 require_once "include/benc.php";
-dbconn(0);
+dbconn();
 
 // Convert a mysql datetime value unto a unix timestamp (epoch)
 function dttm2unixtime($dttm2timestamp_in)
@@ -47,7 +47,8 @@ $query = "SELECT torrents.name AS name, torrents.id AS id, filename, info_hash, 
 
 $res = mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
-$subres = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) FROM comments WHERE torrent = $id");
+if (isset($id))
+    $subres = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) FROM comments WHERE torrent = " . $id);
 $subrow = mysqli_fetch_array($subres);
 $count = $subrow[0];
 

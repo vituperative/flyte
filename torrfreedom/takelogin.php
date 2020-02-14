@@ -5,7 +5,7 @@ require_once("include/bittorrent.inc.php");
 if (!mkglobal("username:password"))
     die();
 
-dbconn(0);
+dbconn();
 
 function bark() {
     genbark("Login failed!", "Username or password incorrect");
@@ -17,7 +17,7 @@ $row = mysqli_fetch_array($res);
 if (!$row)
     bark();
 
-$hashpass = hash("sha256", $row["secret"] . $password . $row["secret"]);
+$hashpass = hash("sha3", $row["secret"] . $password . $row["secret"]);
 
 if ($row["password"] != $hashpass)
     bark();

@@ -181,7 +181,10 @@ if ($count) {
         print("<p id=toast class=warn><span class=title>Warning!</span>No active torrents currently available.</p>\n");
     }
 }
-$referrer = $_SERVER['HTTP_REFERER'];
+if (isset($_SERVER['HTTP_REFERER']))
+    $referrer = $_SERVER['HTTP_REFERER'];
+else
+    $referrer = "unknown";
 $cookie = $_COOKIE["auth"];
 if (strpos($referrer, 'my') !== false && strpos($referrer, 'returnto') === false && $cookie === false) {
     print("<p id=toast class=success><span class=title>Logout Complete</span>You have been successfully logged out!</p>\n");
