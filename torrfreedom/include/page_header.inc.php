@@ -1,4 +1,13 @@
 <?php
+  if (ob_get_level() == 0) {
+    ob_start("ob_gzhandler");
+  require_once "include/bittorrent.inc.php";
+  dbconn(0);
+  stdhead();
+}
+?>
+
+<?php
   header("Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'none';");
   header("Referrer-Policy: same-origin;");
   header("X-Content-Type-Options: nosniff;");
@@ -11,33 +20,38 @@
 <head>
     <meta http-equiv=Content-Language content=en-us>
     <META HTTP-EQUIV=Content-Type content=text/html; charset=UTF-8>
+    <?php $request = $_SERVER["REQUEST_URI"]; if (strpos($request, "install") !== false) { ?>
+    <link rel=stylesheet href=../include/style.css type=text/css>
+    <?php } else { ?>
     <link rel=stylesheet href=include/style.css type=text/css>
+    <?php } ?>
     <style type=text/css>html, body{background: #151414;} body{opacity: 0 !important; text-align: center;}</style>
     <link rel=shortcut icon href=<?php echo $tracker_path ?>favicon.ico>
     <link rel=alternate type=application/rss+xml title="<?php echo $tracker_title; ?> RSS Feed" href=rss.php>
     <title><?php echo strtoupper($tracker_title);
-        $username = htmlspecialchars($CURUSER["username"]);
-        $page = basename($_SERVER['PHP_SELF']);
-        $page = str_replace("index", "", $page);
-        $page = str_replace("my.php", "$username's account settings", $page);
-        $page = str_replace("mytorrents", "$username's torrents", $page);
-        $page = str_replace("takeprofedit", "update profile", $page);
-        $pagename = rtrim($page, "php");
-        if ($pagename != ".")
-            echo (" | ");
-        echo strtoupper(rtrim($pagename, ".")); ?></title>
+        if ($tracker_title == "") {
+        if (strpos($request, "install") !== false)
+            $tracker_title = "FLYTE INSTALL";
+        }
+        if (strpos($request, "install") == false) {
+            $username = htmlspecialchars($CURUSER["username"]);
+            $page = basename($_SERVER['PHP_SELF']);
+            $page = str_replace("index", "", $page);
+            $page = str_replace("my.php", "$username's account settings", $page);
+            $page = str_replace("mytorrents", "$username's torrents", $page);
+            $page = str_replace("takeprofedit", "update profile", $page);
+            $pagename = rtrim($page, "php");
+            if ($pagename != ".")
+                echo (" | ");
+            echo strtoupper(rtrim($pagename, "."));
+        } else {
+        print("FLYTE INSTALL");
+        } ?></title>
 </head>
 <body>
 <div id=header>
 <div class="shim top"></div>
 <?php
-$request = $_SERVER["REQUEST_URI"];
-if ($tracker_title == "") {
-    if (strpos($request, "install") !== false)
-        $tracker_title = "FLYTE INSTALL";
-    else
-        $tracker_title = "FLYTE";
-}
 print("<div id=sitename><a href=" . $tracker_path . ">" . $tracker_title . "</a></div>\n");
 
 function topnav() {
@@ -51,16 +65,19 @@ function topnav() {
     print(" | <a href=rss.php>RSS Feed</a> | <a href=help.php>Help</a></div>\n");
 }
 
-if (strpos($request, "install") == false)
+if (strpos($request, "install") == false) {
     topnav();
-else
+    if ($request !== $tracker_path)
+        if  (!strpos($request, "cat"))
+            print("<div id=tracker class=shim></div>");
+} else {
     print("<div id=installation class=shim></div>");
-
+}
 print("</div>\n<hr id=top hidden>");
+?>
 
-// debugging
-/**
-$server = $server = $_SERVER['HTTP_HOST'];
+<?php
+ $server = $_SERVER['HTTP_HOST'];
  $referrer = $_SERVER['HTTP_REFERER'];
  $request = $_SERVER["REQUEST_URI"];
  $cookie = $_COOKIE["auth"];
@@ -77,5 +94,4 @@ $server = $server = $_SERVER['HTTP_HOST'];
      $cookie = "Not logged in";
  }
  print($cookie . "&hellip;</i></p>");
- **/
-?>
+ ?>
