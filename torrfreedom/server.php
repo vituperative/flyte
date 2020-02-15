@@ -48,9 +48,10 @@ foreach ($indicesServer as $arg) {
 
 echo '<tr><th colspan=2>Tracker Configuration</th></tr>';
 echo '<tr><td>$tracker_title</td><td>' . $tracker_title . '</td></tr>';
-echo '<tr><td>$trackerpath</td><td>' . $tracker_path . '</td></tr>';
+echo '<tr><td>$tracker_path</td><td>' . $tracker_path . '</td></tr>';
 echo '<tr><td>$tracker_url_key</td><td>' . $tracker_url_key . '</td></tr>';
 echo '<tr><td>$tracker_url_name</td><td>' . $tracker_url_name . '</td></tr>';
+echo '<tr><td>$contact</td><td>' . $contact . '</td></tr>';
 echo '<tr><td>$autoclean_interval</td><td>' . $autoclean_interval . ' seconds</td></tr>';
 echo '<tr><td>$max_torrent_size</td><td>' . $max_torrent_size / 1024 / 1024 . ' GB</td></tr>';
 echo '</table>';
