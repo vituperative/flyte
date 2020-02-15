@@ -11,12 +11,14 @@ $time_start = getmicrotime();
 require_once "secrets.inc.php";
 require_once "cleanup.php";
 
+/**
 $max_torrent_size = 10000000;
-$announce_interval = 3600;
+$announce_interval = 900;
 $signup_timeout = 86400 * 3;
 $max_dead_torrent_time = 4 * 3600;
 $autoclean_interval = 600;
 $pic_base_url = "pic/";
+**/
 
 ##########################
 #
@@ -25,7 +27,7 @@ $pic_base_url = "pic/";
 ##########################
 
 $appname = "Flyte";
-$version = "1.2";
+$version = "1.2.1";
 
 # the first one will be displayed on the pages
 $announce_urls = array(); //
@@ -331,7 +333,7 @@ function stdfoot()
     if (strpos($request, "install") !== false)
         print('<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; ' . $appname . ' v. ' . $version . ' &nbsp;&nbsp;| : . . .</code></p>');
     if ($CURUSER["admin"] == "yes")
-        print('<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; ' . $appname . ' v. ' . $version . $bullet. 'Administrator Mode &nbsp;&nbsp;| : . . .</code></p>');
+        print('<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; ' . $appname . ' v. ' . $version . $bullet. 'Administrator Mode &nbsp;&nbsp;| : . . .</span></p>');
     else if ($contact == "") {
         print('<p id=footer><span id=blurb>' . $sitename . ' (Est. 2017)' . $bullet . 'Design by <a href=http://skank.i2p/>dr|z3d</a></span></p>');
     } else {
@@ -496,23 +498,26 @@ function pager($rpp, $count, $href, $opts = array())
 
         }
         $pagerstr = join(" ", $pagerarr);
-//        $pagertop = "<p hidden align=\"center\">$pager<br>$pagerstr</p>\n";
+        $request = $_SERVER["REQUEST_URI"];
         $pagertop = "";
         if ($i != $page) {
-            $pagerbottom = "<p id=pager>$pagerstr</p>\n";
+            if ($request = $tracker_path || (strpos($request, "incldead") !== false) || (strpos($request, "mytorrents") !== false))
+                $pagerbottom = "<p id=pager>$pagerstr</p>\n</div>\n";
+            else
+                $pagerbottom = "<p id=pager>$pagerstr</p>\n";
         } else {
-            $pagerbottom = "<p id=pager>$pagerstr<br>$pager</p>\n";
+            if ($request = $tracker_path || (strpos($request, "incldead") !== false) || (strpos($request, "mytorrents") !== false))
+                $pagerbottom = "<p id=pager>$pagerstr<br>$pager</p>\n<div>\n";
+            else
+                $pagerbottom = "<p id=pager>$pagerstr<br>$pager</p>\n";
         }
 
     } else {
-//        $pagertop = "<p hidden align=\"center\">$pager</p>\n";
-        $pagertop = "";
         $pagerbottom = "<p id=pager>$pager</p>\n";
     }
 
     $start = $page * $rpp;
 
-//    return array($pagertop, $pagerbottom, "LIMIT $start,$rpp");
     return array("", $pagerbottom, "LIMIT $start,$rpp");
 }
 
