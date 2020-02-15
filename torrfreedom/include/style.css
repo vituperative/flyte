@@ -303,7 +303,7 @@ th, #dostuff td {
 
 input[type="submit"], input[type="reset"], input[type="file"], input[type="text"], textarea, input[type="password"], select, button, .button, #addcomment a {
   margin: 0 6px;
-  padding: 3px 12px;
+  padding: 4px 12px;
   line-height: 1.5 !important;
   font-weight: 700 !important;
   border: none !important;
@@ -359,6 +359,8 @@ input[type="submit"], input[type="file"], input[type="reset"], .button, #addcomm
 }
 
 .button {
+  margin-right: 0;
+  padding: 3px 12px 4px;
   font-weight: 700 !important;
   color: #9a9898 !important;
   vertical-align: middle;
@@ -1080,9 +1082,13 @@ table table {
 
 #dostuff td {
   padding: 12px !important;
-  text-align: center !important;
+  text-align: right !important;
   border-top: 1px solid #111 !important;
   background: linear-gradient(to bottom, #343131, #232020) !important;
+}
+
+#dostuff td input:last-child {
+    margin-right: 0;
 }
 
 #sitename {
@@ -1345,7 +1351,14 @@ code.dest {
 }
 
 #server {
+  padding: 3px;
   width: 820px !important;
+  border: 1px solid #343030;
+  background: #423b3b;
+}
+
+#server table {
+    border: 1px solid #111;
 }
 
 #server td {
