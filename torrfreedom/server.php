@@ -1,10 +1,16 @@
 <?php
 require_once 'include/bittorrent.inc.php';
-dbconn();
+dbconn(0);
 stdhead();
+$admin = (isset($CURUSER) && $CURUSER["admin"] == "yes");
 ?>
-<table id=helpwrapper height=100%>
-<tr><td>
+
+<?php
+if (!$admin) {
+header("Location: index.php");
+}
+?>
+
 <div id=server>
 <?php
 $indicesServer = array(
@@ -16,6 +22,7 @@ $indicesServer = array(
     'SERVER_PROTOCOL',
     'SCRIPT_NAME',
     'GATEWAY_INTERFACE',
+/**
     'REQUEST_METHOD',
     'HTTP_ACCEPT',
     'HTTP_ACCEPT_ENCODING',
@@ -26,10 +33,11 @@ $indicesServer = array(
     'REMOTE_ADDR',
     'REMOTE_HOST',
     'REMOTE_PORT',
+**/
 );
 
 echo '<table id=serverdetails>';
-echo '<tr><th colspan=2>Server Indices</th></tr>';
+echo '<tr><th colspan=2>Server Configuration</th></tr>';
 foreach ($indicesServer as $arg) {
     if (isset($_SERVER[$arg])) {
         echo '<tr><td>' . $arg . '</td><td>' . $_SERVER[$arg] . '</td></tr>';
@@ -37,9 +45,15 @@ foreach ($indicesServer as $arg) {
         echo '<tr><td>' . $arg . '</td><td>-</td></tr>';
     }
 }
+
+echo '<tr><th colspan=2>Tracker Configuration</th></tr>';
+echo '<tr><td>$tracker_title</td><td>' . $tracker_title . '</td></tr>';
+echo '<tr><td>$trackerpath</td><td>' . $tracker_path . '</td></tr>';
+echo '<tr><td>$tracker_url_key</td><td>' . $tracker_url_key . '</td></tr>';
+echo '<tr><td>$tracker_url_name</td><td>' . $tracker_url_name . '</td></tr>';
+echo '<tr><td>$autoclean_interval</td><td>' . $autoclean_interval . ' seconds</td></tr>';
+echo '<tr><td>$max_torrent_size</td><td>' . $max_torrent_size / 1024 / 1024 . ' GB</td></tr>';
 echo '</table>';
+
+stdfoot();
 ?>
-</div>
-</td></tr>
-</table>
-<?php stdfoot();?>
