@@ -5,7 +5,7 @@ TF Website
 - [ ] Code cleanup
 - [ ] Support of list of trackers
 - [ ] Built-in torrent search engine
-- [x] Install script
+- [ ] Multi-page install script with support for initial db creation, categories, admin creation etc
 - [ ] Optional support of flatfiles (instead of mysql)
 - [ ] Jetty support (using phpbridge)
 - [x] Refactor html markup and streamline css
