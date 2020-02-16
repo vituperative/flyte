@@ -11,14 +11,13 @@ $time_start = getmicrotime();
 require_once "secrets.inc.php";
 require_once "cleanup.php";
 
-/**
 $max_torrent_size = 10000000;
 $announce_interval = 900;
 $signup_timeout = 86400 * 3;
 $max_dead_torrent_time = 4 * 3600;
 $autoclean_interval = 600;
 $pic_base_url = "pic/";
-**/
+
 
 ##########################
 #
