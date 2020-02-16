@@ -1659,6 +1659,24 @@ input#togglepanel {
   background: linear-gradient(to bottom, #343030, #232020);
 }
 
+#notfound {
+    width: 600px;
+    margin: 30px auto;
+    font-weight: 900;
+}
+
+#notfound .warn {
+    padding-bottom: 30px;
+}
+
+#notfound .title {
+    margin: 0 0 20px;
+    padding: 0 0 15px;
+    display: block;
+    font-size: 150%;
+    border-bottom: 1px solid #999;
+}
+
 @media screen and (max-width: 900px) {
   .torrentname {
     width: 1%;
