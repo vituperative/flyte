@@ -1,5 +1,6 @@
 <?php
 require_once 'include/bittorrent.inc.php';
+dbconn(0);
 stdhead();
 ?>
 <table id=wrapper class=help>
