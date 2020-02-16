@@ -421,6 +421,7 @@ function deletetorrent($id)
 
 function pager($rpp, $count, $href, $opts = array())
 {
+    global $tracker_path;
     $pages = ceil($count / $rpp);
 
     if (!@$opts["lastpagedefault"]) {
