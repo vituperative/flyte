@@ -1,71 +1,146 @@
 <?php
-    require_once "need.php";
-    require_once "../include/bittorrent.inc.php";
-    require_once "../include/page_header.inc.php";
 
-function installDB($file, $link)
-{
-    $sql = file($file);
-    $templine = '';
-    $errs = 0;
-    foreach ($sql as $query) {
-        if (substr($query, 0, 2) == '--' || $query == '') {
-            continue;
+$timeCook = 3600 * 3;
+require_once "install_class.php";
+require_once "../include/bittorrent.inc.php";
+require_once "../include/page_header.inc.php";
+
+$installer = new Installer();
+const stepNames = array(
+    1 => "Check database connection",
+    2 => "Setup Tracker configuration",
+    3 => "Install database",
+    4 => "Install Tracker configuration"
+);
+
+if (!isset($_COOKIE['step'])) {
+    print("deleted? - " . $_COOKIE['step']);
+    //setStep(1);
+    setcookie('step', 1, time() + $timeCook);
+    header("Refresh: 0");
+}
+
+switch ($_COOKIE['step']) {
+    case 1:
+        if ($installer->checkPost("sql", $_POST)) {
+            $err = $installer->conn2DB_arr($_POST);
+            if ($err !== True) {
+                printf(
+                    "<div class='error'>Cant connect to DB! Err: %s</div>",
+                    $err
+                );
+            } else {
+                print("set cookie");
+                print_r($installer->getPost("sql", $_POST));
+                print("setcookie inst_sql, and that value is: ");
+                setcookie('inst_sql', serialize($installer->getPost("sql", $_POST)), time() + $timeCook);
+                setcookie('step', 2, time() + $timeCook);
+                header("Refresh: 0");
+            }
         }
-
-        $templine .= $query;
-        //echo "do"; //https://stackoverflow.com/questions/19751354/how-to-import-sql-file-in-mysql-database-using-php thx author; because source db.sql sdont works
-        if (substr(trim($query), -1, 1) == ';') {
-            // Perform the query
-            $link->query($templine) or print('Error performing query \'<strong>' . $templine . '\': ' . $link->error . '<br><br>');
-            // Reset temp variable to empty
-            //echo ("I did ".$templine);
-            $templine = '';
-            $errs += 1;
+        break;
+    case 2:
+        if ($installer->checkPost("tracker_info", $_POST) && isset($_COOKIE['inst_sql'])) {
+            //TODO check if that information is good.
+            setcookie('inst_info', serialize($installer->getPost("tracker_info", $_POST)), time() + $timeCook);
+            setcookie('step', 3, time() + $timeCook);
+            header("Refresh: 0");
         }
-    }
+        break;
+    case 3:
 
-}
-
-$defPathToConfig = "../include/secrets.inc.php";
-
-$config_raw = "<?php \r\n";
-foreach ($need4conf as $need) {
-    if (!isset($_POST[$need])) {
-        var_dump($_POST);
-        die("need " . $need . " for installing, <hr><a href='index.php'>START INSTALLATION</a> ");
-    }
-    $config_raw .= '$' . $need . '="' . $_POST[$need] . '";' . "\r\n";
-}
-
-$mysql_host = $_POST['mysql_host'];
-$mysql_user = $_POST['mysql_user'];
-$mysql_pass = $_POST['mysql_pass'];
-$mysql_db = $_POST['mysql_db'];
-if (!function_exists('mysql_connect')) print("<p class=installfail>Cannot connect to configured MySQL or MariaDB database.<br>Please ensure your database server is installed and running!</p>");stdfoot();
-$link = mysqli_connect("$mysql_host", "$mysql_user", "$mysql_pass", "$mysql_db");
-
-if (!$link) {
-    var_dump($_POST);
-    die("Can't connect to db: " . mysqli_connect_errno());
-
-}
-$iDB = installDB("db.sql", $link);
-if ($iDB > 0) {
-    echo (" errs in install db " . $iDB);
-}
-
-$configFile = fopen($defPathToConfig, "w") or die("Can't open " . $defPathToConfig . " to write config file");
-fwrite($configFile, $config_raw) or die("Cannot write to the config file; check access permissions on: " . $defPathToConfig);
-fclose($configFile);
-
-echo "If you don't see errors, delete install.php and use that";
-
+    case 4:
+        if (!isset($_COOKIE['inst_sql']) || !isset($_COOKIE['inst_info']))
+            print("broken cookies... try delete all cookies for this website");
+        if (!$installer->checkConfPathWritable()) {
+            printf(
+                "<center><div class='step'>Dont writable file %s</div></center>",
+                Installer::defPathToConfig
+            ); // to own method maybe? how to use va list like C in php?
+        } else {
+            if (isset($_POST['continue_conf'])) {
+                $all = array(
+                    "sql" => unserialize($_COOKIE['inst_sql']),
+                    "inst_info" => unserialize($_COOKIE['inst_info'])
+                );
+                $elements = array();
+                foreach ($all as $arr)
+                    foreach ($arr as $key => $value)
+                        $elements[$key] = $value;
+                if (!$installer->installconf($elements)) //todo elements get
+                    printf(
+                        "<center><div class='step'>Can't write conf file %s</div></center>",
+                        Installer::defPathToConfig
+                    );
+                else {
+                    setcookie('step', 4, time() + $timeCook);
+                    header("Refresh: 0");
+                }
+            }
+            if (isset($_POST['continue_sql'])) {
+                $installer->conn2DB_arr(unserialize($_COOKIE['inst_sql']));
+                if (!$installer->installDB())
+                    printf("<center><div class='step'>Can't install DB </div></center>");
+                else {
+                    setcookie('step', 5, time() + $timeCook);
+                    header("Refresh: 0");
+                }
+            }
+            break;
+        }
+} //switch end
 ?>
 
+    <table id=wrapper>
+        <tr>
+            <td>
+                <div id=installer>
+                    <form action='index.php' method="POST">
+                        <?php
+                        if (strpos($_COOKIE['step'], "5") !== false) {
+                            printf("<center><div class='step'>Installation Complete!</div> </center>", $_COOKIE['step'], stepNames[$_COOKIE['step']]);
+                        } else {
+                            printf("<center><div class='step'>Step: %d  - %s </div> </center>", $_COOKIE['step'], stepNames[$_COOKIE['step']]);
+                        }
+                        switch ($_COOKIE['step']) {
+                            case 1:
+                                print($installer->initHTML("sql"));
+                                break;
+                            case 2:
+                                if (!isset($_COOKIE['inst_sql'])) {
+                                    print("<div class='error'>You haven't supplied correct MySQL database information; go back and try again!</div>");
+                                }
+                                print($installer->initHTML("tracker_info"));
+                                break;
+                            case 3:
+                                print("Continue?");
+                                print("<input type=hidden name='continue_sql' value='1'/>");
+                                //$_POST['continue_conf']
+                                break;
+                            case 4:
+                                print("Continue?");
+                                print("<input type=hidden name='continue_conf' value='1'/>");
+                                //$_POST['continue_conf']
+                                break;
+                            case 5:
+                                print("<p>You should move or delete the <code>install</code> folder after you have verified your tracker is working.</p>");
+                                print("<p>To change various tracker settings, edit <code>include/secrets.ini.php</code></p>");
+                                break;
+                            default:
+                                print("are u crazy?");
+                                break;
+                        }
+                        if ($_COOKIE['step'] == 1)
+                            print('<input type=submit value="Start Installation/>');
+                        elseif ($_COOKIE['step'] < 5)
+                            print('<input type=submit value="Next"/>');
+                        else
+                            print('<a href=addAdmin.php class=button>Create Administrator Account</a>&nbsp;<a href=../ class=button>View ' . $tracker_title . '</a>');
+                        ?>
 
-</td></tr>
-</table>
-<style type=text/css>body{opacity: 1 !important;}</style>
-</body>
-</html>
+                </form>
+                </div>
+            </td>
+        </tr>
+    </table>
+<?php stdfoot(); ?>

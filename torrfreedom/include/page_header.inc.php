@@ -19,21 +19,22 @@
 <html>
 <head>
     <meta http-equiv=Content-Language content=en-us>
-    <META HTTP-EQUIV=Content-Type content=text/html; charset=UTF-8>
+    <meta charset="UTF-8">
     <?php $request = $_SERVER["REQUEST_URI"]; if (strpos($request, "install") !== false) { ?>
-    <link rel=stylesheet href=../include/style.css type=text/css>
+        <link rel=stylesheet href=../include/style.css type=text/css>
     <?php } else { ?>
-    <link rel=stylesheet href=include/style.css type=text/css>
+        <link rel=stylesheet href=include/style.css type=text/css>
     <?php } ?>
     <style type=text/css>html, body{background: #151414;} body{opacity: 0 !important; text-align: center;}</style>
     <link rel=shortcut icon href=<?php echo $tracker_path ?>favicon.ico>
     <link rel=alternate type=application/rss+xml title="<?php echo $tracker_title; ?> RSS Feed" href=rss.php>
-    <title><?php echo strtoupper($tracker_title);
-        if ($tracker_title == "") {
-        if (strpos($request, "install") !== false)
+    <title><?php
+        if (strpos($request, "install") !== false) {
             $tracker_title = "FLYTE INSTALL";
-        }
-        if (strpos($request, "install") == false) {
+        } else {
+            if ($tracker_title == false)
+                $tracker_title = "FLYTE";
+            echo strtoupper($tracker_title);
             $username = htmlspecialchars($CURUSER["username"]);
             $page = basename($_SERVER['PHP_SELF']);
             $page = str_replace("index", "", $page);
@@ -44,9 +45,8 @@
             if ($pagename != ".")
                 echo (" | ");
             echo strtoupper(rtrim($pagename, "."));
-        } else {
-        print("FLYTE INSTALL");
-        } ?></title>
+        }
+        ?></title>
 </head>
 <body>
 <div id=header>
