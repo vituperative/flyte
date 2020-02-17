@@ -64,12 +64,20 @@ print("<div id=sitename><a href=" . $tracker_path . ">" . $tracker_title . "</a>
 function topnav() {
     global $CURUSER;
     global $username;
+    $isadmin = $CURUSER["admin"] == "yes";
+    $request = $_SERVER["REQUEST_URI"];
     print("<div id=topnav>");
-    if ($CURUSER)
-        print("<a href=upload.php>Upload</a> | <a href=my.php>Account</a> | <a href=logout.php>Logout" . $username . "</a>");
-    else
+    if (strpos($request, "admin") !== false && $isadmin) {
+            print("<a href=../>Tracker</a> | <a href=server.php>Server Config</a> | <a href=#>Users</a> | <a href=logout.php>Logout</a></div>\n");
+    } else if ($CURUSER) {
+        print("<a href=upload.php>Upload</a> | <a href=my.php>Account</a> | <a href=logout.php>Logout</a>");
+        if ($isadmin)
+            print(" | <a href=" . $tracker_path . "admin/>Admin</a>");
+    } else {
         print("<a href=login.php>Login</a> | <a href=signup.php>Signup</a>");
-    print(" | <a href=rss.php>RSS Feed</a> | <a href=help.php>Help</a></div>\n");
+    }
+    if (strpos($request, "admin") === false)
+        print(" | <a href=rss.php>RSS Feed</a> | <a href=help.php>Help</a></div>\n");
 }
 
 if (strpos($request, "install") == false) {
