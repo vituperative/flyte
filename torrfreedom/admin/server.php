@@ -1,5 +1,5 @@
 <?php
-require_once 'include/bittorrent.inc.php';
+require_once '../include/bittorrent.inc.php';
 dbconn(0);
 stdhead();
 $admin = (isset($CURUSER) && $CURUSER["admin"] == "yes");
@@ -7,7 +7,7 @@ $admin = (isset($CURUSER) && $CURUSER["admin"] == "yes");
 
 <?php
 if (!$admin) {
-header("Location: index.php");
+header("Location: ../index.php");
 }
 ?>
 
