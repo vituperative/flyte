@@ -1,11 +1,11 @@
 <?php
-
 $timeCook = 3600 * 3;
 require_once "install_class.php";
 require_once "../include/bittorrent.inc.php";
 require_once "../include/page_header.inc.php";
 print("<link rel=stylesheet href=installer.css type=text/css>");
 $installer = new Installer();
+
 if ($installer->checkPost("admin", $_POST)) {
     print("Adding Administrator account");
     $values = $installer->getPost("admin", $_POST);
@@ -112,7 +112,7 @@ switch ($_COOKIE['step']) {
                                 break;
                             case 2:
                                 if (!isset($_COOKIE['inst_sql'])) {
-                                    print("<div class='error'> Need sql info for that step, try full restart that page </div>");
+                                    print("<div class='error'>You haven't supplied correct MySQL database information; go back and try again!</div>");
                                 }
                                 print($installer->initHTML("tracker_info"));
                                 break;
@@ -151,4 +151,4 @@ switch ($_COOKIE['step']) {
             </td>
         </tr>
     </table>
-    <style type=text/css>body{opacity: 1 !important;}</style> </body> </html>
+<?php stdfoot(); ?>

@@ -4,13 +4,17 @@
 
 #installer {
   margin: 50px auto;
-  padding: 20px 20px 46px;
+  padding: 20px 20px 50px;
   width: 600px;
   border-radius: 3px;
   box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #212020, inset 0 0 1px 1px #565050;
   background: #212020;
   background: repeating-linear-gradient(to bottom, #212020, #121010 2px);
   will-change: transform;
+}
+
+#installer.addadmin {
+  padding: 20px 30px;
 }
 
 #installer label span {

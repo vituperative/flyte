@@ -140,4 +140,4 @@ switch ($_COOKIE['step']) {
             </td>
         </tr>
     </table>
-    <style type=text/css>body{opacity: 1 !important;}</style> </body> </html>
+<?php stdfoot(); ?>
