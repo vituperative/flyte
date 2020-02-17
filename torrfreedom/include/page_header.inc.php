@@ -31,6 +31,7 @@
     <title><?php
         if (strpos($request, "install") !== false) {
             $tracker_title = "FLYTE INSTALL";
+            echo strtoupper($tracker_title);
         } else {
             if ($tracker_title == false)
                 $tracker_title = "FLYTE";
