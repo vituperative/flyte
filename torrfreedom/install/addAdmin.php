@@ -10,12 +10,15 @@ print("<link rel=stylesheet href=installer.css type=text/css>");
     <tr>
         <td>
             <div id=installer>
-                <form action='index.php' method="POST">
+                <div class=step>Create Administrator Account</div>
+                    <form action='index.php' method="POST">
                     <?php
                     print($installer->initHTML("admin"));
-                    print('<input type=submit value="Create Admin Account"/>');
+                    print("<div id=dostuff>");
+                    print('<input type=submit value="Create"/>');
+                    print("</div>");
                     ?>
-            </form>
+                    </form>
             </div>
         </td>
     </tr>
