@@ -1124,58 +1124,6 @@ table table {
     margin-bottom: 12px;
 }
 
-#installation.shim {
-  margin-top: 10px;
-}
-
-#installer {
-  margin: 50px auto;
-  padding: 20px 20px 46px;
-  width: 400px;
-  border-radius: 3px;
-  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #212020, inset 0 0 1px 1px #565050;
-  background: #212020;
-  background: repeating-linear-gradient(to bottom, #212020, #121010 2px);
-  will-change: transform;
-}
-
-#installer label span {
-  margin-right: 10px;
-  padding: 3px 8px;
-  min-width: 140px;
-  display: inline-block;
-  vertical-align: middle;
-  font-weight: 600;
-  text-align: right;
-  background: linear-gradient(to bottom, #454040, #343030);
-  border-radius: 15px 3px 3px 15px;
-}
-
-#installer hr {
-  display: block !important;
-  background: linear-gradient(to right, #212020, #343030, #212020);
-}
-
-#installer input[type="submit"] {
-  float: right;
-  text-transform: capitalize;
-  margin-top: 6px;
-  will-change: transform;
-  position: relative;
-  z-index: 10;
-}
-
-.installfail {
-    margin: 5% auto 0;
-    padding: 40px 20px;
-    width: 600px;
-    line-height: 1.8;
-    font-weight: 700;
-    border: 1px solid #454040;
-    box-shadow: inset 0 0 0 1px #232020, inset 0 0 1px 1px #900;
-    background: linear-gradient(to bottom, #232020, #131010);
-}
-
 #search, #torrentshow {
   font-weight: 600;
 }
@@ -1204,11 +1152,6 @@ input#username {
 
 input[type="password"] {
   background-image: url(../pic/password.png);
-}
-
-#installer input[type="password"] {
-  padding: 4px 6px !important;
-  background-image: none !important;
 }
 
 #search input[type="text"]:hover, #search input[type="text"]:focus, input#username:hover, input#username:focus, input[type="password"]:hover, input[type="password"]:focus {
@@ -1780,10 +1723,6 @@ input#togglepanel {
   }
   #toast.fixed {
     width: 300px !important;
-  }
-  #installation.shim {
-    margin-top: 6px;
-    height: 10px;
   }
   .tablewrap:not(#torrentlist):not(.slim) {
     width: 800px !important;
