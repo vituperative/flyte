@@ -20,11 +20,17 @@
 <head>
     <meta http-equiv=Content-Language content=en-us>
     <meta charset="UTF-8">
-    <?php $request = $_SERVER["REQUEST_URI"]; if (strpos($request, "install") !== false) { ?>
-        <link rel=stylesheet href=../include/style.css type=text/css>
-    <?php } else { ?>
-        <link rel=stylesheet href=include/style.css type=text/css>
-    <?php } ?>
+    <?php
+        $request = $_SERVER["REQUEST_URI"];
+        if (strpos($request, "install") !== false) {
+            print("<link rel=stylesheet href=../include/style.css type=text/css>\n");
+            print("<link rel=stylesheet href=installer.css type=text/css>\n");
+        } else if (strpos($request, "admin") !== false) {
+            print("<link rel=stylesheet href=../include/style.css type=text/css>\n");
+        } else {
+            print("<link rel=stylesheet href=include/style.css type=text/css>\n");
+        }
+    ?>
     <style type=text/css>html, body{background: #151414;} body{opacity: 0 !important; text-align: center;}</style>
     <link rel=shortcut icon href=<?php echo $tracker_path ?>favicon.ico>
     <link rel=alternate type=application/rss+xml title="<?php echo $tracker_title; ?> RSS Feed" href=rss.php>
