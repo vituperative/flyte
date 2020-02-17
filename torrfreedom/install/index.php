@@ -105,7 +105,11 @@ switch ($_COOKIE['step']) {
                 <div id=installer>
                     <form action='index.php' method="POST">
                         <?php
-                        printf("<center><div class='step'>Step: %d  - %s </div> </center>", $_COOKIE['step'], stepNames[$_COOKIE['step']]);
+                        if (strpos($_COOKIE['step'], "5") !== false) {
+                            printf("<center><div class='step'>Installation Complete!</div> </center>", $_COOKIE['step'], stepNames[$_COOKIE['step']]);
+                        } else {
+                            printf("<center><div class='step'>Step: %d  - %s </div> </center>", $_COOKIE['step'], stepNames[$_COOKIE['step']]);
+                        }
                         switch ($_COOKIE['step']) {
                             case 1:
                                 print($installer->initHTML("sql"));
@@ -127,9 +131,8 @@ switch ($_COOKIE['step']) {
                                 //$_POST['continue_conf']
                                 break;
                             case 5:
-                                print("<p>Installation is complete. You should now delete or move the <code>install</code> folder after you have verified your tracker is working.</p>");
+                                print("<p>You should move or delete the <code>install</code> folder after you have verified your tracker is working.</p>");
                                 print("<p>To change various tracker settings, edit <code>include/secrets.ini.php</code></p>");
-                                print("<p>To add an admin account, use <a href='addAdmin.php'>addAdmin.php</a></p>");
                                 break;
                             default:
                                 print("are u crazy?");
@@ -138,11 +141,11 @@ switch ($_COOKIE['step']) {
                         //print($installer->initAllTables());
                         print("<div id=dostuff>");
                         if ($_COOKIE['step'] == 1)
-                            print('<input type=submit value="Start installation"/>');
+                            print('<input type=submit value="Start Installation"/>');
                         elseif ($_COOKIE['step'] < 5)
-                            print('<input type=submit value="Continue installation"/>');
+                            print('<input type=submit value="Next"/>');
                         else
-                            print('<a href=../ class=button>Go to ' . $tracker_title . '</a>');
+                            print('<a href=addAdmin.php class=button>Create Administrator Account</a>&nbsp;<a href=../ class=button>View ' . $tracker_title . '</a>');
                         print("</div>");
                         ?>
 
