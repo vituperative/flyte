@@ -77,6 +77,7 @@ print("</div>\n<hr id=top hidden>");
 ?>
 
 <?php
+/**
  $server = $_SERVER['HTTP_HOST'];
  $referrer = $_SERVER['HTTP_REFERER'];
  $request = $_SERVER["REQUEST_URI"];
@@ -94,4 +95,5 @@ print("</div>\n<hr id=top hidden>");
      $cookie = "Not logged in";
  }
  print($cookie . "&hellip;</i></p>");
+**/
  ?>
