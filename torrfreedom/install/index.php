@@ -4,9 +4,10 @@ $timeCook = 3600 * 3;
 require_once "install_class.php";
 require_once "../include/bittorrent.inc.php";
 require_once "../include/page_header.inc.php";
+print("<link rel=stylesheet href=installer.css type=text/css>");
 $installer = new Installer();
 if ($installer->checkPost("admin", $_POST)) {
-    print("adding admin");
+    print("Adding Administrator account");
     $values = $installer->getPost("admin", $_POST);
 
     if ($installer->addAdmin($values['admin_username'], $values['admin_password'])) {
@@ -17,10 +18,10 @@ if ($installer->checkPost("admin", $_POST)) {
 }
 
 const stepNames = array(
-    1 => "Check DB",
-    2 => "set config values",
-    3 => "install DB",
-    4 => "install config"
+    1 => "Check database connection",
+    2 => "Setup Tracker configuration",
+    3 => "Install database",
+    4 => "Install Tracker configuration"
 );
 
 if (!isset($_COOKIE['step'])) {
@@ -101,7 +102,6 @@ switch ($_COOKIE['step']) {
     <table id=wrapper>
         <tr>
             <td>
-
                 <div id=installer>
                     <form action='index.php' method="POST">
                         <?php
@@ -136,12 +136,14 @@ switch ($_COOKIE['step']) {
                                 break;
                         }
                         //print($installer->initAllTables());
+                        print("<div id=dostuff>");
                         if ($_COOKIE['step'] == 1)
                             print('<input type=submit value="Start installation"/>');
                         elseif ($_COOKIE['step'] < 5)
                             print('<input type=submit value="Continue installation"/>');
                         else
-                            print('<input type=submit disabled value="..."/>');
+                            print('<a href=../ class=button>Go to ' . $tracker_title . '</a>');
+                        print("</div>");
                         ?>
 
                 </form>

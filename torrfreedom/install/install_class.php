@@ -24,17 +24,17 @@ class Installer
     );
     const placeholders =
     array(
-        "mysql_host" => "Your mysql host",
-        "mysql_pass" => "Your mysql password",
-        "mysql_user" => "Your mysql username",
-        "mysql_db" => "Your mysql DataBase",
-        "tracker_title" => "Tracker title",
-        "tracker_url_name" => "Tracker URL path, some www.example667.com",
-        "tracker_url_key" => "Your b32 url to tracker example: http://nfrjvknwcw47itotkzmk6mdlxmxfxsxhbhlr5ozhlsuavcogv4hq.b32.i2p",
-        "torrent_dir" =>    "Directory of torrent files, will be like to 777 mode as example",
-        "tracker_title" => "Name of your tracker",
-        "admin_username" => "Admin username",
-        "admin_password" => "Password of admin"
+        "mysql_host" =>       "IP or hostname of MySQL server",
+        "mysql_pass" =>       "Your mysql password",
+        "mysql_user" =>       "Your mysql username",
+        "mysql_db" =>         "Your mysql DataBase",
+        "tracker_title" =>    "Tracker title",
+        "tracker_url_name" => "Tracker URL path, e.g. mytracker.i2p",
+        "tracker_url_key" =>  "b32 url e.g. http://nfrjvknwcw47itotkzmk6mdlxmxfxsxhbhlr5ozhlsuavcogv4hq.b32.i2p",
+        "torrent_dir" =>      "Directory of torrent files, will be like to 777 mode as example",
+        "tracker_title" =>    "Name of your tracker",
+        "admin_username" =>   "Admin username",
+        "admin_password" =>   "Password of admin"
     );
     //need4conf from
     function conn2DB_arr($elemets)

@@ -4,12 +4,13 @@ $timeCook = 3600 * 3;
 require_once "install_class.php";
 require_once "../include/bittorrent.inc.php";
 require_once "../include/page_header.inc.php";
+
 $installer = new Installer();
 const stepNames = array(
-    1 => "Check DB",
-    2 => "set config values",
-    3 => "install DB",
-    4 => "install config"
+    1 => "Check database connection",
+    2 => "Setup Tracker configuration",
+    3 => "Install database",
+    4 => "Install Tracker configuration"
 );
 
 if (!isset($_COOKIE['step'])) {
@@ -90,21 +91,9 @@ switch ($_COOKIE['step']) {
 } //switch end
 ?>
 
-<!DOCTYPE HTML>
-<html>
-
-<head>
-    <meta http-equiv="Content-Language" content="en-us">
-    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="../include/style.css" type="text/css">
-    <link rel="shortcut icon" href="favicon.ico" />
-</head>
-
-<body>
     <table id=wrapper>
         <tr>
             <td>
-
                 <div id=installer>
                     <form action='index.php' method="POST">
                         <?php
@@ -115,23 +104,24 @@ switch ($_COOKIE['step']) {
                                 break;
                             case 2:
                                 if (!isset($_COOKIE['inst_sql'])) {
-                                    print("<div class='error'> Need sql info for that step, try full restart that page </div>");
+                                    print("<div class='error'>You haven't supplied correct MySQL database information; go back and try again!</div>");
                                 }
                                 print($installer->initHTML("tracker_info"));
                                 break;
                             case 3:
-                                print("C0ntinue?");
+                                print("Continue?");
                                 print("<input type=hidden name='continue_sql' value='1'/>");
                                 //$_POST['continue_conf']
                                 break;
                             case 4:
-                                print("C0ntinue?");
+                                print("Continue?");
                                 print("<input type=hidden name='continue_conf' value='1'/>");
                                 //$_POST['continue_conf']
                                 break;
                             case 5:
-                                print("Installation is finished, now you will detete /install after check work of your tracker now");
-                                print("you can change some, fix in include/secrets.ini.php<br/>");
+                                print("<p>Installation is complete. You should now delete or move the <code>install</code> folder after you have verified your tracker is working.</p>");
+                                print("<p>To change various tracker settings, edit <code>include/secrets.ini.php</code></p>");
+                                print("<p>To add an admin account, use <a href='addAdmin.php'>addAdmin.php</a></p>");
                                 break;
                             default:
                                 print("are u crazy?");
@@ -142,11 +132,11 @@ switch ($_COOKIE['step']) {
                         elseif ($_COOKIE['step'] < 5)
                             print('<input type=submit value="Continue installation"/>');
                         else
-                            print('<input type=submit disabled value="..."/>');
+                            print('<a href=../ class=button>Go to ' . $tracker_title . '</a>');
                         ?>
 
-                </div>
                 </form>
+                </div>
             </td>
         </tr>
     </table>
