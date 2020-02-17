@@ -33,13 +33,6 @@ $announce_urls = array(); //
 array_push($announce_urls, $tracker_url_name . "/announce.php", $tracker_url_key . "/announce.php", $tracker_url_name . "/announce",
     $tracker_url_key . "/announce", $tracker_url_name . "/a", $tracker_url_key . "/a");
 
-//$announce_urls[] .= $tracker_url_name . "/announce.php";
-//$announce_urls[] .= $tracker_url_key . "/announce.php";
-//$announce_urls[] .= $tracker_url_name . "/announce";
-//$announce_urls[] .= $tracker_url_key . "/announce";
-//$announce_urls[] .= $tracker_url_name . "/a";
-//$announce_urls[] .= $tracker_url_key . "/a";
-
 function dbconn($autoclean = 1)
 {
     global $mysql_host, $mysql_user, $mysql_pass, $mysql_db;
@@ -323,15 +316,16 @@ function stdhead($title = "")
 
 function stdfoot()
 {
-    global $pic_base_url, $version, $appname, $time_start, $contact, $tracker_title, $request, $CURUSER;
+    global $pic_base_url, $version, $appname, $time_start, $contact, $tracker_title, $CURUSER;
     $time = round(getmicrotime() - $time_start, 1);
     $sitename = ucwords(strtolower($tracker_title));
+    $request = $_SERVER["REQUEST_URI"];
     $bullet = '&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;&nbsp;';
 //    print('<p id=footer><span id=blurb>Running: ' . $appname . ' v. ' . $version . '</code></p>');
 //    print('<p id=footer><span id=blurb>Running: ' . $appname . ' v. ' . $version . '</code>' . $bullet . 'Page spawned in ' . $time . ' seconds</span></p>');
     if (strpos($request, "install") !== false)
-        print('<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; ' . $appname . ' v. ' . $version . ' &nbsp;&nbsp;| : . . .</code></p>');
-    if ($CURUSER["admin"] == "yes")
+        print('<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; ' . $appname . ' v. ' . $version . ' &nbsp;&nbsp;| : . . .</span></p>');
+    else if ($CURUSER["admin"] == "yes")
         print('<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; ' . $appname . ' v. ' . $version . $bullet. 'Administrator Mode &nbsp;&nbsp;| : . . .</span></p>');
     else if ($contact == "") {
         print('<p id=footer><span id=blurb>' . $sitename . ' (Est. 2017)' . $bullet . 'Design by <a href=http://skank.i2p/>dr|z3d</a></span></p>');
@@ -421,7 +415,6 @@ function deletetorrent($id)
 
 function pager($rpp, $count, $href, $opts = array())
 {
-    global $tracker_path;
     $pages = ceil($count / $rpp);
 
     if (!@$opts["lastpagedefault"]) {
