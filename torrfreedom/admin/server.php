@@ -3,9 +3,7 @@ require_once '../include/bittorrent.inc.php';
 dbconn(0);
 stdhead();
 $admin = (isset($CURUSER) && $CURUSER["admin"] == "yes");
-?>
-
-<?php
+$mysqli = new mysqli("$mysql_host", "$mysql_user", "$mysql_pass", "$mysql_db");
 if (!$admin) {
 header("Location: ../index.php");
 }
@@ -20,20 +18,6 @@ $indicesServer = array(
     'SERVER_SIGNATURE',
     'SERVER_SOFTWARE',
     'SERVER_PROTOCOL',
-    'SCRIPT_NAME',
-    'GATEWAY_INTERFACE',
-/**
-    'REQUEST_METHOD',
-    'HTTP_ACCEPT',
-    'HTTP_ACCEPT_ENCODING',
-    'HTTP_ACCEPT_LANGUAGE',
-    'HTTP_CONNECTION',
-    'HTTP_HOST',
-    'HTTP_USER_AGENT',
-    'REMOTE_ADDR',
-    'REMOTE_HOST',
-    'REMOTE_PORT',
-**/
 );
 
 echo '<table id=serverdetails>';
@@ -45,6 +29,8 @@ foreach ($indicesServer as $arg) {
         echo '<tr><td>' . $arg . '</td><td>-</td></tr>';
     }
 }
+printf("<tr><td>MySQL Version</td><td> %s</td></tr>\n", $mysqli->server_info);
+$mysqli->close();
 
 echo '<tr><th colspan=2>Tracker Configuration</th></tr>';
 echo '<tr><td>$appname</td><td>' . $appname . '</td></tr>';
@@ -57,7 +43,7 @@ echo '<tr><td>$tracker_url_name</td><td>' . $tracker_url_name . '</td></tr>';
 echo '<tr><td>$pic_base_url</td><td>' . $pic_base_url . '</td></tr>';
 echo '<tr><td>$autoclean_interval</td><td>' . $autoclean_interval . ' (seconds)</td></tr>';
 echo '<tr><td>$max_torrent_size</td><td>' . round($max_torrent_size / 1024 / 1024, 2) . ' (GB)</td></tr>';
-echo '</table>';
+echo '</table></div>';
 
 stdfoot();
 ?>
