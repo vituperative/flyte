@@ -23,7 +23,7 @@ echo "</tr>";
 }*/
 echo "</table>";
 
-mysqli_close($con);
+mysqli_close($mysqli);
 echo "</div>";
 stdfoot();
 ?>
