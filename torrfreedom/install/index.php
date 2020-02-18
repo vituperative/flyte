@@ -3,7 +3,6 @@ $timeCook = 3600 * 3;
 require_once "install_class.php";
 require_once "../include/bittorrent.inc.php";
 require_once "../include/page_header.inc.php";
-print("<link rel=stylesheet href=installer.css type=text/css>");
 $installer = new Installer();
 
 if ($installer->checkPost("admin", $_POST)) {
@@ -18,10 +17,10 @@ if ($installer->checkPost("admin", $_POST)) {
 }
 
 const stepNames = array(
-    1 => "Check database connection",
-    2 => "Setup Tracker configuration",
-    3 => "Install database",
-    4 => "Install Tracker configuration"
+    1 => "Configure Database",
+    2 => "Configure Tracker Options",
+    3 => "Install Database",
+    4 => "Deploy Tracker Configuration"
 );
 
 if (!isset($_COOKIE['step'])) {

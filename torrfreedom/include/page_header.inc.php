@@ -20,11 +20,17 @@
 <head>
     <meta http-equiv=Content-Language content=en-us>
     <meta charset="UTF-8">
-    <?php $request = $_SERVER["REQUEST_URI"]; if (strpos($request, "install") !== false) { ?>
-        <link rel=stylesheet href=../include/style.css type=text/css>
-    <?php } else { ?>
-        <link rel=stylesheet href=include/style.css type=text/css>
-    <?php } ?>
+    <?php
+        $request = $_SERVER["REQUEST_URI"];
+        if (strpos($request, "install") !== false) {
+            print("<link rel=stylesheet href=../include/style.css type=text/css>\n");
+            print("<link rel=stylesheet href=installer.css type=text/css>\n");
+        } else if (strpos($request, "admin") !== false) {
+            print("<link rel=stylesheet href=../include/style.css type=text/css>\n");
+        } else {
+            print("<link rel=stylesheet href=include/style.css type=text/css>\n");
+        }
+    ?>
     <style type=text/css>html, body{background: #151414;} body{opacity: 0 !important; text-align: center;}</style>
     <link rel=shortcut icon href=<?php echo $tracker_path ?>favicon.ico>
     <link rel=alternate type=application/rss+xml title="<?php echo $tracker_title; ?> RSS Feed" href=rss.php>
@@ -58,12 +64,20 @@ print("<div id=sitename><a href=" . $tracker_path . ">" . $tracker_title . "</a>
 function topnav() {
     global $CURUSER;
     global $username;
+    $isadmin = $CURUSER["admin"] == "yes";
+    $request = $_SERVER["REQUEST_URI"];
     print("<div id=topnav>");
-    if ($CURUSER)
-        print("<a href=upload.php>Upload</a> | <a href=my.php>Account</a> | <a href=logout.php>Logout" . $username . "</a>");
-    else
+    if (strpos($request, "admin") !== false && $isadmin) {
+            print("<a href=#>Blacklist</a> | <a href=#>Configure</a> | <a href=server.php>Server</a> | <a href=users.php>Users</a> | <a href=logout.php>Logout</a></div>\n");
+    } else if ($CURUSER) {
+        print("<a href=upload.php>Upload</a> | <a href=my.php>Account</a> | <a href=logout.php>Logout</a>");
+        if ($isadmin)
+            print(" | <a href=" . $tracker_path . "admin/>Admin</a>");
+    } else {
         print("<a href=login.php>Login</a> | <a href=signup.php>Signup</a>");
-    print(" | <a href=rss.php>RSS Feed</a> | <a href=help.php>Help</a></div>\n");
+    }
+    if (strpos($request, "admin") === false)
+        print(" | <a href=rss.php>RSS Feed</a> | <a href=help.php>Help</a></div>\n");
 }
 
 if (strpos($request, "install") == false) {
