@@ -316,6 +316,10 @@ input[type="submit"], input[type="reset"], input[type="file"], input[type="text"
   outline: none;
 }
 
+input[type="text"], textarea, input[type="password"] {
+  background: #343232;
+}
+
 #nuke input[type="submit"] {
   box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #342323, inset 0 0 0 2px rgba(255, 0, 0, .1);
 }

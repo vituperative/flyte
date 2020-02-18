@@ -68,7 +68,7 @@ function topnav() {
     $request = $_SERVER["REQUEST_URI"];
     print("<div id=topnav>");
     if (strpos($request, "admin") !== false && $isadmin) {
-            print("<a href=../>Tracker</a> | <a href=server.php>Server Config</a> | <a href=#>Users</a> | <a href=logout.php>Logout</a></div>\n");
+            print("<a href=#>Blacklist</a> | <a href=#>Configure</a> | <a href=server.php>Server</a> | <a href=users.php>Users</a> | <a href=logout.php>Logout</a></div>\n");
     } else if ($CURUSER) {
         print("<a href=upload.php>Upload</a> | <a href=my.php>Account</a> | <a href=logout.php>Logout</a>");
         if ($isadmin)
