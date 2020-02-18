@@ -64,6 +64,7 @@ print("<div id=sitename><a href=" . $tracker_path . ">" . $tracker_title . "</a>
 function topnav() {
     global $CURUSER;
     global $username;
+    global $tracker_path;
     $isadmin = $CURUSER["admin"] == "yes";
     $request = $_SERVER["REQUEST_URI"];
     print("<div id=topnav>");
