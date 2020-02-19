@@ -7,11 +7,34 @@ class admin{
 		(SELECT COUNT(*) FROM torrents WHERE torrents.owner = users.id) AS cntt,
 		(SELECT COUNT(*) FROM comments WHERE comments.user = users.id) AS cntc
 		FROM users"
+		"addUser"=>"INSERT INTO users (username, password, secret, status, added,admin) VALUES( '%s', '%s', '%s', 'confirmed'" . ", NOW(), '%s')",
+		"delUser"=>"DELETE FROM USERS where username='%s'"
 	);
 	
 	function getSQLCon(){
 			return $this->con;
 	}
+
+	function addUser($username, $password, $admin='no')
+	    {
+		if (strlen($password) > 64)
+		    die("Sorry, password is too long (max is 63 chars)");
+		if (!preg_match('/^[a-z][\w.-]*$/is', $username) || strlen($username) > 40)
+		    die("Invalid username. Must not be more than 40 characters long and no weird characters");
+		if (!isset($this->link)) $this->ConnToDBByConfig();
+		print("Connected");
+		$secret = mksecret();
+		$hashpass = hash("sha256", $secret . $password . $secret); //JES NEED TO CHANGE sha3 to sha3-224 maybe 224.....
+		print("INSERT INTO users (username, password, secret, status, added,admin) VALUES( '$username', '$hashpass', '$secret', 'confirmed'" . ", NOW(), 'yes')");
+		$ret = $this->doSQL( self::sqls['addUser'], $username, $hashpass, $secret, $admin );
+		if ($ret !== True) return False;
+		//print("return true");
+		return True;
+	}
+	function delUserByUsername($username){
+		return $this->doSQL( self::sqls['delUser'], $username);
+	}
+
 	function __construct($moveIfNotAdmin=True, $page='../index.php'){
 		
 		dbconn(0);
