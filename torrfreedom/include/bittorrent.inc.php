@@ -318,7 +318,7 @@ function stdfoot()
     global $pic_base_url, $version, $appname, $time_start, $contact, $tracker_title, $CURUSER;
     $time = round(getmicrotime() - $time_start, 1);
     $sitename = ucwords(strtolower($tracker_title));
-    $request = $_SERVER["REQUEST_URI"];
+    $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME']; // TODO ADD THAT 2 FUNCTION
     $bullet = '&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;&nbsp;';
 //    print('<p id=footer><span id=blurb>Running: ' . $appname . ' v. ' . $version . '</code></p>');
 //    print('<p id=footer><span id=blurb>Running: ' . $appname . ' v. ' . $version . '</code>' . $bullet . 'Page spawned in ' . $time . ' seconds</span></p>');

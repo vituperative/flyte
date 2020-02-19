@@ -1,16 +1,15 @@
 <?php
-require_once '../include/bittorrent.inc.php';
-dbconn(0);
-stdhead();
-$admin = (isset($CURUSER) && $CURUSER["admin"] == "yes");
-$mysqli = new mysqli("$mysql_host", "$mysql_user", "$mysql_pass", "$mysql_db");
-if (!$admin) {
-header("Location: ../index.php");
-}
+require 'admin_class.php';
+$admin = new admin();
+
+//$mysqli = new mysqli("$mysql_host", "$mysql_user", "$mysql_pass", "$mysql_db");
+
 ?>
 
 <div id=server>
 <?php
+$params_of_serv = $admin->getServInfo();
+/*
 $indicesServer = array(
     'SERVER_NAME',
     'SERVER_ADDR',
@@ -19,19 +18,18 @@ $indicesServer = array(
     'SERVER_SOFTWARE',
     'SERVER_PROTOCOL',
 );
+*/
 
 echo '<table id=serverdetails>';
 echo '<tr><th colspan=2>Server Configuration</th></tr>';
-foreach ($indicesServer as $arg) {
+foreach ($params_of_serv as $key=>$val) {
     if (isset($_SERVER[$arg])) {
-        echo '<tr><td>' . $arg . '</td><td>' . $_SERVER[$arg] . '</td></tr>';
+        echo '<tr><td>' . $key . '</td><td>' . $val . '</td></tr>';
     } else {
-        echo '<tr><td>' . $arg . '</td><td>-</td></tr>';
+        echo '<tr><td>' . $key . '</td><td>-</td></tr>';
     }
 }
-printf("<tr><td>MySQL Version</td><td> %s</td></tr>\n", $mysqli->server_info);
-$mysqli->close();
-
+printf("<tr><td>MySQL Version</td><td> %s</td></tr>\n", mysqli_get_server_version( $admin->getSQLCon() ) );
 echo '<tr><th colspan=2>Tracker Configuration</th></tr>';
 echo '<tr><td>$appname</td><td>' . $appname . '</td></tr>';
 echo '<tr><td>$version</td><td>' . $version . '</td></tr>';
