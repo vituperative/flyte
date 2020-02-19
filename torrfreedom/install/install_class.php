@@ -183,7 +183,7 @@ class Installer
         if (!isset($this->link)) $this->ConnToDBByConfig();
         print("Connected");
         $secret = mksecret();
-        $hashpass = hash("sha3-224", $secret . $password . $secret); //JES NEED TO CHANGE sha3 to sha3-224 maybe 224.....
+        $hashpass = hash("sha256", $secret . $password . $secret); //JES NEED TO CHANGE sha3 to sha3-224 maybe 224.....
         print("INSERT INTO users (username, password, secret, status, added,admin) VALUES( '$username', '$hashpass', '$secret', 'confirmed'" . ", NOW(), 'yes')");
         $ret = $this->link->query(
             "INSERT INTO users (username, password, secret, status, added,admin) VALUES( '$username', '$hashpass', '$secret', 'confirmed'" . ", NOW(), 'yes')"
