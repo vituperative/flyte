@@ -2,20 +2,23 @@
 require 'admin_class.php';
 $admin = new admin();
 
-print("<div id=server class=users>\n");
-
 if(isset($_GET['add_user'])){
-	$admin->addUser($_GET['add_user'], "123456", $_GET['admin']);
+	$admin->addUser($_GET['add_user'], $_GET['password'], $_GET['admin']);
 }
 
 ?>
-<form action=adduser.php style="position:absolute" method=GET>
-	Nick <input type=text placeholder=nick name=add_user>
-	admin(yes/no) <input type=text name=admin value='no'>
-	<input type=submit>
-	<hr/>
+<form action=adduser.php method=GET>
+<div id=server class=usermanage>
+<table>
+<tr><th colspan=2>Add New User</th></tr>
+<tr><td>Username</td><td><input type=text name=add_user></td></tr>
+<tr><td>Password</td><td><input type=text name=password></td></tr>
+<tr><td>	Admin Privileges</td><td>
+<select>
+  <option value=no selected>No&hellip; just a regular user account</option>
+  <option value=yes>Yes&hellip; full administrative privileges</option></td></tr>
+<tr id=dostuff><td colspan=2>	<input type=submit value="Add User"</td></tr>
+</table>
+</div>
 </form>
-<?php
-
-stdfoot();
-?>
+<?php stdfoot(); ?>
