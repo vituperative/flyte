@@ -6,7 +6,7 @@ class admin{
 		"getAllUsers"=>"SELECT users.username, users.added, users.last_login, users.last_access, 
 		(SELECT COUNT(*) FROM torrents WHERE torrents.owner = users.id) AS cntt,
 		(SELECT COUNT(*) FROM comments WHERE comments.user = users.id) AS cntc
-		FROM users"
+		FROM users",
 		"addUser"=>"INSERT INTO users (username, password, secret, status, added,admin) VALUES( '%s', '%s', '%s', 'confirmed'" . ", NOW(), '%s')",
 		"delUser"=>"DELETE FROM USERS where username='%s'"
 	);
