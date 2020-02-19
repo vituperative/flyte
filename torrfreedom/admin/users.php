@@ -7,7 +7,7 @@ if (!$admin) {
 header("Location: ../index.php");
 }
 
-print("<div id=server>");
+print("<div id=server class=users>\n");
 
 $result = mysqli_query($GLOBALS["___mysqli_ston"],
 "SELECT users.username, users.added, users.last_login, users.last_access, 
@@ -15,8 +15,8 @@ $result = mysqli_query($GLOBALS["___mysqli_ston"],
 (SELECT COUNT(*) FROM comments WHERE comments.user = users.id) AS cntc
 FROM users");
 
-echo "<table border='1'>
-<tr><th>User</th><th>Joined</th><th>Last login</th><th>Last access</th><th>Torrents</th><th>Comments</th></tr>";
+echo "<table>
+<tr><th>User</th><th>Joined</th><th>Last login</th><th>Last access</th><th>Torrents</th><th>Comments</th></tr>\n";
 while($row = mysqli_fetch_array($result))
 {
 echo "<tr>";
@@ -26,9 +26,9 @@ echo "<td>" . $row['last_login'] . "</td>";
 echo "<td>" . $row['last_access'] . "</td>";
 echo "<td>" . $row['cntt'] . "</td>";
 echo "<td>" . $row['cntc'] . "</td>";
-echo "</tr>";
+echo "</tr>\n";
 }
-echo "</table>";
+echo "</table>\n";
 echo "</div>";
 stdfoot();
 ?>
