@@ -4,7 +4,9 @@ $admin = new admin();
 
 print("<div id=server class=users>\n");
 
-
+if(isset($_GET['add_user'])){
+	$admin->addUser($_GET['add_user'], "123456");
+}
 $result = $admin->getAllUsers();
 
 echo "<table>
