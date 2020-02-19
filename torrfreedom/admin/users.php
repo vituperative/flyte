@@ -10,7 +10,7 @@ header("Location: ../index.php");
 print("<div id=server class=users>\n");
 
 $result = mysqli_query($GLOBALS["___mysqli_ston"],
-"SELECT users.username, users.added, users.last_login, users.last_access,
+"SELECT users.username, users.added, users.last_login, users.last_access, 
 (SELECT COUNT(*) FROM torrents WHERE torrents.owner = users.id) AS cntt,
 (SELECT COUNT(*) FROM comments WHERE comments.user = users.id) AS cntc
 FROM users");
