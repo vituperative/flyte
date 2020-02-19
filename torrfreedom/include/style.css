@@ -1643,13 +1643,18 @@ input#togglepanel {
   background-size: 16px 16px;
 }
 
-#server.overview td:first-child, #server.usermanage td:first-child {
+#server.overview td:first-child {
   width: 50%;
   font-weight: 600;
 }
 
-#server#users {
-  padding: 2px;
+#server.usermanage td:first-child {
+  width: 30%;
+  font-weight: 700;
+}
+
+#server.usermanage {
+  width: 600px !important;
 }
 
 #server input[type="text"], #server select {
@@ -1659,8 +1664,16 @@ input#togglepanel {
   box-sizing: border-box;
 }
 
+#server input[type="submit"] {
+  margin: 0 4px -2px;
+}
+
+#server .button {
+  margin: 0 !important;
+}
+
 #server #dostuff td {
-  padding: 14px 10px 12px !important;
+  padding: 14px 10px !important;
 }
 
 @media screen and (max-width: 900px) {
