@@ -8,7 +8,12 @@ if(isset($_GET['add_user'])){
 	$admin->addUser($_GET['add_user'], "123456");
 }
 $result = $admin->getAllUsers();
-
+?>
+<hr/>
+<a href=adduser.php>Add user</a>
+<hr/>
+<a href=deluser.php>Del user</a>
+<?php
 echo "<table>
 <tr><th>User</th><th>Joined</th><th>Last login</th><th>Last access</th><th>Torrents</th><th>Comments</th></tr>\n";
 while($row = mysqli_fetch_array($result))
