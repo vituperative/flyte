@@ -11,8 +11,8 @@ if(isset($_GET['add_user'])){
 <div id=server class=usermanage>
 <table>
 <tr><th colspan=2>Add New User</th></tr>
-<tr><td>Username</td><td><input type=text name=add_user></td></tr>
-<tr><td>Password</td><td><input type=text name=password></td></tr>
+<tr><td>Username</td><td><input type=text name=add_user required></td></tr>
+<tr><td>Password</td><td><input type=text name=password required></td></tr>
 <tr><td>	Admin Privileges</td><td>
 <select>
   <option value=no selected>No&hellip; just a regular user account</option>
