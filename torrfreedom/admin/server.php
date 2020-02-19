@@ -29,7 +29,7 @@ foreach ($params_of_serv as $key=>$val) {
         echo '<tr><td>' . $key . '</td><td>-</td></tr>';
     }
 }
-printf("<tr><td>MySQL Version</td><td> %s</td></tr>\n", mysqli_get_server_version( $admin->getSQLCon() ) );
+printf("<tr><td>MySQL Version</td><td> %s</td></tr>\n", mysqli_get_server_info( $admin->getSQLCon() ) );
 echo '<tr><th colspan=2>Tracker Configuration</th></tr>';
 echo '<tr><td>$appname</td><td>' . $appname . '</td></tr>';
 echo '<tr><td>$version</td><td>' . $version . '</td></tr>';
