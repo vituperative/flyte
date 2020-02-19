@@ -1,10 +1,16 @@
 <?php
   if (ob_get_level() == 0) {
     ob_start("ob_gzhandler");
-  require_once "include/bittorrent.inc.php";
-  dbconn(0);
-  stdhead();
+  if ( strstr(__DIR__,"include") !== FALSE){
+//	print(__DIR__);
+  	require_once "bittorrent.inc.php";
+  }
+  else
+	require_once "include/bittorrent.inc.php";
+  //dbconn(0);
+  //stdhead(); WHO IS ADD THIS ?! WHICH? WHERE U?
 }
+global $CURUSER, $pic_base_url, $tracker_title, $tracker_url_name, $tracker_path;
 ?>
 
 <?php
@@ -21,7 +27,8 @@
     <meta http-equiv=Content-Language content=en-us>
     <meta charset="UTF-8">
     <?php
-        $request = $_SERVER["REQUEST_URI"];
+	
+        $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME']; // TODO ADD THAT 2 FUNCTION
         if (strpos($request, "install") !== false) {
             print("<link rel=stylesheet href=../include/style.css type=text/css>\n");
             print("<link rel=stylesheet href=installer.css type=text/css>\n");
@@ -60,13 +67,13 @@
 <div class="shim top"></div>
 <?php
 print("<div id=sitename><a href=" . $tracker_path . ">" . $tracker_title . "</a></div>\n");
-
+if(!function_exists("topnav")){
 function topnav() {
     global $CURUSER;
     global $username;
     global $tracker_path;
     $isadmin = $CURUSER["admin"] == "yes";
-    $request = $_SERVER["REQUEST_URI"];
+    $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME'];
     print("<div id=topnav>");
     if (strpos($request, "admin") !== false && $isadmin) {
             print("<a href=#>Blacklist</a> | <a href=#>Configure</a> | <a href=server.php>Server</a> | <a href=users.php>Users</a> | <a href=logout.php>Logout</a></div>\n");
@@ -79,6 +86,7 @@ function topnav() {
     }
     if (strpos($request, "admin") === false)
         print(" | <a href=rss.php>RSS Feed</a> | <a href=help.php>Help</a></div>\n");
+}
 }
 
 if (strpos($request, "install") == false) {
