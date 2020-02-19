@@ -10,7 +10,7 @@ if(isset($_GET['add_user'])){
 <form action=adduser.php method=GET>
 <div id=server class=usermanage>
 <table>
-<tr><th colspan=2>Add New User</th></tr>
+<tr><th colspan=2>Create User Account</th></tr>
 <tr><td>Username</td><td><input type=text name=add_user required></td></tr>
 <tr><td>Password</td><td><input type=text name=password required></td></tr>
 <tr><td>	Admin Privileges</td><td>
