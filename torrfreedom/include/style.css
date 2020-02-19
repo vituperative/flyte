@@ -1643,9 +1643,24 @@ input#togglepanel {
   background-size: 16px 16px;
 }
 
-#server.overview td:first-child {
+#server.overview td:first-child, #server.usermanage td:first-child {
   width: 50%;
   font-weight: 600;
+}
+
+#server#users {
+  padding: 2px;
+}
+
+#server input[type="text"], #server select {
+  margin: 8px 0;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+#server #dostuff td {
+  padding: 14px 10px 12px !important;
 }
 
 @media screen and (max-width: 900px) {
