@@ -23,7 +23,7 @@ $indicesServer = array(
 echo '<table id=serverdetails>';
 echo '<tr><th colspan=2>Server Configuration</th></tr>';
 foreach ($params_of_serv as $key=>$val) {
-    if (isset($_SERVER[$arg])) {
+    if (isset($_SERVER[$key])) {
         echo '<tr><td>' . $key . '</td><td>' . $val . '</td></tr>';
     } else {
         echo '<tr><td>' . $key . '</td><td>-</td></tr>';
