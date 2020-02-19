@@ -323,15 +323,15 @@ function stdfoot()
 //    print('<p id=footer><span id=blurb>Running: ' . $appname . ' v. ' . $version . '</code></p>');
 //    print('<p id=footer><span id=blurb>Running: ' . $appname . ' v. ' . $version . '</code>' . $bullet . 'Page spawned in ' . $time . ' seconds</span></p>');
     if (strpos($request, "install") !== false)
-        print('<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; ' . $appname . ' v. ' . $version . ' &nbsp;&nbsp;| : . . .</span></p>');
+        print("\n<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; " . $appname . " v. " . $version . " &nbsp;&nbsp;| : . . .</span></p>");
     else if ($CURUSER["admin"] == "yes")
-        print('<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; ' . $appname . ' v. ' . $version . $bullet. 'Administrator Mode &nbsp;&nbsp;| : . . .</span></p>');
+        print("\n<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; " . $appname . " v. " . $version . $bullet. "Administrator Mode &nbsp;&nbsp;| : . . .</span></p>");
     else if ($contact == "") {
         print('<p id=footer><span id=blurb>' . $sitename . ' (Est. 2017)' . $bullet . 'Design by <a href=http://skank.i2p/>dr|z3d</a></span></p>');
     } else {
         print('<p id=footer><span id=blurb>' . $sitename . ' (Est. 2017)' . $bullet . 'Admin: <code>' . $contact . '</code>' . $bullet . 'Design by <a href=http://skank.i2p/>dr|z3d</a></span></p>');
     }
-    print("<style type=text/css>body {opacity: 1 !important;}</style>");
+    print("\n<style type=text/css>body {opacity: 1 !important;}</style>");
     print("\n</body>\n</html>");
 }
 
