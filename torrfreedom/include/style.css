@@ -1643,6 +1643,11 @@ input#togglepanel {
   background-size: 16px 16px;
 }
 
+#server.overview td:first-child {
+  width: 50%;
+  font-weight: 600;
+}
+
 @media screen and (max-width: 900px) {
   .torrentname {
     width: 1%;
