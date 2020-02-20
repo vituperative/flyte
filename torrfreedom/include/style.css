@@ -1672,6 +1672,18 @@ input#togglepanel {
   margin: 0 !important;
 }
 
+#server.users tr:not(#dostuff) td:last-child .button {
+  padding: 3px;
+}
+
+#server.users .no {
+  background-size: 12px 12px !important;
+}
+
+#server input[type="checkbox"] {
+  margin: 8px 4px 8px 0;
+}
+
 #server #dostuff td {
   padding: 14px 10px !important;
 }
