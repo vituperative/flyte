@@ -14,24 +14,30 @@ class admin{
 	function getSQLCon(){
 			return $this->con;
 	}
+	function getLastSQLError(){
+		return mysqli_error($this->con);
+	}
 
 	function addUser($username, $password, $admin='no')
 	    {
 		if (strlen($password) > 64)
-		    die("Sorry, password is too long (max is 63 chars)");
+		    return("Sorry, password is too long (max is 63 chars)");
 		if (!preg_match('/^[a-z][\w.-]*$/is', $username) || strlen($username) > 40)
-		    die("Invalid username. Must not be more than 40 characters long and no weird characters");
+		    return("Invalid username. Must not be more than 40 characters long and no weird characters");
 		//if (!isset($this->link)) $this->ConnToDBByConfig();
 		//print("Connected");
 		$secret = mksecret();
 		$hashpass = hash("sha256", $secret . $password . $secret); //JES NEED TO CHANGE sha3 to sha3-224 maybe 224.....
 		
 		$ret = $this->doSQL( self::sqls['addUser'], $username, $hashpass, $secret, $admin );
-		if ($ret !== True) return False;
+		if ($ret !== True) return ( $this->getLastSQLError(). "(maybe user exist already?)" );
 		//print("return true");
 		return True;
 	}
-	function delUserByUsername($username){
+	function delUserByUsername($username, $withTorrents=True, $withComments=True)
+	{
+		//if withTorrents... DELETE FROM TORRENTS where ... username=... 
+		//also with comments
 		return $this->doSQL( self::sqls['delUser'], $username);
 	}
 

@@ -3,8 +3,11 @@ require 'admin_class.php';
 $admin = new admin();
 
 if(isset($_GET['del_user'])){
-	print("DEL!");
-	$admin->delUserByUsername($_GET['del_user']);
+	$ret=$admin->delUserByUsername($_GET['del_user']);
+	if( !$ret ){
+		print ("<div style='text-transform:uppercase'>Some is wrong: ".$admin->getLastSQLError()."</div>");
+	}
+	header("Location: users.php");
 }
 
 ?>
@@ -19,4 +22,5 @@ if(isset($_GET['del_user'])){
 </table>
 </div>
 </form>
+
 <?php stdfoot(); ?>

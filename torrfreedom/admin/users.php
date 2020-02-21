@@ -4,9 +4,12 @@ $admin = new admin();
 
 print("<div id=server class=users>\n");
 
-if(isset($_GET['add_user'])){
-    $admin->addUser($_GET['add_user'], "123456");
-}
+if (isset($_GET['add_user'])){
+    $admin->addUser($_GET['add_user'], $_GET['password'], $_GET['admin']);
+} elseif(isset($_GET['del_user'])){
+	$admin->delUserByUsername($_GET['del_user']);
+} 
+
 $result = $admin->getAllUsers();
 
 echo "<table>
@@ -20,10 +23,10 @@ echo "<td>" . $row['last_login'] . "</td>";
 echo "<td>" . $row['last_access'] . "</td>";
 echo "<td>" . $row['cntt'] . "</td>";
 echo "<td>" . $row['cntc'] . "</td>";
-echo "<td><a href=# class=button><span class=no></span></a></td>";
+echo "<td><a href='users.php?del_user=".$row['username']."' class=button><span class=no></span></a></td>";
 echo "</tr>\n";
-
 }
+
 echo "<tr id=dostuff><td colspan=7><a class=button href=adduser.php>Create New User Account</a></td></tr>";
 echo "</table>\n";
 echo "</div>";
