@@ -5,7 +5,7 @@ $admin = new admin();
 if(isset($_GET['add_user'])){
 	$ret=$admin->addUser($_GET['add_user'], $_GET['password'], $_GET['admin']);
 	if( $ret !== TRUE){
-		print ("<div style='text-transform:uppercase'>Some is wrong: ".$ret."</div>");
+		print ("<p class=warn>Error: ". $ret ."</p>");
 	}
 	else header("Location: users.php");
 }
