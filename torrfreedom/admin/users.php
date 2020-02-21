@@ -7,28 +7,28 @@ print("<div id=server class=users>\n");
 if (isset($_GET['add_user'])){
     $admin->addUser($_GET['add_user'], $_GET['password'], $_GET['admin']);
 } elseif(isset($_GET['del_user'])){
-	$admin->delUserByUsername($_GET['del_user']);
-} 
+   $admin->delUserByUsername($_GET['del_user']);
+}
 
 $result = $admin->getAllUsers();
 
 echo "<table>
-<tr><th>User</th><th>Joined</th><th>Last login</th><th>Last access</th><th>Torrents</th><th>Comments</th><th>Delete</th></tr>\n";
+<tr><th>User</th><th>Admin</th><th>Joined</th><th>Last Login</th><th>Last Access</th><th>Torrents</th><th>Comments</th><th>Delete</th></tr>\n";
 while($row = mysqli_fetch_array($result))
 {
 echo "<tr>";
 echo "<td>" . $row['username'] . "</td>";
+echo "<td>" .  "</td>"; // TODO check if user is admin
 echo "<td>" . $row['added'] . "</td>";
-echo "<td>" . $row['last_login'] . "</td>";
-echo "<td>" . $row['last_access'] . "</td>";
+echo "<td>" . $row['last_login'] . "</td>"; // TODO replace 1970 date with "Never"
+echo "<td>" . $row['last_access'] . "</td>"; // TODO replace 1970 date with "Never"
 echo "<td>" . $row['cntt'] . "</td>";
 echo "<td>" . $row['cntc'] . "</td>";
-echo "<td><a href='users.php?del_user=".$row['username']."' class=button><span class=no></span></a></td>";
+echo "<td><a href='users.php?del_user=".$row['username']."' class=button><span class=no></span></a></td>"; // TODO no immediate delete, switch to deluser.php for confirm/options
 echo "</tr>\n";
 }
 
-echo "<tr id=dostuff><td colspan=7><a class=button href=adduser.php>Create New User Account</a></td></tr>";
+echo "<tr id=dostuff><td colspan=8><a class=button href=adduser.php>Create New User Account</a></td></tr>";
 echo "</table>\n";
 echo "</div>";
 stdfoot();
-?>
