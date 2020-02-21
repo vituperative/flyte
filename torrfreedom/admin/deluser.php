@@ -22,4 +22,5 @@ if(isset($_GET['del_user'])){
 </table>
 </div>
 </form>
+
 <?php stdfoot(); ?>

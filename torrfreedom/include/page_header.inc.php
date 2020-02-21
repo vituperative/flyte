@@ -27,7 +27,6 @@ global $CURUSER, $pic_base_url, $tracker_title, $tracker_url_name, $tracker_path
     <meta http-equiv=Content-Language content=en-us>
     <meta charset="UTF-8">
     <?php
-	
         $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME']; // TODO ADD THAT 2 FUNCTION
         if (strpos($request, "install") !== false) {
             print("<link rel=stylesheet href=../include/style.css type=text/css>\n");
@@ -76,7 +75,7 @@ function topnav() {
     $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME'];
     print("<div id=topnav>");
     if (strpos($request, "admin") !== false && $isadmin) {
-            print("<a href=#>Blacklist</a> | <a href=#>Configure</a> | <a href=server.php>Server</a> | <a href=users.php>Users</a> | <a href=logout.php>Logout</a></div>\n");
+            print("<a href=#>Blacklist</a> | <a href=#>Configure</a> | <a href=server.php>Server</a> | <a href=users.php>Users</a> | <a href=../logout.php>Logout</a></div>\n");
     } else if ($CURUSER) {
         print("<a href=upload.php>Upload</a> | <a href=my.php>Account</a> | <a href=logout.php>Logout</a>");
         if ($isadmin)

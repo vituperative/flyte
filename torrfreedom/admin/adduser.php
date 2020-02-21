@@ -11,7 +11,7 @@ if(isset($_GET['add_user'])){
 }
 
 ?>
-<!-- Some new DROZD code -->
+
 <form action=adduser.php method=GET>
 <div id=server class=usermanage>
 <table>
