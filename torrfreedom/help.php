@@ -43,6 +43,13 @@ Yes you can! There is support for a limited number of <a href=https://www.w3scho
 
 <h3>Is the tracker software available to download?</h3>
 <p>The tracker software (a fork of Byte Monsoon) is currently in heavy development. When it's ready for release, it will be available as a torrent on the site. Watch this space!</p>
+
+<h3>Who's responsible for this fork?</h3>
+<?php
+print("<span class=spacer>" . $spacer . "</span><b>Original author:</b> dfx (Byte Monsoon)<br>");
+print("<span class=spacer>" . $spacer . "</span><b>Additional code:</b> Voron / TF / dr|z3d<br>");
+print("<span class=spacer>" . $spacer . "</span><b>Design:</b> dr|z3d");
+?>
 </div>
 </td></tr>
 </table>
