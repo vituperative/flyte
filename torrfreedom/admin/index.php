@@ -12,6 +12,8 @@ print("<tr><td>Total Torrents</td><td></td></tr>");
 print("<tr><td>Active Torrents</td><td></td></tr>");
 print("<tr><td>Total Categories</td><td></td></tr>");
 print("<tr><td>Total Users</td><td></td></tr>");
+print("<tr><td>Unique logins (today / this week)</td><td></td></tr>");
+print("<tr><td>Peers announcing to tracker (seeds / leeches)</td><td></td></tr>");
 print("</table>");
 
 stdfoot(); ?>
