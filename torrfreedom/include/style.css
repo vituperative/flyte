@@ -1326,6 +1326,7 @@ code.dest {
 
 .no {
   background: url(../pic/no.png) no-repeat;
+  mix-blend-mode: luminosity;
 }
 
 .no.small {
@@ -1673,11 +1674,14 @@ input#togglepanel {
 }
 
 #server.users tr:not(#dostuff) td:last-child .button {
-  padding: 3px;
+  padding: 1px 3px !important;
+  font-size: 14px !important;
 }
 
 #server.users .no {
   background-size: 12px 12px !important;
+  vertical-align: middle;
+  mix-blend-mode: normal;
 }
 
 #server input[type="checkbox"] {
