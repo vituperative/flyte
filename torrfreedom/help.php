@@ -13,7 +13,8 @@ stdhead();
 <h3>How do I upload a torrent?</h3>
 <ol id=howtoupload>
 <li>Create a torrent file in your favorite I2P-capable BitTorrent client, optionally adding the tracker announce address indicated above, or upload an existing .torrent file you have downloaded. Note: if <span id=trackername><?=strtolower($tracker_title)?></span>'s tracker isn't already present in the torrent, it will be added automatically, so you can upload ANY torrent file.</li>
-<li><a href=signup.php>Sign up</a> in order to upload torrents. Only a username and password is required to create an account. All passwords are encrypted on the server.</li>
+<li>Please be aware that any torrent you upload that doesn't contain this tracker's announce won't (yet) register your client as a member of the swarm, so for best results ensure you create your torrent with this tracker's announce embedded to ensure the torrent lists as active.</li>
+<li><a href=signup.php>Sign up</a> in order to upload torrents. Only a username and password is required to create an account. All passwords are salted and encrypted on the server, so there is no way for an admin to discover your password.</li>
 <li><a href=upload.php>Upload</a> your torrent file!</li>
 <li>Start seeding your torrent and others will see it!</li>
 </ol>
