@@ -5,7 +5,7 @@ $admin = new admin();
 if(isset($_GET['del_user'])){
    $ret=$admin->delUserByUsername($_GET['del_user']);
    if( !$ret ){
-      print ("<div style='text-transform:uppercase'>Some is wrong: ".$admin->getLastSQLError()."</div>");
+      print ("<p class=warn>MySQL error: ".$admin->getLastSQLError()."</p>");
    }
    header("Location: users.php");
 }
