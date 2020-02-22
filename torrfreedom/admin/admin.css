@@ -1,0 +1,137 @@
+/* admin */
+
+#server {
+  padding: 2px;
+  width: 820px !important;
+  border: 1px solid #343030;
+  border-radius: 0;
+  background: #423b3b;
+}
+
+#server table {
+  border: 1px solid #111;
+}
+
+#server td {
+  padding: 3px 10px;
+  border: 1px solid #111;
+}
+
+#server td:first-child {
+  text-align: right;
+  background: rgba(0, 0, 0, .2);
+  color: #bbb;
+}
+
+#server.users th, #server.users td {
+  font-size: 90%;
+  text-align: center;
+  padding: 6px !important;
+}
+
+#server.users th {
+  text-transform: capitalize;
+}
+
+#server.users td:first-child {
+  padding-left: 24px !important;
+  text-align: left;
+  font-weight: 600;
+  background: url(../pic/user.png) 6px center no-repeat;
+  background-size: 16px 16px;
+}
+
+#server.overview td:first-child {
+  width: 50%;
+  font-weight: 600;
+}
+
+#server.usermanage td:first-child {
+  width: 30%;
+  font-weight: 700;
+}
+
+#server.usermanage {
+  width: 600px !important;
+}
+
+#server input[type="text"], #server select {
+  margin: 8px 0;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+#server input[type="submit"] {
+  margin: 0 4px -2px;
+}
+
+#server .button {
+  margin: 0 !important;
+}
+
+#server.users tr:not(#dostuff) td:last-child .button {
+  padding: 1px 3px !important;
+  font-size: 14px !important;
+}
+
+#server.users .no, #server.torrents .no {
+  background-size: 12px 12px !important;
+  vertical-align: middle;
+  mix-blend-mode: normal;
+  display: block;
+}
+
+#server input[type="checkbox"] {
+  margin: 8px 4px 8px 0;
+}
+
+#server #dostuff td {
+  padding: 14px 10px !important;
+}
+
+#server.torrents {
+    margin-top: -2px !important;
+    width: calc(100% - 16px) !important;
+}
+
+#server.torrents td:nth-child(odd) {
+  background: rgba(0, 0, 0, .2);
+}
+
+#server.torrents td:first-child {
+  text-align: left;
+}
+
+#server.torrents th {
+  font-size: 90% !important;
+}
+
+#server.torrents th:nth-child(n+2), #server.torrents td:nth-child(n+2) {
+  text-align: center;
+}
+
+#server.torrents .button, #server.users tr:nth-last-child(n+2) .button {
+  margin: 2px 0 !important;
+  padding: 3px !important;
+  min-width: 0 !important;
+  display: inline-block;
+}
+
+#server.torrents td > *, #server.torrents .button > * {
+  vertical-align: middle;
+}
+
+#server.torrents .button span {
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+}
+
+#server.torrents code {
+  max-width: 80px;
+  display: inline-block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
