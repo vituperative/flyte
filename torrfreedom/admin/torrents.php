@@ -23,7 +23,7 @@ else{
 
 
 echo "<table>
-<tr><th>id</th><th>info_hash(in hex)</th><th>name</th><th>filename</th><th>descr</th><th>ori_descr</th><th>category</th><th>views</th><th>visible</th><th>leechers</th><th>seeders</th><th>banned</th><th>hits</th></tr>\n";
+<tr><th>id</th><th>info_hash(in hex)</th><th>name</th><th>filename</th><th>descr</th><th>ori_descr</th><th>category</th><th>views</th><th>visible</th><th>leechers</th><th>seeders</th><th>banned</th><th>hits</th><th>delete</th></tr>\n";
 
 while($row = mysqli_fetch_array($result))
 {
@@ -43,6 +43,7 @@ echo "<td>" . $row['leechers'].  "</td>";
 echo "<td>" . $row['seeders'].  "</td>"; 
 echo "<td><a href=bantorrent.php?torid=$torid>" . $row['banned'].  "</a></td>"; 
 echo "<td>" . $row['hits'].  "</td>"; 
+echo "<td><a href='delTorrent.php?wdel_id=".$torid."' class=button><span class=no></span></a></td>"; 
 echo "</tr>\n";
 /*
 	foreach($row as $key=>$val){
