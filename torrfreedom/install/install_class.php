@@ -13,28 +13,32 @@ class Installer
     const install_elements =
     array(
         "sql" => array("mysql_host", "mysql_user", "mysql_pass", "mysql_db"),
-        "tracker_info" => array("tracker_url_name", "tracker_url_key", "torrent_dir", "tracker_title"),
+        "tracker_info" => array("tracker_url_name", "tracker_url_key", "torrent_dir", "tracker_title", "tracker_path",
+		"contact_url","contact"),
         "admin" => array("admin_username", "admin_password")
     );
+	//TODO: construct that... in method
     const need4conf = array(
-        "mysql_host", "mysql_user", "mysql_pass",
-        "mysql_db", "tracker_title",
-        "tracker_url_name", "tracker_url_key",
-        "torrent_dir"
+        "mysql_host", "mysql_user", "mysql_pass", "mysql_db",
+        "tracker_url_name", "tracker_url_key", "torrent_dir", "tracker_title", "tracker_path",
+		"contact_url","contact",
+        "tracker_url_name", "tracker_url_key"
     );
     const placeholders =
     array(
-        "mysql_host" =>       "IP or hostname of MySQL server",
-        "mysql_pass" =>       "Your mysql password",
-        "mysql_user" =>       "Your mysql username",
-        "mysql_db" =>         "Your mysql DataBase",
-        "tracker_title" =>    "Tracker title",
-        "tracker_url_name" => "Tracker URL path, e.g. mytracker.i2p",
-        "tracker_url_key" =>  "b32 url e.g. http://nfrjvknwcw47itotkzmk6mdlxmxfxsxhbhlr5ozhlsuavcogv4hq.b32.i2p",
-        "torrent_dir" =>      "Directory of torrent files, will be like to 777 mode as example",
+        "mysql_host" =>       "Host of your mysql database (usually localhost)",
+        "mysql_pass" =>       "Password to access the database",
+        "mysql_user" =>       "Username to access the database",
+        "mysql_db" =>         "The name of the database you will use",
         "tracker_title" =>    "Name of your tracker",
+        "tracker_url_name" => "Complete human url to tracker location. DO NOT trail with a",
+        "tracker_url_key" =>  "b32 url e.g. http://nfrjvknwcw47itotkzmk6mdlxmxfxsxhbhlr5ozhlsuavcogv4hq.b32.i2p ",
+        "torrent_dir" =>      "Directory of torrent files, will be like to 777 mode as example",
         "admin_username" =>   "Admin username",
-        "admin_password" =>   "Password of admin"
+        "admin_password" =>   "Password of admin",
+	"contact_url" => "URL to contact with admin maybe mailto:admintorrents@mail.i2p",
+	"tracker_path" => "/ or /Torrents or /TF/torrfredom",
+	"contact" => "Contacts"
     );
     //need4conf from
     function conn2DB_arr($elemets)
@@ -124,6 +128,14 @@ class Installer
     } //initTables()
     function installconf($elements)
     {
+	$need4conf = array();
+	foreach(self::install_elements as $namearr=>$arr){
+		if($namearr != "admin") // in not array of ignores;
+		foreach($arr as $name=>$v)
+			$need4conf[$name]=$v;
+	}
+	//var_dump($need4conf); // todo check it; if good delete self::need4conf and change there to $need4conf;
+
         $config_raw = "<?php \r\n";
         foreach (self::need4conf as $need) {
             if (!isset($elements[$need])) {
@@ -180,17 +192,18 @@ class Installer
             die("Sorry, password is too long (max is 63 chars)");
         if (!preg_match('/^[a-z][\w.-]*$/is', $username) || strlen($username) > 40)
             die("Invalid username. Must not be more than 40 characters long and no weird characters");
-        if (!isset($this->link)) $this->ConnToDBByConfig();
+        if (!isset($this->link)) {
+		$this->ConnToDBByConfig();
+	}
         print("Connected");
         $secret = mksecret();
         $hashpass = hash("sha256", $secret . $password . $secret); //JES NEED TO CHANGE sha3 to sha3-224 maybe 224.....
-        print("INSERT INTO users (username, password, secret, status, added,admin) VALUES( '$username', '$hashpass', '$secret', 'confirmed'" . ", NOW(), 'yes')");
-        $ret = $this->link->query(
+        //die("INSERT INTO users (username, password, secret, status, added,admin) VALUES( '$username', '$hashpass', '$secret', 'confirmed'" . ", NOW(), 'yes')");
+        $ret = mysqli_query($this->link,
             "INSERT INTO users (username, password, secret, status, added,admin) VALUES( '$username', '$hashpass', '$secret', 'confirmed'" . ", NOW(), 'yes')"
         );
-
-        if ($ret !== True) return False;
-        print("return true");
+	//die($this->link->error);
+        if ( strlen( mysqli_error($this->link) ) > 5 ) return (  mysqli_error($this->link) );
         return True;
     }
 }

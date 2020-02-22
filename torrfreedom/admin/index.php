@@ -1,19 +1,23 @@
 <?php
 require_once "../include/bittorrent.inc.php";
-dbconn();
-stdhead("Admin page");
-$admin = (isset($CURUSER) && $CURUSER["admin"] == "yes");
-if (!$admin)
-    header("Location: ../index.php");
+require 'admin_class.php';
+$admin = new admin();
+
+
+
+function total($what,$val){
+	printf("<tr><td>%s</td><td>%s</td></tr>", $what,$val);
+}
 
 print("<div id=server class=overview>\n<table>\n");
 print("<tr><th colspan=2>Tracker Overview</th></tr>");
-print("<tr><td>Total Torrents</td><td></td></tr>");
-print("<tr><td>Active Torrents</td><td></td></tr>");
-print("<tr><td>Total Categories</td><td></td></tr>");
-print("<tr><td>Total Users</td><td></td></tr>");
-print("<tr><td>Unique logins (today / this week)</td><td></td></tr>");
-print("<tr><td>Peers announcing to tracker (seeds / leeches)</td><td></td></tr>");
+total("Total Users", $admin->countUsers());
+total("Total Torrents", $admin->countTorrents());
+total("Total Categories", $admin->countCategories());
+total("Unique logins (today / this week)", "--");
+total("Peers announcing to tracker (seeds / leeches)", $admin->countOfSeeders()."/".$admin->countOfLeech() );
+
+
 print("</table>");
 
 stdfoot(); ?>

@@ -10,8 +10,8 @@ $installer = new Installer();
             <div id=installer class=addadmin>
                 <?php
                 if (isset($_GET['alreadyadded'])) {
-                    echo "<div class=step>Warning: Account exists!</div>";
-                    echo "<p class=warn>Administrator account under that name already exists!</p>";
+                    echo "<div class=step>Warning: (maybe) Account exists!</div>";
+                    echo "<p class=warn>".$_GET['err']."!</p>";
                 } else {
                     echo "<div class=step>Success!</div>";
                     echo "<p class=success>New Administrator account successfully created!</p>";
