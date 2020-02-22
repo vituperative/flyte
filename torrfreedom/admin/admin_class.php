@@ -14,15 +14,18 @@ class sql{
 		"delTorrentByID"=>"DELETE FROM torrents WHERE id= '%d'",
 		"delTorrentByX"=>"DELETE FROM torrents WHERE %s= '%s'",
 		"delTorrentsByUserID"=>"DELETE FROM torrents WHERE owner= '%s'",
+
+		"getTorrentsByUserID"=>"SELECT * FROM torrents WHERE owner= '%s' LIMIT %d OFFSET %d",
+
 		"getUserByID"=>"SELECT * FROM users where id='%d'",
 		"getUserByName"=>"SELECT * FROM users where username='%s'",
 
 		"delCommentsWhereIS"=>"DELETE FROM comments where %s='%s'",
-		"changeValueOfTorrentByID"=>"UPDATE torrents SET %s='%s' WHERE '%s'='%s'", //Update torrents set what is where a=b 
+		"changeValueOfTorrentByID"=>"UPDATE torrents SET `%s`='%s' WHERE `%s`='%s'", //Update torrents set what is where a=b 
 		"getCountOfTB"=>"select COUNT(*) AS count FROM %s",
 		"getCountOfTBWhere"=>"select COUNT(*) AS count FROM %s WHERE %s='%s'",
 		"isAdmin"=>"select * from users where username='%s' and admin='yes';",
-		"getAllTorrents"=>"SELECT * FROM torrents",
+		"getAllTorrents"=>"SELECT * FROM torrents LIMIT %d OFFSET %d",
 		"getNameOfCategoryByID"=>"select * from categories where id='%d'"
 	);
 	function doSQL($sprintf, ...$arguments){
@@ -87,8 +90,14 @@ class torrents extends comments{
 	function setBanTorrentByID($is_banned, $id){
 		if( $is_banned === True ) $is_banned="yes";
 		elseif( $is_banned === False ) $is_banned="no";
+		
+		$this->changeValueOfTorrentByID("banned",  "$is_banned", "id", "$id");
+	}
+	function setVissbleTorrentByID($is_vissible, $id){
+		if( $is_vissible === True ) $is_vissible="yes";
+		elseif( $is_vissible === False ) $is_vissible="no";
 
-		$this->changeValueOfTorrentByID("banned",  "$is_anned", "id", "$id");
+		$this->changeValueOfTorrentByID("visible",  "$is_vissible", "id", "$id");
 	}
 	function getTorrentByID($id){
 		//$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM torrents WHERE id = $id");
@@ -120,9 +129,26 @@ class torrents extends comments{
 	function countTorrents(){
 		return $this->getCountOfTB("torrents");
 	}
-	function getAllTorrents(){
-		return $this->doSQL( sql::sqls['getAllTorrents'] );
+	function getAllTorrents($offset=0,$limit=60){
+		return $this->doSQL( sql::sqls['getAllTorrents'], $limit, $offset );
 	}
+	function getTorrentsByUserID($id, $offset=0,$limit=60){
+		return $this->doSQL( sql::sqls['getTorrentsByUserID'], $id, $limit, $offset );
+	}
+	function getTorrentsByUserNick($nick, $offset=0,$limit=60){
+
+		$user=$this->getUserByName($nick);
+		//var_dump($user);
+		return $this->getTorrentsByUserID($user['id'], $offset, $limit);
+	}
+	function countOfTorrentsByUserID($id){
+		return $this->getCountOfTBWhere("torrents","owner",$id);
+	}
+	function countOfTorrentsByUserNick($id){
+		$user=$this->getUserByName($id);
+		return $this->countOfTorrentsByUserID($user['id']);
+	}
+
 }
 
 class categories extends torrents{

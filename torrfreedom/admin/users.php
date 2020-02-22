@@ -21,16 +21,23 @@ while($row = mysqli_fetch_array($result))
 		$row['last_access']="Never";
 	}
 	$isadmin= $admin->isAdmin($row['username']) == True ? "+" : "-";
-
+//var_dump($row);
+$username=$row['username'];
+//$countTorrents=$admin->countOfTorrentsByUserNick($username);
 echo "<tr>";
-echo "<td>" . $row['username'] . "</td>";
-echo "<td>" . $isadmin.  "</td>"; // TODO check if user is admin
+
+echo "<td>" . $username . "</td>";
+echo "<td>" . $isadmin.  "</td>"; 
 echo "<td>" . $row['added'] . "</td>";
 echo "<td>" . $row['last_login'] . "</td>"; // TODO replace 1970 date with "Never"
 echo "<td>" . $row['last_access'] . "</td>"; // TODO replace 1970 date with "Never"
-echo "<td>" . $row['cntt'] . "</td>";
+if($row['cntt'])
+	echo "<td><a href=torrents.php?user=$username>" . $row['cntt'] . "</a></td>";
+else
+	echo "<td>" . $row['cntt'] . "</td>";
 echo "<td>" . $row['cntc'] . "</td>";
-echo "<td><a href='deluser.php?wdel_user=".$row['username']."' class=button><span class=no></span></a></td>"; // TODO no immediate delete, switch to deluser.php for confirm/options
+echo "<td><a href='deluser.php?wdel_user=".$row['username']."' class=button><span class=no></span></a></td>"; 
+
 echo "</tr>\n";
 }
 
