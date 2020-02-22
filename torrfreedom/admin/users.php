@@ -16,9 +16,15 @@ echo "<table>
 <tr><th>User</th><th>Admin</th><th>Joined</th><th>Last Login</th><th>Last Access</th><th>Torrents</th><th>Comments</th><th>Delete</th></tr>\n";
 while($row = mysqli_fetch_array($result))
 {
+	if( strstr($row['last_login'],"1970-01-01 00:00:00") !== FALSE ){
+		$row['last_login']="Never";
+		$row['last_access']="Never";
+	}
+	$isadmin= $admin->isAdmin($row['username']) == True ? "+" : "-";
+
 echo "<tr>";
 echo "<td>" . $row['username'] . "</td>";
-echo "<td>" .  "</td>"; // TODO check if user is admin
+echo "<td>" . $isadmin.  "</td>"; // TODO check if user is admin
 echo "<td>" . $row['added'] . "</td>";
 echo "<td>" . $row['last_login'] . "</td>"; // TODO replace 1970 date with "Never"
 echo "<td>" . $row['last_access'] . "</td>"; // TODO replace 1970 date with "Never"
