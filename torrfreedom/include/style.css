@@ -1678,10 +1678,11 @@ input#togglepanel {
   font-size: 14px !important;
 }
 
-#server.users .no {
+#server.users .no, #server.torrents .no {
   background-size: 12px 12px !important;
   vertical-align: middle;
   mix-blend-mode: normal;
+  display: block;
 }
 
 #server input[type="checkbox"] {
@@ -1690,6 +1691,52 @@ input#togglepanel {
 
 #server #dostuff td {
   padding: 14px 10px !important;
+}
+
+#server.torrents {
+    margin-top: -2px !important;
+    width: calc(100% - 16px) !important;
+}
+
+#server.torrents td:nth-child(odd) {
+  background: rgba(0, 0, 0, .2);
+}
+
+#server.torrents td:first-child {
+  text-align: left;
+}
+
+#server.torrents th {
+  font-size: 90% !important;
+}
+
+#server.torrents th:nth-child(n+2), #server.torrents td:nth-child(n+2) {
+  text-align: center;
+}
+
+#server.torrents .button {
+  margin: 2px 0 !important;
+  padding: 3px !important;
+  min-width: 0 !important;
+  display: inline-block;
+}
+
+#server.torrents td > *, #server.torrents .button > * {
+  vertical-align: middle;
+}
+
+#server.torrents .button span {
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+}
+
+#server.torrents code {
+  max-width: 80px;
+  display: inline-block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 900px) {
