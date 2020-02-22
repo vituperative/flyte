@@ -28,6 +28,7 @@ if (!isset($_COOKIE['step'])) {
     //setStep(1);
     setcookie('step', 1, time() + $timeCook);
     header("Refresh: 0");
+    exit(0);
 }
 ?>
 <style>
