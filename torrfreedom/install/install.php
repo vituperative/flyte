@@ -1,5 +1,6 @@
 <?php
-
+include "index.php";
+/*
 $timeCook = 3600 * 3;
 require_once "install_class.php";
 require_once "../include/bittorrent.inc.php";
@@ -144,3 +145,4 @@ switch ($_COOKIE['step']) {
         </tr>
     </table>
 <?php stdfoot(); ?>
+*/

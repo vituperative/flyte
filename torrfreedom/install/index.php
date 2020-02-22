@@ -6,15 +6,15 @@ require_once "../include/page_header.inc.php";
 $installer = new Installer();
 
 if ($installer->checkPost("admin", $_POST)) {
-    print("Adding Administrator account");
+    //print("Adding Administrator account");
     $values = $installer->getPost("admin", $_POST);
-
-    if ($installer->addAdmin($values['admin_username'], $values['admin_password'])) {
-        print("header");
+    $ret = $installer->addAdmin($values['admin_username'], $values['admin_password']);
+    if ( $ret === True || $ret === 1 ) {
         header("Location: addedAdmin.php");
-    }
-    header("Location: addedAdmin.php?alreadyadded=1");
+    }else
+    	header("Location: addedAdmin.php?alreadyadded=1&err=".$ret);
 }
+
 
 const stepNames = array(
     1 => "Configure Database",
@@ -24,12 +24,35 @@ const stepNames = array(
 );
 
 if (!isset($_COOKIE['step'])) {
-    print("deleted? - " . $_COOKIE['step']);
+    //print("deleted? - " . $_COOKIE['step']);
     //setStep(1);
     setcookie('step', 1, time() + $timeCook);
     header("Refresh: 0");
+    exit(0);
 }
+?>
+<style>
+	.step_suc{
+    margin: 0 auto;
+    padding: 10px 0 0 0;
+    color: #0f2;
+    text-transform: uppercase;
+    position: sticky;
+    background-color: #224b4259;
+    width: 40em;		
+	}
+	.error{
+    margin: 0 auto;
+    padding: 10px 0 0 0;
+    color: red;
+    text-transform: uppercase;
+    position: sticky;
+    background-color: #ad38ce59;
+    width: 40em;
+	}
 
+</style>
+<?php
 switch ($_COOKIE['step']) {
     case 1:
         if ($installer->checkPost("sql", $_POST)) {
@@ -61,7 +84,7 @@ switch ($_COOKIE['step']) {
             print("broken cookies... try delete all cookies for this website");
         if (!$installer->checkConfPathWritable()) {
             printf(
-                "<center><div class='step'>Dont writable file %s</div></center>",
+                "<center><div class='error'>Dont writable file %s</div></center>",
                 Installer::defPathToConfig
             ); // to own method maybe? how to use va list like C in php?
         } else {
@@ -76,20 +99,20 @@ switch ($_COOKIE['step']) {
                         $elements[$key] = $value;
                 if (!$installer->installconf($elements)) //todo elements get
                     printf(
-                        "<center><div class='step'>Can't write conf file %s</div></center>",
+                        "<center><div class='error'>Can't write conf file %s</div></center>",
                         Installer::defPathToConfig
                     );
                 else {
-                    setcookie('step', 4, time() + $timeCook);
+                    setcookie('step', 5, time() + $timeCook);
                     header("Refresh: 0");
                 }
             }
             if (isset($_POST['continue_sql'])) {
                 $installer->conn2DB_arr(unserialize($_COOKIE['inst_sql']));
                 if (!$installer->installDB())
-                    printf("<center><div class='step'>Can't install DB </div></center>");
+                    printf("<center><div class='error'>Can't install DB </div></center>");
                 else {
-                    setcookie('step', 5, time() + $timeCook);
+                    setcookie('step', 4, time() + $timeCook);
                     header("Refresh: 0");
                 }
             }
@@ -105,7 +128,7 @@ switch ($_COOKIE['step']) {
                     <form action='index.php' method="POST">
                         <?php
                         if (strpos($_COOKIE['step'], "5") !== false) {
-                            printf("<center><div class='step'>Installation Complete!</div> </center>", $_COOKIE['step'], stepNames[$_COOKIE['step']]);
+                            printf("<center><div class='step_suc'>Installation Complete!</div> </center>", $_COOKIE['step'], stepNames[$_COOKIE['step']]);
                         } else {
                             printf("<center><div class='step'>Step: %d  - %s </div> </center>", $_COOKIE['step'], stepNames[$_COOKIE['step']]);
                         }

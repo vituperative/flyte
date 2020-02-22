@@ -3,6 +3,7 @@ require_once "install_class.php";
 require_once "../include/bittorrent.inc.php";
 require_once "../include/page_header.inc.php";
 $installer = new Installer();
+
 ?>
 
 <table id=wrapper>
@@ -16,6 +17,7 @@ $installer = new Installer();
                     print("<div id=dostuff>");
                     print('<input type=submit value="Create"/>');
                     print("</div>");
+			
                     ?>
                     </form>
             </div>
