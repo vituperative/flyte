@@ -15,7 +15,7 @@ total("Total Users", $admin->countUsers());
 total("Total Torrents", $admin->countTorrents());
 total("Total Categories", $admin->countCategories());
 total("Unique logins (today / this week)", "--");
-total("Peers announcing to tracker (seeds / leeches)", $admin->countPeers());
+total("Peers announcing to tracker (seeds / leeches)", $admin->countOfSeeders()."/".$admin->countOfLeech() );
 
 
 print("</table>");

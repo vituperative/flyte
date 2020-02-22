@@ -9,16 +9,25 @@ class sql{
 		FROM users",
 		"addUser"=>"INSERT INTO users (username, password, secret, status, added,admin) VALUES( '%s', '%s', '%s', 'confirmed'" . ", NOW(), '%s')",
 		"delUser"=>"DELETE FROM users where username='%s'",
+
 		"getTorrentByID"=>"SELECT * FROM torrents WHERE id = '%d'",
 		"delTorrentByID"=>"DELETE FROM torrents WHERE id= '%d'",
+		"delTorrentByX"=>"DELETE FROM torrents WHERE %s= '%s'",
+		"delTorrentsByUserID"=>"DELETE FROM torrents WHERE owner= '%s'",
+		"getUserByID"=>"SELECT * FROM users where id='%d'",
+		"getUserByName"=>"SELECT * FROM users where username='%s'",
+
 		"delCommentsWhereIS"=>"DELETE FROM comments where %s='%s'",
 		"changeValueOfTorrentByID"=>"UPDATE torrents SET %s='%s' WHERE '%s'='%s'", //Update torrents set what is where a=b 
 		"getCountOfTB"=>"select COUNT(*) AS count FROM %s",
+		"getCountOfTBWhere"=>"select COUNT(*) AS count FROM %s WHERE %s='%s'",
 		"isAdmin"=>"select * from users where username='%s' and admin='yes';",
+		"getAllTorrents"=>"SELECT * FROM torrents",
+		"getNameOfCategoryByID"=>"select * from categories where id='%d'"
 	);
 	function doSQL($sprintf, ...$arguments){
 		$string = vsprintf($sprintf, $arguments );
-		//printf("Debug info: %s\n\r", $string);
+		//printf("Debug info: %s\n\r<br>", $string);
 		return $result = mysqli_query($this->con, $string ); 
 	}
 	function getSQLCon(){
@@ -33,6 +42,10 @@ class sql{
 	}
 	function getCountOfTB($table){
 		$r= $this->doSQL( sql::sqls['getCountOfTB'], $table );
+		return mysqli_fetch_assoc($r)['count'];
+	}
+	function getCountOfTBWhere($table,$a,$b){
+		$r= $this->doSQL( sql::sqls['getCountOfTBWhere'], $table,$a,$b );
 		return mysqli_fetch_assoc($r)['count'];
 	}
 }
@@ -58,6 +71,9 @@ class comments extends sql{
 		if(!$allowed) return false;
 		return $this->doSQL( sql::sqls['delCommentsWhereIS'], $where, $is);
 	} 
+	function delCommentByUserID($id){
+		return $this->delCommentIsWhere($id, "user");
+	}
 }
 
 class torrents extends comments{
@@ -79,13 +95,33 @@ class torrents extends comments{
 		$ret = $this->doSQL( sql::sqls['getTorrentByID'], $id );
 		return mysqli_fetch_array($ret);
 	}
-	function delTorrentByID($id){
+	//"delTorrentByX"=>"DELETE FROM torrents WHERE %s= '%s'"
+	function delTorrentByX($x,$value){
+		$ret1 = $this->doSQL( sql::sqls['delTorrentByX'], $x, $v );
+	}
+
+	function delTorrentsByUserID($id, $withComments=True){
+		$ret0= True;
+		$ret1 = $this->doSQL( sql::sqls['delTorrentsByUserID'], $id );
+		if($withComments) $ret0 = $this->delCommentIsWhere("user", $id);
+		if ( !($ret1 && $ret0) ) return $this->getLastSQLError() ;
+		return True;
+	}
+
+	function delTorrentByID($id,$withComments=True){ //maybeto delTorrentByX? or no...
+		$ret0 = True;
+
 		$ret1 = $this->doSQL( sql::sqls['delTorrentByID'], $id );
-		$ret0 = $this->delCommentIsWhere("torrent", $id);
-		return ($ret1 && $ret0);
+		if($withComments) $ret0 = $this->delCommentIsWhere("torrent", $id);
+
+		if ( !($ret1 && $ret0) ) return $this->getLastSQLError() ;
+		return True;
 	}
 	function countTorrents(){
 		return $this->getCountOfTB("torrents");
+	}
+	function getAllTorrents(){
+		return $this->doSQL( sql::sqls['getAllTorrents'] );
 	}
 }
 
@@ -93,11 +129,23 @@ class categories extends torrents{
 	function countCategories(){
 		return $this->getCountOfTB("categories");
 	}
+	function getNameOfCategoryByID($id){
+		//getNameOfCategoryByID
+		$category=$this->doSQL( sql::sqls['getNameOfCategoryByID'], $id );
+		//$category=mysqli_fetch_array($category)['name'];
+		return mysqli_fetch_array($category)['name'];
+	}
 }
 
 class peers extends categories{
 	function countPeers(){
 		return $this->getCountOfTB("peers");
+	}	
+	function countOfSeeders(){
+		return $this->getCountOfTBWhere("peers","seeder","yes");
+	}	
+	function countOfLeech(){
+		return $this->getCountOfTBWhere("peers","seeder","no");
 	}	
 }
 
@@ -118,11 +166,41 @@ class users extends peers{
 		//print("return true");
 		return True;
 	}
+	function getUserByName($username){
+		//print($username);
+		$res=$this->doSQL( sql::sqls['getUserByName'], $username);
+		$user=mysqli_fetch_array($res);
+		return $user;
+	}
+
+	function getUserByID($id){
+		$res=$this->doSQL( sql::sqls['getUserByID'], $id);
+		$user=mysqli_fetch_array($res);
+		return $user;
+	}
+
 	function delUserByUsername($username, $withTorrents=True, $withComments=True)
 	{
+		$ret0=True;
 		//if withTorrents... DELETE FROM TORRENTS where ... username=... 
 		//also with comments
-		return $this->doSQL( sql::sqls['delUser'], $username);
+		$user=$this->getUserByName($username);
+		//var_dump($user);
+		//exit(0);
+		if($withTorrents){
+			//print("DEL TORRENTS>". $withComments);
+			//exit(0);	
+			$ret0=$this->delTorrentsByUserID($user['id'], $withComments);
+			//print("deleted?");
+			//exit(0);
+		}
+		elseif( $withComments && !$withTorrents){
+			$ret0 = $this->delCommentByUserID($user['id']);
+		}
+		$ret1=True;
+		$ret1= $this->doSQL( sql::sqls['delUser'], $username);
+		if ( !($ret1 && $ret0) ) return $this->getLastSQLError() ;
+		return True;
 	}
 	function getAllUsers(){
 		return $this->doSQL( sql::sqls['getAllUsers'] );

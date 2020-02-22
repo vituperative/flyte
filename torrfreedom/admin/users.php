@@ -30,7 +30,7 @@ echo "<td>" . $row['last_login'] . "</td>"; // TODO replace 1970 date with "Neve
 echo "<td>" . $row['last_access'] . "</td>"; // TODO replace 1970 date with "Never"
 echo "<td>" . $row['cntt'] . "</td>";
 echo "<td>" . $row['cntc'] . "</td>";
-echo "<td><a href='users.php?del_user=".$row['username']."' class=button><span class=no></span></a></td>"; // TODO no immediate delete, switch to deluser.php for confirm/options
+echo "<td><a href='deluser.php?wdel_user=".$row['username']."' class=button><span class=no></span></a></td>"; // TODO no immediate delete, switch to deluser.php for confirm/options
 echo "</tr>\n";
 }
 
