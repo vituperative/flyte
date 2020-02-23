@@ -31,7 +31,7 @@ echo "<td>" . $row['name'].  "</td>";
 //https://stackoverflow.com/questions/14674834/php-convert-string-to-hex-and-hex-to-string
 echo "<td><code>" . implode(unpack("H*", $row['info_hash'])) .  "</code></td>";
 //echo "<td><a href=vistorrent.php?torid=$torid>" . $row['visible'].  "</a></td>";
-echo "<td><form action=vistorrent.php method=GET><input type=checkbox name=visible><input type=submit value=Apply></td>"; //TODO apply in situ, not via vistorrent.php
+echo "<td><form action=modifytorrent.php method=GET><input type=checkbox name=visible><input type=submit value=Apply><input type=hidden name=torid value=$torid /><input type=hidden name=do value=visible /></td></form>"; //TODO apply in situ, not via vistorrent.php
 /**
 echo "<td>" . $row['filename'].  "</td>";
 echo "<td>" . $row['descr'].  "</td>";
@@ -43,7 +43,7 @@ echo "<td>" . $row['seeders'].  "</td>";
 echo "<td>" . $row['leechers'].  "</td>";
 //echo "<td><a href=bantorrent.php?torid=$torid>" . $row['banned'].  "</a></td>";
 echo "<td>
-<form action=bantorrent.php method=GET><input type=checkbox name=banned><input type=submit value=Apply></td>"; //TODO apply in situ, not via bantorrent.php
+<form action=modifytorrent.php method=GET><input type=checkbox name=banned><input type=submit value=Apply><input type=hidden name=torid value=$torid /><input type=hidden name=do value=banned /></form></td>"; //TODO apply in situ, not via bantorrent.php
 //echo "<td>" . $row['hits'].  "</td>";
 echo "<td><a href='delTorrent.php?wdel_id=".$torid."' class=button><span class=no></span></a></td>";
 echo "</tr>\n";
@@ -57,3 +57,4 @@ echo "</tr>\n";
 
 echo "</table></div>";
 stdfoot();
+
