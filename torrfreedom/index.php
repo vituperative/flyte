@@ -15,6 +15,9 @@ if (empty($cleansearchstr)) {
 
 $orderby = "ORDER BY torrents.id DESC";
 if(isset($_GET['order'])){
+
+if( !isset($_GET['search']) || strlen($_GET['search']) < 1) return header("Location: index.php");
+
 /*
 <user__> <select name='order'>
 <user__> <option value='added'>Upload Date</option>
@@ -24,16 +27,12 @@ if(isset($_GET['order'])){
 <user__> <option value='comments'>Comments</option>
 */
 
+
+
 $orders = array("added", "swarmsize", "size", "times_completed", "comments");
 foreach( $orders as $order ){
 	if( $_GET['order'] == $order ){
-
-		$wo=$_GET['order'];
-		if($wo != "swarmsize"){
 			$orderby = "ORDER BY torrents.$wo DESC";
-		}else{
-			$orderby = "ORDER BY torrents.(leechers+seeders) DESC";
-		}
 	}
 }
 
@@ -113,7 +112,7 @@ if (!$count && isset($cleansearchstr)) {
 if ($count) {
     list($pagertop, $pagerbottom, $limit) = pager(25, $count, "./?" . $addparam);
 
-    $query = "SELECT torrents.*, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%d.%m.%y %T') as added, categories.name AS cat_name, users.username FROM torrents LEFT JOIN categories ON category = categories.id LEFT JOIN users ON torrents.owner = users.id $where $orderby $limit";
+    $query = "SELECT torrents.*, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%d.%m.%y %T') as added, categories.name AS cat_name, SUM(torrents.leechers+torrents.seeders) as swarmsize, users.username FROM torrents LEFT JOIN categories ON category = categories.id LEFT JOIN users ON torrents.owner = users.id $where $orderby $limit";
     $res = mysqli_query($GLOBALS["___mysqli_ston"], $query)
     or die(mysqli_error($GLOBALS["___mysqli_ston"]));
 } else {
