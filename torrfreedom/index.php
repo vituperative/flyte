@@ -44,15 +44,16 @@ foreach( $orders as $order ){
 $addparam = "";
 $wherea = array();
 
-if (isset($_GET["incldead"])) {
+if (isset($_GET["incldead"]) ) {
     $addparam .= "incldead=1&amp;";
     if (!isset($CURUSER) || $CURUSER["admin"] !== "yes") {
         $wherea[] = "banned != 'yes'";
     }
-
-} else {
-    $wherea[] = "visible != 'no'";
+    if( !$_GET["incldead"] )
+     $wherea[] = "visible != 'no'";
 }
+
+//var_dump($wherea);
 
 if (isset($_GET["cat"]) && ($_GET["cat"] != 0)) {
     $wherea[] = "category = " . sqlesc($_GET["cat"]);
@@ -109,6 +110,8 @@ if (!$count && isset($cleansearchstr)) {
     }
 }
 
+//print("where:".$where);
+
 if ($count) {
     list($pagertop, $pagerbottom, $limit) = pager(25, $count, "./?" . $addparam);
 
@@ -162,7 +165,7 @@ if (isset($_GET["incldead"])) {
     $deadchkbox .= " checked=\"checked\"";
 }
 
-$deadchkbox .= " /> include inactive torrents</label>&nbsp; \n";
+$deadchkbox .= " /> with inactive torrents</label>&nbsp; \n";
 
 ?>
 <?=$catdropdown?>
