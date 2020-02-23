@@ -2,12 +2,13 @@
 require_once "../include/bittorrent.inc.php";
 
 class sql{
+
 	const sqls = array(
 		"getAllUsers"=>"SELECT users.username, users.added, users.last_login, users.last_access, 
 		(SELECT COUNT(*) FROM torrents WHERE torrents.owner = users.id) AS cntt,
-		(SELECT COUNT(*) FROM comments WHERE comments.user = users.id) AS cntc
+		(SELECT COUNT(*) FROM comments WHERE comments.user = users.id) AS cntc, status
 		FROM users",
-		"addUser"=>"INSERT INTO users (username, password, secret, status, added,admin) VALUES( '%s', '%s', '%s', 'confirmed'" . ", NOW(), '%s')",
+		"addUser"=>"INSERT INTO users (username, password, secret, status, added,admin) VALUES( '%s', '%s', '%s', '%s'" . ", NOW(), '%s')",
 		"delUser"=>"DELETE FROM users where username='%s'",
 
 		"getTorrentByID"=>"SELECT * FROM torrents WHERE id = '%d'",
