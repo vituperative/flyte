@@ -43,7 +43,7 @@ array_push($announce_urls, $tracker_url_name . "/announce.php", $tracker_url_key
 function dbconn($autoclean = 1)
 {
     global $mysql_host, $mysql_user, $mysql_pass, $mysql_db;
-    print($mysql_host."<<<");
+
     @($GLOBALS["___mysqli_ston"] = mysqli_connect($mysql_host, $mysql_user, $mysql_pass, $mysql_db))
     or die(mysqli_error($GLOBALS["___mysqli_ston"]));
 
