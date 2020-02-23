@@ -1161,7 +1161,7 @@ input[type="password"] {
 }
 
 #torrentshow {
-  margin: 15px 0 20px !important;
+  margin: 0 0 20px !important;
   padding-bottom: 11px;
   border-bottom: 1px solid #343232;
 }
