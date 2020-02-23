@@ -14,6 +14,8 @@ echo "<div id=server class=users>\n<table>
 <tr><th>User</th><th>Admin</th><th>Joined</th><th>Last Login</th><th>Last Access</th><th>Torrents</th><th>Comments</th><th>Delete</th></tr>\n";
 while($row = mysqli_fetch_array($result))
 {
+	//var_dump($row);
+	if($row['status'] != "confirmed") continue;
 	if( strstr($row['last_login'],"1970-01-01 00:00:00") !== FALSE ){
 		$row['last_login']="Never";
 		$row['last_access']="Never";
@@ -43,3 +45,4 @@ echo "<tr id=dostuff><td colspan=8><a class=button href=adduser.php>Create New U
 echo "</table>\n";
 echo "</div>";
 stdfoot();
+
