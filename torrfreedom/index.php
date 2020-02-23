@@ -49,8 +49,9 @@ if (isset($_GET["incldead"]) ) {
     if (!isset($CURUSER) || $CURUSER["admin"] !== "yes") {
         $wherea[] = "banned != 'yes'";
     }
-    if( !$_GET["incldead"] )
+    if( $_GET["incldead"] !='1' )
      $wherea[] = "visible != 'no'";
+    else $wherea[] = "visible != 'yes'";
 }
 
 //var_dump($wherea);
@@ -165,7 +166,7 @@ if (isset($_GET["incldead"])) {
     $deadchkbox .= " checked=\"checked\"";
 }
 
-$deadchkbox .= " /> with inactive torrents</label>&nbsp; \n";
+$deadchkbox .= " /> is inactive torrents</label>&nbsp; \n";
 
 ?>
 <?=$catdropdown?>
@@ -231,3 +232,4 @@ if (strpos($referrer, 'my') !== false && strpos($referrer, 'returnto') === false
 }
 stdfoot();
 ?>
+
