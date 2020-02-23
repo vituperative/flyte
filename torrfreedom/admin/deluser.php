@@ -36,3 +36,4 @@ if(isset($_GET['wdel_user'])) printf("value='%s'",$_GET['wdel_user'])?>required>
 </form>
 
 <?php stdfoot(); ?>
+

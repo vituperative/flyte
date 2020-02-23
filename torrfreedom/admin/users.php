@@ -45,3 +45,4 @@ echo "<tr id=dostuff><td colspan=8><a class=button href=adduser.php>Create New U
 echo "</table>\n";
 echo "</div>";
 stdfoot();
+

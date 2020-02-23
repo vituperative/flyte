@@ -7,6 +7,7 @@ require_once 'include/bittorrent.inc.php';
 
 dbconn();
 
+
 $searchstr = @unesc($_GET["search"]);
 $cleansearchstr = searchfield($searchstr);
 if (empty($cleansearchstr)) {
@@ -14,19 +15,47 @@ if (empty($cleansearchstr)) {
 }
 
 $orderby = "ORDER BY torrents.id DESC";
+if(isset($_GET['order'])){
+
+
+
+/*
+<user__> <select name='order'>
+<user__> <option value='added'>Upload Date</option>
+<user__> <option value='leechesandseeders'>Swarm size</option>
+<user__> <option value='size'>File size</option>
+<user__> <option value='times_completed'>Downloads</option>
+<user__> <option value='comments'>Comments</option>
+*/
+
+
+
+$orders = array("added", "swarmsize", "size", "times_completed", "comments");
+foreach( $orders as $order ){
+	if( $_GET['order'] == $order ){
+			$orderby = "ORDER BY torrents.$order DESC";
+	}
+}
+
+
+}
+//print ("now order by is: ".$orderby);
+
 
 $addparam = "";
 $wherea = array();
 
-if (isset($_GET["incldead"])) {
+if (isset($_GET["incldead"]) ) {
     $addparam .= "incldead=1&amp;";
     if (!isset($CURUSER) || $CURUSER["admin"] !== "yes") {
         $wherea[] = "banned != 'yes'";
     }
+    if( $_GET["incldead"] !='1' )
+     $wherea[] = "visible != 'no'";
+    else $wherea[] = "visible != 'yes'";
+}else $wherea[] = "visible != 'no'";
 
-} else {
-    $wherea[] = "visible != 'no'";
-}
+//var_dump($wherea);
 
 if (isset($_GET["cat"]) && ($_GET["cat"] != 0)) {
     $wherea[] = "category = " . sqlesc($_GET["cat"]);
@@ -83,10 +112,13 @@ if (!$count && isset($cleansearchstr)) {
     }
 }
 
+//print("where:".$where);
+
 if ($count) {
     list($pagertop, $pagerbottom, $limit) = pager(25, $count, "./?" . $addparam);
-
-    $query = "SELECT torrents.*, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%d.%m.%y %T') as added, categories.name AS cat_name, users.username FROM torrents LEFT JOIN categories ON category = categories.id LEFT JOIN users ON torrents.owner = users.id $where $orderby $limit";
+   
+    $query = "SELECT torrents.*, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%d.%m.%y %T') as added, categories.name AS cat_name, torrents.leechers+torrents.seeders as swarmsize, users.username FROM torrents LEFT JOIN categories ON category = categories.id LEFT JOIN users ON torrents.owner = users.id $where $orderby $limit";
+    //die($query);
     $res = mysqli_query($GLOBALS["___mysqli_ston"], $query)
     or die(mysqli_error($GLOBALS["___mysqli_ston"]));
 } else {
@@ -136,18 +168,18 @@ if (isset($_GET["incldead"])) {
     $deadchkbox .= " checked=\"checked\"";
 }
 
-$deadchkbox .= " /> include inactive torrents</label>&nbsp; \n";
+$deadchkbox .= " /> is inactive torrents</label>&nbsp; \n";
 
 ?>
 <?=$catdropdown?>
 </select>
 Sort by:
-<select>
-<option>Upload Date</option>
-<option>Swarm size</option>
-<option>File size</option>
-<option>Downloads</option>
-<option>Comments</option>
+<select name='order'>
+<option value='added'>Upload Date</option>
+<option value='swarmsize'>Swarm size</option>
+<option value='size'>File size</option>
+<option value='times_completed'>Downloads</option>
+<option value='comments'>Comments</option>
 </select>
 <?=$deadchkbox?>
 <input type="submit" value="Search!" class="input"/>
@@ -202,3 +234,4 @@ if (strpos($referrer, 'my') !== false && strpos($referrer, 'returnto') === false
 }
 stdfoot();
 ?>
+
