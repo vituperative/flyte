@@ -141,11 +141,20 @@ $deadchkbox .= " /> include inactive torrents</label>&nbsp; \n";
 ?>
 <?=$catdropdown?>
 </select>
+Sort by:
+<select>
+<option>Upload Date</option>
+<option>Swarm size</option>
+<option>File size</option>
+<option>Downloads</option>
+<option>Comments</option>
+</select>
 <?=$deadchkbox?>
 <input type="submit" value="Search!" class="input"/>
 </div>
 </form>
 <div id=torrentshow>
+<!--
 <?php
 if ($additionals) {
     $time_end = getmicrotime();
@@ -159,6 +168,7 @@ Show: <select class="input" name="cat"><option value="0">All Categories</option>
 <?=$deadchkbox?>
 <input type="submit" value="Go!" class="input"/>
 </form>
+-->
 </div>
 </div>
 <?php

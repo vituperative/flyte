@@ -1,4 +1,9 @@
 <?php
+if(file_exists("methods_.php")) require_once("methods_.php");
+else
+	include_once("../methods_.php") ;
+
+
 ini_set('default_charset', 'utf-8');
 function getmicrotime()
 {
@@ -6,9 +11,12 @@ function getmicrotime()
     return ((float) $usec + (float) $sec);
 }
 $time_start = getmicrotime();
-
-require_once "secrets.inc.php";
-require_once "cleanup.php";
+include_once mm::require_file("/include/secrets.inc.php");
+include_once mm::require_file("/include/cleanup.php");
+global $mysql_host, $mysql_user, $mysql_pass, $mysql_db;
+echo $mysql_host;
+//require_once "secrets.inc.php";
+//require_once "cleanup.php";
 
 $max_torrent_size = 10000000;
 $announce_interval = 900;
@@ -35,7 +43,7 @@ array_push($announce_urls, $tracker_url_name . "/announce.php", $tracker_url_key
 function dbconn($autoclean = 1)
 {
     global $mysql_host, $mysql_user, $mysql_pass, $mysql_db;
-
+    print($mysql_host."<<<");
     @($GLOBALS["___mysqli_ston"] = mysqli_connect($mysql_host, $mysql_user, $mysql_pass, $mysql_db))
     or die(mysqli_error($GLOBALS["___mysqli_ston"]));
 

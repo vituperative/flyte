@@ -1,5 +1,5 @@
 <?php
-require_once "../include/bittorrent.inc.php";
+
 require 'admin_class.php';
 $admin = new admin();
 

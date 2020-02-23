@@ -14,7 +14,7 @@ if(isset($_GET['continue']) && isset($_GET['torid']) && isset($_GET['val']) ){
 ?>
 
 <form action=bantorrent.php method=GET>
-	isvisible: <select name=val>
+	banit?: <select name=val>
 		<option>yes</option>
 		<option>no</option>
 	</select>
