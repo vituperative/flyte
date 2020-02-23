@@ -44,6 +44,7 @@ echo "<td>" . $row['leechers'].  "</td>";
 //echo "<td><a href=bantorrent.php?torid=$torid>" . $row['banned'].  "</a></td>";
 echo "<td>
 <form action=modifytorrent.php method=GET><input type=checkbox name=banned><input type=submit value=Apply><input type=hidden name=torid value=$torid /><input type=hidden name=do value=banned /></form></td>"; //TODO apply in situ, not via bantorrent.php
+
 //echo "<td>" . $row['hits'].  "</td>";
 echo "<td><a href='delTorrent.php?wdel_id=".$torid."' class=button><span class=no></span></a></td>";
 echo "</tr>\n";
