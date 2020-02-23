@@ -14,6 +14,33 @@ if (empty($cleansearchstr)) {
 }
 
 $orderby = "ORDER BY torrents.id DESC";
+if(isset($_GET['order'])){
+/*
+<user__> <select name='order'>
+<user__> <option value='added'>Upload Date</option>
+<user__> <option value='leechesandseeders'>Swarm size</option>
+<user__> <option value='size'>File size</option>
+<user__> <option value='times_completed'>Downloads</option>
+<user__> <option value='comments'>Comments</option>
+*/
+
+$orders = array("added", "swarmsize", "size", "times_completed", "comments");
+foreach( $orders as $order ){
+	if( $_GET['order'] == $order ){
+
+		$wo=$_GET['order'];
+		if($wo != "swarmsize"){
+			$orderby = "ORDER BY torrents.$wo DESC";
+		}else{
+			$orderby = "ORDER BY torrents.(leechers+seeders) DESC";
+		}
+	}
+}
+
+
+}
+//print ("now order by is: ".$orderby);
+
 
 $addparam = "";
 $wherea = array();
@@ -142,12 +169,12 @@ $deadchkbox .= " /> include inactive torrents</label>&nbsp; \n";
 <?=$catdropdown?>
 </select>
 Sort by:
-<select>
-<option>Upload Date</option>
-<option>Swarm size</option>
-<option>File size</option>
-<option>Downloads</option>
-<option>Comments</option>
+<select name='order'>
+<option value='added'>Upload Date</option>
+<option value='swarmsize'>Swarm size</option>
+<option value='size'>File size</option>
+<option value='times_completed'>Downloads</option>
+<option value='comments'>Comments</option>
 </select>
 <?=$deadchkbox?>
 <input type="submit" value="Search!" class="input"/>
