@@ -39,7 +39,8 @@ function dltable($name, $arr, $torrent)
 dbconn(0);
 
 if (!isset($_GET["id"]) && !isset($_GET["info_hash"]) ) {
-    die();
+    print("<p id=toast class=warn><span class=title>Torrent Unavailable.</span>The torrent you are trying to access has been blacklisted from this tracker.</p>");
+    header("Refresh: 5; url=" . $tracker_path);
 }
 
 $row = "";
