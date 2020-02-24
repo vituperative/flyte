@@ -51,7 +51,7 @@
   font-weight: 700;
 }
 
-#server.usermanage {
+#server.usermanage, #server.dialog {
   width: 600px !important;
 }
 
@@ -99,16 +99,17 @@
   background: rgba(0, 0, 0, .2);
 }
 
-#server.torrents td:first-child {
-  text-align: left;
-}
-
 #server.torrents th {
-  font-size: 90% !important;
+  font-size: 90%;
 }
 
-#server.torrents th:nth-child(n+2), #server.torrents td:nth-child(n+2) {
+#server.torrents th:nth-child(n+3), #server.torrents td:nth-child(n+2) {
   text-align: center;
+}
+
+#server.torrents th:first-child, #server.torrents th:nth-child(2),
+#server.torrents td:first-child, #server.torrents td:nth-child(2) {
+  text-align: left;
 }
 
 #server.torrents .button, #server.users tr:nth-last-child(n+2) .button {
@@ -134,4 +135,16 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+#server.torrents form {
+  white-space: nowrap;
+}
+
+#server.torrents input[type="submit"] {
+  min-width: 0;
+}
+
+#server .success, #server .fail {
+  text-align: center;
 }

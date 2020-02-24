@@ -1313,7 +1313,7 @@ code.dest {
   margin-bottom: 8px;
 }
 
-.yes, .no, .edit, .download {
+.yes, .no, .edit, .download, .nuke {
   font-size: 0;
   display: inline-block;
   width: 16px;
@@ -1324,9 +1324,13 @@ code.dest {
   background-position: center center !important;
 }
 
-.no {
+.no, .nuke {
   background: url(../pic/no.png) no-repeat;
   mix-blend-mode: luminosity;
+}
+
+.nuke {
+  background: url(../pic/no.png) no-repeat;
 }
 
 .no.small {
@@ -1352,7 +1356,7 @@ code.dest {
   font-size: 95%;
 }
 
-.edit, .download {
+.edit, .download, .nuke {
   margin: 0 0 0 4px !important;
   padding: 4px;
   display: inline-block;
@@ -1380,6 +1384,16 @@ code.dest {
 
 .download:hover, .download:focus {
   background: url(../pic/download.png) no-repeat, linear-gradient(to bottom, #232020, #454040);
+}
+
+.nuke {
+  font-size: 0 !important;
+  background: url(../pic/no.png) no-repeat, linear-gradient(to bottom, #454040, #232020);
+  mix-blend-mode: normal !important;
+}
+
+.nuke:hover, .nuke:focus {
+  background: url(../pic/no.png) no-repeat, linear-gradient(to bottom, #232020, #454040);
 }
 
 #details th a:nth-child(3) {

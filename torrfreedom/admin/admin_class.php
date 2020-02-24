@@ -2,12 +2,13 @@
 require_once "../include/bittorrent.inc.php";
 
 class sql{
+
 	const sqls = array(
 		"getAllUsers"=>"SELECT users.username, users.added, users.last_login, users.last_access, 
 		(SELECT COUNT(*) FROM torrents WHERE torrents.owner = users.id) AS cntt,
-		(SELECT COUNT(*) FROM comments WHERE comments.user = users.id) AS cntc
+		(SELECT COUNT(*) FROM comments WHERE comments.user = users.id) AS cntc, status
 		FROM users",
-		"addUser"=>"INSERT INTO users (username, password, secret, status, added,admin) VALUES( '%s', '%s', '%s', 'confirmed'" . ", NOW(), '%s')",
+		"addUser"=>"INSERT INTO users (username, password, secret, status, added,admin) VALUES( '%s', '%s', '%s', '%s'" . ", NOW(), '%s')",
 		"delUser"=>"DELETE FROM users where username='%s'",
 
 		"getTorrentByID"=>"SELECT * FROM torrents WHERE id = '%d'",
@@ -176,8 +177,9 @@ class peers extends categories{
 }
 
 class users extends peers{
-	function addUser($username, $password, $admin='no')
+	function addUser($username, $password, $admin='no', $confirmed=1)
 	    {
+		$confirmed = $confirmed?"confirmed":"pending";
 		if (strlen($password) > 64)
 		    return("Sorry, password is too long (max is 63 chars)");
 		if (!preg_match('/^[a-z][\w.-]*$/is', $username) || strlen($username) > 40)
@@ -187,7 +189,7 @@ class users extends peers{
 		$secret = mksecret();
 		$hashpass = hash("sha256", $secret . $password . $secret); //JES NEED TO CHANGE sha3 to sha3-224 maybe 224.....
 		
-		$ret = $this->doSQL( sql::sqls['addUser'], $username, $hashpass, $secret, $admin );
+		$ret = $this->doSQL( sql::sqls['addUser'], $username, $hashpass, $secret, $confirmed, $admin );
 		if ($ret !== True) return ( $this->getLastSQLError(). "(maybe user exist already?)" );
 		//print("return true");
 		return True;
@@ -204,7 +206,11 @@ class users extends peers{
 		$user=mysqli_fetch_array($res);
 		return $user;
 	}
-
+	function blackListToUsername($username,$lengthrand=32){
+		//die("do black list");
+		$rand=random_bytes($lengthrand);
+		$this->addUser($username, $rand, 'no', false);
+	}
 	function delUserByUsername($username, $withTorrents=True, $withComments=True)
 	{
 		$ret0=True;
