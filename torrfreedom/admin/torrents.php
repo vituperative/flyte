@@ -17,9 +17,12 @@ else{
    $result = $admin->getTorrentsByUserNick($_GET['user'], $offset);
 }
 
-
 echo "<div id=server class=torrents>\n<table>
 <tr><th>Category</th><!--<th>id</th>--><th>Name</th><th>Info hash</th><th>Visible</th><!--<th>Filename</th><th>Descr</th><th>ori_descr</th>--><th>Downloads</th><th>Views</th><th>Seeders</th><th>Leechers</th><th>Banned</th><!--<th>hits</th>--><th>Nuke</th></tr>\n";
+
+function delTorrent($torid, $name, $user){
+   printf( "<td><a href=\"delTorrent.php?wdel_id='%s'&name='%s'&user='%s'\" class=button><span class=no></span></a></td>",$torid,$name,$user );
+}
 
 while($row = mysqli_fetch_array($result))
 {
@@ -45,7 +48,8 @@ echo "<td>" . $row['leechers'].  "</td>";
 echo "<td>
 <form action=modifytorrent.php method=GET><input type=checkbox name=banned><input type=submit value=Apply><input type=hidden name=torid value=$torid /><input type=hidden name=do value=banned /></form></td>"; //TODO apply in situ, not via bantorrent.php
 //echo "<td>" . $row['hits'].  "</td>";
-echo "<td><a href='delTorrent.php?wdel_id=".$torid."' class=button><span class=no></span></a></td>";
+//echo "<td><a href='delTorrent.php?wdel_id=".$torid."&name=".$row['name']."&user=".$_GET['user']."' class=button><span class=no></span></a></td>"; // maybe there is printf/sprintf?
+delTorrent($torid, $row['name'], $_GET['user']);
 echo "</tr>\n";
 /*
    foreach($row as $key=>$val){
