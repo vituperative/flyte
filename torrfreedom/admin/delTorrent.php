@@ -1,13 +1,18 @@
 <?php
 require 'admin_class.php';
 $admin = new admin();
+?>
 
-if(isset($_GET['del_torent'])){
+<form action=delTorrent.php method=GET>
+<div id=server class=dialog>
+
+<?php
+if(isset($_GET['del_torent'])) {
    $ret=$admin->delTorrentByID($_GET['del_torent']);
    if( strlen($ret) ){
-      print ("<p class=warn>Error: ". $ret ."</p>");
+      print ("<p class=fail>Error: ". $ret ."</p>");
    }
-   else print("deleted!");
+   else print("<p class=success>Torrent deleted!</p>");
 }
 if( !isset( $_GET['name'] ) ) $_GET['name']="undefined";
 if( !isset( $_GET['user'] ) ) $_GET['user']="undefined";
@@ -25,15 +30,16 @@ function sureBox($wdel_id){
 
 ?>
 
-<form action=delTorrent.php method=GET>
-<div id=server class=usermanage>
+<?php
+if(!isset($_GET['del_torent'])) {
+?>
 <table>
 <tr><th colspan=2>Delete torrent</th></tr>
 <?php
 	sureBox($wdel_id);
 ?>
-
 </table>
+<?php } ?>
 </div>
 </form>
 <?php stdfoot(); ?>

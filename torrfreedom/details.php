@@ -131,8 +131,11 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
             $s .= " $spacer<$editlink><span>Edit torrent</span></a>";
         }
 
-        echo '<tr><th colspan=2>' . $s . '&nbsp;&nbsp;<a title="Download ' . $row["filename"] . '" class=download href="download.php?id=' . $id . '&amp;file=' . rawurlencode($row["filename"]) . '"><span>' . htmlspecialchars($row["filename"]) . '</span></a></th></tr>';
-
+        if ($admin || $owned) {
+            echo '<tr><th colspan=2>' . $s . '&nbsp;&nbsp;<a title="Download ' . $row["filename"] . '" class=download href="download.php?id=' . $id . '&amp;file=' . rawurlencode($row["filename"]) . '"><span>' . htmlspecialchars($row["filename"]) . '</span></a><a title="Delete torrent" class=nuke href=#></a></th></tr>';
+        } else {
+            echo '<tr><th colspan=2>' . $s . '&nbsp;&nbsp;<a title="Download ' . $row["filename"] . '" class=download href="download.php?id=' . $id . '&amp;file=' . rawurlencode($row["filename"]) . '"><span>' . htmlspecialchars($row["filename"]) . '</span></a></th></tr>';
+        }
         $rowcount = 0;
 
         if (!empty($row["descr"])) {

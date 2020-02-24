@@ -116,7 +116,7 @@ if (!$count && isset($cleansearchstr)) {
 
 if ($count) {
     list($pagertop, $pagerbottom, $limit) = pager(25, $count, "./?" . $addparam);
-   
+
     $query = "SELECT torrents.*, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%d.%m.%y %T') as added, categories.name AS cat_name, torrents.leechers+torrents.seeders as swarmsize, users.username FROM torrents LEFT JOIN categories ON category = categories.id LEFT JOIN users ON torrents.owner = users.id $where $orderby $limit";
     //die($query);
     $res = mysqli_query($GLOBALS["___mysqli_ston"], $query)
@@ -168,7 +168,7 @@ if (isset($_GET["incldead"])) {
     $deadchkbox .= " checked=\"checked\"";
 }
 
-$deadchkbox .= " /> is inactive torrents</label>&nbsp; \n";
+$deadchkbox .= " /> include inactive</label>&nbsp; \n";
 
 ?>
 <?=$catdropdown?>

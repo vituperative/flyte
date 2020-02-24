@@ -59,4 +59,3 @@ function getMessage($do){
 	<input type=submit value=sure? name=continue>
 </form>
 <?php stdfoot(); ?>
-
