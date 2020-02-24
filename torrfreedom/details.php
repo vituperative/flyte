@@ -38,22 +38,27 @@ function dltable($name, $arr, $torrent)
 
 dbconn(0);
 
-if (!isset($_GET["id"]) && !isset($_GET["hash"]) ) {
+if (!isset($_GET["id"]) && !isset($_GET["info_hash"]) ) {
     die();
 }
 
 $row = "";
+$id=0;
 
 
-if(isset($_GET["hash"])){
-	$hash = $_GET["hash"];
+if(isset($_GET["info_hash"])){
+	$hash = $_GET["info_hash"];
 	//$hash = preg_replace('/ *$/s', "", $hash);
-	$hash = hex2bin($hash);
+	$hash=urldecode($hash);
+	//print("Hash:".$hash);
+	//$hash = hex2bin($hash);
 
 	//print("Hash: ".$hash);
-	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT torrents.seeders, torrents.banned, torrents.leechers, torrents.info_hash, torrents.filename, UNIX_TIMESTAMP() - UNIX_TIMESTAMP(torrents.last_action) AS lastseed, torrents.name, torrents.owner, torrents.save_as, torrents.descr, torrents.visible, torrents.size, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%H:%i, %a %D %M %Y') as added, torrents.views, torrents.hits, torrents.times_completed, torrents.id, torrents.type, torrents.numfiles, categories.name AS cat_name, category, users.username FROM torrents LEFT JOIN categories ON torrents.category = categories.id LEFT JOIN users ON torrents.owner = users.id WHERE torrents.info_hash = '$hash'")
+	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT torrents.seeders, torrents.id, torrents.banned, torrents.leechers, torrents.info_hash, torrents.filename, UNIX_TIMESTAMP() - UNIX_TIMESTAMP(torrents.last_action) AS lastseed, torrents.name, torrents.owner, torrents.save_as, torrents.descr, torrents.visible, torrents.size, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%H:%i, %a %D %M %Y') as added, torrents.views, torrents.hits, torrents.times_completed, torrents.id, torrents.type, torrents.numfiles, categories.name AS cat_name, category, users.username FROM torrents LEFT JOIN categories ON torrents.category = categories.id LEFT JOIN users ON torrents.owner = users.id WHERE torrents.info_hash = '$hash'")
 	or die();
-	$row = mysqli_fetch_array($res);	
+	$row = mysqli_fetch_array($res);
+	$id=intval($row['id']);
+
 }else{
 	$id = $_GET["id"];
 	$id = intval($id);
@@ -73,7 +78,12 @@ if (isset($CURUSER)) {
 }
 
 if (!$row || ($row["banned"] == "yes" && !$admin)) {
-    print("<p id=toast class=warn><span class=title>Torrent does not exist!</span>The torrent you are trying to access has been blacklisted from this tracker.</p>");
+    stdhead();
+    if (!$row)
+        print("<p id=toast class=warn><span class=title>Torrent does not exist!</span>The torrent file you are requesting does not exist on the server.</p>");
+    else
+        print("<p id=toast class=warn><span class=title>Torrent Unavailable.</span>The torrent you are trying to access has been blacklisted from this tracker.</p>");
+    header("Refresh: 5; url=" . $tracker_path);
 } else {
     if (isset($_GET["hit"])) {
         mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE torrents SET views = views + 1 WHERE id = $id");
