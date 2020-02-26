@@ -30,7 +30,7 @@ $signup_timeout = 86400 * 3;
 $max_dead_torrent_time = 4 * 3600;
 $autoclean_interval = 600;
 $pic_base_url = "pic/";
-
+$pagesize = 25;
 
 ##########################
 #
@@ -630,13 +630,13 @@ function torrenttable($res, $variant = "index")
         print("<th>Visible</th>");
     }
 
-    print("<th>Files</th><th>Comments</th><th>Added</th><th>Size</th>");
+    print("<th>Size</th><th>Files</th><th>Seeds</th><th>Leech</th>");
     if ($CURUSER) {
 //        print("<th>Views</th><th>Hits</th><th>DL's</th>");
         print("<th>Views</th><th>DL's</th>");
     }
 
-    print("<th>Seeds</th><th>Leech</th>");
+    print("<th>Comments</th><th>Added</th>");
     if ($variant != "mytorrents" && $CURUSER) {
         print("<th>Uploader</th>");
     }
@@ -705,6 +705,8 @@ function torrenttable($res, $variant = "index")
             print("</td>\n");
         }
 
+        print("<td>" . mksize($row["size"]) . "</td>\n");
+
         if ($row["type"] == "shashgle") {
             print("<td>" . $row["numfiles"] . "</td>\n");
         } else {
@@ -713,28 +715,6 @@ function torrenttable($res, $variant = "index")
             } else {
                 print("<td><a href=\"details.php?id=$id&amp;filelist=1#filelist\">" . $row["numfiles"] . "</a></td>\n");
             }
-
-        }
-
-        if (!$row["comments"]) {
-            print("<td>" . $row["comments"] . "</td>\n");
-        } else {
-            if ($variant == "index") {
-                print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;tocomm=1\">" . $row["comments"] . "</a></td>\n");
-            } else {
-                print("<td><a href=\"details.php?id=$id&amp;page=0#startcomments\">" . $row["comments"] . "</a></td>\n");
-            }
-
-        }
-
-//        print("<td>" . str_replace(" ", "<br>", $row["added"]) . "</td>\n");
-        print("<td>" . preg_replace("/ .*/", "", $row["added"]) . "</td>\n");
-        print("<td>" . mksize($row["size"]) . "</td>\n");
-
-        if (isset($CURUSER)) {
-            print("<td>" . $row["views"] . "</td>\n");
-//            print("<td>" . $row["hits"] . "</td>\n");
-            print("<td>" . $row["times_completed"] . "</td>\n");
         }
 
         if ($row["seeders"]) {
@@ -758,6 +738,25 @@ function torrenttable($res, $variant = "index")
         } else {
             print("<td>" . $row["leechers"] . "</td>\n");
         }
+
+        if (isset($CURUSER)) {
+            print("<td>" . $row["views"] . "</td>\n");
+//            print("<td>" . $row["hits"] . "</td>\n");
+            print("<td>" . $row["times_completed"] . "</td>\n");
+        }
+
+        if (!$row["comments"]) {
+            print("<td>" . $row["comments"] . "</td>\n");
+        } else {
+            if ($variant == "index") {
+                print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;tocomm=1\">" . $row["comments"] . "</a></td>\n");
+            } else {
+                print("<td><a href=\"details.php?id=$id&amp;page=0#startcomments\">" . $row["comments"] . "</a></td>\n");
+            }
+
+        }
+
+        print("<td>" . preg_replace("/ .*/", "", $row["added"]) . "</td>\n");
 
         if ($variant == "index" && $CURUSER) {
             print("<td class=uploadername>" . (isset($row["username"]) ? htmlspecialchars($row["username"]) : "<i>Unknown</i>") . "</td>\n");
