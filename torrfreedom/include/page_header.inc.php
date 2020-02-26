@@ -28,7 +28,7 @@ global $CURUSER, $pic_base_url, $tracker_title, $tracker_url_name, $tracker_path
     <meta charset="UTF-8">
     <?php
         $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME']; // TODO ADD THAT 2 FUNCTION
-        if (strpos($request, "install") !== false) {
+        if (strpos($request, "install/") !== false) {
             print("<link rel=stylesheet href=../include/style.css type=text/css>\n");
             print("<link rel=stylesheet href=installer.css type=text/css>\n");
         } else if (strpos($request, "admin") !== false) {
@@ -41,7 +41,7 @@ global $CURUSER, $pic_base_url, $tracker_title, $tracker_url_name, $tracker_path
     <link rel=shortcut icon href=<?php echo $tracker_path ?>favicon.ico>
     <link rel=alternate type=application/rss+xml title="<?php echo $tracker_title; ?> RSS Feed" href=rss.php>
     <title><?php
-        if (strpos($request, "install") !== false) {
+        if (strpos($request, "install/") !== false) {
             $tracker_title = "FLYTE INSTALL";
             echo strtoupper($tracker_title);
         } else {
@@ -88,7 +88,7 @@ function topnav() {
 }
 }
 
-if (strpos($request, "install") == false) {
+if (strpos($request, "install/") == false) {
     topnav();
     if ($request !== $tracker_path)
         if  (!strpos($request, "cat"))
