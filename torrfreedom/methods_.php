@@ -3,6 +3,11 @@ class mm{//magic methods
 	const dirs=array(
 			"a","admin","announce","include","install","pic","s","scrape"
 		);
+
+	public static function is_root_dir_(){
+		if(file_exists("methods_.php")) return true;
+		return False;
+	}
 	public static function is_root_dir(){
 		foreach(explode("/",dirname($_SERVER['PHP_SELF'])) as $dir)
 				if( in_array($dir, self::dirs) ) return true;
