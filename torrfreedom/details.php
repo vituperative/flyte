@@ -142,9 +142,11 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
             $s .= " $spacer<$editlink><span>Edit torrent</span></a>";
         }
 
-        if ($admin || $owned) {
+        if ( $admin ) {
             echo '<tr><th colspan=2>' . $s . '&nbsp;&nbsp;<a title="Download ' . $row["filename"] . '" class=download href="download.php?id=' . $id . '&amp;file=' . rawurlencode($row["filename"]) . '"><span>' . htmlspecialchars($row["filename"]) . '</span></a><a title="Delete torrent" class=nuke href="admin/delTorrent.php?wdel_id=\'' . $CURUSER["username"] . '\'&amp;id=\'' . $id . '\'&amp;&amp;name=\'' . htmlspecialchars($row["name"]) . '\'"></a></th></tr>';
-        } else {
+        } elseif($owned){
+            echo '<tr><th colspan=2>' . $s . '&nbsp;&nbsp;<a title="Download ' . $row["filename"] . '" class=download href="download.php?id=' . $id . '&amp;file=' . rawurlencode($row["filename"]) . '"><span>' . htmlspecialchars($row["filename"]) . '</span></a><a title="Delete torrent" class=nuke href="user/delTorrent.php?wdel_id=\'' . $CURUSER["username"] . '\'&amp;id=\'' . $id . '\'&amp;&amp;name=\'' . htmlspecialchars($row["name"]) . '\'"></a></th></tr>';		
+	}else {
             echo '<tr><th colspan=2>' . $s . '&nbsp;&nbsp;<a title="Download ' . $row["filename"] . '" class=download href="download.php?id=' . $id . '&amp;file=' . rawurlencode($row["filename"]) . '"><span>' . htmlspecialchars($row["filename"]) . '</span></a></th></tr>';
         }
         $rowcount = 0;
