@@ -1,5 +1,7 @@
 <?php
-require_once "../include/bittorrent.inc.php";
+if(file_exists("../include/bittorrent.inc.php")) require_once("../include/bittorrent.inc.php");
+else require_once("include/bittorrent.inc.php");
+
 
 class sql{
 
@@ -15,9 +17,11 @@ class sql{
 		"delTorrentByID"=>"DELETE FROM torrents WHERE id= '%d'",
 		"delTorrentByX"=>"DELETE FROM torrents WHERE %s= '%s'",
 		"delTorrentsByUserID"=>"DELETE FROM torrents WHERE owner= '%s'",
-
+		"getActiveTorrents"=>"SELECT %s from torrents where torrents.banned='no' and (torrents.leechers+torrents.seeders)>1 and torrents.visible='yes'",
+		"getTorrentsHits"=>"select COUNT(torrents.hits) from torrents %s",
+		"getTorrentsCompleted"=>"select COUNT(torrents.times_completed) from torrents %s ",
 		"getTorrentsByUserID"=>"SELECT * FROM torrents WHERE owner= '%s' LIMIT %d OFFSET %d",
-
+		
 		"getUserByID"=>"SELECT * FROM users where id='%d'",
 		"getUserByName"=>"SELECT * FROM users where username='%s'",
 
@@ -105,6 +109,22 @@ class torrents extends comments{
 		$ret = $this->doSQL( sql::sqls['getTorrentByID'], $id );
 		return mysqli_fetch_array($ret);
 	}
+	function getActiveTorrents(){
+		$ret = $this->doSQL( sql::sqls['getActiveTorrents'], "*" );
+		return mysqli_fetch_array($ret);
+	}
+	function getCountActiveTorrents(){
+		$ret = $this->doSQL( sql::sqls['getActiveTorrents'], "COUNT(*)" );
+		return mysqli_fetch_array($ret);
+	}	
+	function getTorrentsHits(){
+		$ret = $this->doSQL( sql::sqls['getTorrentsHits'], "" );
+		return mysqli_fetch_array($ret);
+	}
+	function getTorrentsCompleted(){
+		$ret = $this->doSQL( sql::sqls['getTorrentsCompleted'], "" );
+		return mysqli_fetch_array($ret);
+	}
 	//"delTorrentByX"=>"DELETE FROM torrents WHERE %s= '%s'"
 	function delTorrentByX($x,$value){
 		$ret1 = $this->doSQL( sql::sqls['delTorrentByX'], $x, $v );
@@ -149,6 +169,7 @@ class torrents extends comments{
 		$user=$this->getUserByName($id);
 		return $this->countOfTorrentsByUserID($user['id']);
 	}
+
 
 }
 
