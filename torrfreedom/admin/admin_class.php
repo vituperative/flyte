@@ -21,7 +21,7 @@ class sql{
 		"getTorrentsHits"=>"select COUNT(torrents.hits) from torrents %s",
 		"getTorrentsCompleted"=>"select COUNT(torrents.times_completed) from torrents %s ",
 		"getTorrentsByUserID"=>"SELECT * FROM torrents WHERE owner= '%s' LIMIT %d OFFSET %d",
-		
+		"getTorrentTop"=>"select COUNT(torrents.hits) as hits, COUNT(torrents.times_completed) as downloadtimes, COUNT(torrents.leechers) as leechers, COUNT(torrents.seeders) as seeders from torrents order by hits limit '%d'",
 		"getUserByID"=>"SELECT * FROM users where id='%d'",
 		"getUserByName"=>"SELECT * FROM users where username='%s'",
 
@@ -119,6 +119,10 @@ class torrents extends comments{
 	}	
 	function getTorrentsHits(){
 		$ret = $this->doSQL( sql::sqls['getTorrentsHits'], "" );
+		return mysqli_fetch_array($ret);
+	}
+	function getTorrentTop($limit=10){
+		$ret = $this->doSQL( sql::sqls['getTorrentTop'], $limit );
 		return mysqli_fetch_array($ret);
 	}
 	function getTorrentsCompleted(){
