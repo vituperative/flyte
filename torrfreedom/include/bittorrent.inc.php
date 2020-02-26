@@ -11,10 +11,16 @@ function getmicrotime()
     return ((float) $usec + (float) $sec);
 }
 $time_start = getmicrotime();
-include_once mm::require_file("/include/secrets.inc.php");
-include_once mm::require_file("/include/cleanup.php");
+if( mm::is_root_dir_() ){
+	include_once "secrets.inc.php";
+	include_once "cleanup.php";
+}else{
+	include_once "../include/secrets.inc.php";
+	include_once "../include/cleanup.php";
+}
+
 global $mysql_host, $mysql_user, $mysql_pass, $mysql_db;
-echo $mysql_host;
+
 //require_once "secrets.inc.php";
 //require_once "cleanup.php";
 
