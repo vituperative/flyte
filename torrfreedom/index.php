@@ -169,7 +169,7 @@ if (isset($_GET["incldead"])) {
     $deadchkbox .= " checked=\"checked\"";
 }
 
-$deadchkbox .= " /> is inactive torrents</label>&nbsp; \n";
+$deadchkbox .= " /> include inactive</label>&nbsp; \n";
 
 ?>
 <?=$catdropdown?>
