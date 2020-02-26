@@ -17,19 +17,6 @@ if (empty($cleansearchstr)) {
 $orderby = "ORDER BY torrents.id DESC";
 if(isset($_GET['order'])){
 
-
-
-/*
-<user__> <select name='order'>
-<user__> <option value='added'>Upload Date</option>
-<user__> <option value='leechesandseeders'>Swarm size</option>
-<user__> <option value='size'>File size</option>
-<user__> <option value='times_completed'>Downloads</option>
-<user__> <option value='comments'>Comments</option>
-*/
-
-
-
 $orders = array("added", "swarmsize", "size", "times_completed", "comments");
 foreach( $orders as $order ){
    if( $_GET['order'] == $order ){
@@ -52,7 +39,7 @@ if (isset($_GET["incldead"]) ) {
     }
     if( $_GET["incldead"] !='1' )
      $wherea[] = "visible != 'no'";
-    else $wherea[] = "visible != 'yes'";
+    else $wherea[] = "";
 }else $wherea[] = "visible != 'no'";
 
 //var_dump($wherea);
