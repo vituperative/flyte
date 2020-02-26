@@ -33,6 +33,7 @@ global $CURUSER, $pic_base_url, $tracker_title, $tracker_url_name, $tracker_path
             print("<link rel=stylesheet href=installer.css type=text/css>\n");
         } else if (strpos($request, "admin") !== false) {
             print("<link rel=stylesheet href=../include/style.css type=text/css>\n");
+            print("<link rel=stylesheet href=admin.css type=text/css>\n");
         } else {
             print("<link rel=stylesheet href=include/style.css type=text/css>\n");
         }
@@ -84,7 +85,7 @@ function topnav() {
         print("<a href=login.php>Login</a> | <a href=signup.php>Signup</a>");
     }
     if (strpos($request, "admin") === false)
-        print(" | <a href=rss.php>RSS Feed</a> | <a href=help.php>Help</a></div>\n");
+        print(" | <a href=rss.php>RSS Feed</a> | <a href=help.php>Help</a> | <a href=stats.php>Stats</a></div>\n");
 }
 }
 
