@@ -7,7 +7,7 @@ require_once 'include/bittorrent.inc.php';
 
 dbconn();
 
-
+$pagesize = isset($_GET['pagesize']) ? intval($_GET['pagesize']) : 25;
 $searchstr = @unesc($_GET["search"]);
 $cleansearchstr = searchfield($searchstr);
 if (empty($cleansearchstr)) {
@@ -92,7 +92,7 @@ if (!$count && isset($cleansearchstr)) {
         }
 
         $ssa = array();
-        foreach (array("search_text", "ori_descr") as $sss) {
+        foreach (array("search_text", "ori_descr", "torrents.name") as $sss) {
             $ssa[] = "$sss LIKE '%" . sqlwildcardesc($searchss) . "%'";
         }
 
@@ -103,6 +103,7 @@ if (!$count && isset($cleansearchstr)) {
         if ($where != "") {
             $where = "WHERE $where";
         }
+	//echo "SELECT COUNT(*) FROM torrents $where";
 
         $res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) FROM torrents $where");
         if ($res != false) {
@@ -116,9 +117,9 @@ if (!$count && isset($cleansearchstr)) {
 
 if ($count) {
     list($pagertop, $pagerbottom, $limit) = pager($pagesize, $count, "./?" . $addparam);
-
     $query = "SELECT torrents.*, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%d.%m.%y %T') as added, categories.name AS cat_name, torrents.leechers+torrents.seeders as swarmsize, users.username FROM torrents LEFT JOIN categories ON category = categories.id LEFT JOIN users ON torrents.owner = users.id $where $orderby $limit";
-    //die($query);
+
+   // die($query);
     $res = mysqli_query($GLOBALS["___mysqli_ston"], $query)
     or die(mysqli_error($GLOBALS["___mysqli_ston"]));
 } else {
@@ -168,7 +169,7 @@ if (isset($_GET["incldead"])) {
     $deadchkbox .= " checked=\"checked\"";
 }
 
-$deadchkbox .= " /> include inactive</label>&nbsp; \n";
+$deadchkbox .= " /> is inactive torrents</label>&nbsp; \n";
 
 ?>
 <?=$catdropdown?>
