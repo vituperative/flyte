@@ -7,7 +7,7 @@ require_once 'include/bittorrent.inc.php';
 
 dbconn();
 
-
+$pagesize = isset($_GET['pagesize']) ? intval($_GET['pagesize']) : 25;
 $searchstr = @unesc($_GET["search"]);
 $cleansearchstr = searchfield($searchstr);
 if (empty($cleansearchstr)) {
@@ -17,24 +17,11 @@ if (empty($cleansearchstr)) {
 $orderby = "ORDER BY torrents.id DESC";
 if(isset($_GET['order'])){
 
-
-
-/*
-<user__> <select name='order'>
-<user__> <option value='added'>Upload Date</option>
-<user__> <option value='leechesandseeders'>Swarm size</option>
-<user__> <option value='size'>File size</option>
-<user__> <option value='times_completed'>Downloads</option>
-<user__> <option value='comments'>Comments</option>
-*/
-
-
-
 $orders = array("added", "swarmsize", "size", "times_completed", "comments");
 foreach( $orders as $order ){
-	if( $_GET['order'] == $order ){
-			$orderby = "ORDER BY torrents.$order DESC";
-	}
+   if( $_GET['order'] == $order ){
+         $orderby = "ORDER BY torrents.$order DESC";
+   }
 }
 
 
@@ -52,7 +39,6 @@ if (isset($_GET["incldead"]) ) {
     }
     if( $_GET["incldead"] !='1' )
      $wherea[] = "visible != 'no'";
-    else $wherea[] = "visible != 'yes'";
 }else $wherea[] = "visible != 'no'";
 
 //var_dump($wherea);
@@ -92,7 +78,7 @@ if (!$count && isset($cleansearchstr)) {
         }
 
         $ssa = array();
-        foreach (array("search_text", "ori_descr") as $sss) {
+        foreach (array("search_text", "ori_descr", "torrents.name") as $sss) {
             $ssa[] = "$sss LIKE '%" . sqlwildcardesc($searchss) . "%'";
         }
 
@@ -103,6 +89,7 @@ if (!$count && isset($cleansearchstr)) {
         if ($where != "") {
             $where = "WHERE $where";
         }
+	//echo "SELECT COUNT(*) FROM torrents $where";
 
         $res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) FROM torrents $where");
         if ($res != false) {
@@ -115,10 +102,10 @@ if (!$count && isset($cleansearchstr)) {
 //print("where:".$where);
 
 if ($count) {
-    list($pagertop, $pagerbottom, $limit) = pager(25, $count, "./?" . $addparam);
-
+    list($pagertop, $pagerbottom, $limit) = pager($pagesize, $count, "./?" . $addparam);
     $query = "SELECT torrents.*, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%d.%m.%y %T') as added, categories.name AS cat_name, torrents.leechers+torrents.seeders as swarmsize, users.username FROM torrents LEFT JOIN categories ON category = categories.id LEFT JOIN users ON torrents.owner = users.id $where $orderby $limit";
-    //die($query);
+
+   // die($query);
     $res = mysqli_query($GLOBALS["___mysqli_ston"], $query)
     or die(mysqli_error($GLOBALS["___mysqli_ston"]));
 } else {

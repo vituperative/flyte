@@ -1,13 +1,23 @@
 <?php
 class mm{//magic methods
-
-	public static function getPathToTF(){
-		$dirs=array(
+	const dirs=array(
 			"a","admin","announce","include","install","pic","s","scrape"
 		);
+
+	public static function is_root_dir_(){
+		if(file_exists("methods_.php")) return true;
+		return False;
+	}
+	public static function is_root_dir(){
+		foreach(explode("/",dirname($_SERVER['PHP_SELF'])) as $dir)
+				if( in_array($dir, self::dirs) ) return true;
+		return False;		
+	}
+	public static function getPathToTF(){
+
 		$pathToTF="";
 		foreach(explode("/",dirname($_SERVER['PHP_SELF'])) as $dir){
-				if( in_array($dir, $dirs) ){
+				if( in_array($dir, self::dirs) ){
 					 $pathToTF.="/";
 					 break;
 				}

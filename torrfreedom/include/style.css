@@ -674,13 +674,14 @@ hr.separator {
   background: linear-gradient(to bottom, #343232, #232020);
 }
 
-#details, #addcomment, #uploader, .note, #upload.note, .success, #myaccount, #dologin, #signup, .warn.note, #wrapper.help div, #nuke, #comment, #recentcomments {
+#details, #addcomment, #uploader, .note, #upload.note, .success, #myaccount, #userprefs, #changepass,
+#dologin, #signup, .warn.note, #wrapper.help div, #nuke, #comment, #recentcomments, #stats {
   margin: 0 auto !important;
   box-sizing: border-box;
   border: 1px solid #111 !important;
 }
 
-#uploader, #myaccount, #nuke {
+#uploader, #myaccount, #changepass, #nuke, #userprefs {
   margin: 0 !important;
 }
 
@@ -688,7 +689,7 @@ hr.separator {
   margin-top: -1px !important;
 }
 
-#dologin, #signup, #myaccount, .warn.cookies {
+#dologin, #signup, #myaccount, #changepass, .warn.cookies, #userprefs {
   width: 600px !important;
 }
 
@@ -728,7 +729,7 @@ hr.separator {
   display: none; // no need for dupe, displayed below torrent details
 }*/
 
-#details th, #dologin th, #signup th, #myaccount th, #torrents th, #torrentedit th, #uploader th, #comment th {
+#details th, #dologin th, #signup th, #myaccount th, #torrents th, #torrentedit th, #uploader th, #comment th, #userprefs th {
   padding: 8px 14px !important;
   font-size: 105% !important;
   font-weight: 700 !important;
@@ -737,7 +738,7 @@ hr.separator {
   border-bottom: 1px solid #111 !important;
 }
 
-#details tr:not(#description) td:first-child {
+#details tr:not(#description) td:first-child, #stats td:first-child {
   text-align: right;
 }
 
@@ -941,28 +942,71 @@ th a {
   text-align: right;
 }
 
-#uploader td:first-child, #myaccount td:first-child {
+#changepass th {
+  text-align: left;
+  border-bottom: 1px solid #111;
+}
+
+#uploader td:first-child, #myaccount td:first-child, #changepass td:first-child,
+#stats td:first-child, #userprefs td:first-child {
   padding: 6px;
   white-space: nowrap;
   text-align: right;
 }
 
-#myaccount td:first-child {
-  min-width: 200px;
+form[action="takeprofedit.php"], form[action="updateprefs.php"] {
+  width: 600px;
+  margin: 0 auto;
+}
+
+#myaccount td:first-child, #changepass td:first-child, #userprefs td:first-child {
+  width: 160px !important;
   font-weight: 700;
 }
 
-#myaccount input[type="text"], #myaccount input[type="password"] {
+#stats {
+    width: 600px;
+}
+
+#stats td {
+  padding: 6px 12px;
+  width: 50%;
+}
+
+#stats td:first-child {
+  font-weight: 700;
+}
+
+#stats td:last-child {
+  text-align: left;
+}
+
+#myaccount th span {
+  font-size: 90% !important;
+  font-weight: 600;
+}
+
+#myaccount input[type="text"], #myaccount input[type="password"], #userprefs input[type="text"],
+#changepass input[type="text"], #changepass input[type="password"] {
   margin-left: 0;
   width: 100% !important;
   max-width: 100% !important;
+}
+
+#userprefs input[type="text"] {
+  width: calc(100% - 10px) !important;
+}
+
+input[type="text"]:disabled {
+    opacity: .6;
+    cursor: not-allowed;
 }
 
 #details td {
   padding: 6px 10px;
 }
 
-#uploader td:first-child b, #myaccount td:first-child b {
+#uploader td:first-child b, #myaccount td:first-child b, #changepass td:first-child b {
   font-weight: 700 !important;
 }
 
@@ -997,11 +1041,12 @@ table table {
   display: none;
 }
 
-#details td:last-child, #uploader td:last-child, #dologin td:last-child, #signup td:last-child, #myaccount td:last-child {
+#details td:last-child, #uploader td:last-child, #dologin td:last-child, #signup td:last-child,
+#myaccount td:last-child, #userprefs td:last-child {
   text-align: left;
 }
 
-#uploader td, #dologin td, #signup td, #myaccount td {
+#uploader td, #dologin td, #signup td, #myaccount td, #changepass td, #userprefs td {
   padding: 9px;
 }
 
@@ -1013,7 +1058,12 @@ table table {
   padding-left: 4px !important;
 }
 
-#uploader input, #uploader input[type="text"], #uploader input[type="file"], #uploader textarea, #myaccount input[type="text"], #myaccount input[type="password"], #torrentedit textarea, #torrentedit input[type="text"], #dologin input[type="text"], #dologin input[type="password"], #signup input[type="text"], #signup input[type="password"] {
+#uploader input, #uploader input[type="text"], #uploader input[type="file"], #uploader textarea,
+#myaccount input[type="text"], #myaccount input[type="password"], #myprefs input[type="text"],
+#changepass input[type="password"],
+#torrentedit textarea, #torrentedit input[type="text"],
+#dologin input[type="text"], #dologin input[type="password"],
+#signup input[type="text"], #signup input[type="password"] {
   width: calc(100% - 6px);
   max-width: calc(100% - 6px);
   box-sizing: border-box;
@@ -1603,7 +1653,7 @@ input#togglepanel {
   margin-bottom: 18px !important;
 }
 
-#dologin, #signup, #myaccount, #invite {
+#dologin, #signup, #myaccount, #changepass, #invite, #userprefs {
   width: 500px !important;
   margin: 0 auto;
 }
