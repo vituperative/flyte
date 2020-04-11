@@ -215,7 +215,8 @@ if ($count) {
         print("<p id=toast class=warn><span class=title>Search Results</span>Nothing found!<br>");
         print("Try again with a refined search string.</p>\n");
     } else {
-        print("<p id=toast class=warn><span class=title>Warning!</span>No active torrents currently available.</p>\n");
+        header("Refresh: 5; url=./?incldead=1&cat=0");
+        print("<p id=toast class=warn><span class=title>Warning!</span>No torrents currently active.<br> Redirecting to inactive torrents&hellip;</p>\n");
     }
 }
 if (isset($_SERVER['HTTP_REFERER']))
