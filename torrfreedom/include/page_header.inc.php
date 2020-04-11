@@ -76,18 +76,20 @@ if (!function_exists("topnav")) {
     $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME'];
     print("<div id=topnav>");
     if (strpos($request, "admin") !== false && $isadmin) {
-      print("<a href=#>Blacklist</a> | <a href=#>Configure</a> | <a href=server.php>Server</a> | <a href=users.php>Users</a> | <a href=../logout.php>Logout</a></div>\n");
-    } else if ($CURUSER) {
-      print("<a href=upload.php>Upload</a> | <a href=my.php>Account</a> | <a href=logout.php>Logout</a>");
-      if ($isadmin)
+      print("<a href=" . $tracker_path . "admin/>Admin</a> | <a href=server.php>Server</a><!-- | <a href=#>Configure</a>--> | <a href=users.php>Users</a><!-- | <a href=#>Blacklist</a>--> | <a href=../stats.php>Stats</a>\n");
+    } else if ($isadmin)
         print(" | <a href=" . $tracker_path . "admin/>Admin</a>");
-    } else {
+    if ($CURUSER && strpos($request, "admin") === false) {
+      print(" | <a href=my.php>Account</a> | <a href=upload.php>Upload</a>");
+    } else if (!$CURUSER) {
       print("<a href=login.php>Login</a> | <a href=signup.php>Signup</a>");
     }
+    if ($CURUSER && strpos($request, "admin") === false)
+      print(" | <a href=stats.php>Stats</a>");
     if (strpos($request, "admin") === false && !$isadmin)
       print(" | <a href=rss.php>RSS Feed</a> | <a href=help.php>Help</a>");
     if ($CURUSER)
-      print(" | <a href=stats.php>Stats</a>");
+      print(" | <a href=logout.php>Logout</a>");
     print("</div>\n");
   }
 }
