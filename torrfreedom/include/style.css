@@ -103,6 +103,7 @@ input[type="submit"], input[type="reset"], input[type="radio"], input[type="file
   }
   #sitename a:hover, #sitename a:focus, #sitename a:active {
     background: repeating-linear-gradient(to bottom, rgba(128, 64, 0, .2), rgba(0, 0, 0, .3) 2px), linear-gradient(to bottom, rgba(255, 96, 0, .1), rgba(0, 0, 0, .7) 100%), linear-gradient(to top, #f60, #520 10%, #000 35%, #f60 65%) !important;
+    -webkit-background-clip: text !important;
     background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     filter: opacity(.8);
@@ -206,9 +207,8 @@ th, #dostuff td {
   padding: 4px 12px;
 }
 
-#torrents th {
+#torrents th, #torrents th a {
   text-align: center !important;
-  font-size: 90% !important;
   color: rgba(255, 255, 255, .6);
 }
 
@@ -739,11 +739,8 @@ hr.separator {
   border-bottom: 1px solid #111 !important;
 }
 
-#torrents th {
-  font-size: 90% !important;
-}
-
-#torrents th a, #torrents th a:hover, #torrents th a:focus, #torrents th a:active {
+#torrents th, #torrents th a {
+  font-size: 9pt !important;
   font-weight: 700 !important;
   text-decoration: none;
   color: #bbb;
@@ -941,11 +938,11 @@ hr.separator {
   text-align: justify;
 }
 
-table:not(#torrents) th a {
+th a {
   float: right;
 }
 
-#myaccount th a {
+#myaccount th a, #torrents th a {
   float: none;
 }
 
@@ -1748,9 +1745,9 @@ input#togglepanel {
   #pager {
     width: 100%;
   }
-  #torrents th {
+  #torrents th, #torrents th a {
     padding: 6px 4px !important;
-    font-size: 85% !important;
+    font-size: 8pt !important;
   }
   #torrents td:first-child::before {
     display: inline-block;
@@ -1813,8 +1810,8 @@ input#togglepanel {
   .tablewrap#torrentlist {
     width: calc(100% - 20px) !important;
   }
-  #torrents th {
-  font-size: 95% !important;
+  #torrents th, #torrents th a {
+  font-size: 8.5pt !important;
   }
 }
 
@@ -1827,15 +1824,21 @@ input#togglepanel {
   }
 }
 
-/* chrome/blink fix for sluggish rendering */
+/* disable sticky header on non-firefox-based browsers */
+/*
 @supports not (-moz-appearance: none) {
   .shim.top {
+    margin-top: -7px;
     height: 10px;
     position: static;
   }
 
   #header {
-    margin-top: -10px;
+    margin-top: 0;
+    margin-bottom: -9px;
     position: static;
+    border-top: 1px solid #434040 !important;
   }
 }
+*/
+
