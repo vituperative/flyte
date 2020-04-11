@@ -7,7 +7,7 @@ require_once 'include/bittorrent.inc.php';
 
 dbconn();
 
-$pagesize = isset($_GET['pagesize']) ? intval($_GET['pagesize']) : 25;
+$pagesize = isset($_GET['pagesize']) ? intval($_GET['pagesize']) : 50;
 $searchstr = @unesc($_GET["search"]);
 $cleansearchstr = searchfield($searchstr);
 if (empty($cleansearchstr)) {
@@ -16,13 +16,15 @@ if (empty($cleansearchstr)) {
 
 $orderby = "ORDER BY torrents.id DESC";
 if (isset($_GET['order'])) {
-    $orders = array("added", "swarmsize", "size", "times_completed", "comments", "category", "numfiles", "owner", "seeders", "leechers", "name");
+    $orders = array("added", "swarmsize", "size", "times_completed", "comments", "category", "numfiles", "owner", "seeders", "leechers", "name", "views");
     foreach ($orders as $order) {
         if ($_GET['order'] == $order) {
             $orderby = "ORDER BY torrents.$order DESC";
+//            print("<p id=toast class=success><span class=title>Sort activated!</span><br>Now sorting torrents by <b>" . $order . "</b></p>\n");
         }
     }
 }
+
 //print ("now order by is: ".$orderby);
 
 
@@ -221,5 +223,6 @@ if (isset($_COOKIE["auth"]))
 if (strpos($referrer, 'my') !== false && strpos($referrer, 'returnto') === false && $cookie === false) {
     print("<p id=toast class=success><span class=title>Logout Complete</span>You have been successfully logged out!</p>\n");
 }
+
 stdfoot();
 ?>

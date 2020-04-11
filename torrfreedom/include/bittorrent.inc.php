@@ -674,7 +674,12 @@ function torrenttable($res, $variant = "index")
         print("&incldead=1");
       print("\">Leech</a></th>");
       if ($CURUSER["admin"] == "yes")
-        print("<th>Views</th>");
+      print("<th><a href=\"./?order=views");
+      if (isset($_GET["cat"]) && ($_GET["cat"] != 0))
+        print("&cat=" . ($_GET["cat"]));
+      if (isset($_GET["incldead"]))
+        print("&incldead=1");
+      print("\">Views</a></th>");
       if ($CURUSER) {
         print("<th><a href=\"./?order=times_completed");
       if (isset($_GET["cat"]) && ($_GET["cat"] != 0))

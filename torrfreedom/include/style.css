@@ -1543,7 +1543,7 @@ code.dest {
 input#togglepanel {
   position: absolute;
   z-index: -1;
-  top: -1000;
+/*  top: -1000px;*/
 }
 
 #togglepanel+label {
@@ -1816,8 +1816,8 @@ input#togglepanel {
 }
 
 @media screen and (min-width: 1800px) {
-  body, input, select, textarea, button, .button, label, #addcomment a, #dostuff .button {
-    font-size: 9.5pt !important;
+  body, input, select, textarea, button, .button, label, #addcomment a, #dostuff .button, td, td a {
+    font-size: 10pt !important;
   }
   #sitename a {
     font-size: 48pt !important;
