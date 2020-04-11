@@ -136,7 +136,7 @@ class torrents extends comments{
 	}
 	//"delTorrentByX"=>"DELETE FROM torrents WHERE %s= '%s'"
 	function delTorrentByX($x,$value){
-		$ret1 = $this->doSQL( sql::sqls['delTorrentByX'], $x, $v );
+		$ret1 = $this->doSQL( sql::sqls['delTorrentByX'], $x, $value );
 	}
 
 	function delTorrentsByUserID($id, $withComments=True){
