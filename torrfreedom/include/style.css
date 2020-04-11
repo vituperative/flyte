@@ -730,7 +730,7 @@ hr.separator {
   display: none; // no need for dupe, displayed below torrent details
 }*/
 
-#details th, #dologin th, #signup th, #myaccount th, #torrents th, #torrentedit th, #uploader th, #comment th, #userprefs th {
+#details th, #dologin th, #signup th, #myaccount th, #torrents th, #torrentedit th, #uploader th, #comment th, #userprefs th, #stats th {
   padding: 8px 14px !important;
   font-size: 105% !important;
   font-weight: 700 !important;

@@ -637,7 +637,7 @@ function torrenttable($res, $variant = "index")
       }
 
       print("<th>Size</th><th>Files</th><th>Seeds</th><th>Leech</th>");
-      if ($CURUSER && $CURUSER["admin"] == "yes")
+      if ($CURUSER["admin"] == "yes")
         print("<th>Views</th>");
       if ($CURUSER)
         print("<th>DL's</th>");
@@ -743,7 +743,7 @@ function torrenttable($res, $variant = "index")
           print("<td>" . $row["leechers"] . "</td>\n");
         }
 
-        if ($CURUSER && $CURUSER["admin"] == "yes")
+        if ($CURUSER["admin"] == "yes")
           print("<td>" . $row["views"] . "</td>\n");
         if ($CURUSER)
           print("<td>" . $row["times_completed"] . "</td>\n");

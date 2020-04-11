@@ -10,10 +10,12 @@ stdhead();
 printf("<div class=\"tablewrap slim\">\n<table id=stats>");
 
 printf("<tr><th colspan=2>Tracker Stats</th></tr>");
-printf("<tr><td>Active torrents</td><td>%d</td></tr>", $user->getCountActiveTorrents());
 printf("<tr><td>Total Torrents</td><td>%d</td></tr>", $user->countTorrents());
-printf("<tr><td>Completed Downloads</td><td>%d</td></tr>", $user->getTorrentsCompleted());
+printf("<tr><td>Active torrents</td><td>%d</td></tr>", $user->getCountActiveTorrents());
+if ($CURUSER["admin"] == "yes")
+  printf("<tr><td>Completed Downloads</td><td>%d</td></tr>", $user->getTorrentsCompleted());
 printf("<tr><td>Active Peers</td><td>%d &nbsp; <span title=\"Seeds / Leechers\">[ %d / %d ]</span></td></tr>", $user->countPeers(),$user->countOfSeeders(),$user->countOfLeech(), 1);
+if ($CURUSER["admin"] == "yes")
 printf("<tr><td>Total Hits</td><td>%d</td></tr>", $user->getTorrentsHits());
 printf("<tr><td>Total Comments</td><td>%d</td></tr>", $user->countComments());
 

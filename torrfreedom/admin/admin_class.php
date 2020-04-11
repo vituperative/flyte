@@ -6,37 +6,38 @@ else require_once("include/bittorrent.inc.php");
 class sql{
 
 	const sqls = array(
-		"getAllUsers"=>"SELECT users.username, users.added, users.last_login, users.last_access, 
+		"getAllUsers"=>"SELECT users.username, users.added, users.last_login, users.last_access,
 		(SELECT COUNT(*) FROM torrents WHERE torrents.owner = users.id) AS cntt,
 		(SELECT COUNT(*) FROM comments WHERE comments.user = users.id) AS cntc, status
 		FROM users",
 		"addUser"=>"INSERT INTO users (username, password, secret, status, added,admin) VALUES( '%s', '%s', '%s', '%s'" . ", NOW(), '%s')",
-		"delUser"=>"DELETE FROM users where username='%s'",
+		"delUser"=>"DELETE FROM users WHERE username='%s'",
 
 		"getTorrentByID"=>"SELECT * FROM torrents WHERE id = '%d'",
 		"delTorrentByID"=>"DELETE FROM torrents WHERE id= '%d'",
 		"delTorrentByX"=>"DELETE FROM torrents WHERE %s= '%s'",
 		"delTorrentsByUserID"=>"DELETE FROM torrents WHERE owner= '%s'",
-		"getActiveTorrents"=>"SELECT %s from torrents where torrents.banned='no' and (torrents.leechers+torrents.seeders)>1 and torrents.visible='yes'",
-		"getTorrentsHits"=>"select COUNT(torrents.hits) from torrents %s",
-		"getTorrentsCompleted"=>"select COUNT(torrents.times_completed) from torrents %s ",
+		"getActiveTorrents"=>"SELECT %s FROM torrents WHERE torrents.banned='no' AND (torrents.leechers+torrents.seeders)>1 AND torrents.visible='yes'",
+		"getTorrentsHits"=>"SELECT COUNT(torrents.hits) FROM torrents %s",
+		"getTorrentsViews"=>"SELECT COUNT(torrents.views) FROM torrents %s",
+		"getTorrentsCompleted"=>"SELECT COUNT(torrents.times_completed) FROM torrents %s",
 		"getTorrentsByUserID"=>"SELECT * FROM torrents WHERE owner= '%s' LIMIT %d OFFSET %d",
-		"getTorrentTop"=>"select COUNT(torrents.hits) as hits, COUNT(torrents.times_completed) as downloadtimes, COUNT(torrents.leechers) as leechers, COUNT(torrents.seeders) as seeders from torrents order by hits limit '%d'",
-		"getUserByID"=>"SELECT * FROM users where id='%d'",
-		"getUserByName"=>"SELECT * FROM users where username='%s'",
+		"getTorrentTop"=>"SELECT COUNT(torrents.hits) as hits, COUNT(torrents.times_completed) AS downloadtimes, COUNT(torrents.leechers) AS leechers, COUNT(torrents.seeders) AS seeders FROM torrents order by hits LIMIT '%d'",
+		"getUserByID"=>"SELECT * FROM users WHERE id='%d'",
+		"getUserByName"=>"SELECT * FROM users WHERE username='%s'",
 
-		"delCommentsWhereIS"=>"DELETE FROM comments where %s='%s'",
-		"changeValueOfTorrentByID"=>"UPDATE torrents SET `%s`='%s' WHERE `%s`='%s'", //Update torrents set what is where a=b 
-		"getCountOfTB"=>"select COUNT(*) AS count FROM %s",
-		"getCountOfTBWhere"=>"select COUNT(*) AS count FROM %s WHERE %s='%s'",
-		"isAdmin"=>"select * from users where username='%s' and admin='yes';",
+		"delCommentsWhereIS"=>"DELETE FROM comments WHERE %s='%s'",
+		"changeValueOfTorrentByID"=>"UPDATE torrents SET `%s`='%s' WHERE `%s`='%s'", //Update torrents set what is WHERE a=b
+		"getCountOfTB"=>"SELECT COUNT(*) AS COUNT FROM %s",
+		"getCountOfTBWhere"=>"SELECT COUNT(*) AS COUNT FROM %s WHERE %s='%s'",
+		"isAdmin"=>"SELECT * FROM users WHERE username='%s' AND admin='yes';",
 		"getAllTorrents"=>"SELECT * FROM torrents LIMIT %d OFFSET %d",
-		"getNameOfCategoryByID"=>"select * from categories where id='%d'"
+		"getNameOfCategoryByID"=>"SELECT * FROM categories WHERE id='%d'"
 	);
 	function doSQL($sprintf, ...$arguments){
 		$string = vsprintf($sprintf, $arguments );
 		//printf("Debug info: %s\n\r<br>", $string);
-		return $result = mysqli_query($this->con, $string ); 
+		return $result = mysqli_query($this->con, $string );
 	}
 	function getSQLCon(){
 			return $this->con;
@@ -50,11 +51,11 @@ class sql{
 	}
 	function getCountOfTB($table){
 		$r= $this->doSQL( sql::sqls['getCountOfTB'], $table );
-		return mysqli_fetch_assoc($r)['count'];
+		return mysqli_fetch_assoc($r)['COUNT'];
 	}
 	function getCountOfTBWhere($table,$a,$b){
 		$r= $this->doSQL( sql::sqls['getCountOfTBWhere'], $table,$a,$b );
-		return mysqli_fetch_assoc($r)['count'];
+		return mysqli_fetch_assoc($r)['COUNT'];
 	}
 }
 
@@ -63,22 +64,22 @@ class comments extends sql{
 		"id", "user", "torrent", "added", "text", "ori_text"
 	);
 //
-	function countComments(){
+	function COUNTComments(){
 		return $this->getCountOfTB("comments");
 	}
 
-	function delCommentIsWhere($is, $where="id"){
+	function delCommentIsWhere($is, $WHERE="id"){
 		$allowed=false;
 		foreach(self::commentfields as $allow_fields)
 		{
-			if($where == $allow_fields){
+			if($WHERE == $allow_fields){
 				$allowed=true;
 				break;
 			}
 		}
 		if(!$allowed) return false;
-		return $this->doSQL( sql::sqls['delCommentsWhereIS'], $where, $is);
-	} 
+		return $this->doSQL( sql::sqls['delCommentsWhereIS'], $WHERE, $is);
+	}
 	function delCommentByUserID($id){
 		return $this->delCommentIsWhere($id, "user");
 	}
@@ -88,14 +89,14 @@ class torrents extends comments{
 	const torrentfields=array(
 		//is much...
 	);
-//		"changeValueOfTorrentByID"=>"UPDATE torrents SET %s='%s' WHERE '%s'='%s'" //Update torrents set what is where a=b 
-	function changeValueOfTorrentByID($what,$value,$where_a,$where_b){
-		return $this->doSQL( sql::sqls['changeValueOfTorrentByID'], $what, $value, $where_a, $where_b );
+//		"changeValueOfTorrentByID"=>"UPDATE torrents SET %s='%s' WHERE '%s'='%s'" //Update torrents set what is WHERE a=b
+	function changeValueOfTorrentByID($what,$value,$WHERE_a,$WHERE_b){
+		return $this->doSQL( sql::sqls['changeValueOfTorrentByID'], $what, $value, $WHERE_a, $WHERE_b );
 	}
 	function setBanTorrentByID($is_banned, $id){
 		if( $is_banned === True ) $is_banned="yes";
 		elseif( $is_banned === False ) $is_banned="no";
-		
+
 		$this->changeValueOfTorrentByID("banned",  "$is_banned", "id", "$id");
 	}
 	function setVissbleTorrentByID($is_vissible, $id){
@@ -116,9 +117,13 @@ class torrents extends comments{
 	function getCountActiveTorrents(){
 		$ret = $this->doSQL( sql::sqls['getActiveTorrents'], "COUNT(*)" );
 		return mysqli_fetch_array($ret);
-	}	
+	}
 	function getTorrentsHits(){
 		$ret = $this->doSQL( sql::sqls['getTorrentsHits'], "" );
+		return mysqli_fetch_array($ret);
+	}
+	function getTorrentsViews(){
+		$ret = $this->doSQL( sql::sqls['getTorrentsViews'], "" );
 		return mysqli_fetch_array($ret);
 	}
 	function getTorrentTop($limit=10){
@@ -151,7 +156,7 @@ class torrents extends comments{
 		if ( !($ret1 && $ret0) ) return $this->getLastSQLError() ;
 		return True;
 	}
-	function countTorrents(){
+	function COUNTTorrents(){
 		return $this->getCountOfTB("torrents");
 	}
 	function getAllTorrents($offset=0,$limit=60){
@@ -166,19 +171,19 @@ class torrents extends comments{
 		//var_dump($user);
 		return $this->getTorrentsByUserID($user['id'], $offset, $limit);
 	}
-	function countOfTorrentsByUserID($id){
+	function COUNTOfTorrentsByUserID($id){
 		return $this->getCountOfTBWhere("torrents","owner",$id);
 	}
-	function countOfTorrentsByUserNick($id){
+	function COUNTOfTorrentsByUserNick($id){
 		$user=$this->getUserByName($id);
-		return $this->countOfTorrentsByUserID($user['id']);
+		return $this->COUNTOfTorrentsByUserID($user['id']);
 	}
 
 
 }
 
 class categories extends torrents{
-	function countCategories(){
+	function COUNTCategories(){
 		return $this->getCountOfTB("categories");
 	}
 	function getNameOfCategoryByID($id){
@@ -190,15 +195,15 @@ class categories extends torrents{
 }
 
 class peers extends categories{
-	function countPeers(){
+	function COUNTPeers(){
 		return $this->getCountOfTB("peers");
-	}	
-	function countOfSeeders(){
+	}
+	function COUNTOfSeeders(){
 		return $this->getCountOfTBWhere("peers","seeder","yes");
-	}	
-	function countOfLeech(){
+	}
+	function COUNTOfLeech(){
 		return $this->getCountOfTBWhere("peers","seeder","no");
-	}	
+	}
 }
 
 class users extends peers{
@@ -213,7 +218,7 @@ class users extends peers{
 		//print("Connected");
 		$secret = mksecret();
 		$hashpass = hash("sha256", $secret . $password . $secret); //JES NEED TO CHANGE sha3 to sha3-224 maybe 224.....
-		
+
 		$ret = $this->doSQL( sql::sqls['addUser'], $username, $hashpass, $secret, $confirmed, $admin );
 		if ($ret !== True) return ( $this->getLastSQLError(). "(maybe user exist already?)" );
 		//print("return true");
@@ -239,14 +244,14 @@ class users extends peers{
 	function delUserByUsername($username, $withTorrents=True, $withComments=True)
 	{
 		$ret0=True;
-		//if withTorrents... DELETE FROM TORRENTS where ... username=... 
+		//if withTorrents... DELETE FROM TORRENTS WHERE ... username=...
 		//also with comments
 		$user=$this->getUserByName($username);
 		//var_dump($user);
 		//exit(0);
 		if($withTorrents){
 			//print("DEL TORRENTS>". $withComments);
-			//exit(0);	
+			//exit(0);
 			$ret0=$this->delTorrentsByUserID($user['id'], $withComments);
 			//print("deleted?");
 			//exit(0);
@@ -262,7 +267,7 @@ class users extends peers{
 	function getAllUsers(){
 		return $this->doSQL( sql::sqls['getAllUsers'] );
 	}
-	function countUsers(){
+	function COUNTUsers(){
 		return $this->getCountOfTB("users");
 	}
 	function isAdmin($nick){
@@ -298,7 +303,7 @@ class admin extends users{
 		if($moveIfNotAdmin) {
 			$is_admin = $this->checkAdmin();
 			if(!$is_admin){
-				
+
 				if(!self::DEBUG){
 					header("Location: ../index.php");
 					exit(0);
