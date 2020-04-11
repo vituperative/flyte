@@ -743,6 +743,12 @@ hr.separator {
   font-size: 90% !important;
 }
 
+#torrents th a, #torrents th a:hover, #torrents th a:focus, #torrents th a:active {
+  font-weight: 700 !important;
+  text-decoration: none;
+  color: #bbb;
+}
+
 #details tr:not(#description) td:first-child, #stats td:first-child {
   text-align: right;
 }
@@ -935,7 +941,7 @@ hr.separator {
   text-align: justify;
 }
 
-th a {
+table:not(#torrents) th a {
   float: right;
 }
 
