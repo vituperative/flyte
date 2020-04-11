@@ -16,8 +16,7 @@ if (empty($cleansearchstr)) {
 
 $orderby = "ORDER BY torrents.id DESC";
 if (isset($_GET['order'])) {
-
-    $orders = array("added", "swarmsize", "size", "times_completed", "comments", "category", "numfiles", "owner", "seeders", "leechers");
+    $orders = array("added", "swarmsize", "size", "times_completed", "comments", "category", "numfiles", "owner", "seeders", "leechers", "name");
     foreach ($orders as $order) {
         if ($_GET['order'] == $order) {
             $orderby = "ORDER BY torrents.$order DESC";
