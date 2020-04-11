@@ -739,6 +739,10 @@ hr.separator {
   border-bottom: 1px solid #111 !important;
 }
 
+#torrents th {
+  font-size: 90% !important;
+}
+
 #details tr:not(#description) td:first-child, #stats td:first-child {
   text-align: right;
 }
@@ -1802,6 +1806,9 @@ input#togglepanel {
   }
   .tablewrap#torrentlist {
     width: calc(100% - 20px) !important;
+  }
+  #torrents th {
+  font-size: 95% !important;
   }
 }
 
