@@ -174,8 +174,6 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
             }
 
             print("</tr>");
-        } else {
-            tr("Downloads", $row["times_completed"], 0, $rowcount++);
         }
 
         $keepget = "";
