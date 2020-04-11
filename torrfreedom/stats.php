@@ -5,6 +5,8 @@ if (ob_get_level() == 0) {
 require_once "include/bittorrent.inc.php";
 require_once "user/user.class.php";
 $user=new user();
+if (!$CURUSER)
+  header("Location: ./");
 stdhead();
 
 printf("<div class=\"tablewrap slim\">\n<table id=stats>");
@@ -16,7 +18,7 @@ if ($CURUSER["admin"] == "yes")
   printf("<tr><td>Completed Downloads</td><td>%d</td></tr>", $user->getTorrentsCompleted());
 printf("<tr><td>Active Peers</td><td>%d &nbsp; <span title=\"Seeds / Leechers\">[ %d / %d ]</span></td></tr>", $user->countPeers(),$user->countOfSeeders(),$user->countOfLeech(), 1);
 if ($CURUSER["admin"] == "yes")
-printf("<tr><td>Total Hits</td><td>%d</td></tr>", $user->getTorrentsHits());
+printf("<tr><td>Total Views</td><td>%d</td></tr>", $user->getTorrentsViews());
 printf("<tr><td>Total Comments</td><td>%d</td></tr>", $user->countComments());
 
 printf("</div></table>");
