@@ -98,7 +98,8 @@ if (strpos($request, "install/") == false) {
   topnav();
   if ($request !== $tracker_path)
     if (!strpos($request, "cat"))
-      print("<div id=tracker class=shim></div>");
+        if (!strpos($request, "order"))
+            print("<div id=tracker class=shim></div>");
 } else {
   print("<div id=installation class=shim></div>");
 }
