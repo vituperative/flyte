@@ -167,14 +167,13 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
         }
 
         tr("Added", $row["added"] . " UTC", 0, $rowcount++);
-        if ($CURUSER) {
+        if ($admin) {
             print("<tr><td>Stats</td><td><b>Downloads:</b> " . $row["times_completed"] . "&nbsp;&nbsp;&nbsp;<b>Views:</b> " . $row["views"] . "&nbsp;&nbsp;&nbsp;<b>Hits:</b> " . $row["hits"]);
             if ($row["visible"] == "no") {
                 print("&nbsp;&nbsp;&nbsp;<b>Visible:</b> <span class=\"no small\" title=\"No seeders currently connected to this torrent\">No</span>");
             }
-
             print("</tr>");
-        } else {
+        } else if ($CURUSER) {
             tr("Downloads", $row["times_completed"], 0, $rowcount++);
         }
 

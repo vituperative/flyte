@@ -15,16 +15,13 @@ if (empty($cleansearchstr)) {
 }
 
 $orderby = "ORDER BY torrents.id DESC";
-if(isset($_GET['order'])){
-
-$orders = array("added", "swarmsize", "size", "times_completed", "comments");
-foreach( $orders as $order ){
-   if( $_GET['order'] == $order ){
-         $orderby = "ORDER BY torrents.$order DESC";
-   }
-}
-
-
+if (isset($_GET['order'])) {
+    $orders = array("added", "swarmsize", "size", "times_completed", "comments", "category", "numfiles", "owner", "seeders", "leechers", "name");
+    foreach ($orders as $order) {
+        if ($_GET['order'] == $order) {
+            $orderby = "ORDER BY torrents.$order DESC";
+        }
+    }
 }
 //print ("now order by is: ".$orderby);
 
@@ -32,15 +29,17 @@ foreach( $orders as $order ){
 $addparam = "";
 $wherea = array();
 
-if (isset($_GET["incldead"]) ) {
+if (isset($_GET["incldead"])) {
     $addparam .= "incldead=1&amp;";
     if (!isset($CURUSER) || $CURUSER["admin"] !== "yes") {
         $wherea[] = "banned != 'yes'";
     }
-    if( $_GET["incldead"] !='1' )
-     $wherea[] = "visible != 'no'";
-}else $wherea[] = "visible != 'no'";
-
+    if ($_GET["incldead"] != '1')
+        $wherea[] = "visible != 'no'";
+    else $wherea[] = "visible != 'yes'";
+} else {
+    $wherea[] = "visible != 'no'";
+}
 //var_dump($wherea);
 
 if (isset($_GET["cat"]) && ($_GET["cat"] != 0)) {
@@ -89,7 +88,7 @@ if (!$count && isset($cleansearchstr)) {
         if ($where != "") {
             $where = "WHERE $where";
         }
-	//echo "SELECT COUNT(*) FROM torrents $where";
+        //echo "SELECT COUNT(*) FROM torrents $where";
 
         $res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) FROM torrents $where");
         if ($res != false) {
@@ -105,9 +104,9 @@ if ($count) {
     list($pagertop, $pagerbottom, $limit) = pager($pagesize, $count, "./?" . $addparam);
     $query = "SELECT torrents.*, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%d.%m.%y %T') as added, categories.name AS cat_name, torrents.leechers+torrents.seeders as swarmsize, users.username FROM torrents LEFT JOIN categories ON category = categories.id LEFT JOIN users ON torrents.owner = users.id $where $orderby $limit";
 
-   // die($query);
+    // die($query);
     $res = mysqli_query($GLOBALS["___mysqli_ston"], $query)
-    or die(mysqli_error($GLOBALS["___mysqli_ston"]));
+        or die(mysqli_error($GLOBALS["___mysqli_ston"]));
 } else {
     unset($res);
 }
@@ -124,7 +123,7 @@ if (isset($cleansearchstr)) {
     stdhead("Search results for: $searchstr");
 } else {
     stdhead();
-    ?>
+?>
 <?php
 }
 
@@ -133,47 +132,50 @@ $cats = genrelist();
 ?>
 
 <div id=searchandshow>
-<input type=checkbox name=togglepanel id=togglepanel><label for=togglepanel title="Toggle Panel Visibility"><span id=toggle>&nbsp;</span></label>
-<form method="get" action="./">
-<div id=search>
-<input name="search" type="text" value="<?=htmlspecialchars($searchstr)?>" size="40" class="input">
-<select class="input" name="cat"><option value="0">All Categories</option>
-<?php
+    <input type=checkbox name=togglepanel id=togglepanel><label for=togglepanel title="Toggle Panel Visibility"><span id=toggle>&nbsp;</span></label>
+    <form method="get" action="./">
+        <div id=search>
+            <input name="search" type="text" value="<?= htmlspecialchars($searchstr) ?>" size="40" class="input">
+            <select class="input" name="cat">
+                <option value="0">All Categories</option>
+                <?php
 
-$catdropdown = "";
-foreach ($cats as $cat) {
-    $catdropdown .= "<option value=\"" . $cat["id"] . "\"";
-    if (isset($_GET["cat"]) && $cat["id"] == $_GET["cat"]) {
-        $catdropdown .= " selected=\"selected\"";
-    }
+                $catdropdown = "";
+                foreach ($cats as $cat) {
+                    $catdropdown .= "<option value=\"" . $cat["id"] . "\"";
+                    if (isset($_GET["cat"]) && $cat["id"] == $_GET["cat"]) {
+                        $catdropdown .= " selected=\"selected\"";
+                    }
 
-    $catdropdown .= ">" . htmlspecialchars($cat["name"]) . "</option>\n";
-}
+                    $catdropdown .= ">" . htmlspecialchars($cat["name"]) . "</option>\n";
+                }
 
-$deadchkbox = "<label><input type=\"checkbox\" name=\"incldead\" value=\"1\"";
-if (isset($_GET["incldead"])) {
-    $deadchkbox .= " checked=\"checked\"";
-}
+                $deadchkbox = "<label><input type=\"checkbox\" name=\"incldead\" value=\"1\"";
+                if (isset($_GET["incldead"])) {
+                    $deadchkbox .= " checked=\"checked\"";
+                }
 
-$deadchkbox .= " /> include inactive</label>&nbsp; \n";
+                $deadchkbox .= " /> include inactive</label>&nbsp; \n";
 
-?>
-<?=$catdropdown?>
-</select>
-Sort by:
-<select name='order'>
-<option value='added'>Upload Date</option>
-<option value='swarmsize'>Swarm size</option>
-<option value='size'>File size</option>
-<option value='times_completed'>Downloads</option>
-<option value='comments'>Comments</option>
-</select>
-<?=$deadchkbox?>
-<input type="submit" value="Search!" class="input"/>
-</div>
-</form>
-<div id=torrentshow>
-<!--
+                ?>
+                <?= $catdropdown ?>
+            </select>
+            Sort by:
+            <select name='order'>
+                <option value='added'>Upload Date</option>
+                <option value='swarmsize'>Swarm size</option>
+                <option value='size'>File size</option>
+                <?php if ($CURUSER) { ?>
+                    <option value='times_completed'>Downloads</option>
+                <?php } ?>
+                <option value='comments'>Comments</option>
+            </select>
+            <?= $deadchkbox ?>
+            <input type="submit" value="Search!" class="input" />
+        </div>
+    </form>
+    <div id=torrentshow>
+        <!--
 <?php
 if ($additionals) {
     $time_end = getmicrotime();
@@ -182,13 +184,13 @@ if ($additionals) {
 ?>
 <form method="get" action="./">
 Show: <select class="input" name="cat"><option value="0">All Categories</option>
-<?=$catdropdown?>
+<?= $catdropdown ?>
 </select>
-<?=$deadchkbox?>
+<?= $deadchkbox ?>
 <input type="submit" value="Go!" class="input"/>
 </form>
 -->
-</div>
+    </div>
 </div>
 <?php
 
@@ -221,4 +223,3 @@ if (strpos($referrer, 'my') !== false && strpos($referrer, 'returnto') === false
 }
 stdfoot();
 ?>
-
