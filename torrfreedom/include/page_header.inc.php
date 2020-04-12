@@ -152,7 +152,7 @@
         }
 ?>
       </center>
-      </div>
+    </div>
     <hr id=top hidden>
 <?php
 /**
