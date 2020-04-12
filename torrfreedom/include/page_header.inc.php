@@ -28,7 +28,7 @@ header("X-Frame-Options: Deny;");
   if (strpos($request, "install/") !== false) {
       if (strpos($request, "admin") !== false) {
   ?>
-  <link rel=preload href=include/style.css as=style>
+  <link rel="preload" href="include/style.css" as="style">
   <?php
       }
   }
@@ -75,7 +75,7 @@ header("X-Frame-Options: Deny;");
 <div id=header>
 <div class="shim top"></div>
 <?php
-print("<div id=sitename><a href=" . $tracker_path . ">" . $tracker_title . "</a></div>\n");
+print("<center>\n<div id=sitename>\n<a href=" . $tracker_path . ">" . $tracker_title . "</a>\n</div>\n");
 if (!function_exists("topnav")) {
   function topnav()
   {
@@ -84,23 +84,32 @@ if (!function_exists("topnav")) {
     global $tracker_path;
     $isadmin = $CURUSER["admin"] == "yes";
     $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME'];
-    print("<div id=topnav>");
+    print("<div id=topnav>\n");
     if (strpos($request, "admin") !== false && $isadmin) {
-      print("<a href=" . $tracker_path . "admin/>Admin</a> | <a href=server.php>Server</a><!-- | <a href=#>Configure</a>--> | <a href=users.php>Users</a><!-- | <a href=#>Blacklist</a>--> | <a href=../stats.php>Stats</a>\n");
+      print("<a href=" . $tracker_path . "admin/>Admin</a>\n");
+      print("<a href=server.php>Server</a>\n");
+      print("<!--<a href=#>Configure</a>-->\n");
+      print("<a href=users.php>Users</a>\n");
+      print("<!--<a href=#>Blacklist</a>-->\n");
+      print("<a href=../stats.php>Stats</a>\n");
     } else if ($isadmin)
-        print(" | <a href=" . $tracker_path . "admin/>Admin</a>");
+      print("<a href=" . $tracker_path . "admin/>Admin</a>\n");
     if ($CURUSER && strpos($request, "admin") === false) {
-      print(" | <a href=my.php>Account</a> | <a href=upload.php>Upload</a>");
+      print("<a href=my.php>Account</a>\n");
+      print("<a href=upload.php>Upload</a>\n");
     } else if (!$CURUSER) {
-      print("<a href=login.php>Login</a> | <a href=signup.php>Signup</a>");
+      print("<a href=login.php>Login</a>\n");
+      print("<a href=signup.php>Signup</a>\n");
     }
     if ($CURUSER && strpos($request, "admin") === false)
-      print(" | <a href=stats.php>Stats</a>");
-    if (strpos($request, "admin") === false && !$isadmin)
-      print(" | <a href=rss.php>RSS Feed</a> | <a href=help.php>Help</a>");
+      print("<a href=stats.php>Stats</a>\n");
+    if (strpos($request, "admin") === false && !$isadmin) {
+      print("<a href=rss.php>RSS Feed</a>\n");
+      print("<a href=help.php>Help</a>\n");
+    }
     if ($CURUSER)
-      print(" | <a href=logout.php>Logout</a>");
-    print("</div>\n");
+      print("<a href=logout.php>Logout</a>\n");
+    print("</div>\n</center>\n");
   }
 }
 
