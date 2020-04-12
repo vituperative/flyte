@@ -24,6 +24,8 @@ if (isset($_GET['order'])) {
                 $orderby = "ORDER BY torrents.$order ASC";
             else if($order == "owner")
                 $orderby = "ORDER BY users.username ASC";
+            else if($order == "swarmsize")
+                $orderby = "ORDER BY torrents.leechers + torrents.seeders DESC";
             else
                 $orderby = "ORDER BY torrents.$order DESC";
             break;
