@@ -623,7 +623,7 @@ function torrenttable($res, $variant = "index")
   global $CURUSER;
   global $tracker_url_name;
   global $tracker_path;
-  $url = (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != "") ? "?" . $_SERVER['QUERY_STRING'] . "&" : "?" . $_SERVER['QUERY_STRING'];
+  $url = (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != "") ? "?" . $_SERVER['QUERY_STRING'] . "&" : "?";
   $filteredURL = preg_replace('~(\?|&)order=[^&]*.~', '$1', $url);
 ?>
 
