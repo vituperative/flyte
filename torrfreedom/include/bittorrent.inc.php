@@ -352,7 +352,7 @@ function stdfoot()
   } else {
     print('<p id=footer><span id=blurb>' . $sitename . ' (Est. 2017)' . $bullet . 'Admin: <code>' . $contact . '</code>' . $bullet . 'Design by <a href=http://skank.i2p/>dr|z3d</a></span></p>');
   }
-  print("\n<style type=text/css>body {opacity: 1 !important;}</style>");
+  print("\n<style type=text/css>body {opacity: 1 !important; color: #bbb !important;} a {opacity: 1 !important;} body::after {display: none !important;}</style>");
   print("\n</body>\n</html>");
 }
 
@@ -673,13 +673,14 @@ function torrenttable($res, $variant = "index")
       if (isset($_GET["incldead"]))
         print("&incldead=1");
       print("\">Leech</a></th>");
-      if ($CURUSER["admin"] == "yes")
-      print("<th><a href=\"./?order=views");
-      if (isset($_GET["cat"]) && ($_GET["cat"] != 0))
-        print("&cat=" . ($_GET["cat"]));
-      if (isset($_GET["incldead"]))
-        print("&incldead=1");
-      print("\">Views</a></th>");
+      if ($CURUSER["admin"] == "yes") {
+        print("<th><a href=\"./?order=views");
+        if (isset($_GET["cat"]) && ($_GET["cat"] != 0))
+          print("&cat=" . ($_GET["cat"]));
+        if (isset($_GET["incldead"]))
+          print("&incldead=1");
+        print("\">Views</a></th>");
+      }
       if ($CURUSER) {
         print("<th><a href=\"./?order=times_completed");
       if (isset($_GET["cat"]) && ($_GET["cat"] != 0))

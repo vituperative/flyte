@@ -17,7 +17,19 @@ body {
   position: relative;
   min-width: 800px;
   color: #bbb;
-  opacity: 0 !important;
+}
+
+body::after {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    display: inline-block;
+    background: #151414;
+    content: "";
 }
 
 body, input, select, textarea, button {
@@ -571,22 +583,34 @@ hr.separator {
 
 #topnav {
   padding-bottom: 6px;
-  margin: 0 0 10px;
+  margin: 0 auto 10px;
+  word-spacing: -.18em;
   color: transparent;
   border-bottom: 1px solid #343232;
-  filter: drop-shadow(0 0 1px #181717);
 }
 
-#topnav a, .username {
-  margin: 8px -6px;
+#topnav a {
+  margin: 8px 0;
   padding: 4px 24px 6px;
+  min-width: 100px;
   display: inline-block;
   line-height: 1;
-  box-shadow: inset 0 0 0 1px #454040, 0 0 0 1px #121010;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, .1) 50%, rgba(0, 0, 0, .2) 50%), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px), linear-gradient(to bottom, #454040, #232020);
-  font-size: 105% !important;
-  color: #9a9090;
   text-decoration: none !important;
+  font-weight: 700 !important;
+  font-size: 105% !important;
+  text-shadow: 0 1px 1px #000;
+  color: #9f9090;
+  box-shadow: inset 0 0 0 1px #454040, inset 0 0 0 2px #121010, 0 0 0 1px #121010;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, .1) 50%, rgba(0, 0, 0, .2) 50%), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px), linear-gradient(to bottom, #454040, #232020);
+  will-change: transform;
+}
+
+#topnav a::before, #topnav a::after {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 2px;
+  vertical-align: middle;
 }
 
 #addcomment a {
@@ -594,14 +618,28 @@ hr.separator {
   font-size: 90% !important;
 }
 
-#topnav a {
-  margin: 8px -6px;
-  min-width: 100px;
-  color: #9f9090;
-  font-weight: 700 !important;
-  text-shadow: 0 1px 1px #000;
-  box-shadow: inset 0 0 0 1px #454040, inset 0 0 0 2px #121010, 0 0 0 1px #121010;
-  will-change: transform;
+@supports (animation: ease margin .5s forwards) {
+  #topnav a {
+    margin: 8px -240px;
+    filter: opacity(0);
+    animation: ease slide .4s forwards;
+  }
+}
+
+@keyframes slide {
+  0 {
+    margin: 8px -240px;
+    filter: opacity(0);
+    transform: scale(.4);
+  }
+  60% {
+    filter: opacity(0);
+  }
+  100% {
+    margin: 8px 0;
+    filter: opacity(1);
+    transform: scale(1);
+  }
 }
 
 #topnav a:first-child {
@@ -1573,11 +1611,18 @@ input#togglepanel {
   border: 1px solid #232020;
   border-radius: 50%;
   background: #484040;
-  background: linear-gradient(to bottom, #484040, #353030);
-  box-shadow: inset 0 0 0 1px #454040, inset 0 -2px 2px #111;
+  background: radial-gradient(at center -10px, rgba(220, 200, 200, .05) 30%, rgba(0, 0, 0, 0) 150%), linear-gradient(to bottom, #484040, #353030);
+  box-shadow: inset 0 0 0 1px #454040, inset 0 0 1px 1px #565050, inset 0 -2px 2px #111;
   content: "";
   filter: drop-shadow(0 0 1px rgba(255, 220, 220, .1));
   will-change: transform;
+}
+
+@media screen and (min-width: 1200px) {
+  #togglepanel + label::after {
+    width: 11px;
+    height: 11px;
+  }
 }
 
 #togglepanel+label:hover::after, #togglepanel:focus+label::after {
@@ -1816,8 +1861,12 @@ input#togglepanel {
 }
 
 @media screen and (min-width: 1800px) {
-  body, input, select, textarea, button, .button, label, #addcomment a, #dostuff .button, td, td a {
+  body, input, input[type="submit"], input[type="reset"], select, textarea, button, .button, label, #addcomment a, #dostuff .button, td, td a {
     font-size: 10pt !important;
+  }
+  input, input[type="submit"], input[type="reset"], select, button, .button {
+    padding-top: 3px;
+    padding-bottom: 5px;
   }
   #sitename a {
     font-size: 48pt !important;

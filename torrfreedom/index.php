@@ -14,13 +14,17 @@ if (empty($cleansearchstr)) {
     unset($cleansearchstr);
 }
 
-$orderby = "ORDER BY torrents.id DESC";
-if (isset($_GET['order'])) {
+// $orderby = "ORDER BY torrents.id DESC";
+
+if ($_GET['order'] === "name")
+    $orderby = "ORDER BY torrents.name ASC";
+else if ($_GET['order'] === "owner")
+    $orderby = "ORDER BY torrents.owner ASC";
+else if (isset($_GET['order'])) {
     $orders = array("added", "swarmsize", "size", "times_completed", "comments", "category", "numfiles", "owner", "seeders", "leechers", "name", "views");
     foreach ($orders as $order) {
         if ($_GET['order'] == $order) {
             $orderby = "ORDER BY torrents.$order DESC";
-//            print("<p id=toast class=success><span class=title>Sort activated!</span><br>Now sorting torrents by <b>" . $order . "</b></p>\n");
         }
     }
 }
@@ -104,7 +108,7 @@ if (!$count && isset($cleansearchstr)) {
 
 if ($count) {
     list($pagertop, $pagerbottom, $limit) = pager($pagesize, $count, "./?" . $addparam);
-    $query = "SELECT torrents.*, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%d.%m.%y %T') as added, categories.name AS cat_name, torrents.leechers+torrents.seeders as swarmsize, users.username FROM torrents LEFT JOIN categories ON category = categories.id LEFT JOIN users ON torrents.owner = users.id $where $orderby $limit";
+    $query = "SELECT torrents.*, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%d.%m.%y %T') as added, categories.name AS cat_name, torrents.leechers + torrents.seeders as swarmsize, users.username FROM torrents LEFT JOIN categories ON category = categories.id LEFT JOIN users ON torrents.owner = users.id $where $orderby $limit";
 
     // die($query);
     $res = mysqli_query($GLOBALS["___mysqli_ston"], $query)
@@ -211,7 +215,8 @@ if ($count) {
         print("<p id=toast class=warn><span class=title>Search Results</span>Nothing found!<br>");
         print("Try again with a refined search string.</p>\n");
     } else {
-        print("<p id=toast class=warn><span class=title>Warning!</span>No active torrents currently available.</p>\n");
+        header("Refresh: 5; url=./?incldead=1&cat=0");
+        print("<p id=toast class=warn><span class=title>Warning!</span>No torrents currently active.<br> Redirecting to inactive torrents&hellip;</p>\n");
     }
 }
 if (isset($_SERVER['HTTP_REFERER']))
