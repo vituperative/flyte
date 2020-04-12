@@ -9,7 +9,7 @@ function dltable($name, $arr, $torrent)
 {
     global $CURUSER;
 
-    $s .= "\n";
+    $s = "\n";
     $s .= "<table id=peerinfo>\n";
     $s .= "<tr><th>Peer</th><th>Uploaded</th><th>Downloaded</th><th>Completed</th><th>Time connected</th><th>Idle</th></tr>\n";
     $now = time();

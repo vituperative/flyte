@@ -14,13 +14,9 @@ if (empty($cleansearchstr)) {
     unset($cleansearchstr);
 }
 
-// $orderby = "ORDER BY torrents.id DESC";
+$orderby = "ORDER BY torrents.id DESC";
 
-if ($_GET['order'] === "name")
-    $orderby = "ORDER BY torrents.name ASC";
-else if ($_GET['order'] === "owner")
-    $orderby = "ORDER BY torrents.owner ASC";
-else if (isset($_GET['order'])) {
+if (isset($_GET['order'])) {
     $orders = array("added", "swarmsize", "size", "times_completed", "comments", "category", "numfiles", "owner", "seeders", "leechers", "name", "views");
     foreach ($orders as $order) {
         if ($_GET['order'] == $order) {
