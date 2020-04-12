@@ -25,6 +25,7 @@ header("X-Frame-Options: Deny;");
 
 <head>
   <?php
+    $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME']; // TODO ADD THAT 2 FUNCTION
   if (strpos($request, "install/") !== false) {
       if (strpos($request, "admin") !== false) {
   ?>
@@ -36,7 +37,6 @@ header("X-Frame-Options: Deny;");
   <meta http-equiv=Content-Language content=en-us>
   <meta charset="UTF-8">
   <?php
-  $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME']; // TODO ADD THAT 2 FUNCTION
   if (strpos($request, "install/") !== false) {
     print("<link rel=stylesheet href=../include/style.css type=text/css>\n");
     print("<link rel=stylesheet href=installer.css type=text/css>\n");
