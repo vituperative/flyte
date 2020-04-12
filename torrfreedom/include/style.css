@@ -17,7 +17,19 @@ body {
   position: relative;
   min-width: 800px;
   color: #bbb;
-  opacity: 0 !important;
+}
+
+body::after {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    display: inline-block;
+    background: #151414;
+    content: "";
 }
 
 body, input, select, textarea, button {
@@ -595,13 +607,29 @@ hr.separator {
 }
 
 #topnav a {
-  margin: 8px -6px;
+  margin: 8px -200px;
   min-width: 100px;
   color: #9f9090;
   font-weight: 700 !important;
   text-shadow: 0 1px 1px #000;
   box-shadow: inset 0 0 0 1px #454040, inset 0 0 0 2px #121010, 0 0 0 1px #121010;
   will-change: transform;
+  animation: ease slide .5s forwards;
+  filter: opacity(0);
+}
+
+@keyframes slide {
+  0 {
+    margin: 8px -200px;
+    filter: opacity(0);
+  }
+  65% {
+    filter: opacity(0);
+  }
+  100% {
+    margin: 8px -6px;
+    filter: opacity(1);
+  }
 }
 
 #topnav a:first-child {
@@ -1823,8 +1851,12 @@ input#togglepanel {
 }
 
 @media screen and (min-width: 1800px) {
-  body, input, select, textarea, button, .button, label, #addcomment a, #dostuff .button, td, td a {
+  body, input, input[type="submit"], input[type="reset"], select, textarea, button, .button, label, #addcomment a, #dostuff .button, td, td a {
     font-size: 10pt !important;
+  }
+  input, input[type="submit"], input[type="reset"], select, button, .button {
+    padding-top: 3px;
+    padding-bottom: 5px;
   }
   #sitename a {
     font-size: 48pt !important;

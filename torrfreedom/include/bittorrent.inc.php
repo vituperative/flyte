@@ -352,7 +352,7 @@ function stdfoot()
   } else {
     print('<p id=footer><span id=blurb>' . $sitename . ' (Est. 2017)' . $bullet . 'Admin: <code>' . $contact . '</code>' . $bullet . 'Design by <a href=http://skank.i2p/>dr|z3d</a></span></p>');
   }
-  print("\n<style type=text/css>body {opacity: 1 !important;}</style>");
+  print("\n<style type=text/css>body {opacity: 1 !important; color: #bbb !important;} a {opacity: 1 !important;} body::after {display: none !important;}</style>");
   print("\n</body>\n</html>");
 }
 

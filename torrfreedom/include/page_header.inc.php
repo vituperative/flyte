@@ -24,6 +24,15 @@ header("X-Frame-Options: Deny;");
 <html>
 
 <head>
+  <?php
+  if (strpos($request, "install/") !== false) {
+      if (strpos($request, "admin") !== false) {
+  ?>
+  <link rel=preload href=include/style.css as=style>
+  <?php
+      }
+  }
+  ?>
   <meta http-equiv=Content-Language content=en-us>
   <meta charset="UTF-8">
   <?php
@@ -38,7 +47,8 @@ header("X-Frame-Options: Deny;");
     print("<link rel=stylesheet href=include/style.css type=text/css>\n");
   }
   ?>
-  <style type=text/css>html, body{background: #151414;} body{opacity: 0 !important; text-align: center;}</style> <link rel=shortcut icon href=<?php echo $tracker_path ?>favicon.ico>
+    <style type=text/css>html, body{background: #151414;} body, a {opacity: 0;} body{text-align: center; color: transparent !important;}</style>
+    <link rel=shortcut icon href=<?php echo $tracker_path ?>favicon.ico>
     <link rel=alternate type=application/rss+xml title="<?php echo $tracker_title; ?> RSS Feed" href=rss.php>
     <title><?php
             if (strpos($request, "install/") !== false) {
