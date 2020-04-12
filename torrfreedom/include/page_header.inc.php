@@ -8,9 +8,7 @@
       require_once "include/bittorrent.inc.php";
   }
   global $CURUSER, $pic_base_url, $tracker_title, $tracker_url_name, $tracker_path;
-?>
 
-<?php
   header("Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'none';");
   header("Referrer-Policy: same-origin");
   header("X-Content-Type-Options: nosniff");
@@ -18,7 +16,6 @@
   header("Set-Cookie: HttpOnly; SameSite=Strict;");
   header("X-Frame-Options: Deny;");
 ?>
-
 <!DOCTYPE HTML>
 <html>
   <head>
