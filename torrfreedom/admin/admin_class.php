@@ -19,8 +19,8 @@ class sql
         "delTorrentsByUserID" => "DELETE FROM torrents WHERE owner= '%s'",
         "getActiveTorrents" => "SELECT %s FROM torrents WHERE torrents.banned='no' AND (torrents.leechers+torrents.seeders)>1 AND torrents.visible='yes'",
         "getTorrentsHits" => "SELECT COUNT(torrents.hits) FROM torrents %s",
-        "getTorrentsViews" => "SELECT COUNT(torrents.views) FROM torrents %s",
-        "getTorrentsCompleted" => "SELECT COUNT(torrents.times_completed) FROM torrents %s",
+        "getTorrentsViews" => "SELECT SUM(torrents.views) FROM torrents %s",
+        "getTorrentsCompleted" => "SELECT SUM(torrents.times_completed) FROM torrents %s",
         "getTorrentsByUserID" => "SELECT * FROM torrents WHERE owner= '%s' LIMIT %d OFFSET %d",
         "getTorrentTop" => "SELECT COUNT(torrents.hits) as hits, COUNT(torrents.times_completed) AS downloadtimes, COUNT(torrents.leechers) AS leechers, COUNT(torrents.seeders) AS seeders FROM torrents order by hits LIMIT '%d'",
         "getUserByID" => "SELECT * FROM users WHERE id='%d'",
@@ -28,8 +28,9 @@ class sql
 
         "delCommentsWhereIS" => "DELETE FROM comments WHERE %s='%s'",
         "changeValueOfTorrentByID" => "UPDATE torrents SET `%s`='%s' WHERE `%s`='%s'", //Update torrents set what is WHERE a=b
-        "getCountOfTB" => "SELECT COUNT(*) AS COUNT FROM %s",
-        "getCountOfTBWhere" => "SELECT COUNT(*) AS COUNT FROM %s WHERE %s='%s'",
+        "getCountOfTB" => "SELECT COUNT(*) FROM %s",
+        "getCountOfTBWhere" => "SELECT COUNT(*) FROM %s WHERE %s='%s'",
+        "getCountOfTBWhereMoreFunc" => "SELECT COUNT(*) FROM %s WHERE %s > %s",
         "isAdmin" => "SELECT * FROM users WHERE username='%s' AND admin='yes';",
         "getAllTorrents" => "SELECT * FROM torrents LIMIT %d OFFSET %d",
         "getNameOfCategoryByID" => "SELECT * FROM categories WHERE id='%d'"
@@ -56,12 +57,17 @@ class sql
     function getCountOfTB($table)
     {
         $r = $this->doSQL(sql::sqls['getCountOfTB'], $table);
-        return mysqli_fetch_assoc($r)['COUNT'];
+        return mysqli_fetch_array($r)[0];
     }
     function getCountOfTBWhere($table, $a, $b)
     {
         $r = $this->doSQL(sql::sqls['getCountOfTBWhere'], $table, $a, $b);
-        return mysqli_fetch_assoc($r)['COUNT'];
+        return mysqli_fetch_array($r)[0];
+    }
+    function getCountOfTBWhereMoreFunc($table, $a, $b)
+    {
+        $r = $this->doSQL(sql::sqls['getCountOfTBWhereMoreFunc'], $table, $a, $b);
+        return mysqli_fetch_array($r)[0];
     }
 }
 
@@ -132,7 +138,7 @@ class torrents extends comments
     function getCountActiveTorrents()
     {
         $ret = $this->doSQL(sql::sqls['getActiveTorrents'], "COUNT(*)");
-        return mysqli_fetch_array($ret);
+        return mysqli_fetch_array($ret)[0];
     }
     function getTorrentsHits()
     {
@@ -142,7 +148,7 @@ class torrents extends comments
     function getTorrentsViews()
     {
         $ret = $this->doSQL(sql::sqls['getTorrentsViews'], "");
-        return mysqli_fetch_array($ret);
+        return mysqli_fetch_array($ret)[0];
     }
     function getTorrentTop($limit = 10)
     {
@@ -152,7 +158,7 @@ class torrents extends comments
     function getTorrentsCompleted()
     {
         $ret = $this->doSQL(sql::sqls['getTorrentsCompleted'], "");
-        return mysqli_fetch_array($ret);
+        return mysqli_fetch_array($ret)[0];
     }
     //"delTorrentByX"=>"DELETE FROM torrents WHERE %s= '%s'"
     function delTorrentByX($x, $value)
@@ -308,6 +314,18 @@ class users extends peers
     function countUsers()
     {
         return $this->getCountOfTB("users");
+    }
+    function countAccess()
+    {
+        return $this->countDayAccess() . "/" . $this->countWeekAccess();
+    }
+    function countDayAccess()
+    {
+        return $this->getCountOfTBWhereMoreFunc("users", "last_access", "DATE_SUB(NOW(), INTERVAL 1 DAY)");
+    }
+    function countWeekAccess()
+    {
+        return $this->getCountOfTBWhereMoreFunc("users", "last_access", "DATE_SUB(NOW(), INTERVAL 1 WEEK)");
     }
     function isAdmin($nick)
     {

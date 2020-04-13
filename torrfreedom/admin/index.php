@@ -14,7 +14,7 @@ print("<tr><th colspan=2>Tracker Overview</th></tr>");
 total("Total Users", $admin->countUsers());
 total("Total Torrents", $admin->countTorrents());
 total("Total Categories", $admin->countCategories());
-total("Unique logins (today / this week)", "--");
+total("Unique logins (today / this week)", $admin->countAccess());
 total("Peers announcing to tracker (seeds / leeches)", $admin->countOfSeeders()."/".$admin->countOfLeech() );
 
 
