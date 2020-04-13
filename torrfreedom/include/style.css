@@ -671,6 +671,7 @@ hr.separator {
 #topnav a:active {
   color: rgba(255, 96, 0, .7);
   background: radial-gradient(at center 80px, rgba(255, 96, 0, .6) 0, rgba(0, 0, 0, 0) 70%), linear-gradient(to bottom, rgba(255, 255, 255, .1), rgba(0, 0, 0, .2)), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px);
+  background: radial-gradient(at center 80px, rgba(200, 48, 0, .05) 0, rgba(0, 0, 0, 0) 75%), linear-gradient(to bottom, rgba(255, 255, 255, .1), rgba(0, 0, 0, .2)), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px);
   box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050, inset 3px 3px 4px 2px #121010;
 }
 
@@ -820,7 +821,7 @@ hr.separator {
   top: -600px;
   right: 10px;
   z-index: 1000;
-  width: 290px !important;
+  width: 300px !important;
   font-size: 95% !important;
   font-weight: 600 !important;
   text-shadow: 0 1px 1px #000;
@@ -1400,11 +1401,14 @@ code.dest {
   width: 660px !important;
   line-height: 160%;
   text-align: justify;
-  font-size: 105%;
   text-shadow: 0 1px 1px #000;
   border: none !important;
   border-radius: 4px;
   background: rgba(48, 40, 40, .3);
+}
+
+#wrapper.help div, #server, #restricted, #wrapper.help a {
+  font-size: 10pt;
 }
 
 #wrapper.help div {
@@ -1581,7 +1585,7 @@ code.dest {
 input#togglepanel {
   position: absolute;
   z-index: -1;
-/*  top: -1000px;*/
+  top: -10000px;
 }
 
 #togglepanel+label {
@@ -1620,8 +1624,9 @@ input#togglepanel {
 
 @media screen and (min-width: 1200px) {
   #togglepanel + label::after {
-    width: 11px;
-    height: 11px;
+    margin-top: -5px;
+    width: 12px;
+    height: 12px;
   }
 }
 
@@ -1870,6 +1875,12 @@ input#togglepanel {
   }
   #sitename a {
     font-size: 48pt !important;
+  }
+  #wrapper.help div {
+    width: 1000px !important;
+  }
+  #wrapper.help div, #server, #restricted, #wrapper.help a {
+    font-size: 11pt !important;
   }
 }
 
