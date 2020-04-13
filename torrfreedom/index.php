@@ -20,7 +20,15 @@ if (isset($_GET['order'])) {
     $orders = array("added", "swarmsize", "size", "times_completed", "comments", "category", "numfiles", "owner", "seeders", "leechers", "name", "views");
     foreach ($orders as $order) {
         if ($_GET['order'] == $order) {
-            $orderby = "ORDER BY torrents.$order DESC";
+            if($order == "name")
+                $orderby = "ORDER BY torrents.$order ASC";
+            else if($order == "owner")
+                $orderby = "ORDER BY users.username ASC";
+            else if($order == "swarmsize")
+                $orderby = "ORDER BY torrents.leechers + torrents.seeders DESC";
+            else
+                $orderby = "ORDER BY torrents.$order DESC";
+            break;
         }
     }
 }
@@ -106,6 +114,7 @@ if ($count) {
     list($pagertop, $pagerbottom, $limit) = pager($pagesize, $count, "./?" . $addparam);
     $query = "SELECT torrents.*, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%d.%m.%y %T') as added, categories.name AS cat_name, torrents.leechers + torrents.seeders as swarmsize, users.username FROM torrents LEFT JOIN categories ON category = categories.id LEFT JOIN users ON torrents.owner = users.id $where $orderby $limit";
 
+    //print($query);
     // die($query);
     $res = mysqli_query($GLOBALS["___mysqli_ston"], $query)
         or die(mysqli_error($GLOBALS["___mysqli_ston"]));

@@ -623,94 +623,72 @@ function torrenttable($res, $variant = "index")
   global $CURUSER;
   global $tracker_url_name;
   global $tracker_path;
+  $url = (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != "") ? "?" . $_SERVER['QUERY_STRING'] . "&" : "?";
+  $filteredURL = preg_replace('~(\?|&)order=[^&]*.~', '$1', $url);
 ?>
 
   <div class=tablewrap id=torrentlist>
     <table id=torrents>
       <tr>
-      <?php
-      print("<th>");
-      if (!isset($_GET["cat"]) || ($_GET["cat"] == 0)) {
-        print("<a href=\"./?order=category");
-      if (isset($_GET["incldead"]))
-        print("&incldead=1");
-      print("\">");
-      }
-      print("Type");
-      if (!isset($_GET["cat"]) || ($_GET["cat"] == 0))
-        print("</a>");
-      print("</th><th><a href=\"./?order=name");
-      if (isset($_GET["cat"]) && ($_GET["cat"] != 0))
-        print("&cat=" . ($_GET["cat"]));
-      if (isset($_GET["incldead"]))
-        print("&incldead=1");
-      print("\">Name</a></th>");
-      print("<th>Torrent</th>");
-      if ($variant == "mytorrents") {
-        print("<th>Visible</th>");
-      }
-      print("<th><a href=\"./?order=size");
-      if (isset($_GET["cat"]) && ($_GET["cat"] != 0))
-        print("&cat=" . ($_GET["cat"]));
-      if (isset($_GET["incldead"]))
-        print("&incldead=1");
-      print("\">Size</a></th>");
-      print("<th><a href=\"./?order=numfiles");
-      if (isset($_GET["cat"]) && ($_GET["cat"] != 0))
-        print("&cat=" . ($_GET["cat"]));
-      if (isset($_GET["incldead"]))
-        print("&incldead=1");
-      print("\">Files</a></th>");
-      print("<th><a href=\"./?order=seeders");
-      if (isset($_GET["cat"]) && ($_GET["cat"] != 0))
-        print("&cat=" . ($_GET["cat"]));
-      if (isset($_GET["incldead"]))
-        print("&incldead=1");
-      print("\">Seeds</a></th>");
-      print("<th><a href=\"./?order=leechers");
-      if (isset($_GET["cat"]) && ($_GET["cat"] != 0))
-        print("&cat=" . ($_GET["cat"]));
-      if (isset($_GET["incldead"]))
-        print("&incldead=1");
-      print("\">Leech</a></th>");
-      if ($CURUSER["admin"] == "yes") {
-        print("<th><a href=\"./?order=views");
-        if (isset($_GET["cat"]) && ($_GET["cat"] != 0))
-          print("&cat=" . ($_GET["cat"]));
-        if (isset($_GET["incldead"]))
-          print("&incldead=1");
-        print("\">Views</a></th>");
-      }
-      if ($CURUSER) {
-        print("<th><a href=\"./?order=times_completed");
-      if (isset($_GET["cat"]) && ($_GET["cat"] != 0))
-        print("&cat=" . ($_GET["cat"]));
-      if (isset($_GET["incldead"]))
-        print("&incldead=1");
-      print("\">DL's</a></th>");
-      }
-      print("<th><a href=\"./?order=comments");
-      if (isset($_GET["cat"]) && ($_GET["cat"] != 0))
-        print("&cat=" . ($_GET["cat"]));
-      if (isset($_GET["incldead"]))
-        print("&incldead=1");
-      print("\">Comments</a></th><th><a href=\"./?order=added");
-      if (isset($_GET["cat"]) && ($_GET["cat"] != 0))
-        print("&cat=" . ($_GET["cat"]));
-      if (isset($_GET["incldead"]))
-        print("&incldead=1");
-      print("\">Added</a></th>");
-      if ($variant != "mytorrents" && $CURUSER) {
-        print("<th><a href=\"./?order=owner");
-      if (isset($_GET["cat"]) && ($_GET["cat"] != 0))
-        print("&cat=" . ($_GET["cat"]));
-      if (isset($_GET["incldead"]))
-        print("&incldead=1");
-      print("\">Uploader</a></th>");
-      }
-
-      print("</tr>\n");
-
+        <th>
+          <a href=/<?=$filteredURL;?>order=category>Type</a>
+        </th>
+        <th>
+          <a href=/<?=$filteredURL;?>order=name>Name</a>
+        </th>
+        <th>Torrent</th>
+<?php
+        if ($variant == "mytorrents") {
+?>
+          <th>Visible</th>
+<?php
+        }
+?>
+        <th>
+          <a href=/<?=$filteredURL;?>order=size>Size</a>
+        </th>
+        <th>
+          <a href=/<?=$filteredURL;?>order=numfiles>Files</a>
+        </th>
+        <th>
+          <a href=/<?=$filteredURL;?>order=seeders>Seeds</a>
+        </th>
+        <th>
+          <a href=/<?=$filteredURL;?>order=leechers>Leech</a>
+        </th>
+<?php
+        if ($CURUSER["admin"] == "yes") {
+?>
+          <th>
+            <a href=/<?=$filteredURL;?>order=views>Views</a>
+          </th>
+<?php
+        }
+        if ($CURUSER) {
+?>
+          <th>
+            <a href=/<?=$filteredURL;?>order=times_completed>DL's</a>
+          </th>
+<?php
+        }
+?>
+        <th>
+          <a href=/<?=$filteredURL;?>order=comments>Comments</a>
+        </th>
+        <th>
+          <a href=/<?=$filteredURL;?>order=added>Added</a>
+        </th>
+<?php
+        if ($variant != "mytorrents" && $CURUSER) {
+?>
+          <th>
+            <a href=/<?=$filteredURL;?>order=owner>Uploader</a>
+          </th>
+<?php
+        }
+?>
+      </tr>
+<?php
       $styles = array('a', 'r');
 
       while ($row = mysqli_fetch_assoc($res)) {
