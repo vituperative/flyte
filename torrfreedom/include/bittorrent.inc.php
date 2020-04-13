@@ -625,7 +625,7 @@ function torrenttable($res, $variant = "index")
   global $tracker_path;
   $url = (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != "") ? "?" . $_SERVER['QUERY_STRING'] . "&" : "?";
   $filteredURL = preg_replace('~(\?|&)order=[^&]*.~', '$1', $url);
-
+  $filteredURL = htmlspecialchars($filteredURL);
 ?>
 
   <div class=tablewrap id=torrentlist>
