@@ -21,10 +21,10 @@
   <head>
 <?php
     $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME']; // TODO ADD THAT 2 FUNCTION
-    if (strpos($request, "install/") !== false) {
-      if (strpos($request, "admin") !== false) {
+    if (strpos($request, "install/") === false) {
+      if (strpos($request, "admin") === false) {
 ?>
-        <link rel="preload" href="include/style.css" as="style">
+    <link rel="preload" href="include/style.css" as="style">
 <?php
       }
     }
@@ -82,7 +82,7 @@
           <a href="<?=$tracker_path;?>"><?=$tracker_title;?></a>
         </div>
         <div id=topnav>
-<?php       
+<?php
         $isadmin = $CURUSER["admin"] == "yes";
         $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME'];
 

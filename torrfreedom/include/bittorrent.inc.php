@@ -625,16 +625,17 @@ function torrenttable($res, $variant = "index")
   global $tracker_path;
   $url = (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != "") ? "?" . $_SERVER['QUERY_STRING'] . "&" : "?";
   $filteredURL = preg_replace('~(\?|&)order=[^&]*.~', '$1', $url);
+
 ?>
 
   <div class=tablewrap id=torrentlist>
     <table id=torrents>
       <tr>
         <th>
-          <a href=/<?=$filteredURL;?>order=category>Type</a>
+          <a href="./<?=$filteredURL;?>order=category">Type</a>
         </th>
         <th>
-          <a href=/<?=$filteredURL;?>order=name>Name</a>
+          <a href="./<?=$filteredURL;?>order=name">Name</a>
         </th>
         <th>Torrent</th>
 <?php
@@ -645,44 +646,44 @@ function torrenttable($res, $variant = "index")
         }
 ?>
         <th>
-          <a href=/<?=$filteredURL;?>order=size>Size</a>
+          <a href="./<?=$filteredURL;?>order=size">Size</a>
         </th>
         <th>
-          <a href=/<?=$filteredURL;?>order=numfiles>Files</a>
+          <a href="./<?=$filteredURL;?>order=numfiles">Files</a>
         </th>
         <th>
-          <a href=/<?=$filteredURL;?>order=seeders>Seeds</a>
+          <a href="./<?=$filteredURL;?>order=seeders">Seeds</a>
         </th>
         <th>
-          <a href=/<?=$filteredURL;?>order=leechers>Leech</a>
+          <a href="./<?=$filteredURL;?>order=leechers">Leech</a>
         </th>
 <?php
         if ($CURUSER["admin"] == "yes") {
 ?>
           <th>
-            <a href=/<?=$filteredURL;?>order=views>Views</a>
+            <a href="./<?=$filteredURL;?>order=views">Views</a>
           </th>
 <?php
         }
         if ($CURUSER) {
 ?>
           <th>
-            <a href=/<?=$filteredURL;?>order=times_completed>DL's</a>
+            <a href="./<?=$filteredURL;?>order=times_completed">DL's</a>
           </th>
 <?php
         }
 ?>
         <th>
-          <a href=/<?=$filteredURL;?>order=comments>Comments</a>
+          <a href="./<?=$filteredURL;?>order=comments">Comments</a>
         </th>
         <th>
-          <a href=/<?=$filteredURL;?>order=added>Added</a>
+          <a href="./<?=$filteredURL;?>order=added">Added</a>
         </th>
 <?php
         if ($variant != "mytorrents" && $CURUSER) {
 ?>
           <th>
-            <a href=/<?=$filteredURL;?>order=owner>Uploader</a>
+            <a href="./<?=$filteredURL;?>order=owner">Uploader</a>
           </th>
 <?php
         }
