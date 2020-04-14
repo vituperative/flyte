@@ -129,6 +129,10 @@ body {
   text-align: left;
 }
 
+#server.torrents td:nth-child(2) {
+  word-break: break-all;
+}
+
 #server.torrents .button, #server.users tr:nth-last-child(n+2) .button {
   margin: 2px 0 !important;
   padding: 3px !important;
