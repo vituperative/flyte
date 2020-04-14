@@ -731,7 +731,7 @@ function torrenttable($res, $variant = "index")
             }
             print("\"");
           }
-          print(">" . substr($description, 0, 100) . "</span>");
+          print(">" . substr($description, 0, 200) . "</span>");
         }
         print("</td>\n");
 

@@ -1749,18 +1749,52 @@ input#togglepanel {
   border-bottom: 1px solid #999;
 }
 
-@media screen and (max-width: 900px) {
-  .torrentname {
-    width: 1%;
-    min-width: 220px;
-  }
-  .torrentname a, .torrentname .briefdesc {
-    display: inline-block;
-    max-width: 400px;
-  }
+@media screen and (min-width: 1200px) {
   .tablewrap:not(#torrentlist):not(.slim) {
-    margin: 0 !important;
-    width: calc(100% - 8px) !important;
+    width: 900px !important;
+  }
+  .tablewrap#torrentlist {
+    width: calc(100% - 20px) !important;
+  }
+  #torrents th, #torrents th a {
+  font-size: 8.5pt !important;
+  }
+  #torrents .briefdesc {
+    max-width: 430px;
+  }
+}
+
+@media screen and (min-width: 1300px) {
+  #torrents .briefdesc {
+    max-width: 510px;
+  }
+}
+
+@media screen and (min-width: 1500px) {
+  #torrents .briefdesc {
+    max-width: 600px;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  body, input, input[type="submit"], input[type="reset"], select, textarea, button, .button, label, #addcomment a, #dostuff .button, td, td a {
+    font-size: 10pt !important;
+  }
+  input, input[type="submit"], input[type="reset"], select, button, .button {
+    padding-top: 3px;
+    padding-bottom: 5px;
+  }
+  #sitename a {
+    font-size: 48pt !important;
+  }
+  #wrapper.help div {
+    width: 1000px !important;
+  }
+  #wrapper.help div, #server, #restricted, #wrapper.help a {
+    font-size: 11pt !important;
+  }
+  #torrents .briefdesc {
+    max-width: 720px;
   }
 }
 
@@ -1822,7 +1856,7 @@ input#togglepanel {
   }
   #torrents .briefdesc {
     margin-top: 1px;
-    max-width: 250px;
+    max-width: 420px;
   }
   #torrents td:first-child img, #torrents td:nth-child(3) a img {
     width: 20px !important;
@@ -1858,40 +1892,25 @@ input#togglepanel {
   }
 }
 
-@media screen and (min-width: 1200px) {
-  .tablewrap:not(#torrentlist):not(.slim) {
-    width: 900px !important;
-  }
-  .tablewrap#torrentlist {
-    width: calc(100% - 20px) !important;
-  }
-  #torrents th, #torrents th a {
-  font-size: 8.5pt !important;
-  }
+@media screen and (max-width: 1100px) {
   #torrents .briefdesc {
-    max-width: 600px;
+    margin-top: 1px;
+    max-width: 280px;
   }
 }
 
-@media screen and (min-width: 1800px) {
-  body, input, input[type="submit"], input[type="reset"], select, textarea, button, .button, label, #addcomment a, #dostuff .button, td, td a {
-    font-size: 10pt !important;
+@media screen and (max-width: 900px) {
+  .torrentname {
+    width: 1%;
+    min-width: 220px;
   }
-  input, input[type="submit"], input[type="reset"], select, button, .button {
-    padding-top: 3px;
-    padding-bottom: 5px;
+  .torrentname a, .torrentname .briefdesc {
+    display: inline-block;
+    max-width: 230px !important;
   }
-  #sitename a {
-    font-size: 48pt !important;
-  }
-  #wrapper.help div {
-    width: 1000px !important;
-  }
-  #wrapper.help div, #server, #restricted, #wrapper.help a {
-    font-size: 11pt !important;
-  }
-  #torrents .briefdesc {
-    max-width: 700px;
+  .tablewrap:not(#torrentlist):not(.slim) {
+    margin: 0 !important;
+    width: calc(100% - 8px) !important;
   }
 }
 
