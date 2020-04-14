@@ -94,7 +94,7 @@
             <!--<a href=#>Configure</a>-->
             <a href=users.php>Users</a>
             <!--<a href=#>Blacklist</a>-->
-            <a href=../stats.php>Stats</a>
+            <!--<a href=../stats.php>Stats</a>-->
 <?php
           } else if ($isadmin) {
 ?>
@@ -112,20 +112,24 @@
             <a href=signup.php>Signup</a>
 <?php
           }
-          if ($CURUSER && strpos($request, "admin") === false) {
+          if ($CURUSER && !$isadmin) {
 ?>
             <a href=stats.php>Stats</a>
 <?php
           }
           if (strpos($request, "admin") === false && !$isadmin) {
 ?>
-            <a href=rss.php>RSS Feed</a>
             <a href=help.php>Help</a>
+            <a href=rss.php>RSS Feed</a>
 <?php
           }
-          if ($CURUSER) {
+          if ($CURUSER && strpos($request, "admin") === false) {
 ?>
             <a href=logout.php>Logout</a>
+<?php
+          } else if (!strpos($request, "admin") === false) {
+?>
+            <a href=../logout.php>Logout</a>
 <?php
           }
 ?>

@@ -115,14 +115,14 @@ class torrents extends comments
         if ($is_banned === True) $is_banned = "yes";
         elseif ($is_banned === False) $is_banned = "no";
 
-        $this->changeValueOfTorrentByID("banned",  "$is_banned", "id", "$id");
+        $this->changeValueOfTorrentByID("banned", "$is_banned", "id", "$id");
     }
     function setVissbleTorrentByID($is_vissible, $id)
     {
         if ($is_vissible === True) $is_vissible = "yes";
         elseif ($is_vissible === False) $is_vissible = "no";
 
-        $this->changeValueOfTorrentByID("visible",  "$is_vissible", "id", "$id");
+        $this->changeValueOfTorrentByID("visible", "$is_vissible", "id", "$id");
     }
     function getTorrentByID($id)
     {
@@ -253,8 +253,8 @@ class users extends peers
         $confirmed = $confirmed ? "confirmed" : "pending";
         if (strlen($password) > 64)
             return ("Sorry, password is too long (max is 63 chars)");
-        if (!preg_match('/^[a-z][\w.-]*$/is', $username) || strlen($username) > 40)
-            return ("Invalid username. Must not be more than 40 characters long and no weird characters");
+        if (!preg_match('/^[a-z][\w.-]*$/is', $username) || strlen($username) > 12)
+            return ("Invalid username. Must not be more than 12 characters long and no weird characters");
         //if (!isset($this->link)) $this->ConnToDBByConfig();
         //print("Connected");
         $secret = mksecret();
@@ -317,7 +317,7 @@ class users extends peers
     }
     function countAccess()
     {
-        return $this->countDayAccess() . "/" . $this->countWeekAccess();
+        return $this->countDayAccess() . " today / " . $this->countWeekAccess() . " this week";
     }
     function countDayAccess()
     {

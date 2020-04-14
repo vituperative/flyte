@@ -10,23 +10,35 @@
 
 #server table {
   border: 1px solid #111;
+  user-select: auto;
+}
+
+#server th {
+  border-bottom: 1px solid #111;
+  font-weight: 700 !important;
+}
+
+#server #serverdetails th:last-child {
+  border-top: 1px solid #111 !important;
 }
 
 #server td {
-  padding: 3px 10px;
-  border: 1px solid #111;
+  padding: 6px 10px;
+  user-select: all;
 }
 
 #server td:first-child {
   text-align: right;
-  background: rgba(0, 0, 0, .2);
+  font-weight: 600;
   color: #bbb;
+  background: rgba(0, 0, 0, .2);
 }
 
 #server.users th, #server.users td {
   font-size: 90%;
   text-align: center;
   padding: 6px !important;
+  border-right: 1px solid #111 !important;
 }
 
 #server.users th {
@@ -71,7 +83,7 @@
 }
 
 #server.users tr:not(#dostuff) td:last-child .button {
-  padding: 1px 3px !important;
+  padding: 3px !important;
   font-size: 14px !important;
 }
 
