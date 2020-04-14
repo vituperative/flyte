@@ -601,18 +601,17 @@ hr.separator {
   font-size: 105% !important;
   text-shadow: 0 1px 1px #000;
   color: #9f9090;
-  border: 1px solid #454040;
+  border: 1px solid #343030;
   box-shadow: inset 0 0 0 1px #454040, inset 0 0 0 2px #121010, 0 0 0 1px #121010;
   box-shadow: inset 0 0 0 1px #121010, 0 0 0 1px #121010;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, .1) 50%, rgba(0, 0, 0, .2) 50%), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px), linear-gradient(to bottom, #454040, #232020);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .8) 50%), repeating-linear-gradient(to right, rgba(0, 0, 0, .8), rgba(0, 0, 0, .3) 2px), linear-gradient(to bottom, #454040, #232020);
   will-change: transform;
 }
 
 #topnav a::before, #topnav a::after {
   content: "";
   display: block;
-  width: 1px;
-  height: 2px;
+  height: 1px;
   vertical-align: middle;
 }
 
@@ -1893,7 +1892,7 @@ input#togglepanel {
   #wrapper.help div, #server, #restricted, #wrapper.help a {
     font-size: 11pt !important;
   }
-   #torrents .briefdesc {
+  #torrents .briefdesc {
     max-width: 700px;
   }
 }
