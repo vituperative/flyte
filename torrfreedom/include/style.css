@@ -1873,6 +1873,12 @@ input#togglepanel {
   }
 }
 
+@media screen and (min-width: 1500px) {
+  #torrents .briefdesc {
+    max-width: 700px;
+  }
+}
+
 @media screen and (min-width: 1800px) {
   body, input, input[type="submit"], input[type="reset"], select, textarea, button, .button, label, #addcomment a, #dostuff .button, td, td a {
     font-size: 10pt !important;
@@ -1891,7 +1897,7 @@ input#togglepanel {
     font-size: 11pt !important;
   }
   #torrents .briefdesc {
-    max-width: 700px;
+    max-width: 800px;
   }
 }
 
