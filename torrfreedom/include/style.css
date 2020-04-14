@@ -1871,6 +1871,9 @@ input#togglepanel {
   #torrents th, #torrents th a {
   font-size: 8.5pt !important;
   }
+  #torrents .briefdesc {
+    max-width: 600px;
+  }
 }
 
 @media screen and (min-width: 1800px) {
@@ -1889,6 +1892,9 @@ input#togglepanel {
   }
   #wrapper.help div, #server, #restricted, #wrapper.help a {
     font-size: 11pt !important;
+  }
+   #torrents .briefdesc {
+    max-width: 700px;
   }
 }
 
