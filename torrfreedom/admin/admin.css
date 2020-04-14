@@ -1,5 +1,9 @@
 /* admin */
 
+body {
+  min-width: 1000px;
+}
+
 #server {
   padding: 2px;
   width: 820px !important;
@@ -80,6 +84,7 @@
 
 #server .button {
   margin: 0 !important;
+  user-select: none;
 }
 
 #server.users tr:not(#dostuff) td:last-child .button {
@@ -159,4 +164,28 @@
 
 #server .success, #server .fail {
   text-align: center;
+}
+
+@media screen and (min-width: 0) {
+  #server.torrents th {
+    font-size: 80% !important;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  #server.torrents th:nth-child(3), #server.torrents td:nth-child(3) {
+    display: none;
+  }
+  #server.torrents th:first-child {
+    width: 1%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #server.torrents td {
+    border-right: 1px solid #111 !important;
+  }
+  #server.torrents td:nth-child(odd) {
+    background: none;
+  }
 }
