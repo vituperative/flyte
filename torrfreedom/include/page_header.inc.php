@@ -111,8 +111,9 @@
           if (strpos($request, "admin") !== false && $isadmin) {
 ?>
             <a href="<?=$tracker_path;?>admin/">Admin</a>
-            <a href=server.php>Server</a>
+            <!--<a href=server.php>Server</a>-->
             <!--<a href=#>Configure</a>-->
+            <a href=torrents.php>Torrents</a>
             <a href=users.php>Users</a>
             <!--<a href=#>Blacklist</a>-->
             <!--<a href=../stats.php>Stats</a>-->

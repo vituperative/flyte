@@ -9,7 +9,7 @@ function total($what,$val){
 }
 
 print("<div id=server class=overview>\n<table>\n");
-print("<tr><th colspan=2>Tracker Overview</th></tr>");
+print("<tr><th colspan=2>Tracker Overview&nbsp;&nbsp;<a href=server.php>Server Details</a></th></tr>");
 total("Torrents", $admin->getCountActiveTorrents() . " active / <a href=torrents.php>" . $admin->countTorrents() . "</a> total");
 total("Connected Peers", $admin->countOfSeeders() . " seeds / " . $admin->countOfLeech() . " leechers", 1);
 total("Categories", $admin->countCategories());

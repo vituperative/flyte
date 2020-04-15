@@ -56,6 +56,10 @@
   background-size: 16px 16px;
 }
 
+#server.overview th a {
+  font-size: 90%;
+}
+
 #server.overview td:first-child {
   width: 50%;
   font-weight: 600;
@@ -107,7 +111,7 @@
 }
 
 #server.torrents {
-    margin-top: -2px !important;
+    margin-top: -4px !important;
     width: calc(100% - 16px) !important;
 }
 
