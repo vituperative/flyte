@@ -1,9 +1,5 @@
 /* admin */
 
-body {
-  min-width: 900px;
-}
-
 #server {
   padding: 2px;
   width: 820px !important;

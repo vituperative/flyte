@@ -12,14 +12,14 @@ if (isset($_GET['offset'])) {
 
 if (!isset($_GET['user'])) {
     $result = $admin->getAllTorrents($offset);
-    $username = "All torrents on tracker" ;
+    $username = "All Torrents" ;
 } else {
     $result = $admin->getTorrentsByUserNick($_GET['user'], $offset);
     $username = "Torrents owned by: " . $_GET['user'];
 }
 
-echo "<div id=server class=torrents>\n<table>
-<tr><th>Category</th><!--<th>id</th>--><th>$username</th><!--<th>Info hash</th>--><th>Visible</th><!--<th>Filename</th><th>Descr</th><th>ori_descr</th>--><th>DL's</th><th>Views</th><th>Cmts</th><th>Seed</th><th>Leech</th><th>Banned</th><!--<th>hits</th>--><th>Nuke</th></tr>\n";
+echo "<style type=text/css>body {min-width: 1000px !important;}</style>\n<div id=server class=torrents>\n<table>
+<tr><th>Type</th><!--<th>id</th>--><th>$username</th><!--<th>Info hash</th>--><th>Visible</th><!--<th>Filename</th><th>Descr</th><th>ori_descr</th>--><th>DL's</th><th>Views</th><th>Cmts</th><th>Seed</th><th>Leech</th><th>Banned</th><th>Added</th><!--<th>hits</th>--><th>Nuke</th></tr>\n";
 
 function delTorrent($torid, $name, $user)
 {
@@ -60,6 +60,7 @@ echo "<td>" . $row['ori_descr'].  "</td>";
 <form action=modifytorrent.php method=GET><input type=checkbox name=banned><input type=submit value=Apply><input type=hidden name=torid value=$torid /><input type=hidden name=do value=banned /></form></td>"; // TODO apply in situ, not via bantorrent.php
     //echo "<td>" . $row['hits'].  "</td>";
     //echo "<td><a href='delTorrent.php?wdel_id=".$torid."&name=".$row['name']."&user=".$_GET['user']."' class=button><span class=no></span></a></td>"; // maybe there is printf/sprintf?
+    echo "<td>" .  preg_replace("/ .*/", "", $row["added"]) .  "</td>";
     delTorrent($torid, $row['name'], $_GET['user']);
     echo "</tr>\n";
     /*
