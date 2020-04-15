@@ -1,7 +1,7 @@
 /* admin */
 
 body {
-  min-width: 1000px;
+  min-width: 900px;
 }
 
 #server {
@@ -124,13 +124,30 @@ body {
   text-align: center;
 }
 
-#server.torrents th:first-child, #server.torrents th:nth-child(2),
-#server.torrents td:first-child, #server.torrents td:nth-child(2) {
+#server.torrents th:first-child, #server.torrents td:first-child {
+  width: 1%;
+  white-space: nowrap;
+  text-align: center;
+}
+
+#server.torrents th:nth-child(2), #server.torrents td:nth-child(2) {
   text-align: left;
 }
 
+#server.torrents td:first-child {
+  position: relative;
+}
+
 #server.torrents td:nth-child(2) {
+  line-height: 1.1;
   word-break: break-all;
+  font-weight: 700;
+  user-select: auto;
+}
+
+#server.torrents td:nth-child(2) code {
+  margin: 0;
+  max-width: none !important;
 }
 
 #server.torrents .button, #server.users tr:nth-last-child(n+2) .button {
@@ -177,19 +194,10 @@ body {
 }
 
 @media screen and (max-width: 1200px) {
-  #server.torrents th:nth-child(3), #server.torrents td:nth-child(3) {
-    display: none;
-  }
   #server.torrents th:first-child {
     width: 1%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-  #server.torrents td {
-    border-right: 1px solid #111 !important;
-  }
-  #server.torrents td:nth-child(odd) {
-    background: none;
   }
 }

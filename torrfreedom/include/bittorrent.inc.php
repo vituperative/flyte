@@ -352,7 +352,7 @@ function stdfoot()
   } else {
     print('<p id=footer><span id=blurb>' . $sitename . ' (Est. 2017)' . $bullet . 'Admin: <code>' . $contact . '</code>' . $bullet . 'Design by <a href=http://skank.i2p/>dr|z3d</a></span></p>');
   }
-  print("\n<style type=text/css>body {opacity: 1 !important; color: #bbb !important;} a {opacity: 1 !important;} body::after {display: none !important;}</style>");
+  print("\n<style type=text/css>body {opacity: 1 !important; color: #bbb !important; overflow-x: auto !important;} a {opacity: 1 !important;} body::after {display: none !important;}</style>");
   print("\n</body>\n</html>");
 }
 
@@ -407,7 +407,6 @@ function loggedinorreturn()
   global $CURUSER;
   if (!$CURUSER) {
     header("Refresh: 0; url=login.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]));
-    //        header("Refresh: 0; url=login.php?returnto=" . $_SERVER["REQUEST_URI"]);
     exit();
   }
 }
@@ -731,7 +730,12 @@ function torrenttable($res, $variant = "index")
             }
             print("\"");
           }
-          print(">" . substr($description, 0, 200) . "</span>");
+          print(">");
+          if (strlen($description) > 200)
+            print(substr($description, 0, 200) . "&hellip;");
+          else
+            print($description);
+          print("</span>");
         }
         print("</td>\n");
 

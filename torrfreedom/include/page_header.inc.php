@@ -48,7 +48,7 @@
 <?php
     }
 ?>
-    <style type=text/css>html, body{background: #151414;} body, a {opacity: 0;} body{text-align: center; color: transparent !important;}</style>
+    <style type=text/css>html, body{background: #151414;} body, a {opacity: 0;} body{text-align: center; color: transparent !important; overflow-x: hidden;}</style>
     <link rel=shortcut icon href=<?=$tracker_path;?>favicon.ico>
     <link rel=alternate type=application/rss+xml title="<?=$tracker_title;?> RSS Feed" href=rss.php>
     <title>
