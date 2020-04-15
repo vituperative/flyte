@@ -1240,7 +1240,7 @@ table table {
 #searchandshow {
   margin: 0 0 -10px;
   background: #212020;
-  background: radial-gradient(at top, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, #232020, rgba(0, 0, 0, 0));
+  background: linear-gradient(to top, #151414 12px, rgba(40,38,38,.5), rgba(50,46,46,.3)), radial-gradient(at top, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, #232020, rgba(0, 0, 0, 0));
 }
 
 .shim {
