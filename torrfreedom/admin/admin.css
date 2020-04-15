@@ -1,9 +1,5 @@
 /* admin */
 
-body {
-  min-width: 1000px;
-}
-
 #server {
   padding: 2px;
   width: 820px !important;
@@ -39,22 +35,29 @@ body {
 }
 
 #server.users th, #server.users td {
-  font-size: 90%;
-  text-align: center;
   padding: 6px !important;
-  border-right: 1px solid #111 !important;
+  text-align: center;
+  font-size: 90%;
 }
 
 #server.users th {
   text-transform: capitalize;
 }
 
+#server.users td, #server.torrents td {
+  border-right: 1px solid #222 !important;
+  border-bottom: 1px solid #222 !important;
+}
 #server.users td:first-child {
   padding-left: 24px !important;
   text-align: left;
   font-weight: 600;
   background: url(../pic/user.png) 6px center no-repeat;
   background-size: 16px 16px;
+}
+
+#server.overview th a {
+  font-size: 90%;
 }
 
 #server.overview td:first-child {
@@ -108,7 +111,7 @@ body {
 }
 
 #server.torrents {
-    margin-top: -2px !important;
+    margin-top: -4px !important;
     width: calc(100% - 16px) !important;
 }
 
@@ -124,9 +127,31 @@ body {
   text-align: center;
 }
 
-#server.torrents th:first-child, #server.torrents th:nth-child(2),
-#server.torrents td:first-child, #server.torrents td:nth-child(2) {
+#server.torrents th:first-child, #server.torrents td:first-child {
+  width: 1%;
+  white-space: nowrap;
+  text-align: center;
+}
+
+#server.torrents th:nth-child(2), #server.torrents td:nth-child(2) {
   text-align: left;
+}
+
+#server.torrents td:first-child {
+  position: relative;
+}
+
+#server.torrents td:nth-child(2) {
+  line-height: 1.1;
+  word-break: break-all;
+  font-weight: 700;
+  user-select: auto;
+}
+
+#server.torrents td:nth-child(2) code {
+  margin: 0;
+  max-width: none !important;
+  font-weight: 500 !important;
 }
 
 #server.torrents .button, #server.users tr:nth-last-child(n+2) .button {
@@ -173,19 +198,10 @@ body {
 }
 
 @media screen and (max-width: 1200px) {
-  #server.torrents th:nth-child(3), #server.torrents td:nth-child(3) {
-    display: none;
-  }
   #server.torrents th:first-child {
     width: 1%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-  #server.torrents td {
-    border-right: 1px solid #111 !important;
-  }
-  #server.torrents td:nth-child(odd) {
-    background: none;
   }
 }

@@ -25,6 +25,27 @@
       if (strpos($request, "admin") === false) {
 ?>
     <link rel="preload" href="include/style.css" as="style">
+    <link rel="preload" href="<?=$pic_base_url?>download.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>magnet.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>down.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>search.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>password.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>1.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>2.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>3.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>4.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>5.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>6.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>7.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>8.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>9.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>10.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>11.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>user.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>edit.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>yes.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>no.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>peer.png" as="image">
 <?php
       }
     }
@@ -48,7 +69,7 @@
 <?php
     }
 ?>
-    <style type=text/css>html, body{background: #151414;} body, a {opacity: 0;} body{text-align: center; color: transparent !important;}</style>
+    <style type=text/css>html, body{background: #151414;} body, a {opacity: 0;} body{text-align: center; color: transparent !important; overflow-x: hidden;}</style>
     <link rel=shortcut icon href=<?=$tracker_path;?>favicon.ico>
     <link rel=alternate type=application/rss+xml title="<?=$tracker_title;?> RSS Feed" href=rss.php>
     <title>
@@ -90,8 +111,9 @@
           if (strpos($request, "admin") !== false && $isadmin) {
 ?>
             <a href="<?=$tracker_path;?>admin/">Admin</a>
-            <a href=server.php>Server</a>
+            <!--<a href=server.php>Server</a>-->
             <!--<a href=#>Configure</a>-->
+            <a href=torrents.php>Torrents</a>
             <a href=users.php>Users</a>
             <!--<a href=#>Blacklist</a>-->
             <!--<a href=../stats.php>Stats</a>-->
