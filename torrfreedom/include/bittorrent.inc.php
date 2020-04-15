@@ -347,7 +347,14 @@ function stdfoot()
     print("\n<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; " . $appname . " v. " . $version . " &nbsp;&nbsp;| : . . .</span></p>");
   else if ($CURUSER["admin"] == "yes")
     print("\n<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; " . $appname . " v. " . $version . $bullet . "Administrator Mode &nbsp;&nbsp;| : . . .</span></p>");
-  else if ($contact == "") {
+  else if ($CURUSER) {
+    require_once "user/user.class.php";
+    $user=new user();
+    print('<p id=footer><span id=blurb>' . $sitename . ' Tracker');
+    if ($contact)
+      print($bullet . 'Admin: <code>' . $contact . '</code>');
+    print($bullet . 'Torrents:&nbsp; ' . $user->getCountActiveTorrents() . ' active,&nbsp;  ' . $user->countTorrents() . ' total' . $bullet . '<a href=rss.php>RSS Feed</a></span></p>');
+  } else if ($contact == "") {
     print('<p id=footer><span id=blurb>' . $sitename . ' (Est. 2017)' . $bullet . 'Design by <a href=http://skank.i2p/>dr|z3d</a></span></p>');
   } else {
     print('<p id=footer><span id=blurb>' . $sitename . ' (Est. 2017)' . $bullet . 'Admin: <code>' . $contact . '</code>' . $bullet . 'Design by <a href=http://skank.i2p/>dr|z3d</a></span></p>');

@@ -134,12 +134,11 @@
           }
           if ($CURUSER && !$isadmin) {
 ?>
-            <a href=stats.php>Stats</a>
+            <a href=help.php>Help</a>
 <?php
           }
           if (!$CURUSER) {
 ?>
-            <a href=help.php>Help</a>
             <a href=rss.php>RSS Feed</a>
 <?php
           }
