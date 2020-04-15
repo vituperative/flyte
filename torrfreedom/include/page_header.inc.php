@@ -132,7 +132,7 @@
             <a href=signup.php>Signup</a>
 <?php
           }
-          if ($CURUSER && !$isadmin) {
+          if (!$isadmin) {
 ?>
             <a href=help.php>Help</a>
 <?php
