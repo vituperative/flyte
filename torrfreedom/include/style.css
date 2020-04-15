@@ -68,6 +68,16 @@ code::-moz-selection, code::selection {
   color: #fff;
 }
 
+#header {
+  margin: -12px 0 0;
+  padding-top: 8px;
+  position: sticky;
+  top: -10px;
+  z-index: 999;
+  background: linear-gradient(to bottom, #232020, #151414);
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .4));
+}
+
 #siteinfo code, #footer code {
   opacity: .75;
 }
@@ -401,16 +411,18 @@ input[type="submit"], input[type="file"], input[type="reset"], .button, #addcomm
 }
 
 input[type="submit"]:hover, input[type="file"]:hover, input[type="reset"]:hover, input[type="submit"]:focus, input[type="file"]:focus, input[type="reset"]:focus, .button:hover, .button:focus, #addcomment a:hover, #addcomment a:focus {
+  text-decoration: none;
   color: #cdcbcb !important;
   background: linear-gradient(to bottom, #232121, #343232);
 }
 
-input[type="submit"]:focus, input[type="reset"]:focus, input[type="text"]:focus, input[type="password"]:focus, .button:focus {
+input[type="submit"]:focus, input[type="reset"]:focus, input[type="text"]:focus, input[type="password"]:focus, .button:focus, #addcomment a:focus {
   box-shadow: 0 0 0 1px #121010, 0 0 0 2px rgba(255, 96, 0, .3);
   color: #eee !important;
 }
 
-input[type="submit"]:active, input[type="reset"]:active, select:active, select:focus, .button:active, #details th a:nth-child(n+2):active, .edit:active, .download:active {
+input[type="submit"]:active, input[type="reset"]:active, select:active, select:focus, .button:active, #details th a:nth-child(n+2):active, .edit:active, .download:active,
+#addcomment a:active {
   box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232, inset 2px 2px 2px #111 !important;
 }
 
@@ -583,7 +595,7 @@ hr.separator {
 }
 
 #topnav {
-  padding-bottom: 6px;
+  padding-bottom: 4px;
   margin: 0 auto 10px;
   word-spacing: -.18em;
   color: transparent;
@@ -599,17 +611,18 @@ hr.separator {
   text-decoration: none !important;
   font-weight: 700 !important;
   font-size: 105% !important;
-  text-shadow: 0 1px 1px #000;
+  text-shadow: 0 1px 1px #000, 0 0 2px #000;
   color: #9f9090;
   border: 1px solid #343030;
   box-shadow: inset 0 0 0 1px #000, 0 0 0 1px #121010;
-  background: linear-gradient(to bottom, rgba(96, 96, 96, .15) 50%, rgba(0, 0, 0, .8) 50%), repeating-linear-gradient(to right, rgba(0, 0, 0, .8), rgba(0, 0, 0, .3) 2px), linear-gradient(to bottom, #454040, #232020);
+  background: radial-gradient(at center 80px, rgba(255, 96, 0, .05) 0, rgba(0, 0, 0, 0) 90%), linear-gradient(to bottom, rgba(80, 72, 72, .15) 50%, #121010 50%), repeating-linear-gradient(to right, rgba(90, 72, 72, .5), rgba(0, 0, 0, 0) 2px), linear-gradient(to bottom, #454040, #232020);
   will-change: transform;
 }
 
 #topnav a::before, #topnav a::after {
   content: "";
   display: block;
+  width: 1px;
   height: 1px;
   vertical-align: middle;
 }
@@ -651,19 +664,18 @@ hr.separator {
   border-radius: 0 2px 2px 0;
 }
 
-#topnav a:hover, #topnav a:focus, #addcomment a:hover, #addcomment a:focus, #pager a:hover, #pager a:focus {
+#topnav a:hover, #topnav a:focus, #pager a:hover, #pager a:focus {
   color: #f60;
   text-decoration: none;
-  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050;
+  box-shadow: inset 0 0 0 1px rgba(255,96,0,.5);
   background: linear-gradient(to bottom, #232020, #454040);
 }
 
 #topnav a:hover, #topnav a:focus {
   position: relative;
   z-index: 10;
-  border: 1px solid #454040;
   box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #000, inset 0 0 1px 1px rgba(255, 128, 0, .9);
-  background: radial-gradient(at center 80px, rgba(255, 96, 0, .6) 0, rgba(0, 0, 0, 0) 70%), linear-gradient(to bottom, rgba(255, 255, 255, .1) 50%, rgba(0, 0, 0, .2) 50%), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px);
+  background: radial-gradient(at center 80px, rgba(255, 96, 0, .6) 0, rgba(0, 0, 0, 0) 70%), linear-gradient(to bottom, rgba(255, 255, 255, .1) 50%, #000 50%), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px);
 }
 
 #topnav a:active, #addcomment a:active, #toggle:active {
@@ -1419,16 +1431,6 @@ code.dest {
 #wrapper.help div {
   margin: 0 auto !important;
   width: 800px !important;
-}
-
-#header {
-  margin: -12px 0 0;
-  padding-top: 8px;
-  position: sticky;
-  top: -10px;
-  z-index: 999;
-  background: radial-gradient(at bottom, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, #232020, #121010);
-  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .4));
 }
 
 #howtoupload {
