@@ -151,6 +151,7 @@ body {
 #server.torrents td:nth-child(2) code {
   margin: 0;
   max-width: none !important;
+  font-weight: 500 !important;
 }
 
 #server.torrents .button, #server.users tr:nth-last-child(n+2) .button {

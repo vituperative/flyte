@@ -40,7 +40,7 @@ while ($row = mysqli_fetch_array($result)) {
     echo "</td>";
 
     //echo "<td>" . $torid.  "</td>";
-    echo "<td>" . $row['name'] . "<br><code>" . implode(unpack("H*", $row['info_hash'])) .  "</code></td>";
+    echo "<td><a href=\"../details.php?id=" . $row['id'] . "\">" . $row['name'] . "</a><br><code>" . implode(unpack("H*", $row['info_hash'])) .  "</code></td>";
     //https://stackoverflow.com/questions/14674834/php-convert-string-to-hex-and-hex-to-string
     //echo "<td><code>" . implode(unpack("H*", $row['info_hash'])) .  "</code></td>";
     //echo "<td><a href=vistorrent.php?torid=$torid>" . $row['visible'].  "</a></td>";
