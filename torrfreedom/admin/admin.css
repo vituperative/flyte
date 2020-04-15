@@ -39,16 +39,19 @@ body {
 }
 
 #server.users th, #server.users td {
-  font-size: 90%;
-  text-align: center;
   padding: 6px !important;
-  border-right: 1px solid #111 !important;
+  text-align: center;
+  font-size: 90%;
 }
 
 #server.users th {
   text-transform: capitalize;
 }
 
+#server.users td, #server.torrents td {
+  border-right: 1px solid #222 !important;
+  border-bottom: 1px solid #222 !important;
+}
 #server.users td:first-child {
   padding-left: 24px !important;
   text-align: left;
