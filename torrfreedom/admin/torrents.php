@@ -45,7 +45,7 @@ function delTorrent($torid, $name, $user)
 while ($row = mysqli_fetch_array($result)) {
     echo "<tr>";
     $torid = $row['id'];
-    $form = "<form action=modifytorrent.php method=GET><input type=submit value=Apply><input type=hidden name=torid value=$torid />";
+    $form = "<form action=modifytorrent.php method=GET><input type=submit value=Apply>&nbsp;<input type=hidden name=torid value=$torid />";
 
     echo "<td>";
     if (isset($row["category"])) {
