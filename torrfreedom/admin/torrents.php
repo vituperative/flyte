@@ -28,16 +28,15 @@ while ($row = mysqli_fetch_array($result)) {
     echo "<tr>";
     $torid = $row['id'];
 
-/**
     echo "<td>";
-    if (isset($row["cat_name"])) {
-        print("<a href=\"./?cat=" . $row['category'] . "\" class=\"catlink\" data-tooltip=\"" . $row['cat_name'] . "\"><img src=\"" . $tracker_path . "pic/" . $row['category'] . ".png\" width=24 height=24></a>");
+    if (isset($row["category"])) {
+        $cat_name = $admin->getNameOfCategoryByID($row['category']);
+        print("<a href=\"./?cat=" . $row['category'] . "\" class=\"catlink\" data-tooltip=\"" . $cat_name . "\"><img src=\"" . $tracker_path . "pic/" . $row['category'] . ".png\" width=24 height=24></a>");
     } else {
         print("<span class=\"catlink\" data-tooltip=\"Uncategorized\"><img src=\"" . $tracker_path . "pic/unknown.png\" width=24 height=24></span>");
     }
     echo "</td>";
-**/
-    echo "<td>" . $admin->getNameOfCategoryByID($row['category']).  "</td>";
+
     //echo "<td>" . $torid.  "</td>";
     echo "<td>" . $row['name'] .  "</td>";
     //https://stackoverflow.com/questions/14674834/php-convert-string-to-hex-and-hex-to-string
