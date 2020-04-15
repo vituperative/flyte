@@ -353,7 +353,7 @@ function stdfoot()
     print('<p id=footer><span id=blurb>' . $sitename . ' Tracker');
     if ($contact)
       print($bullet . 'Admin: <code>' . $contact . '</code>');
-    print($bullet . 'Torrents:&nbsp; ' . $user->getCountActiveTorrents() . ' active,&nbsp;  ' . $user->countTorrents() . ' total' . $bullet . '<a href=rss.php>RSS Feed</a></span></p>');
+    print($bullet . 'Torrents:&nbsp; ' . $user->getCountActiveTorrents() . ' active,&nbsp;  ' . $user->countTorrents() . ' total' . $bullet . '<a href=rss.php target=_blank>RSS Feed</a></span></p>');
   } else if ($contact == "") {
     print('<p id=footer><span id=blurb>' . $sitename . ' (Est. 2017)' . $bullet . 'Design by <a href=http://skank.i2p/>dr|z3d</a></span></p>');
   } else {

@@ -134,76 +134,7 @@ if (isset($cleansearchstr)) {
     stdhead("Search results for: $searchstr");
 } else {
     stdhead();
-?>
-<?php
 }
-
-$cats = genrelist();
-
-?>
-
-<div id=searchandshow>
-    <input type=checkbox name=togglepanel id=togglepanel><label for=togglepanel title="Toggle Panel Visibility"><span id=toggle>&nbsp;</span></label>
-    <form method="get" action="./">
-        <div id=search>
-            <input name="search" type="text" value="<?= htmlspecialchars($searchstr) ?>" size="40" class="input">
-            <select class="input" name="cat">
-                <option value="0">All Categories</option>
-                <?php
-
-                $catdropdown = "";
-                foreach ($cats as $cat) {
-                    $catdropdown .= "<option value=\"" . $cat["id"] . "\"";
-                    if (isset($_GET["cat"]) && $cat["id"] == $_GET["cat"]) {
-                        $catdropdown .= " selected=\"selected\"";
-                    }
-
-                    $catdropdown .= ">" . htmlspecialchars($cat["name"]) . "</option>\n";
-                }
-
-                $deadchkbox = "<label><input type=\"checkbox\" name=\"incldead\" value=\"1\"";
-                if (isset($_GET["incldead"])) {
-                    $deadchkbox .= " checked=\"checked\"";
-                }
-
-                $deadchkbox .= " /> include inactive</label>&nbsp; \n";
-
-                ?>
-                <?= $catdropdown ?>
-            </select>
-            Sort by:
-            <select name='order'>
-                <option value='added'>Upload Date</option>
-                <option value='swarmsize'>Swarm size</option>
-                <option value='size'>File size</option>
-                <?php if ($CURUSER) { ?>
-                    <option value='times_completed'>Downloads</option>
-                <?php } ?>
-                <option value='comments'>Comments</option>
-            </select>
-            <?= $deadchkbox ?>
-            <input type="submit" value="Search!" class="input" />
-        </div>
-    </form>
-    <div id=torrentshow>
-        <!--
-<?php
-if ($additionals) {
-    $time_end = getmicrotime();
-    $time = round($time_end - $time_start, 4);
-}
-?>
-<form method="get" action="./">
-Show: <select class="input" name="cat"><option value="0">All Categories</option>
-<?= $catdropdown ?>
-</select>
-<?= $deadchkbox ?>
-<input type="submit" value="Go!" class="input"/>
-</form>
--->
-    </div>
-</div>
-<?php
 
 if (isset($cleansearchstr)) {
     print("<h2>Search results for \"" . htmlspecialchars($searchstr) . "\"</h2>\n");
@@ -220,8 +151,8 @@ if ($count) {
         print("<p id=toast class=warn><span class=title>Search Results</span>Nothing found!<br>");
         print("Try again with a refined search string.</p>\n");
     } else {
-        header("Refresh: 5; url=./?incldead=1&cat=0");
-        print("<p id=toast class=warn><span class=title>Warning!</span>No torrents currently active.<br> Redirecting to inactive torrents&hellip;</p>\n");
+        // not working -> header("Refresh: 5; url=./?incldead=1&cat=0");
+        print("<p id=toast class=warn><span class=title>Warning!</span>No torrents currently active.<br>Select <i>include inactive</i> in the search dropdown to view all torrents.</p>\n");
     }
 }
 if (isset($_SERVER['HTTP_REFERER']))

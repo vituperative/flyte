@@ -1433,6 +1433,10 @@ code.dest {
   font-size: 10pt;
 }
 
+#server {
+  margin: 8px auto !important;
+}
+
 #wrapper.help div {
   margin: 0 auto !important;
   width: 800px !important;
