@@ -313,7 +313,7 @@ th, #dostuff td {
   background: rgba(255, 255, 255, .01) !important;
 }
 
-#torrents tr:nth-child(n+2):hover td {
+#torrents tr:nth-child(n+2):hover td, #filelist tr:hover {
   background: #2a2525 !important;
   border-color: transparent !important;
 }
