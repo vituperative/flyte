@@ -194,7 +194,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
 
                 $subres = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM files WHERE torrent = $id ORDER BY id");
                 while ($subrow = mysqli_fetch_array($subres)) {
-                    $subrow["filename"] = preg_replace("[./]", " / ", $subrow["filename"]);
+                    $subrow["filename"] = preg_replace("[/]", " / ", $subrow["filename"]);
                     $s .= "<tr><td>" . preg_replace(',[^/]+$,', '<b>$0</b>', htmlspecialchars($subrow["filename"])) . "</td><td>" . mksize($subrow["size"]) . "</td></tr>\n";
                 }
 
