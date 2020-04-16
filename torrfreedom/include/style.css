@@ -720,6 +720,22 @@ hr.separator {
   border-top: 1px solid #343232;
   background: #121010;
   background: repeating-linear-gradient(to right, rgba(0, 0, 0, 0), #121010 2px), linear-gradient(to right, #232020, #121010, #232020);
+  animation: ease-in fade .85s forwards;
+}
+
+@keyframes fade {
+  from {
+    filter: opacity(0);
+  }
+  to {
+    filter: opacity(1);
+  }
+}
+
+@supports (animation: ease fade .3s forwards) {
+  #blurb {
+    filter: opacity(0);
+  }
 }
 
 #toast, #addcomment, .note, #upload.note, .success, .warn, #nuke, #recentcomments {
