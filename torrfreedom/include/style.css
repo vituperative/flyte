@@ -957,14 +957,19 @@ hr.separator {
   font-weight: 700 !important;
 }
 
+#details #filelist td {
+  padding-top: 3px;
+  line-height: 1.25;
+}
+
 #details #filelist tr td:first-child {
-  font-weight: 600 !important;
-  color: #aaa;
+  font-weight: 500 !important;
+  color: #ccc;
 }
 
 #details #filelist tr td:first-child b {
-  color: #bbb;
-  font-weight: 700 !important;
+  color: #ddd;
+  font-weight: 600 !important;
 }
 
 #description div hr, .torrentname hr {
@@ -1932,6 +1937,9 @@ input#togglepanel {
   }
   #wrapper.help div, #server, #restricted, #wrapper.help a {
     font-size: 10pt !important;
+  }
+  #details #filelist td {
+    padding-top: 5px;
   }
 }
 
