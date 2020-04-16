@@ -25,10 +25,10 @@
       if (strpos($request, "admin") === false) {
 ?>
     <link rel="preload" href="include/style.css" as="style">
-    <link rel="preload" href="<?=$pic_base_url?>download.png" as="image">
-    <link rel="preload" href="<?=$pic_base_url?>magnet.png" as="image">
     <link rel="preload" href="<?=$pic_base_url?>down.png" as="image">
     <link rel="preload" href="<?=$pic_base_url?>search.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>download.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>magnet.png" as="image">
     <link rel="preload" href="<?=$pic_base_url?>password.png" as="image">
     <link rel="preload" href="<?=$pic_base_url?>1.png" as="image">
     <link rel="preload" href="<?=$pic_base_url?>2.png" as="image">
@@ -111,12 +111,10 @@
           if (strpos($request, "admin") !== false && $isadmin) {
 ?>
             <a href="<?=$tracker_path;?>admin/">Admin</a>
-            <!--<a href=server.php>Server</a>-->
             <!--<a href=#>Configure</a>-->
             <a href=torrents.php>Torrents</a>
             <a href=users.php>Users</a>
             <!--<a href=#>Blacklist</a>-->
-            <!--<a href=../stats.php>Stats</a>-->
 <?php
           } else if ($isadmin) {
 ?>
@@ -134,15 +132,14 @@
             <a href=signup.php>Signup</a>
 <?php
           }
-          if ($CURUSER && !$isadmin) {
-?>
-            <a href=stats.php>Stats</a>
-<?php
-          }
-          if (strpos($request, "admin") === false && !$isadmin) {
+          if (!$isadmin) {
 ?>
             <a href=help.php>Help</a>
-            <a href=rss.php>RSS Feed</a>
+<?php
+          }
+          if (!$CURUSER) {
+?>
+            <a href=rss.php target=_blank>RSS Feed</a>
 <?php
           }
           if ($CURUSER && strpos($request, "admin") === false) {
@@ -163,7 +160,7 @@
             {
               if (!strpos($request, "order")) {
 ?>
-                <div id=tracker class=shim></div>
+<!--                <div id=tracker class=shim></div> -->
 <?php
               }
             }
@@ -177,6 +174,74 @@
       </center>
     </div>
     <hr id=top hidden>
+
+<?php
+$cats = genrelist();
+?>
+
+<center>
+<div id=searchandshow>
+    <input type=checkbox name=togglepanel id=togglepanel hidden><label for=togglepanel title="Toggle Panel Visibility"><span id=toggle>&nbsp;</span></label>
+    <form method="get" action="<?=$tracker_path;?>">
+        <div id=search>
+            <input name="search" type="text" value="<?= htmlspecialchars($searchstr) ?>" size="40" class="input">
+            <select class="input" name="cat">
+                <option value="0">All Categories</option>
+                <?php
+                $catdropdown = "";
+                foreach ($cats as $cat) {
+                    $catdropdown .= "<option value=\"" . $cat["id"] . "\"";
+                    if (isset($_GET["cat"]) && $cat["id"] == $_GET["cat"]) {
+                        $catdropdown .= " selected=\"selected\"";
+                    }
+
+                    $catdropdown .= ">" . htmlspecialchars($cat["name"]) . "</option>\n";
+                }
+
+                $deadchkbox = "<label><input type=\"checkbox\" name=\"incldead\" value=\"1\"";
+                if (isset($_GET["incldead"])) {
+                    $deadchkbox .= " checked=\"checked\"";
+                }
+
+                $deadchkbox .= " /> include inactive</label>&nbsp; \n";
+
+                ?>
+                <?= $catdropdown ?>
+            </select>
+            Sort by:
+            <select name='order'>
+                <option value='added'>Upload Date</option>
+                <option value='swarmsize'>Swarm size</option>
+                <option value='size'>File size</option>
+                <?php if ($CURUSER) { ?>
+                    <option value='times_completed'>Downloads</option>
+                <?php } ?>
+                <option value='comments'>Comments</option>
+            </select>
+            <?= $deadchkbox ?>
+            <input type="submit" value="Search!" class="input" />
+        </div>
+    </form>
+    <div id=torrentshow>
+        <!--
+<?php
+if ($additionals) {
+    $time_end = getmicrotime();
+    $time = round($time_end - $time_start, 4);
+}
+?>
+<form method="get" action="./">
+Show: <select class="input" name="cat"><option value="0">All Categories</option>
+<?= $catdropdown ?>
+</select>
+<?= $deadchkbox ?>
+<input type="submit" value="Go!" class="input"/>
+</form>
+-->
+    </div>
+</div>
+</center>
+
 <?php
 /**
  $server = $_SERVER['HTTP_HOST'];

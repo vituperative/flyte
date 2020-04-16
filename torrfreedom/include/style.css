@@ -720,6 +720,22 @@ hr.separator {
   border-top: 1px solid #343232;
   background: #121010;
   background: repeating-linear-gradient(to right, rgba(0, 0, 0, 0), #121010 2px), linear-gradient(to right, #232020, #121010, #232020);
+  animation: ease-in fade .85s forwards;
+}
+
+@keyframes fade {
+  from {
+    filter: opacity(0);
+  }
+  to {
+    filter: opacity(1);
+  }
+}
+
+@supports (animation: ease fade .3s forwards) {
+  #blurb {
+    filter: opacity(0);
+  }
 }
 
 #toast, #addcomment, .note, #upload.note, .success, .warn, #nuke, #recentcomments {
@@ -798,6 +814,10 @@ hr.separator {
   text-align: left;
   border-top: none !important;
   border-bottom: 1px solid #111 !important;
+}
+
+#myaccount th:last-child {
+  font-size: 90% !important;
 }
 
 #torrents th, #torrents th a {
@@ -937,14 +957,19 @@ hr.separator {
   font-weight: 700 !important;
 }
 
+#details #filelist td {
+  padding-top: 3px;
+  line-height: 1.25;
+}
+
 #details #filelist tr td:first-child {
-  font-weight: 600 !important;
-  color: #aaa;
+  font-weight: 500 !important;
+  color: #ccc;
 }
 
 #details #filelist tr td:first-child b {
-  color: #bbb;
-  font-weight: 700 !important;
+  color: #ddd;
+  font-weight: 600 !important;
 }
 
 #description div hr, .torrentname hr {
@@ -1240,7 +1265,7 @@ table table {
 #searchandshow {
   margin: 0 0 -10px;
   background: #212020;
-  background: radial-gradient(at top, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, #232020, rgba(0, 0, 0, 0));
+  background: linear-gradient(to top, #151414 12px, rgba(40,38,38,.5), rgba(50,46,46,.3)), radial-gradient(at top, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, #232020, rgba(0, 0, 0, 0));
 }
 
 .shim {
@@ -1433,6 +1458,10 @@ code.dest {
   font-size: 10pt;
 }
 
+#server {
+  margin: 8px auto !important;
+}
+
 #wrapper.help div {
   margin: 0 auto !important;
   width: 800px !important;
@@ -1511,12 +1540,20 @@ code.dest {
   background: url(../pic/download.png) no-repeat, linear-gradient(to bottom, #454040, #232020);
 }
 
+.download.magnet {
+  background: url(../pic/magnet.png) no-repeat, linear-gradient(to bottom, #454040, #232020);
+}
+
 .edit:hover, .edit:focus {
   background: url(../pic/edit.png) no-repeat, linear-gradient(to bottom, #232020, #454040);
 }
 
 .download:hover, .download:focus {
   background: url(../pic/download.png) no-repeat, linear-gradient(to bottom, #232020, #454040);
+}
+
+.download.magnet:hover, .download.magnet:focus {
+  background: url(../pic/magnet.png) no-repeat, linear-gradient(to bottom, #232020, #454040);
 }
 
 .nuke {
@@ -1900,6 +1937,9 @@ input#togglepanel {
   }
   #wrapper.help div, #server, #restricted, #wrapper.help a {
     font-size: 10pt !important;
+  }
+  #details #filelist td {
+    padding-top: 5px;
   }
 }
 

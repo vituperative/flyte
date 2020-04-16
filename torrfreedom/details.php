@@ -143,11 +143,11 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
         }
 
         if ( $admin ) {
-            echo '<tr><th colspan=2>' . $s . '&nbsp;&nbsp;<a title="Download ' . $row["filename"] . '" class=download href="download.php?id=' . $id . '&amp;file=' . rawurlencode($row["filename"]) . '"><span>' . htmlspecialchars($row["filename"]) . '</span></a><a title="Delete torrent" class=nuke href="admin/delTorrent.php?wdel_id=\'' . $CURUSER["username"] . '\'&amp;id=\'' . $id . '\'&amp;&amp;name=\'' . htmlspecialchars($row["name"]) . '\'"></a></th></tr>';
-        } elseif($owned){
-            echo '<tr><th colspan=2>' . $s . '&nbsp;&nbsp;<a title="Download ' . $row["filename"] . '" class=download href="download.php?id=' . $id . '&amp;file=' . rawurlencode($row["filename"]) . '"><span>' . htmlspecialchars($row["filename"]) . '</span></a><a title="Delete torrent" class=nuke href="user/delTorrent.php?wdel_id=\'' . $CURUSER["username"] . '\'&amp;id=\'' . $id . '\'&amp;&amp;name=\'' . htmlspecialchars($row["name"]) . '\'"></a></th></tr>';
-	}else {
-            echo '<tr><th colspan=2>' . $s . '&nbsp;&nbsp;<a title="Download ' . $row["filename"] . '" class=download href="download.php?id=' . $id . '&amp;file=' . rawurlencode($row["filename"]) . '"><span>' . htmlspecialchars($row["filename"]) . '</span></a></th></tr>';
+            echo '<tr><th colspan=2>' . $s . '&nbsp;&nbsp;<a title="Delete torrent" class=nuke href="admin/delTorrent.php?wdel_id=\'' . $CURUSER["username"] . '\'&amp;id=\'' . $id . '\'&amp;&amp;name=\'' . htmlspecialchars($row["name"]) . '\'"></a><a title="Download ' . $row["filename"] . '" class=download href="download.php?id=' . $id . '&amp;file=' . rawurlencode($row["filename"]) . '"><span>' . htmlspecialchars($row["filename"]) . '</span></a><a title="Magnet for ' . htmlspecialchars($row["name"]) . '" class=\'download magnet\' href=magnet:?xt=urn:btih:' . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "&amp;dn=" . htmlentities(urlencode($row["filename"])) . "&amp;tr=" . $announce_urls[5] . '></a></th></tr>';
+        } else if ($owned) {
+            echo '<tr><th colspan=2>' . $s . '&nbsp;&nbsp;<a title="Delete torrent" class=nuke href="user/delTorrent.php?wdel_id=\'' . $CURUSER["username"] . '\'&amp;id=\'' . $id . '\'&amp;&amp;name=\'' . htmlspecialchars($row["name"]) . '\'"></a><a title="Download ' . $row["filename"] . '" class=download href="download.php?id=' . $id . '&amp;file=' . rawurlencode($row["filename"]) . '"><span>' . htmlspecialchars($row["filename"]) . '</span></a><a title="Magnet for ' . htmlspecialchars($row["name"]) . '" class=\'download magnet\' href=magnet:?xt=urn:btih:' . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "&amp;dn=" . htmlentities(urlencode($row["filename"])) . "&amp;tr=" . $announce_urls[5] . '></a></th></tr>';
+        } else {
+            echo '<tr><th colspan=2>' . $s . '&nbsp;&nbsp;<a title="Download ' . $row["filename"] . '" class=download href="download.php?id=' . $id . '&amp;file=' . rawurlencode($row["filename"]) . '"><span>' . htmlspecialchars($row["filename"]) . '</span></a><a title="Magnet for ' . htmlspecialchars($row["name"]) . '" class=\'download magnet\' href=magnet:?xt=urn:btih:' . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "&amp;dn=" . htmlentities(urlencode($row["filename"])) . "&amp;tr=" . $announce_urls[5] . '></a></th></tr>';
         }
         $rowcount = 0;
 
@@ -194,6 +194,7 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
 
                 $subres = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT * FROM files WHERE torrent = $id ORDER BY id");
                 while ($subrow = mysqli_fetch_array($subres)) {
+                    $subrow["filename"] = preg_replace("[/]", " / ", $subrow["filename"]);
                     $s .= "<tr><td>" . preg_replace(',[^/]+$,', '<b>$0</b>', htmlspecialchars($subrow["filename"])) . "</td><td>" . mksize($subrow["size"]) . "</td></tr>\n";
                 }
 

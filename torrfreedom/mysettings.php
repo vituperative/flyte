@@ -32,7 +32,7 @@ $mytorrents = $row[0];
 <form method=post action=updateprefs.php>
 <div class="tablewrap slim">
 <table id=userprefs>
-<tr><th colspan=2>Account Configuration</th></tr>
+<tr><th colspan=2>Tracker Preferences</th></tr>
 
 <?php
 tr("Torrents per page", "<input type=text name=pagesize size=3 value=$pagesize disabled/>", 1); // disabled for now, needs a separate form?
