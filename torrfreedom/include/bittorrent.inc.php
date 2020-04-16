@@ -1,8 +1,11 @@
 <?php
-if (file_exists("methods_.php")) require_once("methods_.php");
-else
+if (file_exists("methods_.php")) {
+    include_once("methods_.php");
+    require_once "user/user.class.php";
+} else {
     include_once("../methods_.php");
-
+    require_once "../user/user.class.php";
+}
 
 ini_set('default_charset', 'utf-8');
 function getmicrotime()
@@ -344,24 +347,19 @@ function stdhead($title = "")
 function stdfoot()
 {
     global $pic_base_url, $version, $appname, $time_start, $contact, $tracker_title, $CURUSER;
-    $time = round(getmicrotime() - $time_start, 1);
+    $time = getmicrotime() - $time_start;
     $sitename = ucwords(strtolower($tracker_title));
     $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME']; // TODO ADD THAT 2 FUNCTION
     $bullet = '&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;&nbsp;';
+    $user = new user();
     //    print('<p id=footer><span id=blurb>Running: ' . $appname . ' v. ' . $version . '</code></p>');
     //    print('<p id=footer><span id=blurb>Running: ' . $appname . ' v. ' . $version . '</code>' . $bullet . 'Page spawned in ' . $time . ' seconds</span></p>');
     if (strpos($request, "install") !== false)
         print("\n<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; " . $appname . " v. " . $version . " &nbsp;&nbsp;| : . . .</span></p>");
     else if ($CURUSER["admin"] == "yes")
-        print("\n<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; " . $appname . " v. " . $version . $bullet . "Administrator Mode &nbsp;&nbsp;| : . . .</span></p>");
+        print("\n<p id=footer><span id=blurb>" . $appname . " v. " . $version . $bullet . "Torrents:&nbsp; " . $user->getCountActiveTorrents() . " active,&nbsp; " . $user->countTorrents() . " total" . $bullet . "Page spawned in " . round($time, 3) . " seconds</span></p>");
     else if ($CURUSER) {
-        require_once "user/user.class.php";
-        $user = new user();
         print('<p id=footer><span id=blurb>' . $sitename);
-        /**
-    if ($contact)
-      print($bullet . 'Admin: <code>' . $contact . '</code>');
-         **/
         print($bullet . 'Torrents:&nbsp; ' . $user->getCountActiveTorrents() . ' active,&nbsp;  ' . $user->countTorrents() . ' total' . $bullet . '<a href=rss.php target=_blank>RSS Feed</a></span></p>');
     } else if ($contact == "") {
         print('<p id=footer><span id=blurb>' . $sitename . ' (Est. 2017)' . $bullet . 'Design by <a href=http://skank.i2p/>dr|z3d</a></span></p>');
