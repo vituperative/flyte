@@ -816,6 +816,10 @@ hr.separator {
   border-bottom: 1px solid #111 !important;
 }
 
+#myaccount th:last-child {
+  font-size: 90% !important;
+}
+
 #torrents th, #torrents th a {
   font-size: 9pt !important;
   font-weight: 700 !important;
@@ -1531,12 +1535,20 @@ code.dest {
   background: url(../pic/download.png) no-repeat, linear-gradient(to bottom, #454040, #232020);
 }
 
+.download.magnet {
+  background: url(../pic/magnet.png) no-repeat, linear-gradient(to bottom, #454040, #232020);
+}
+
 .edit:hover, .edit:focus {
   background: url(../pic/edit.png) no-repeat, linear-gradient(to bottom, #232020, #454040);
 }
 
 .download:hover, .download:focus {
   background: url(../pic/download.png) no-repeat, linear-gradient(to bottom, #232020, #454040);
+}
+
+.download.magnet:hover, .download.magnet:focus {
+  background: url(../pic/magnet.png) no-repeat, linear-gradient(to bottom, #232020, #454040);
 }
 
 .nuke {
