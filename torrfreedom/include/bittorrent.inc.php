@@ -146,7 +146,14 @@ function mksize($bytes)
 {
     $suffix = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB');
     $index = floor(log($bytes + 1, 1024)); // + 1 to prevent -INF
-    return sprintf("%.0f %s", $bytes / pow(1024, $index), $suffix[$index]);
+    if ($bytes > 102400000000)
+        return sprintf("%.5s %s", $bytes / pow(1024, $index), $suffix[$index]);
+    else if ($bytes > 10240000000)
+        return sprintf("%.4s %s", $bytes / pow(1024, $index), $suffix[$index]);
+    else if ($bytes > 1024000000)
+        return sprintf("%.3s %s", $bytes / pow(1024, $index), $suffix[$index]);
+    else
+        return sprintf("%.0f %s", $bytes / pow(1024, $index), $suffix[$index]);
 }
 
 function deadtime()
@@ -765,7 +772,7 @@ function torrenttable($res, $variant = "index")
                 print("</td>\n");
             }
 
-            print("<td>" . mksize($row["size"]) . "</td>\n");
+            print("<td title=\"" . $row["size"] . " bytes\">" . mksize($row["size"]) . "</td>\n");
 
             if ($row["type"] == "shashgle") {
                 print("<td>" . $row["numfiles"] . "</td>\n");
