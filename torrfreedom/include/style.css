@@ -1843,6 +1843,12 @@ input#togglepanel {
   }
 }
 
+@media screen and (min-width: 1900px) {
+  #torrents .briefdesc {
+    max-width: 880px;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   body, input, select, textarea, button, td, a, .topnav a {
     font-size: 9pt !important;
