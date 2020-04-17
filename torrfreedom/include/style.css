@@ -1898,12 +1898,19 @@ input#togglepanel {
     font-size: 8.5pt !important;
   }
   #torrents td {
-    padding: 2px 4px !important;
+    padding: 2px 5px !important;
+    width: 1% !important;
+    white-space: nowrap;
     border: 1px solid #222 !important;
+  }
+  #torrents td:nth-child(2) {
+    width: 40% !important;
   }
   #torrents .torrentname {
     padding-left: 8px !important;
-    max-width: 350px;
+    max-width: 400px !important;
+    white-space: normal !important;
+    word-break: break-all !important;
   }
   #torrents .briefdesc {
     margin-top: 1px;
