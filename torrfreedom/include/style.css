@@ -3,6 +3,7 @@
 html {
   margin: 0;
   padding: 0;
+  box-shadow: inset 0 0 0 1px #232020;
   scrollbar-color: #454343 #212020;
 }
 
@@ -12,12 +13,24 @@ body, html {
 }
 
 body {
-  margin: 0 0 5px;
+  margin: 0 1px 5px;
   padding: 0 0 28px;
   position: relative;
   min-width: 800px;
   color: #bbb;
-  opacity: 0 !important;
+}
+
+body::after {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    display: inline-block;
+    background: #151414;
+    content: "";
 }
 
 body, input, select, textarea, button {
@@ -39,7 +52,7 @@ input[type="submit"], .button {
   background: #563232;
 }
 
-#pager, #header, #searchandshow, #footer, #toast, th {
+#pager, #header, #searchandshow, #footer, #toast, th, table {
   user-select: none;
 }
 
@@ -54,6 +67,16 @@ code {
 code::-moz-selection, code::selection {
   background: #393;
   color: #fff;
+}
+
+#header {
+  margin: -12px 0 0;
+  padding-top: 8px;
+  position: sticky;
+  top: -10px;
+  z-index: 999;
+  background: linear-gradient(to bottom, #232020, #151414);
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .4));
 }
 
 #siteinfo code, #footer code {
@@ -97,12 +120,14 @@ input[type="submit"], input[type="reset"], input[type="radio"], input[type="file
     background-clip: text !important;
     -webkit-text-stroke-color: #fff;
     -webkit-text-stroke-width: 1px;
+    -webkit-stroke-linecap: round;
     -webkit-text-fill-color: transparent !important;
-    filter: drop-shadow(0 0 1px #300) drop-shadow(0 0 2px #200) drop-shadow(0 0 3px rgba(0, 0, 0, .1));
-    animation: linear powercycle 180s alternate infinite;
+    filter: drop-shadow(0 0 1px #151414) drop-shadow(0 0 2px #300) drop-shadow(0 0 2px rgba(0, 0, 0, .6));
+/*    animation: linear powercycle 180s alternate infinite;*/
   }
   #sitename a:hover, #sitename a:focus, #sitename a:active {
     background: repeating-linear-gradient(to bottom, rgba(128, 64, 0, .2), rgba(0, 0, 0, .3) 2px), linear-gradient(to bottom, rgba(255, 96, 0, .1), rgba(0, 0, 0, .7) 100%), linear-gradient(to top, #f60, #520 10%, #000 35%, #f60 65%) !important;
+    -webkit-background-clip: text !important;
     background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     filter: opacity(.8);
@@ -199,15 +224,15 @@ th, #dostuff td {
 #torrents {
   width: 100% !important;
   border: 1px solid #111 !important;
+  will-change: transform;
 }
 
 #torrents th, #torrents td {
   padding: 4px 12px;
 }
 
-#torrents th {
+#torrents th, #torrents th a {
   text-align: center !important;
-  font-size: 90% !important;
   color: rgba(255, 255, 255, .6);
 }
 
@@ -288,7 +313,7 @@ th, #dostuff td {
   background: rgba(255, 255, 255, .01) !important;
 }
 
-#torrents tr:nth-child(n+2):hover td {
+#torrents tr:nth-child(n+2):hover td, #filelist tr:hover {
   background: #2a2525 !important;
   border-color: transparent !important;
 }
@@ -387,16 +412,18 @@ input[type="submit"], input[type="file"], input[type="reset"], .button, #addcomm
 }
 
 input[type="submit"]:hover, input[type="file"]:hover, input[type="reset"]:hover, input[type="submit"]:focus, input[type="file"]:focus, input[type="reset"]:focus, .button:hover, .button:focus, #addcomment a:hover, #addcomment a:focus {
+  text-decoration: none;
   color: #cdcbcb !important;
   background: linear-gradient(to bottom, #232121, #343232);
 }
 
-input[type="submit"]:focus, input[type="reset"]:focus, input[type="text"]:focus, input[type="password"]:focus, .button:focus {
+input[type="submit"]:focus, input[type="reset"]:focus, input[type="text"]:focus, input[type="password"]:focus, .button:focus, #addcomment a:focus {
   box-shadow: 0 0 0 1px #121010, 0 0 0 2px rgba(255, 96, 0, .3);
   color: #eee !important;
 }
 
-input[type="submit"]:active, input[type="reset"]:active, select:active, select:focus, .button:active, #details th a:nth-child(n+2):active, .edit:active, .download:active {
+input[type="submit"]:active, input[type="reset"]:active, select:active, select:focus, .button:active, #details th a:nth-child(n+2):active, .edit:active, .download:active,
+#addcomment a:active {
   box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #343232, inset 2px 2px 2px #111 !important;
 }
 
@@ -569,38 +596,45 @@ hr.separator {
 }
 
 #topnav {
-  padding-bottom: 6px;
-  margin: 0 0 10px;
+  padding-bottom: 4px;
+  margin: 0 auto 10px;
+  word-spacing: -.18em;
   color: transparent;
   border-bottom: 1px solid #343232;
-  filter: drop-shadow(0 0 1px #181717);
-}
-
-#topnav a, .username {
-  margin: 8px -6px;
-  padding: 4px 24px 6px;
-  display: inline-block;
-  line-height: 1;
-  box-shadow: inset 0 0 0 1px #454040, 0 0 0 1px #121010;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, .1) 50%, rgba(0, 0, 0, .2) 50%), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px), linear-gradient(to bottom, #454040, #232020);
-  font-size: 105% !important;
-  color: #9a9090;
-  text-decoration: none !important;
-}
-
-#addcomment a {
-  margin: 2px;
-  font-size: 90% !important;
 }
 
 #topnav a {
-  margin: 8px -6px;
+  margin: 8px 0;
+  padding: 4px 24px 6px;
   min-width: 100px;
-  color: #9f9090;
+  display: inline-block;
+  line-height: 1;
+  text-decoration: none !important;
   font-weight: 700 !important;
-  text-shadow: 0 1px 1px #000;
-  box-shadow: inset 0 0 0 1px #454040, inset 0 0 0 2px #121010, 0 0 0 1px #121010;
+  font-size: 105% !important;
+  text-shadow: 0 1px 1px #000, 0 0 2px #000;
+  color: #9f9090;
+  border: 1px solid #343030;
+  box-shadow: inset 0 0 0 1px #000, 0 0 0 1px #121010;
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 1px 1px rgba(0,0,0,0), 0 0 0 1px #121010;
+  background: radial-gradient(at center 80px, rgba(255, 96, 0, .05) 0, rgba(0, 0, 0, 0) 90%), linear-gradient(to bottom, rgba(80, 72, 72, .15) 50%, #121010 50%), repeating-linear-gradient(to right, rgba(90, 72, 72, .5), rgba(0, 0, 0, 0) 2px), linear-gradient(to bottom, #454040, #232020);
+  transition: ease box-shadow .1s, ease color .2s !important;
   will-change: transform;
+}
+
+#topnav a:hover, #topnav a:focus {
+  position: relative;
+  z-index: 10;
+  color: #f60;
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 1px 1px rgba(255, 128, 0, .9), 0 0 0 1px #121010;
+  background: radial-gradient(at center 80px, rgba(255, 96, 0, .6) 0, rgba(0, 0, 0, 0) 70%), linear-gradient(to bottom, rgba(255, 255, 255, .1) 50%, #000 50%), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px);
+  transition: ease box-shadow .1s, ease color .25s !important;
+}
+
+#topnav a:active {
+  color: rgba(255, 96, 0, .7);
+  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #000, inset 0 0 1px 1px rgba(255, 128, 0, .75), inset 4px 4px 4px #121010;
+  background: radial-gradient(at center 80px, rgba(200, 48, 0, .4) 0, rgba(0, 0, 0, 0) 75%), linear-gradient(to bottom, rgba(255, 255, 255, .1), rgba(0, 0, 0, .2)), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px);
 }
 
 #topnav a:first-child {
@@ -611,28 +645,52 @@ hr.separator {
   border-radius: 0 2px 2px 0;
 }
 
-#topnav a:hover, #topnav a:focus, #addcomment a:hover, #addcomment a:focus, #pager a:hover, #pager a:focus {
+#topnav a::before, #topnav a::after {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 1px;
+  vertical-align: middle;
+}
+
+@supports (animation: ease margin .5s forwards) {
+  #topnav a {
+    margin: 8px -240px;
+    filter: opacity(0);
+    animation: ease slide .4s forwards;
+  }
+}
+
+@keyframes slide {
+  0 {
+    margin: 8px -240px;
+    filter: opacity(0);
+    transform: scale(.4);
+  }
+  60% {
+    filter: opacity(0);
+  }
+  100% {
+    margin: 8px 0;
+    filter: opacity(1);
+    transform: scale(1);
+  }
+}
+
+#pager a:hover, #pager a:focus {
   color: #f60;
   text-decoration: none;
-  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050;
+  box-shadow: inset 0 0 0 1px rgba(255,96,0,.5);
   background: linear-gradient(to bottom, #232020, #454040);
 }
 
-#topnav a:hover, #topnav a:focus {
-  position: relative;
-  z-index: 10;
-  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050, inset 0 0 0 2px rgba(255, 96, 0, .2);
-  background: radial-gradient(at center 80px, rgba(255, 96, 0, .6) 0, rgba(0, 0, 0, 0) 70%), linear-gradient(to bottom, rgba(255, 255, 255, .1) 50%, rgba(0, 0, 0, .2) 50%), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px);
+#addcomment a {
+  margin: 2px;
+  font-size: 90% !important;
 }
 
-#topnav a:active, #addcomment a:active, #toggle:active {
-  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050, inset 3px 3px 3px #121010;
-}
-
-#topnav a:active {
-  color: rgba(255, 96, 0, .7);
-  background: radial-gradient(at center 80px, rgba(255, 96, 0, .6) 0, rgba(0, 0, 0, 0) 70%), linear-gradient(to bottom, rgba(255, 255, 255, .1), rgba(0, 0, 0, .2)), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px);
-  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #565050, inset 3px 3px 4px 2px #121010;
+#addcomment a:active, #toggle:active {
+  box-shadow: inset 0 0 0 1px #565050, inset 3px 3px 3px #121010;
 }
 
 #footer {
@@ -662,6 +720,22 @@ hr.separator {
   border-top: 1px solid #343232;
   background: #121010;
   background: repeating-linear-gradient(to right, rgba(0, 0, 0, 0), #121010 2px), linear-gradient(to right, #232020, #121010, #232020);
+  animation: ease-in fade .85s forwards;
+}
+
+@keyframes fade {
+  from {
+    filter: opacity(0);
+  }
+  to {
+    filter: opacity(1);
+  }
+}
+
+@supports (animation: ease fade .3s forwards) {
+  #blurb {
+    filter: opacity(0);
+  }
 }
 
 #toast, #addcomment, .note, #upload.note, .success, .warn, #nuke, #recentcomments {
@@ -697,6 +771,10 @@ hr.separator {
   border: 1px solid #111;
 }
 
+#details + #comments {
+  margin-top: -1px;
+}
+
 #return.note {
   font-weight: 600 !important;
 }
@@ -729,13 +807,24 @@ hr.separator {
   display: none; // no need for dupe, displayed below torrent details
 }*/
 
-#details th, #dologin th, #signup th, #myaccount th, #torrents th, #torrentedit th, #uploader th, #comment th, #userprefs th {
+#details th, #dologin th, #signup th, #myaccount th, #torrents th, #torrentedit th, #uploader th, #comment th, #userprefs th, #stats th {
   padding: 8px 14px !important;
   font-size: 105% !important;
   font-weight: 700 !important;
   text-align: left;
   border-top: none !important;
   border-bottom: 1px solid #111 !important;
+}
+
+#myaccount th:last-child {
+  font-size: 90% !important;
+}
+
+#torrents th, #torrents th a {
+  font-size: 9pt !important;
+  font-weight: 700 !important;
+  text-decoration: none;
+  color: #bbb;
 }
 
 #details tr:not(#description) td:first-child, #stats td:first-child {
@@ -774,7 +863,7 @@ hr.separator {
   top: -600px;
   right: 10px;
   z-index: 1000;
-  width: 290px !important;
+  width: 300px !important;
   font-size: 95% !important;
   font-weight: 600 !important;
   text-shadow: 0 1px 1px #000;
@@ -865,17 +954,22 @@ hr.separator {
 }
 
 #description div b, #details tr:not(#description) td:first-child, #uploader td:first-child {
-  font-weight: 900 !important;
+  font-weight: 700 !important;
+}
+
+#details #filelist td {
+  padding-top: 3px;
+  line-height: 1.25;
 }
 
 #details #filelist tr td:first-child {
-  font-weight: 600 !important;
-  color: #aaa;
+  font-weight: 500 !important;
+  color: #ccc;
 }
 
 #details #filelist tr td:first-child b {
-  color: #bbb;
-  font-weight: 700 !important;
+  color: #ddd;
+  font-weight: 600 !important;
 }
 
 #description div hr, .torrentname hr {
@@ -934,7 +1028,7 @@ th a {
   float: right;
 }
 
-#myaccount th a {
+#myaccount th a, #torrents th a {
   float: none;
 }
 
@@ -1171,7 +1265,7 @@ table table {
 #searchandshow {
   margin: 0 0 -10px;
   background: #212020;
-  background: radial-gradient(at top, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, #232020, rgba(0, 0, 0, 0));
+  background: linear-gradient(to top, #151414 12px, rgba(40,38,38,.5), rgba(50,46,46,.3)), radial-gradient(at top, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, #232020, rgba(0, 0, 0, 0));
 }
 
 .shim {
@@ -1354,26 +1448,23 @@ code.dest {
   width: 660px !important;
   line-height: 160%;
   text-align: justify;
-  font-size: 105%;
   text-shadow: 0 1px 1px #000;
   border: none !important;
   border-radius: 4px;
   background: rgba(48, 40, 40, .3);
 }
 
+#wrapper.help div, #server, #restricted, #wrapper.help a {
+  font-size: 10pt;
+}
+
+#server {
+  margin: 8px auto !important;
+}
+
 #wrapper.help div {
   margin: 0 auto !important;
   width: 800px !important;
-}
-
-#header {
-  margin: -12px 0 0;
-  padding-top: 8px;
-  position: sticky;
-  top: -10px;
-  z-index: 999;
-  background: radial-gradient(at bottom, rgba(255, 240, 240, .05) 0, rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, #232020, #121010);
-  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .4));
 }
 
 #howtoupload {
@@ -1449,12 +1540,20 @@ code.dest {
   background: url(../pic/download.png) no-repeat, linear-gradient(to bottom, #454040, #232020);
 }
 
+.download.magnet {
+  background: url(../pic/magnet.png) no-repeat, linear-gradient(to bottom, #454040, #232020);
+}
+
 .edit:hover, .edit:focus {
   background: url(../pic/edit.png) no-repeat, linear-gradient(to bottom, #232020, #454040);
 }
 
 .download:hover, .download:focus {
   background: url(../pic/download.png) no-repeat, linear-gradient(to bottom, #232020, #454040);
+}
+
+.download.magnet:hover, .download.magnet:focus {
+  background: url(../pic/magnet.png) no-repeat, linear-gradient(to bottom, #232020, #454040);
 }
 
 .nuke {
@@ -1535,7 +1634,7 @@ code.dest {
 input#togglepanel {
   position: absolute;
   z-index: -1;
-  top: -1000;
+  top: -10000px;
 }
 
 #togglepanel+label {
@@ -1557,24 +1656,33 @@ input#togglepanel {
 }
 
 #togglepanel+label::after {
-  margin-top: -4px;
-  width: 10px;
-  height: 10px;
+  margin-top: -3px;
+  width: 11px;
+  height: 11px;
   display: inline-block;
   vertical-align: middle;
   border: 1px solid #232020;
   border-radius: 50%;
   background: #484040;
-  background: linear-gradient(to bottom, #484040, #353030);
-  box-shadow: inset 0 0 0 1px #454040, inset 0 -2px 2px #111;
+  background: radial-gradient(at center -10px, rgba(220, 200, 200, .05) 30%, rgba(0, 0, 0, 0) 150%), linear-gradient(to bottom, #484040, #353030);
+  box-shadow: inset 0 0 0 1px #454040, inset 0 0 1px 1px #565050, inset 0 -2px 2px #111;
   content: "";
   filter: drop-shadow(0 0 1px rgba(255, 220, 220, .1));
   will-change: transform;
 }
 
+@media screen and (min-width: 1200px) {
+  #togglepanel + label::after {
+    margin-top: -5px;
+    width: 13px;
+    height: 13px;
+  }
+}
+
 #togglepanel+label:hover::after, #togglepanel:focus+label::after {
   border: 1px solid #232020;
   box-shadow: inset 0 0 0 1px #454040, inset 0 2px 2px #111;
+  background: radial-gradient(at center 10px, rgba(220, 200, 200, .05) 30%, rgba(0, 0, 0, 0) 150%), linear-gradient(to top, #484040, #353030);
   filter: drop-shadow(0 0 2px rgba(255, 96, 0, .4)) drop-shadow(0 0 2px rgba(128, 32, 0, .3));
 }
 
@@ -1686,18 +1794,58 @@ input#togglepanel {
   border-bottom: 1px solid #999;
 }
 
-@media screen and (max-width: 900px) {
-  .torrentname {
-    width: 1%;
-    min-width: 220px;
-  }
-  .torrentname a, .torrentname .briefdesc {
-    display: inline-block;
-    max-width: 400px;
-  }
+@media screen and (min-width: 1200px) {
   .tablewrap:not(#torrentlist):not(.slim) {
-    margin: 0 !important;
-    width: calc(100% - 8px) !important;
+    width: 900px !important;
+  }
+  .tablewrap#torrentlist {
+    width: calc(100% - 20px) !important;
+  }
+  #torrents th, #torrents th a {
+  font-size: 8.5pt !important;
+  }
+  #torrents .briefdesc {
+    max-width: 430px;
+  }
+}
+
+@media screen and (min-width: 1300px) {
+  #torrents .briefdesc {
+    max-width: 510px;
+  }
+}
+
+@media screen and (min-width: 1500px) {
+  #torrents .briefdesc {
+    max-width: 600px;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  body, input, input[type="submit"], input[type="reset"], select, textarea, button, .button, label, #addcomment a, #dostuff .button, td, td a {
+    font-size: 10pt !important;
+  }
+  input, input[type="submit"], input[type="reset"], select, button, .button {
+    padding-top: 3px;
+    padding-bottom: 5px;
+  }
+  #sitename a {
+    font-size: 48pt !important;
+  }
+  #wrapper.help div {
+    width: 1000px !important;
+  }
+  #wrapper.help div, #server, #restricted, #wrapper.help a {
+    font-size: 11pt !important;
+  }
+  #torrents .briefdesc {
+    max-width: 720px;
+  }
+}
+
+@media screen and (min-width: 1900px) {
+  #torrents .briefdesc {
+    max-width: 880px;
   }
 }
 
@@ -1737,9 +1885,9 @@ input#togglepanel {
   #pager {
     width: 100%;
   }
-  #torrents th {
+  #torrents th, #torrents th a {
     padding: 6px 4px !important;
-    font-size: 85% !important;
+    font-size: 8pt !important;
   }
   #torrents td:first-child::before {
     display: inline-block;
@@ -1750,16 +1898,23 @@ input#togglepanel {
     font-size: 8.5pt !important;
   }
   #torrents td {
-    padding: 2px 4px !important;
+    padding: 2px 5px !important;
+    width: 1% !important;
+    white-space: nowrap;
     border: 1px solid #222 !important;
+  }
+  #torrents td:nth-child(2) {
+    width: 40% !important;
   }
   #torrents .torrentname {
     padding-left: 8px !important;
-    max-width: 350px;
+    max-width: 400px !important;
+    white-space: normal !important;
+    word-break: break-all !important;
   }
   #torrents .briefdesc {
     margin-top: 1px;
-    max-width: 250px;
+    max-width: 420px;
   }
   #torrents td:first-child img, #torrents td:nth-child(3) a img {
     width: 20px !important;
@@ -1793,22 +1948,51 @@ input#togglepanel {
   .tablewrap:not(#torrentlist):not(.slim) {
     width: 800px !important;
   }
+  #wrapper.help div, #server, #restricted, #wrapper.help a {
+    font-size: 10pt !important;
+  }
+  #details #filelist td {
+    padding-top: 5px;
+  }
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (max-width: 1100px) {
+  #torrents .briefdesc {
+    margin-top: 1px;
+    max-width: 280px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .torrentname {
+    width: 1%;
+    min-width: 220px;
+  }
+  .torrentname a, .torrentname .briefdesc {
+    display: inline-block;
+    max-width: 230px !important;
+  }
   .tablewrap:not(#torrentlist):not(.slim) {
-    width: 900px !important;
-  }
-  .tablewrap#torrentlist {
-    width: calc(100% - 20px) !important;
+    margin: 0 !important;
+    width: calc(100% - 8px) !important;
   }
 }
 
-@media screen and (min-width: 1800px) {
-  body, input, select, textarea, button, .button, label, #addcomment a, #dostuff .button {
-    font-size: 9.5pt !important;
+/* disable sticky header on non-firefox-based browsers */
+/*
+@supports not (-moz-appearance: none) {
+  .shim.top {
+    margin-top: -7px;
+    height: 10px;
+    position: static;
   }
-  #sitename a {
-    font-size: 48pt !important;
+
+  #header {
+    margin-top: 0;
+    margin-bottom: -9px;
+    position: static;
+    border-top: 1px solid #434040 !important;
   }
 }
+*/
+

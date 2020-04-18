@@ -1,104 +1,246 @@
 <?php
   if (ob_get_level() == 0) {
     ob_start("ob_gzhandler");
-  if ( strstr(__DIR__,"include") !== FALSE){
-//	print(__DIR__);
-  	require_once "bittorrent.inc.php";
+    if (strstr(__DIR__, "include") !== FALSE) {
+      //	print(__DIR__);
+      require_once "bittorrent.inc.php";
+    } else
+      require_once "include/bittorrent.inc.php";
   }
-  else
-	require_once "include/bittorrent.inc.php";
-  //dbconn(0);
-  //stdhead(); WHO IS ADD THIS ?! WHICH? WHERE U?
-}
-global $CURUSER, $pic_base_url, $tracker_title, $tracker_url_name, $tracker_path;
-?>
+  global $CURUSER, $pic_base_url, $tracker_title, $tracker_url_name, $tracker_path;
 
-<?php
   header("Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'none';");
-  header("Referrer-Policy: same-origin;");
-  header("X-Content-Type-Options: nosniff;");
+  header("Referrer-Policy: same-origin");
+  header("X-Content-Type-Options: nosniff");
   header("X-XSS-Protection: 1;mode=block;");
   header("Set-Cookie: HttpOnly; SameSite=Strict;");
   header("X-Frame-Options: Deny;");
 ?>
 <!DOCTYPE HTML>
 <html>
-<head>
+  <head>
+<?php
+    $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME']; // TODO ADD THAT 2 FUNCTION
+    if (strpos($request, "install/") === false) {
+      if (strpos($request, "admin") === false) {
+?>
+    <link rel="preload" href="include/style.css" as="style">
+    <link rel="preload" href="<?=$pic_base_url?>down.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>search.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>download.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>magnet.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>password.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>1.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>2.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>3.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>4.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>5.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>6.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>7.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>8.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>9.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>10.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>11.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>user.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>edit.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>yes.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>no.png" as="image">
+    <link rel="preload" href="<?=$pic_base_url?>peer.png" as="image">
+<?php
+      }
+    }
+?>
     <meta http-equiv=Content-Language content=en-us>
     <meta charset="UTF-8">
-    <?php
-        $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME']; // TODO ADD THAT 2 FUNCTION
-        if (strpos($request, "install/") !== false) {
-            print("<link rel=stylesheet href=../include/style.css type=text/css>\n");
-            print("<link rel=stylesheet href=installer.css type=text/css>\n");
-        } else if (strpos($request, "admin") !== false) {
-            print("<link rel=stylesheet href=../include/style.css type=text/css>\n");
-            print("<link rel=stylesheet href=admin.css type=text/css>\n");
-        } else {
-            print("<link rel=stylesheet href=include/style.css type=text/css>\n");
-        }
-    ?>
-    <style type=text/css>html, body{background: #151414;} body{opacity: 0 !important; text-align: center;}</style>
-    <link rel=shortcut icon href=<?php echo $tracker_path ?>favicon.ico>
-    <link rel=alternate type=application/rss+xml title="<?php echo $tracker_title; ?> RSS Feed" href=rss.php>
-    <title><?php
-        if (strpos($request, "install/") !== false) {
-            $tracker_title = "FLYTE INSTALL";
-            echo strtoupper($tracker_title);
-        } else {
-            if ($tracker_title == false)
-                $tracker_title = "FLYTE";
-            echo strtoupper($tracker_title);
-            $username = htmlspecialchars($CURUSER["username"]);
-            $page = basename($_SERVER['PHP_SELF']);
-            $page = str_replace("index", "", $page);
-            $page = str_replace("my.php", "$username's account settings", $page);
-            $page = str_replace("mytorrents", "$username's torrents", $page);
-            $page = str_replace("takeprofedit", "update profile", $page);
-            $pagename = rtrim($page, "php");
-            if ($pagename != ".")
-                echo (" | ");
-            echo strtoupper(rtrim($pagename, "."));
-        }
-        ?></title>
-</head>
-<body>
-<div id=header>
-<div class="shim top"></div>
 <?php
-print("<div id=sitename><a href=" . $tracker_path . ">" . $tracker_title . "</a></div>\n");
-if(!function_exists("topnav")){
-function topnav() {
-    global $CURUSER;
-    global $username;
-    global $tracker_path;
-    $isadmin = $CURUSER["admin"] == "yes";
-    $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME'];
-    print("<div id=topnav>");
-    if (strpos($request, "admin") !== false && $isadmin) {
-            print("<a href=#>Blacklist</a> | <a href=#>Configure</a> | <a href=server.php>Server</a> | <a href=users.php>Users</a> | <a href=../logout.php>Logout</a></div>\n");
-    } else if ($CURUSER) {
-        print("<a href=upload.php>Upload</a> | <a href=my.php>Account</a> | <a href=logout.php>Logout</a>");
-        if ($isadmin)
-            print(" | <a href=" . $tracker_path . "admin/>Admin</a>");
-    } else {
-        print("<a href=login.php>Login</a> | <a href=signup.php>Signup</a>");
-    }
-    if (strpos($request, "admin") === false)
-        print(" | <a href=rss.php>RSS Feed</a> | <a href=help.php>Help</a> | <a href=stats.php>Stats</a></div>\n");
-}
-}
-
-if (strpos($request, "install/") == false) {
-    topnav();
-    if ($request !== $tracker_path)
-        if  (!strpos($request, "cat"))
-            print("<div id=tracker class=shim></div>");
-} else {
-    print("<div id=installation class=shim></div>");
-}
-print("</div>\n<hr id=top hidden>");
+    if (strpos($request, "install/") !== false) {
 ?>
+      <link rel=stylesheet href=../include/style.css type=text/css>
+      <link rel=stylesheet href=installer.css type=text/css>
+<?php
+    } else if (strpos($request, "admin") !== false) {
+?>
+      <link rel=stylesheet href=../include/style.css type=text/css>
+      <link rel=stylesheet href=admin.css type=text/css>
+<?php
+    } else {
+?>
+      <link rel=stylesheet href=include/style.css type=text/css>
+<?php
+    }
+?>
+    <style type=text/css>html, body{background: #151414;} body, a {opacity: 0;} body{text-align: center; color: transparent !important; overflow-x: hidden;}</style>
+    <link rel=shortcut icon href=<?=$tracker_path;?>favicon.ico>
+    <link rel=alternate type=application/rss+xml title="<?=$tracker_title;?> RSS Feed" href=rss.php>
+    <title>
+<?php
+      if (strpos($request, "install/") !== false) {
+        $tracker_title = "FLYTE INSTALL";
+        echo strtoupper($tracker_title);
+      } else {
+        if ($tracker_title == false)
+          $tracker_title = "FLYTE";
+        echo strtoupper($tracker_title);
+        $username = htmlspecialchars($CURUSER["username"]);
+        $page = basename($_SERVER['PHP_SELF']);
+        $page = str_replace("index", "", $page);
+        $page = str_replace("my.php", "$username's account settings", $page);
+        $page = str_replace("mytorrents", "$username's torrents", $page);
+        $page = str_replace("takeprofedit", "update profile", $page);
+        $pagename = rtrim($page, "php");
+        if ($pagename != ".")
+          echo (" | ");
+        echo strtoupper(rtrim($pagename, "."));
+      }
+?>
+    </title>
+  </head>
+  <body>
+    <div id=header>
+      <div class="shim top"></div>
+      <center>
+        <div id=sitename>
+          <a href="<?=$tracker_path;?>"><?=$tracker_title;?></a>
+        </div>
+        <div id=topnav>
+<?php
+        $isadmin = $CURUSER["admin"] == "yes";
+        $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME'];
+
+        if (strpos($request, "install/") == false) {
+          if (strpos($request, "admin") !== false && $isadmin) {
+?>
+            <a href="<?=$tracker_path;?>admin/">Admin</a>
+            <!--<a href=#>Configure</a>-->
+            <a href=torrents.php>Torrents</a>
+            <a href=users.php>Users</a>
+            <!--<a href=#>Blacklist</a>-->
+<?php
+          } else if ($isadmin) {
+?>
+            <a href="<?=$tracker_path;?>admin/">Admin</a>
+<?php
+          }
+          if ($CURUSER && strpos($request, "admin") === false) {
+?>
+            <a href=my.php>Account</a>
+            <a href=upload.php>Upload</a>
+<?php
+          } else if (!$CURUSER) {
+?>
+            <a href=login.php>Login</a>
+            <a href=signup.php>Signup</a>
+<?php
+          }
+          if (!$isadmin) {
+?>
+            <a href=help.php>Help</a>
+<?php
+          }
+          if (!$CURUSER) {
+?>
+            <a href=rss.php target=_blank>RSS Feed</a>
+<?php
+          }
+          if ($CURUSER && strpos($request, "admin") === false) {
+?>
+            <a href=logout.php>Logout</a>
+<?php
+          } else if (!strpos($request, "admin") === false) {
+?>
+            <a href=../logout.php>Logout</a>
+<?php
+          }
+?>
+          </div>
+<?php
+          if ($request !== $tracker_path)
+          {
+            if (!strpos($request, "cat"))
+            {
+              if (!strpos($request, "order")) {
+?>
+<!--                <div id=tracker class=shim></div> -->
+<?php
+              }
+            }
+          }
+        } else {
+?>
+          <div id=installation class=shim></div>
+<?php
+        }
+?>
+      </center>
+    </div>
+    <hr id=top hidden>
+
+<?php
+$cats = genrelist();
+?>
+
+<center>
+<div id=searchandshow>
+    <input type=checkbox name=togglepanel id=togglepanel hidden><label for=togglepanel title="Toggle Panel Visibility"><span id=toggle>&nbsp;</span></label>
+    <form method="get" action="<?=$tracker_path;?>">
+        <div id=search>
+            <input name="search" type="text" value="<?= htmlspecialchars($searchstr) ?>" size="40" class="input">
+            <select class="input" name="cat">
+                <option value="0">All Categories</option>
+                <?php
+                $catdropdown = "";
+                foreach ($cats as $cat) {
+                    $catdropdown .= "<option value=\"" . $cat["id"] . "\"";
+                    if (isset($_GET["cat"]) && $cat["id"] == $_GET["cat"]) {
+                        $catdropdown .= " selected=\"selected\"";
+                    }
+
+                    $catdropdown .= ">" . htmlspecialchars($cat["name"]) . "</option>\n";
+                }
+
+                $deadchkbox = "<label><input type=\"checkbox\" name=\"incldead\" value=\"1\"";
+                if (isset($_GET["incldead"])) {
+                    $deadchkbox .= " checked=\"checked\"";
+                }
+
+                $deadchkbox .= " /> include inactive</label>&nbsp; \n";
+
+                ?>
+                <?= $catdropdown ?>
+            </select>
+            Sort by:
+            <select name='order'>
+                <option value='added'>Upload Date</option>
+                <option value='swarmsize'>Swarm size</option>
+                <option value='size'>File size</option>
+                <?php if ($CURUSER) { ?>
+                    <option value='times_completed'>Downloads</option>
+                <?php } ?>
+                <option value='comments'>Comments</option>
+            </select>
+            <?= $deadchkbox ?>
+            <input type="submit" value="Search!" class="input" />
+        </div>
+    </form>
+    <div id=torrentshow>
+        <!--
+<?php
+if ($additionals) {
+    $time_end = getmicrotime();
+    $time = round($time_end - $time_start, 4);
+}
+?>
+<form method="get" action="./">
+Show: <select class="input" name="cat"><option value="0">All Categories</option>
+<?= $catdropdown ?>
+</select>
+<?= $deadchkbox ?>
+<input type="submit" value="Go!" class="input"/>
+</form>
+-->
+    </div>
+</div>
+</center>
 
 <?php
 /**
@@ -119,5 +261,5 @@ print("</div>\n<hr id=top hidden>");
      $cookie = "Not logged in";
  }
  print($cookie . "&hellip;</i></p>");
-**/
- ?>
+ **/
+?>

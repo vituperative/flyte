@@ -1,8 +1,11 @@
 <?php
-if(file_exists("methods_.php")) require_once("methods_.php");
-else
-	include_once("../methods_.php") ;
-
+if (file_exists("methods_.php")) {
+    include_once("methods_.php");
+    require_once "user/user.class.php";
+} else {
+    include_once("../methods_.php");
+    require_once "../user/user.class.php";
+}
 
 ini_set('default_charset', 'utf-8');
 function getmicrotime()
@@ -11,12 +14,12 @@ function getmicrotime()
     return ((float) $usec + (float) $sec);
 }
 $time_start = getmicrotime();
-if( mm::is_root_dir_() ){
-	include_once "secrets.inc.php";
-	include_once "cleanup.php";
-}else{
-	include_once "../include/secrets.inc.php";
-	include_once "../include/cleanup.php";
+if (mm::is_root_dir_()) {
+    include_once "secrets.inc.php";
+    include_once "cleanup.php";
+} else {
+    include_once "../include/secrets.inc.php";
+    include_once "../include/cleanup.php";
 }
 
 global $mysql_host, $mysql_user, $mysql_pass, $mysql_db;
@@ -43,15 +46,22 @@ $version = "1.2.1";
 
 # the first one will be displayed on the pages
 $announce_urls = array(); //
-array_push($announce_urls, $tracker_url_name . "/announce.php", $tracker_url_key . "/announce.php", $tracker_url_name . "/announce",
-    $tracker_url_key . "/announce", $tracker_url_name . "/a", $tracker_url_key . "/a");
+array_push(
+    $announce_urls,
+    $tracker_url_name . "/announce.php",
+    $tracker_url_key . "/announce.php",
+    $tracker_url_name . "/announce",
+    $tracker_url_key . "/announce",
+    $tracker_url_name . "/a",
+    $tracker_url_key . "/a"
+);
 
 function dbconn($autoclean = 1)
 {
     global $mysql_host, $mysql_user, $mysql_pass, $mysql_db;
 
     @($GLOBALS["___mysqli_ston"] = mysqli_connect($mysql_host, $mysql_user, $mysql_pass, $mysql_db))
-    or die(mysqli_error($GLOBALS["___mysqli_ston"]));
+        or die(mysqli_error($GLOBALS["___mysqli_ston"]));
 
     userlogin();
 
@@ -139,7 +149,14 @@ function mksize($bytes)
 {
     $suffix = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB');
     $index = floor(log($bytes + 1, 1024)); // + 1 to prevent -INF
-    return sprintf("%.0f %s", $bytes / pow(1024, $index), $suffix[$index]);
+    if ($bytes > 102400000000)
+        return sprintf("%.5s %s", $bytes / pow(1024, $index), $suffix[$index]);
+    else if ($bytes > 10240000000)
+        return sprintf("%.4s %s", $bytes / pow(1024, $index), $suffix[$index]);
+    else if ($bytes > 1024000000)
+        return sprintf("%.3s %s", $bytes / pow(1024, $index), $suffix[$index]);
+    else
+        return sprintf("%.0f %s", $bytes / pow(1024, $index), $suffix[$index]);
 }
 
 function deadtime()
@@ -220,7 +237,6 @@ function mkglobal($vars)
         } else {
             return 0;
         }
-
     }
     return 1;
 }
@@ -241,7 +257,8 @@ function tr($x, $y, $noesc = 0, $count = 0)
     print("<tr><td>$x</td><td>$a</td></tr>\n");
 }
 
-function tr2($y, $noesc = 0, $count = 0) {
+function tr2($y, $noesc = 0, $count = 0)
+{
     if ($noesc) {
         $a = $y;
     } else {
@@ -304,7 +321,7 @@ function urlparse($m)
 function parsedescr($d)
 {
     #Security: remove any html tags.
-//    $pd = preg_replace('/<[^>]*>/', "", $d);
+    //    $pd = preg_replace('/<[^>]*>/', "", $d);
     $pd = strip_tags($d, '<b><i><ul><ol><li><strong><hr><br><p>');
     #Interface: Add breaklines
     $pd = str_replace(array("\n", "\r"), array("<br>\n", ""), htmlspecialchars($pd));
@@ -314,7 +331,7 @@ function parsedescr($d)
 function stdhead($title = "")
 {
     global $CURUSER, $pic_base_url, $tracker_title, $tracker_url_name, $tracker_path;
-/**
+    /**
     header("Content-Type: text/html; charset=utf-8");
     if ($title == "") {
         $title = $tracker_title . " BitTorrent Tracker";
@@ -323,29 +340,33 @@ function stdhead($title = "")
     }
 
     $trackertitle = $title;
-**/
+     **/
     include "page_header.inc.php";
 }
 
 function stdfoot()
 {
     global $pic_base_url, $version, $appname, $time_start, $contact, $tracker_title, $CURUSER;
-    $time = round(getmicrotime() - $time_start, 1);
+    $time = getmicrotime() - $time_start;
     $sitename = ucwords(strtolower($tracker_title));
     $request = isset($_SERVER["REQUEST_URI"]) ? $_SERVER["REQUEST_URI"] : $_SERVER['SCRIPT_FILENAME']; // TODO ADD THAT 2 FUNCTION
     $bullet = '&nbsp;&nbsp;&nbsp;&bullet;&nbsp;&nbsp;&nbsp;';
-//    print('<p id=footer><span id=blurb>Running: ' . $appname . ' v. ' . $version . '</code></p>');
-//    print('<p id=footer><span id=blurb>Running: ' . $appname . ' v. ' . $version . '</code>' . $bullet . 'Page spawned in ' . $time . ' seconds</span></p>');
+    $user = new user();
+    //    print('<p id=footer><span id=blurb>Running: ' . $appname . ' v. ' . $version . '</code></p>');
+    //    print('<p id=footer><span id=blurb>Running: ' . $appname . ' v. ' . $version . '</code>' . $bullet . 'Page spawned in ' . $time . ' seconds</span></p>');
     if (strpos($request, "install") !== false)
         print("\n<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; " . $appname . " v. " . $version . " &nbsp;&nbsp;| : . . .</span></p>");
     else if ($CURUSER["admin"] == "yes")
-        print("\n<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; " . $appname . " v. " . $version . $bullet. "Administrator Mode &nbsp;&nbsp;| : . . .</span></p>");
-    else if ($contact == "") {
+        print("\n<p id=footer><span id=blurb>" . $appname . " v. " . $version . $bullet . "Torrents:&nbsp; " . $user->getCountActiveTorrents() . " active,&nbsp; " . $user->countTorrents() . " total" . $bullet . "Page spawned in " . round($time, 3) . " seconds</span></p>");
+    else if ($CURUSER) {
+        print('<p id=footer><span id=blurb>' . $sitename);
+        print($bullet . 'Torrents:&nbsp; ' . $user->getCountActiveTorrents() . ' active,&nbsp;  ' . $user->countTorrents() . ' total' . $bullet . '<a href=rss.php target=_blank>RSS Feed</a></span></p>');
+    } else if ($contact == "") {
         print('<p id=footer><span id=blurb>' . $sitename . ' (Est. 2017)' . $bullet . 'Design by <a href=http://skank.i2p/>dr|z3d</a></span></p>');
     } else {
         print('<p id=footer><span id=blurb>' . $sitename . ' (Est. 2017)' . $bullet . 'Admin: <code>' . $contact . '</code>' . $bullet . 'Design by <a href=http://skank.i2p/>dr|z3d</a></span></p>');
     }
-    print("\n<style type=text/css>body {opacity: 1 !important;}</style>");
+    print("\n<style type=text/css>body {opacity: 1 !important; color: #bbb !important; overflow-x: auto !important;} a {opacity: 1 !important;} body::after {display: none !important;}</style>");
     print("\n</body>\n</html>");
 }
 
@@ -388,7 +409,6 @@ function logincookie($id, $password, $secret, $updatedb = 1)
     if ($updatedb) {
         mysqli_query($GLOBALS["___mysqli_ston"], "UPDATE users SET last_login = NOW() WHERE id = $id");
     }
-
 }
 
 function logoutcookie()
@@ -401,7 +421,6 @@ function loggedinorreturn()
     global $CURUSER;
     if (!$CURUSER) {
         header("Refresh: 0; url=login.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]));
-//        header("Refresh: 0; url=login.php?returnto=" . $_SERVER["REQUEST_URI"]);
         exit();
     }
 }
@@ -445,7 +464,6 @@ function pager($rpp, $count, $href, $opts = array())
         if ($page < 0) {
             $page = $pagedefault;
         }
-
     } else {
         $page = $pagedefault;
     }
@@ -501,7 +519,6 @@ function pager($rpp, $count, $href, $opts = array())
             } else {
                 $pagerarr[] = "<span id=pagenow>$text</span>";
             }
-
         }
         $pagerstr = join(" ", $pagerarr);
         $request = $_SERVER["REQUEST_URI"];
@@ -517,7 +534,6 @@ function pager($rpp, $count, $href, $opts = array())
             else
                 $pagerbottom = "<p id=pager>$pagerstr<br>$pager</p>\n";
         }
-
     } else {
         $pagerbottom = "<p id=pager>$pager</p>\n";
     }
@@ -571,7 +587,7 @@ function commenttable($rows)
                 print("<th class=user>" . htmlspecialchars($row["username"]));
             } else {
                 print("<th><i>User vanished!</i>\n");
-           }
+            }
 
             print("<th class=posted>Posted: " . htmlspecialchars($row["added"]) . "</th>\n");
             print("</tr>\n");
@@ -620,166 +636,210 @@ function torrenttable($res, $variant = "index")
     global $CURUSER;
     global $tracker_url_name;
     global $tracker_path;
-    ?>
+    $url = (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != "") ? "?" . $_SERVER['QUERY_STRING'] . "&" : "?";
+    $filteredURL = preg_replace('~(\?|&)order=[^&]*.~', '$1', $url);
+    $filteredURL = htmlspecialchars($filteredURL);
+?>
 
-<div class=tablewrap id=torrentlist>
-<table id=torrents>
-<tr><th>Type</th><th>Name</th><th>Torrent</th>
-<?php
-    if ($variant == "mytorrents") {
-        print("<th>Visible</th>");
-    }
-
-    print("<th>Size</th><th>Files</th><th>Seeds</th><th>Leech</th>");
-    if ($CURUSER) {
-//        print("<th>Views</th><th>Hits</th><th>DL's</th>");
-        print("<th>Views</th><th>DL's</th>");
-    }
-
-    print("<th>Comments</th><th>Added</th>");
-    if ($variant != "mytorrents" && $CURUSER) {
-        print("<th>Uploader</th>");
-    }
-
-    print("</tr>\n");
-
-    $styles = array('a', 'r');
-
-    while ($row = mysqli_fetch_assoc($res)) {
-
-        array_push($styles, array_shift($styles));
-
-        $id = $row["id"];
-        print("<tr>\n");
-
-        print("<td>");
-        if (isset($row["cat_name"])) {
-            print("<a href=\"./?cat=" . $row["category"] . "\" class=\"catlink\" data-tooltip=\"" . $row["cat_name"] . "\"><img src=\"" . $tracker_path . "pic/" . $row["category"] . ".png\" width=24 height=24></a>");
-        } else {
-            print("<span class=\"catlink\" data-tooltip=\"Uncategorized\"><img src=\"" . $tracker_path . "pic/unknown.png\" width=24 height=24></span>");
-        }
-
-        print("</td>\n");
-
-        $dispname = htmlspecialchars($row["name"]);
-        print("<td class=torrentname><a title=\"View details for: " . $dispname . "\" href=\"details.php?");
-        if ($variant == "mytorrents") {
-            print("returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;");
-        }
-
-        print("id=$id");
-        if ($variant == "index") {
-            print("&amp;hit=1");
-        }
-
-        print("\">$dispname</a>\n");
-        if (isset($row["descr"]) && $row["descr"]) {
-//            print("<br>" . truncate(htmlspecialchars($row["ori_descr"], ENT_NOQUOTES), 150));
-            $description = strip_tags($row["ori_descr"]);
-            print("<br><span class=briefdesc");
-            if (strlen($description) > 120) {
-                print(" title=\"" . htmlspecialchars(substr($description, 0, 1000)));
-                if (strlen($description) > 1000) {
-                    print(" &hellip; [more information available on the details page]");
+    <div class=tablewrap id=torrentlist>
+        <table id=torrents>
+            <tr>
+                <th>
+                    <a href="./<?= $filteredURL; ?>order=category">Type</a>
+                </th>
+                <th>
+                    <a href="./<?= $filteredURL; ?>order=name">Name</a>
+                </th>
+                <th>Torrent</th>
+                <?php
+                if ($variant == "mytorrents") {
+                ?>
+                    <th>Visible</th>
+                <?php
                 }
-                print("\"");
-            }
-            print(">" . substr($description, 0, 100) . "</span>");
-        }
-        print("</td>\n");
+                ?>
+                <th>
+                    <a href="./<?= $filteredURL; ?>order=size">Size</a>
+                </th>
+                <th>
+                    <a href="./<?= $filteredURL; ?>order=numfiles">Files</a>
+                </th>
+                <th>
+                    <a href="./<?= $filteredURL; ?>order=seeders">Seeds</a>
+                </th>
+                <th>
+                    <a href="./<?= $filteredURL; ?>order=leechers">Leech</a>
+                </th>
+                <?php
+                if ($CURUSER["admin"] == "yes") {
+                ?>
+                    <th>
+                        <a href="./<?= $filteredURL; ?>order=views">Views</a>
+                    </th>
+                <?php
+                }
+                if ($CURUSER) {
+                ?>
+                    <th>
+                        <a href="./<?= $filteredURL; ?>order=times_completed">DL's</a>
+                    </th>
+                <?php
+                }
+                ?>
+                <th>
+                    <a href="./<?= $filteredURL; ?>order=comments">Comments</a>
+                </th>
+                <th>
+                    <a href="./<?= $filteredURL; ?>order=added">Added</a>
+                </th>
+                <?php
+                if ($variant != "mytorrents" && $CURUSER) {
+                ?>
+                    <th>
+                        <a href="./<?= $filteredURL; ?>order=owner">Uploader</a>
+                    </th>
+                <?php
+                }
+                ?>
+            </tr>
+        <?php
+        $styles = array('a', 'r');
 
-        if ($variant == "index") {
-            print("<td class=dlicons><a href=\"download.php?id=$id&amp;file=" . htmlentities(urlencode($row["filename"])) . "\"><img src=\"" . $tracker_path . "pic/download.png\" border=0 width=24 height=24></a> <a href=\"magnet:?xt=urn:btih:" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "&amp;dn=" . htmlentities(urlencode($row["filename"])) . "&amp;tr=" . $announce_urls[5] . "\"><img src=\"" . $tracker_path . "pic/magnet.png\" border=0 width=24 height=24></a></td>");
-        } elseif ($variant == "mytorrents") {
-            print("<td><a href=\"edit.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;id=" . $row["id"] . "\"><span class=edit title=\"Edit torrent\">edit</span></a></td>\n");
-        }
+        while ($row = mysqli_fetch_assoc($res)) {
 
-        if ($variant == "mytorrents") {
+            array_push($styles, array_shift($styles));
+
+            $id = $row["id"];
+            print("<tr>\n");
+
             print("<td>");
-            if ($row["visible"] == "no") {
-                print("<span class=no>no</span>");
+            if (isset($row["cat_name"])) {
+                print("<a href=\"./?cat=" . $row["category"] . "\" class=\"catlink\" data-tooltip=\"" . $row["cat_name"] . "\"><img src=\"" . $tracker_path . "pic/" . $row["category"] . ".png\" width=24 height=24></a>");
             } else {
-                print("<span class=yes>yes</span>");
+                print("<span class=\"catlink\" data-tooltip=\"Uncategorized\"><img src=\"" . $tracker_path . "pic/unknown.png\" width=24 height=24></span>");
             }
 
             print("</td>\n");
-        }
 
-        print("<td>" . mksize($row["size"]) . "</td>\n");
-
-        if ($row["type"] == "shashgle") {
-            print("<td>" . $row["numfiles"] . "</td>\n");
-        } else {
-            if ($variant == "index") {
-                print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;filelist=1\">" . $row["numfiles"] . "</a></td>\n");
-            } else {
-                print("<td><a href=\"details.php?id=$id&amp;filelist=1#filelist\">" . $row["numfiles"] . "</a></td>\n");
-            }
-        }
-
-        if ($row["seeders"]) {
-            if ($variant == "index") {
-                print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;toseeders=1\">" . $row["seeders"] . "</a></td>\n");
-            } else {
-                print("<td><a href=\"details.php?id=$id&amp;dllist=1#seeds\">" . $row["seeders"] . "</a></td>\n");
+            $dispname = htmlspecialchars($row["name"]);
+            print("<td class=torrentname><a title=\"View details for: " . $dispname . "\" href=\"details.php?");
+            if ($variant == "mytorrents") {
+                print("returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;");
             }
 
-        } else {
-            print("<td>" . $row["seeders"] . "</td>\n");
-        }
-
-        if ($row["leechers"]) {
+            print("id=$id");
             if ($variant == "index") {
-                print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;todlers=1\">" . $row["leechers"] . "</a></td>\n");
-            } else {
-                print("<td><a href=\"details.php?id=$id&amp;dllist=1#leeches\">" . $row["leechers"] . "</a></td>\n");
+                print("&amp;hit=1");
             }
 
-        } else {
-            print("<td>" . $row["leechers"] . "</td>\n");
-        }
+            print("\">$dispname</a>\n");
+            if (isset($row["descr"]) && $row["descr"]) {
+                //            print("<br>" . truncate(htmlspecialchars($row["ori_descr"], ENT_NOQUOTES), 150));
+                $description = strip_tags($row["ori_descr"]);
+                print("<br><span class=briefdesc");
+                if (strlen($description) > 120) {
+                    print(" title=\"" . htmlspecialchars(substr($description, 0, 1000)));
+                    if (strlen($description) > 1000) {
+                        print(" &hellip; [more information available on the details page]");
+                    }
+                    print("\"");
+                }
+                print(">");
+                if (strlen($description) > 200)
+                    print(substr($description, 0, 200) . "&hellip;");
+                else
+                    print($description);
+                print("</span>");
+            }
+            print("</td>\n");
 
-        if (isset($CURUSER)) {
-            print("<td>" . $row["views"] . "</td>\n");
-//            print("<td>" . $row["hits"] . "</td>\n");
-            print("<td>" . $row["times_completed"] . "</td>\n");
-        }
-
-        if (!$row["comments"]) {
-            print("<td>" . $row["comments"] . "</td>\n");
-        } else {
             if ($variant == "index") {
-                print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;tocomm=1\">" . $row["comments"] . "</a></td>\n");
-            } else {
-                print("<td><a href=\"details.php?id=$id&amp;page=0#startcomments\">" . $row["comments"] . "</a></td>\n");
+                print("<td class=dlicons><a href=\"download.php?id=$id&amp;file=" . htmlentities(urlencode($row["filename"])) . "\"><img src=\"" . $tracker_path . "pic/download.png\" border=0 width=24 height=24></a> <a href=\"magnet:?xt=urn:btih:" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "&amp;dn=" . htmlentities(urlencode($row["filename"])) . "&amp;tr=" . $announce_urls[5] . "\"><img src=\"" . $tracker_path . "pic/magnet.png\" border=0 width=24 height=24></a></td>");
+            } elseif ($variant == "mytorrents") {
+                print("<td><a href=\"edit.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;id=" . $row["id"] . "\"><span class=edit title=\"Edit torrent\">edit</span></a></td>\n");
             }
 
+            if ($variant == "mytorrents") {
+                print("<td>");
+                if ($row["visible"] == "no") {
+                    print("<span class=no>no</span>");
+                } else {
+                    print("<span class=yes>yes</span>");
+                }
+
+                print("</td>\n");
+            }
+
+            print("<td title=\"" . $row["size"] . " bytes\">" . mksize($row["size"]) . "</td>\n");
+
+            if ($row["type"] == "shashgle") {
+                print("<td>" . $row["numfiles"] . "</td>\n");
+            } else {
+                if ($variant == "index") {
+                    print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;filelist=1\">" . $row["numfiles"] . "</a></td>\n");
+                } else {
+                    print("<td><a href=\"details.php?id=$id&amp;filelist=1#filelist\">" . $row["numfiles"] . "</a></td>\n");
+                }
+            }
+
+            if ($row["seeders"]) {
+                if ($variant == "index") {
+                    print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;toseeders=1\">" . $row["seeders"] . "</a></td>\n");
+                } else {
+                    print("<td><a href=\"details.php?id=$id&amp;dllist=1#seeds\">" . $row["seeders"] . "</a></td>\n");
+                }
+            } else {
+                print("<td>" . $row["seeders"] . "</td>\n");
+            }
+
+            if ($row["leechers"]) {
+                if ($variant == "index") {
+                    print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;todlers=1\">" . $row["leechers"] . "</a></td>\n");
+                } else {
+                    print("<td><a href=\"details.php?id=$id&amp;dllist=1#leeches\">" . $row["leechers"] . "</a></td>\n");
+                }
+            } else {
+                print("<td>" . $row["leechers"] . "</td>\n");
+            }
+
+            if ($CURUSER["admin"] == "yes")
+                print("<td>" . $row["views"] . "</td>\n");
+            if ($CURUSER)
+                print("<td>" . $row["times_completed"] . "</td>\n");
+
+            if (!$row["comments"]) {
+                print("<td>" . $row["comments"] . "</td>\n");
+            } else {
+                if ($variant == "index") {
+                    print("<td><a href=\"details.php?id=$id&amp;hit=1&amp;tocomm=1\">" . $row["comments"] . "</a></td>\n");
+                } else {
+                    print("<td><a href=\"details.php?id=$id&amp;page=0#startcomments\">" . $row["comments"] . "</a></td>\n");
+                }
+            }
+
+            print("<td>" . preg_replace("/ .*/", "", $row["added"]) . "</td>\n");
+
+            if ($variant == "index" && $CURUSER) {
+                print("<td class=uploadername>" . (isset($row["username"]) ? htmlspecialchars($row["username"]) : "<i>Unknown</i>") . "</td>\n");
+            }
+
+            print("</tr>\n");
         }
 
-        print("<td>" . preg_replace("/ .*/", "", $row["added"]) . "</td>\n");
+        print("</table>\n");
 
-        if ($variant == "index" && $CURUSER) {
-            print("<td class=uploadername>" . (isset($row["username"]) ? htmlspecialchars($row["username"]) : "<i>Unknown</i>") . "</td>\n");
+        if (isset($rows)) {
+            return $rows;
         }
-
-        print("</tr>\n");
     }
 
-    print("</table>\n");
-
-    if (isset($rows)) {
-        return $rows;
+    function hash_pad($hash)
+    {
+        return str_pad($hash, 20);
     }
 
-}
-
-function hash_pad($hash)
-{
-    return str_pad($hash, 20);
-}
-
-function hash_where($name, $hash)
-{
-    $shhash = preg_replace('/ *$/s', "", $hash);
-    return "($name = " . sqlesc($hash) . " OR $name = " . sqlesc($shhash) . ")";
-}
+    function hash_where($name, $hash)
+    {
+        $shhash = preg_replace('/ *$/s', "", $hash);
+        return "($name = " . sqlesc($hash) . " OR $name = " . sqlesc($shhash) . ")";
+    }
