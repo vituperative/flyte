@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 require_once "include/benc.php";
 require_once "include/bittorrent.inc.php";
@@ -119,7 +119,7 @@ list($dname, $plen, $pieces) = dict_check($info, "name(string):piece length(inte
 //check announce url against b64key announce url, if not b64key, reencode dict
 $b64_trackerurl = "$tracker_url_key/announce.php";
 if (strcmp($ann, $b64_trackerurl) != 0) {
-    $dict[value][announce][value] = $b64_trackerurl;
+    $dict["announce"]["value"] = $b64_trackerurl;
     $newdict = benc($dict);
     $fp = fopen($tmpname, "w");
     if (!$fp) {
@@ -193,12 +193,23 @@ if (!$ret) {
 $id = ((is_null($___mysqli_res = mysqli_insert_id($GLOBALS["___mysqli_ston"]))) ? false : $___mysqli_res);
 
 @mysqli_query($GLOBALS["___mysqli_ston"], "DELETE FROM files WHERE torrent = $id");
-foreach ($filelist as $file) {
-    @mysqli_query($GLOBALS["___mysqli_ston"], "INSERT INTO files (torrent, filename, size) VALUES ($id, " . sqlesc($file[0]) . "," . $file[1] . ")");
+
+$insql = "INSERT INTO files (torrent, filename, size) VALUES ";
+
+for($i = 0; $i < sizeof($filelist); ++$i)
+{
+    if($i + 1 == sizeof($filelist))
+    	$insql .= "($id, " . sqlesc($filelist[$i][0]) . "," . $filelist[$i][1] . ");";
+    else
+    	$insql .= "($id, " . sqlesc($filelist[$i][0]) . "," . $filelist[$i][1] . "), ";
 }
+
+@mysqli_query($GLOBALS["___mysqli_ston"], $insql);
 
 move_uploaded_file($tmpname, "$torrent_dir/$id.torrent");
 
-header("Refresh: 0; url=details.php?id=$id&uploaded=1");
+header("Refresh: 2; url=details.php?id=$id&uploaded=1");
+
+exit();
 
 ?>
