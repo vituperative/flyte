@@ -313,7 +313,7 @@ th, #dostuff td {
   background: rgba(255, 255, 255, .01) !important;
 }
 
-#torrents tr:nth-child(n+2):hover td {
+#torrents tr:nth-child(n+2):hover td, #filelist tr:hover {
   background: #2a2525 !important;
   border-color: transparent !important;
 }
@@ -1843,6 +1843,12 @@ input#togglepanel {
   }
 }
 
+@media screen and (min-width: 1900px) {
+  #torrents .briefdesc {
+    max-width: 880px;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   body, input, select, textarea, button, td, a, .topnav a {
     font-size: 9pt !important;
@@ -1892,12 +1898,19 @@ input#togglepanel {
     font-size: 8.5pt !important;
   }
   #torrents td {
-    padding: 2px 4px !important;
+    padding: 2px 5px !important;
+    width: 1% !important;
+    white-space: nowrap;
     border: 1px solid #222 !important;
+  }
+  #torrents td:nth-child(2) {
+    width: 40% !important;
   }
   #torrents .torrentname {
     padding-left: 8px !important;
-    max-width: 350px;
+    max-width: 400px !important;
+    white-space: normal !important;
+    word-break: break-all !important;
   }
   #torrents .briefdesc {
     margin-top: 1px;

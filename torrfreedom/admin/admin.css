@@ -24,6 +24,7 @@
 
 #server td {
   padding: 6px 10px;
+  text-shadow: none;
   user-select: all;
 }
 
