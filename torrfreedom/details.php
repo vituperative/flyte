@@ -52,10 +52,10 @@ if(isset($_GET["info_hash"])){
 	//$hash = preg_replace('/ *$/s', "", $hash);
 	$hash=urldecode($hash);
 	//print("Hash:".$hash);
-	//$hash = hex2bin($hash);
+	$hash = bin2hex($hash);
 
 	//print("Hash: ".$hash);
-	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT torrents.seeders, torrents.id, torrents.banned, torrents.leechers, torrents.info_hash, torrents.filename, UNIX_TIMESTAMP() - UNIX_TIMESTAMP(torrents.last_action) AS lastseed, torrents.name, torrents.owner, torrents.save_as, torrents.descr, torrents.visible, torrents.size, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%H:%i, %a %D %M %Y') as added, torrents.views, torrents.hits, torrents.times_completed, torrents.id, torrents.type, torrents.numfiles, categories.name AS cat_name, category, users.username FROM torrents LEFT JOIN categories ON torrents.category = categories.id LEFT JOIN users ON torrents.owner = users.id WHERE torrents.info_hash = '$hash'")
+	$res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT torrents.seeders, torrents.id, torrents.banned, torrents.leechers, torrents.info_hash, torrents.filename, UNIX_TIMESTAMP() - UNIX_TIMESTAMP(torrents.last_action) AS lastseed, torrents.name, torrents.owner, torrents.save_as, torrents.descr, torrents.visible, torrents.size, DATE_FORMAT(CONVERT_TZ(torrents.added, @@session.time_zone, '+00:00'), '%H:%i, %a %D %M %Y') as added, torrents.views, torrents.hits, torrents.times_completed, torrents.id, torrents.type, torrents.numfiles, categories.name AS cat_name, category, users.username FROM torrents LEFT JOIN categories ON torrents.category = categories.id LEFT JOIN users ON torrents.owner = users.id WHERE HEX(torrents.info_hash) = '$hash'")
 	or die();
 	$row = mysqli_fetch_array($res);
 	$id=intval($row['id']);
