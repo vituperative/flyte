@@ -34,6 +34,7 @@ class sql
         "isAdmin" => "SELECT * FROM users WHERE username='%s' AND admin='yes';",
         "getAllTorrents" => "SELECT * FROM torrents LIMIT %d OFFSET %d",
         "getNameOfCategoryByID" => "SELECT * FROM categories WHERE id='%d'",
+	"getCategories"=> "select * from categories",
 	"getCategoryByName"=> "select * from categories where name='%s'",
 	"getCategoryByID"=> "select * from categories where id='%d'",
 	"addCategoryByName" => "INSERT INTO categories(name,sort_index) values(%s,LAST_INSERT_ID()*10);",
@@ -41,6 +42,7 @@ class sql
 	"delCategoryByID"=> "DELETE FROM categories where id='%d';",
 	"changeCategoryNameByID" => "update categories set name='%s' where id='%d';",
 	"changeCategorySortIndexByID"=> "update categories set sort_index='%d' where id='%d';",
+	"changeCategorySortIndexByName"=> "update categories set sort_index='%d' where name='%s';",
 	"fixAutoIncrementToTable" => "ALTER TABLE %s AUTO_INCREMENT='%d'"
 /*
 
@@ -231,6 +233,9 @@ class torrents extends comments
 
 class categories extends torrents
 {
+	function getCategories(){
+		return $this->doSQL( sql::sqls['getCategories'], "" );
+	}
 	function countCategories(){
 		return $this->getCountOfTB("categories");
 	}
@@ -265,6 +270,10 @@ class categories extends torrents
 	function changeCategorySortIndexByID($id, $sort){
 		//"changeCategorySortIndexByID"=> "update categories set sort_index='%d' where id='%d';",
 		return $this->doSQL( sql::sqls['changeCategorySortIndexByID'], $sort, $id );
+	}
+	function changeCategorySortIndexByName($name, $sort){
+		//"changeCategorySortIndexByID"=> "update categories set sort_index='%d' where id='%d';",
+		return $this->doSQL( sql::sqls['changeCategorySortIndexByName'], $sort, $id );
 	}
 }
 
