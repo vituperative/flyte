@@ -357,10 +357,10 @@ function stdfoot()
     if (strpos($request, "install") !== false)
         print("\n<p id=footer><span id=blurb>. . . : |&nbsp;&nbsp; " . $appname . " v. " . $version . " &nbsp;&nbsp;| : . . .</span></p>");
     else if ($CURUSER["admin"] == "yes")
-        print("\n<p id=footer><span id=blurb>" . $appname . " v. " . $version . $bullet . "Torrents:&nbsp; " . $user->getCountActiveTorrents() . " active,&nbsp; " . $user->countTorrents() . " total" . $bullet . "Page spawned in " . round($time, 3) . " seconds</span></p>");
+        print("\n<p id=footer><span id=blurb>" . $appname . " v. " . $version . $bullet . "Torrents:&nbsp; " . $user->getCountRunningTorrents() . ' running,&nbsp;  ' . $user->getCountActiveTorrents() . " active,&nbsp; " . $user->countTorrents() . " total" . $bullet . "Page spawned in " . round($time, 3) . " seconds</span></p>");
     else if ($CURUSER) {
         print('<p id=footer><span id=blurb>' . $sitename);
-        print($bullet . 'Torrents:&nbsp; ' . $user->getCountActiveTorrents() . ' active,&nbsp;  ' . $user->countTorrents() . ' total' . $bullet . '<a href=rss.php target=_blank>RSS Feed</a></span></p>');
+        print($bullet . 'Torrents:&nbsp; ' . $user->getCountRunningTorrents() . ' running,&nbsp;  ' . $user->getCountActiveTorrents() . ' active,&nbsp;  ' . $user->countTorrents() . ' total' . $bullet . '<a href=rss.php target=_blank>RSS Feed</a></span></p>');
     } else if ($contact == "") {
         print('<p id=footer><span id=blurb>' . $sitename . ' (Est. 2017)' . $bullet . 'Design by <a href=http://skank.i2p/>dr|z3d</a></span></p>');
     } else {
