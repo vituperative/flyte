@@ -46,10 +46,9 @@ if (isset($_GET["incldead"])) {
     }
     if ($_GET["incldead"] != '1')
         $wherea[] = "visible != 'no'";
-    else $wherea[] = "visible != 'yes'";
-} else {
-    $wherea[] = "visible != 'no'";
-}
+    /*if( $_GET["incldead"] == '1' ) // uncomment this is not works...
+ 	$wherea[] = "visible != 'no' || visible != 'yes' "; */
+}else if ( !isset($_GET["incldead"])) $wherea[] = "visible != 'no'";
 //var_dump($wherea);
 
 if (isset($_GET["cat"]) && ($_GET["cat"] != 0)) {
