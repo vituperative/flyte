@@ -1811,13 +1811,13 @@ input#togglepanel {
 
 @media screen and (min-width: 1300px) {
   #torrents .briefdesc {
-    max-width: 510px;
+    max-width: 500px;
   }
 }
 
 @media screen and (min-width: 1500px) {
   #torrents .briefdesc {
-    max-width: 600px;
+    max-width: 580px;
   }
 }
 
@@ -1845,7 +1845,7 @@ input#togglepanel {
 
 @media screen and (min-width: 1900px) {
   #torrents .briefdesc {
-    max-width: 880px;
+    max-width: 760px;
   }
 }
 
