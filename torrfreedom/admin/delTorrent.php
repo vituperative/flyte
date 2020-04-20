@@ -19,10 +19,11 @@ if($wdel_id < 0) return header("Location: index.php");
 
 function sureBox($wdel_id, $msg="Nuke it!"){
    $user = str_replace("'", "", $_GET['user']);
+   $user = str_replace('"', '', $user);
    printf("<tr id=message><td>Torrent: %s</td></tr>",$_GET['name'], $_GET['user'],$wdel_id);
    printf("<tr id=dostuff><td>
 <input type=hidden name=del_torent value='%d' required>
-<a class=button href=torrents.php?user=$user>Cancel</a>
+<a class=button href=torrents.php?user='$user'>Cancel</a>
 <input value='%s' type=submit></td></tr>", $wdel_id, $msg);
 }
 
