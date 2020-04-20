@@ -16,7 +16,7 @@ class sql
         "delTorrentByX" => "DELETE FROM torrents WHERE %s= '%s'",
         "delTorrentsByUserID" => "DELETE FROM torrents WHERE owner= '%s'",
         "getActiveTorrents" => "SELECT %s FROM torrents WHERE torrents.banned='no' AND (torrents.seeders)>1 AND torrents.visible='yes'",
-        "getCountRunningTorrents()" => "SELECT %s FROM torrents WHERE torrents.banned='no' AND (torrents.leechers+torrents.seeders)>1 AND torrents.visible='yes'",
+        "getCountRunningTorrents()" => "SELECT %s FROM torrents WHERE torrents.banned='no' AND torrents.leechers > 0 AND torrents.seeders > 0 AND torrents.visible='yes'",
         "getTorrentsHits" => "SELECT COUNT(torrents.hits) FROM torrents %s",
         "getTorrentsViews" => "SELECT SUM(torrents.views) FROM torrents %s",
         "getTorrentsCompleted" => "SELECT SUM(torrents.times_completed) FROM torrents %s",
