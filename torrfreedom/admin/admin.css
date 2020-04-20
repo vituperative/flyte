@@ -16,6 +16,7 @@
 #server th {
   border-bottom: 1px solid #111;
   font-weight: 700 !important;
+  font-size: 90%;
 }
 
 #server #serverdetails th:last-child {
@@ -91,10 +92,15 @@
   user-select: none;
 }
 
-#server.users tr:not(#dostuff) td:last-child .button {
+#server.users tr:not(#dostuff) td:last-child .button,
+#server.categories tr:not(#dostuff) td:last-child .button {
   padding: 3px !important;
   font-size: 14px !important;
 }
+
+ #server.categories .no {
+  mix-blend-mode: normal;
+ }
 
 #server.users .no, #server.torrents .no {
   background-size: 12px 12px !important;
@@ -186,6 +192,17 @@
 
 #server.torrents input[type="submit"] {
   min-width: 0;
+}
+
+#server.categories {
+  width: 500px !important;
+}
+
+#server.categories th:first-child, #server.categories td:first-child,
+#server.categories th:last-child, #server.categories td:last-child {
+  width: 1%;
+  white-space: nowrap;
+  text-align: center;
 }
 
 #server .success, #server .fail {
