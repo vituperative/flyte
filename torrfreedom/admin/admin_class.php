@@ -17,7 +17,8 @@ class sql
         "delTorrentByID" => "DELETE FROM torrents WHERE id= '%d'",
         "delTorrentByX" => "DELETE FROM torrents WHERE %s= '%s'",
         "delTorrentsByUserID" => "DELETE FROM torrents WHERE owner= '%s'",
-        "getActiveTorrents" => "SELECT %s FROM torrents WHERE torrents.banned='no' AND (torrents.leechers+torrents.seeders)>1 AND torrents.visible='yes'",
+        "getActiveTorrents" => "SELECT %s FROM torrents WHERE torrents.banned='no' AND (torrents.seeders)>1 AND torrents.visible='yes'",
+        "getCountRunningTorrents()" => "SELECT %s FROM torrents WHERE torrents.banned='no' AND (torrents.leechers+torrents.seeders)>1 AND torrents.visible='yes'",
         "getTorrentsHits" => "SELECT COUNT(torrents.hits) FROM torrents %s",
         "getTorrentsViews" => "SELECT SUM(torrents.views) FROM torrents %s",
         "getTorrentsCompleted" => "SELECT SUM(torrents.times_completed) FROM torrents %s",
@@ -146,10 +147,10 @@ class torrents extends comments
         $ret = $this->doSQL(sql::sqls['getTorrentByID'], $id);
         return mysqli_fetch_array($ret);
     }
-    function getActiveTorrents()
+    function getCountRunningTorrents()
     {
-        $ret = $this->doSQL(sql::sqls['getActiveTorrents'], "*");
-        return mysqli_fetch_array($ret);
+        $ret = $this->doSQL(sql::sqls['getCountRunningTorrents'], "COUNT(*)");
+        return mysqli_fetch_array($ret)[0];
     }
     function getCountActiveTorrents()
     {
