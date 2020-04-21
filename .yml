@@ -1,2 +1,0 @@
-- name: PHP Security Checker
-  uses: StephaneBour/actions-php-security-checker@1.0
