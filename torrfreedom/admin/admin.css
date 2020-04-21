@@ -195,14 +195,36 @@
 }
 
 #server.categories {
-  width: 500px !important;
+  width: 600px !important;
 }
 
-#server.categories th:first-child, #server.categories td:first-child,
-#server.categories th:last-child, #server.categories td:last-child {
+#server.categories #dostuff {
+  border-bottom: 1px solid #111 !important;
+}
+
+#server.categories th, #server.categories td {
   width: 1%;
   white-space: nowrap;
   text-align: center;
+}
+
+#server.categories th:nth-child(2), #server.categories td:nth-child(2) {
+  width: auto;
+  text-align: left;
+}
+
+#server.categories td:last-child span {
+  margin-bottom: 1px;
+  padding: 4px !important;
+}
+
+#server.categories td:nth-child(odd) {
+  background: rgba(0, 0, 0, .2);
+}
+
+#server.categories .create {
+  margin-right: 12px;
+  width: calc(100% - 100px);
 }
 
 #server .success, #server .fail {
