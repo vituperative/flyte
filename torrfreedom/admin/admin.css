@@ -83,8 +83,20 @@
   box-sizing: border-box;
 }
 
-#server input[type="submit"] {
+#server input[type="submit"], #server input[type="reset"] {
   margin: 0 4px -2px;
+}
+
+#server.categories input[type="submit"], #server.categories input[type="reset"] {
+  margin: 2px 4px;
+}
+
+#server.categories input[type="text"] {
+  margin: 2px 0;
+}
+
+#server.categories input.create[type="text"] {
+  margin: 2px 8px 2px 0;
 }
 
 #server .button {
