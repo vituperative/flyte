@@ -615,8 +615,7 @@ hr.separator {
   text-shadow: 0 1px 1px #000, 0 0 2px #000;
   color: #9f9090;
   border: 1px solid #343030;
-  box-shadow: inset 0 0 0 1px #000, 0 0 0 1px #121010;
-  box-shadow: inset 0 0 0 1px #000, inset 0 0 1px 1px rgba(0,0,0,0), 0 0 0 1px #121010;
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 1px 1px rgba(0,0,0,0);
   background: radial-gradient(at center 80px, rgba(255, 96, 0, .05) 0, rgba(0, 0, 0, 0) 90%), linear-gradient(to bottom, rgba(80, 72, 72, .15) 50%, #121010 50%), repeating-linear-gradient(to right, rgba(90, 72, 72, .5), rgba(0, 0, 0, 0) 2px), linear-gradient(to bottom, #454040, #232020);
   transition: ease box-shadow .1s, ease color .2s !important;
   will-change: transform;
@@ -626,14 +625,14 @@ hr.separator {
   position: relative;
   z-index: 10;
   color: #f60;
-  box-shadow: inset 0 0 0 1px #000, inset 0 0 1px 1px rgba(255, 128, 0, .9), 0 0 0 1px #121010;
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 1px 1px rgba(255, 128, 0, .9);
   background: radial-gradient(at center 80px, rgba(255, 96, 0, .6) 0, rgba(0, 0, 0, 0) 70%), linear-gradient(to bottom, rgba(255, 255, 255, .1) 50%, #000 50%), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px);
   transition: ease box-shadow .1s, ease color .25s !important;
 }
 
 #topnav a:active {
   color: rgba(255, 96, 0, .7);
-  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #000, inset 0 0 1px 1px rgba(255, 128, 0, .75), inset 4px 4px 4px #121010;
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 1px 1px rgba(255, 128, 0, .75), inset 4px 4px 4px #121010;
   background: radial-gradient(at center 80px, rgba(200, 48, 0, .4) 0, rgba(0, 0, 0, 0) 75%), linear-gradient(to bottom, rgba(255, 255, 255, .1), rgba(0, 0, 0, .2)), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px);
 }
 
@@ -674,6 +673,13 @@ hr.separator {
     margin: 8px 0;
     filter: opacity(1);
     transform: scale(1);
+  }
+}
+
+@supports (justify-content: center) {
+  #topnav {
+    display: flex;
+    justify-content: center;
   }
 }
 
@@ -816,7 +822,7 @@ hr.separator {
   border-bottom: 1px solid #111 !important;
 }
 
-#myaccount th:last-child {
+#myaccount th span {
   font-size: 90% !important;
 }
 
@@ -1026,14 +1032,6 @@ hr.separator {
 
 th a {
   float: right;
-}
-
-#myaccount th a, #torrents th a {
-  float: none;
-}
-
-#myaccount th:last-child {
-  text-align: right;
 }
 
 #changepass th {
