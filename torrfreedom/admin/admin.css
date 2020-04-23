@@ -217,10 +217,10 @@
 #server.categories th, #server.categories td {
   width: 1%;
   white-space: nowrap;
-  text-align: center;
+  text-align: left;
 }
 
-#server.categories th:nth-child(2), #server.categories td:nth-child(2) {
+#server.categories td:nth-child(2) {
   width: auto;
   text-align: left;
 }
