@@ -237,7 +237,7 @@ th, #dostuff td {
 }
 
 #torrents th:nth-child(2), #torrents td:nth-child(2) {
-  text-align: left;
+  text-align: left !important;
 }
 
 #torrents th:nth-child(n+3), #torrents td:nth-child(n+3) {
@@ -253,10 +253,6 @@ th, #dostuff td {
 
 #torrents img {
   vertical-align: middle;
-}
-
-#torrents th:nth-child(2) {
-  text-align: left !important;
 }
 
 #torrents td {
@@ -1031,7 +1027,7 @@ hr.separator {
   text-align: justify;
 }
 
-th a {
+table:not(#torrents):not(#myaccount) th a {
   float: right;
 }
 
