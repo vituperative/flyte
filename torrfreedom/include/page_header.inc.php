@@ -9,13 +9,14 @@
   }
   global $CURUSER, $pic_base_url, $tracker_title, $tracker_url_name, $tracker_path;
 
-  header("Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'none';");
+  header("Content-Security-Policy: default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'none'; img-src 'self' data:;");
   header("Referrer-Policy: same-origin");
   header("X-Content-Type-Options: nosniff");
   header("X-XSS-Protection: 1;mode=block;");
   header("Set-Cookie: HttpOnly; SameSite=Strict;");
   header("X-Frame-Options: Deny;");
 ?>
+
 <!DOCTYPE HTML>
 <html>
   <head>
@@ -25,8 +26,10 @@
       if (strpos($request, "admin") === false) {
 ?>
     <link rel="preload" href="include/style.css" as="style">
+<!--
     <link rel="preload" href="<?=$pic_base_url?>down.png" as="image">
     <link rel="preload" href="<?=$pic_base_url?>search.png" as="image">
+-->
     <link rel="preload" href="<?=$pic_base_url?>download.png" as="image">
     <link rel="preload" href="<?=$pic_base_url?>magnet.png" as="image">
     <link rel="preload" href="<?=$pic_base_url?>password.png" as="image">
