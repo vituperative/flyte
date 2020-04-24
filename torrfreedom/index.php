@@ -136,7 +136,7 @@ if (isset($cleansearchstr)) {
 }
 
 if (isset($cleansearchstr)) {
-    print("<h2>Search results for \"" . htmlspecialchars($searchstr) . "\"</h2>\n");
+    print("<div id=results>Results for <b>" . htmlspecialchars($searchstr) . "</b></div>\n");
 }
 
 if ($count) {
