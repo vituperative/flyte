@@ -107,7 +107,6 @@ if (isset($row["cat_name"])) {
                             </td></tr>
                         <tr><td>Size:</td><td><?php echo mksize($row["size"]) . " (" . $row["size"] . " Bytes)"; ?></td></tr>
                         <tr><td>When:</td><td><?php echo gmdate("D, d M Y H:i:s \G\M\T", dttm2unixtime($row['added'])); ?></td></tr>
-                        <tr><td>From:</td><td><?php echo $row["username"]; ?></td></tr>
                         <tr><td colspan=2><a href='<?=$tracker_url_name?>/download.php?id=<?php echo $row['id']; ?>&amp;file=<?php echo rawurlencode($row["filename"]); ?>'>Download Torrent</a> | <a href='<?=$tracker_url_name?>/details.php?id=<?php echo $row['id']; ?>&amp;hit=1'>View Details</a><?php if (isset($count)) { print(" | <a href='$tracker_url_name/details.php?id=" . $row['id'] . "&amp;hit=1&amp;tocomm=1'>View Comments</a>");} ?></td></tr>
                     </table>
                 ]]>
