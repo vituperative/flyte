@@ -264,7 +264,12 @@ th, #dostuff td {
   padding-bottom: 4px !important;
   position: relative;
   border-bottom: 1px solid rgba(17,17,17,.4);
+  border-top: 1px solid rgba(17,17,17,.4);
   border-right: 1px solid rgba(17,17,17,.15);
+}
+
+#torrents tr:nth-child(odd) td {
+  border-bottom: 1px solid rgba(17,17,17,.6);
 }
 
 #torrents tbody tr:first-child {
@@ -276,10 +281,6 @@ th, #dostuff td {
   vertical-align: middle !important;
 }
 
-#torrents tr:nth-child(n+3) td::after {
-  background: none;
-}
-
 @supports (-moz-appearance: none) {
   #torrents tr:nth-child(n+2) td::after {
     width: 1px;
@@ -288,11 +289,16 @@ th, #dostuff td {
     top: -1px;
     left: -1px;
     display: inline-block;
-    background: #111;
     content: "";
   }
   #torrents tr:nth-child(n+3) td::after {
     background: rgba(17,17,17,.05) !important;
+  }
+  #torrents tr:nth-child(2n+2) td::after {
+    background: rgba(17,17,17,.4) !important;
+  }
+  #torrents tr:nth-child(2) td::after {
+    background: #111 !important;
   }
 }
 
@@ -355,8 +361,8 @@ th, #dostuff td {
 }
 
 #torrents tr:nth-child(n+2):hover td, #filelist tr:hover {
-  background: #2a2525 !important;
   color: #ccc;
+  background: #2a2525 !important;
 }
 
 #torrents td:first-child {
