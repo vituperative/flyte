@@ -56,6 +56,10 @@ input[type="submit"], .button {
   user-select: none;
 }
 
+.briefdesc, #description div, .help {
+  user-select: text;
+}
+
 code {
   margin-left: 2px;
   font-family: Noto Sans Mono, DejaVu Sans Mono, Consolas, monospace;
@@ -258,7 +262,12 @@ th, #dostuff td {
 #torrents td {
   padding-top: 4px !important;
   padding-bottom: 4px !important;
-  border-bottom: 1px solid #222 !important;
+  border-bottom: 1px solid rgba(17,17,17,.2);
+  border-right: 1px solid rgba(17,17,17,.15);
+}
+
+#torrents tbody tr:nth-child(odd) td {
+  border-bottom: 1px solid rgba(17,17,17,.4);
 }
 
 #torrents td:first-child, #torrents td:nth-child(2) {
@@ -269,6 +278,11 @@ th, #dostuff td {
 #torrents td:first-child {
   width: 1%;
   white-space: nowrap;
+  border-left: 1px solid #111;
+}
+
+#torrents td:last-child {
+  border-right: 1px solid #111;
 }
 
 #torrents td:first-child a {
@@ -299,6 +313,22 @@ th, #dostuff td {
   display: block;
   vertical-align: bottom;
   content: "";
+}
+
+#torrents td.size {
+  white-space: nowrap;
+}
+
+#torrents td.size span {
+    display: inline-block;
+    text-align: center;
+    min-width: 16px;
+}
+
+#torrents td.size .right {
+    margin: 0 2px 0 0;
+    min-width: 24px;
+    text-align: right;
 }
 
 #torrents td:nth-child(odd) {
@@ -1847,6 +1877,10 @@ input#togglepanel {
   #torrents .briefdesc {
     max-width: 580px;
   }
+  .torrent, .size, .files, .seeds, .leech, .comments, .added, .views, .uploader, .visible, .downloads {
+    width: 90px;
+    box-sizing: border-box;
+  }
 }
 
 @media screen and (min-width: 1800px) {
@@ -1929,7 +1963,6 @@ input#togglepanel {
     padding: 2px 5px !important;
     width: 1% !important;
     white-space: nowrap;
-    border: 1px solid #222 !important;
   }
   #torrents td:nth-child(2) {
     width: 40% !important;
@@ -1988,6 +2021,12 @@ input#togglepanel {
   #torrents .briefdesc {
     margin-top: 1px;
     max-width: 280px;
+  }
+  #torrents td.size .right {
+    margin-right: 1px !important;
+  }
+  #torrents td.size span:not(.right) {
+    min-width: 14px;
   }
 }
 

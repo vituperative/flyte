@@ -150,6 +150,28 @@ function mksize($bytes)
     $suffix = array('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB');
     $index = floor(log($bytes + 1, 1024)); // + 1 to prevent -INF
     if ($bytes > 102400000000)
+        return sprintf("%.6s %s", $bytes / pow(1024, $index), $suffix[$index]);
+    else if ($bytes > 10240000000)
+        return sprintf("%.5s %s", $bytes / pow(1024, $index), $suffix[$index]);
+    else if ($bytes > 1024000000)
+        return sprintf("%.4s %s", $bytes / pow(1024, $index), $suffix[$index]);
+    else if ($bytes > 102400000)
+        return sprintf("%.3s %s", $bytes / pow(1024, $index), $suffix[$index]);
+    else if ($bytes > 10240000)
+        return sprintf("%.2s %s", $bytes / pow(1024, $index), $suffix[$index]);
+    else if ($bytes > 1024000)
+        return sprintf("%.3s %s", $bytes / pow(1024, $index), $suffix[$index]);
+    else if ($bytes > 102400)
+        return sprintf("%.3s %s", $bytes / pow(1024, $index), $suffix[$index]);
+    else
+        return sprintf("%.0f %s", $bytes / pow(1024, $index), $suffix[$index]);
+}
+
+function mksize2($bytes)
+{
+    $suffix = array('</span><span>B</span>', '</span><span>K</span>', '</span><span>M</span>', '</span><span>G</span>', '</span><span>T</span>', '</span><span>P</span>', '</span><span>E</span>');
+    $index = floor(log($bytes + 1, 1024)); // + 1 to prevent -INF
+    if ($bytes > 102400000000)
         return sprintf("%.5s %s", $bytes / pow(1024, $index), $suffix[$index]);
     else if ($bytes > 10240000000)
         return sprintf("%.4s %s", $bytes / pow(1024, $index), $suffix[$index]);
@@ -647,58 +669,58 @@ function torrenttable($res, $variant = "index")
     <div class=tablewrap id=torrentlist>
         <table id=torrents>
             <tr>
-                <th>
+                <th class=category>
                     <a href="./<?= $filteredURL; ?>order=category">Type</a>
                 </th>
-                <th>
+                <th class=name>
                     <a href="./<?= $filteredURL; ?>order=name">Name</a>
                 </th>
-                <th>Torrent</th>
+                <th class=torrent>Torrent</th>
                 <?php
                 if ($variant == "mytorrents") {
                 ?>
-                    <th>Visible</th>
+                    <th class=visible>Visible</th>
                 <?php
                 }
                 ?>
-                <th>
+                <th class=size>
                     <a href="./<?= $filteredURL; ?>order=size">Size</a>
                 </th>
-                <th>
+                <th class=files>
                     <a href="./<?= $filteredURL; ?>order=numfiles">Files</a>
                 </th>
-                <th>
+                <th class=seeds>
                     <a href="./<?= $filteredURL; ?>order=seeders">Seeds</a>
                 </th>
-                <th>
+                <th class=leech>
                     <a href="./<?= $filteredURL; ?>order=leechers">Leech</a>
                 </th>
                 <?php
                 if ($CURUSER["admin"] == "yes") {
                 ?>
-                    <th>
+                    <th class=views>
                         <a href="./<?= $filteredURL; ?>order=views">Views</a>
                     </th>
                 <?php
                 }
                 if ($CURUSER) {
                 ?>
-                    <th>
+                    <th class=downloads>
                         <a href="./<?= $filteredURL; ?>order=times_completed">DL's</a>
                     </th>
                 <?php
                 }
                 ?>
-                <th>
+                <th class=comments>
                     <a href="./<?= $filteredURL; ?>order=comments">Comments</a>
                 </th>
-                <th>
+                <th class=added>
                     <a href="./<?= $filteredURL; ?>order=added">Added</a>
                 </th>
                 <?php
                 if ($variant != "mytorrents" && $CURUSER) {
                 ?>
-                    <th>
+                    <th class=uploader>
                         <a href="./<?= $filteredURL; ?>order=owner">Uploader</a>
                     </th>
                 <?php
@@ -773,7 +795,7 @@ function torrenttable($res, $variant = "index")
                 print("</td>\n");
             }
 
-            print("<td title=\"" . $row["size"] . " bytes\">" . mksize($row["size"]) . "</td>\n");
+            print("<td class=size title=\"" . $row["size"] . " bytes\"><span class=right>" . mksize2($row["size"]) . "</td>\n");
 
             if ($row["type"] == "shashgle") {
                 print("<td>" . $row["numfiles"] . "</td>\n");
