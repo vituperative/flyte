@@ -356,13 +356,19 @@ th, #dostuff td {
   background: rgba(255, 255, 255, .01) !important;
 }
 
-#torrents tr:hover td {
-  border: 1px solid #2a2525;
-}
-
 #torrents tr:nth-child(n+2):hover td, #filelist tr:hover {
   color: #ccc;
+  border: 1px solid #2a2525 !important;
   background: #2a2525 !important;
+}
+
+#torrents tr:nth-child(n+2):hover td {
+  background: none !important;
+}
+
+#torrents tr:hover {
+  background: #2a2525 !important;
+  transition: ease background .05s;
 }
 
 #torrents td:first-child {
@@ -381,6 +387,14 @@ th, #dostuff td {
 
 #torrents td:nth-child(7) {
   word-spacing: -0.1em;
+}
+
+#torrents tr:hover td:first-child {
+  border-left: 1px solid #111 !important;
+}
+
+#torrents tr:hover td:last-child {
+  border-right: 1px solid #111 !important;
 }
 
 #torrents .dlicons img {
