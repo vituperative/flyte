@@ -845,7 +845,7 @@ function torrenttable($res, $variant = "index")
             print("<td>" . preg_replace("/ .*/", "", $row["added"]) . "</td>\n");
 
             if ($variant == "index" && $CURUSER) {
-                print("<td class=uploadername>" . (isset($row["username"]) ? htmlspecialchars($row["username"]) : "<i>Unknown</i>") . "</td>\n");
+                print("<td class=uploadername>" . (isset($row["username"]) ? htmlspecialchars($row["username"]) : "<i title=\"Elvis has left the building&hellip;\">Unknown</i>") . "</td>\n");
             }
 
             print("</tr>\n");
