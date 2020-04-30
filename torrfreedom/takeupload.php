@@ -16,12 +16,12 @@ loggedinorreturn();
 
 foreach (explode(":", "descr:type:name") as $v) {
     if (!isset($_POST[$v])) {
-        bark("missing form data");
+        bark("Missing form data!");
     }
 }
 
 if (!isset($_FILES["file"])) {
-    bark("missing form data");
+    bark("Missing form data!");
 }
 
 $f = $_FILES["file"];
@@ -35,7 +35,7 @@ if (!validfilename($f["name"])) {
 }
 
 if (!preg_match('/^(.+)\.torrent$/si', $fname, $matches)) {
-    bark("Invalid filename (not a .torrent).");
+    bark("Invalid filename (not a .torrent)");
 }
 
 $shortfname = $torrent = $matches[1];
@@ -45,7 +45,7 @@ if (!empty($_POST["name"])) {
 
 $tmpname = $f["tmp_name"];
 if (!is_uploaded_file($tmpname)) {
-    bark("eek");
+    bark("eek!");
 }
 
 if (!filesize($tmpname)) {
@@ -54,13 +54,13 @@ if (!filesize($tmpname)) {
 
 $dict = bdec_file($tmpname, $max_torrent_size);
 if (!isset($dict)) {
-    bark("What the hell did you upload? This is not a bencoded file!");
+    bark("What the hell did you upload?! This is not a bencoded file!");
 }
 
 function dict_check($d, $s)
 {
     if ($d["type"] != "dictionary") {
-        bark("not a dictionary");
+        bark("Invalid data in torrent: not a dictionary!");
     }
 
     $a = explode(":", $s);
@@ -72,13 +72,14 @@ function dict_check($d, $s)
             $k = $m[1];
             $t = $m[2];
         }
+
         if (!isset($dd[$k])) {
-            bark("dictionary is missing key(s)");
+            bark("Dictionary is missing key(s).. no trackers in torrent?");
         }
 
         if (isset($t)) {
             if ($dd[$k]["type"] != $t) {
-                bark("invalid entry in dictionary");
+                bark("Invalid entry in dictionary");
             }
 
             $ret[] = $dd[$k]["value"];
@@ -93,7 +94,7 @@ function dict_check($d, $s)
 function dict_get($d, $k, $t)
 {
     if ($d["type"] != "dictionary") {
-        bark("not a dictionary");
+        bark("Invalid data in torrent: not a dictionary!");
     }
 
     $dd = $d["value"];
@@ -103,7 +104,7 @@ function dict_get($d, $k, $t)
 
     $v = $dd[$k];
     if ($v["type"] != $t) {
-        bark("invalid dictionary entry type");
+        bark("Invalid dictionary entry type");
     }
 
     return $v["value"];
@@ -123,7 +124,7 @@ if (strcmp($ann, $b64_trackerurl) != 0) {
     $newdict = benc($dict);
     $fp = fopen($tmpname, "w");
     if (!$fp) {
-        bark("problem rewriting torrent with new b64 key");
+        bark("Problem rewriting torrent with new b64 key");
     }
 
     fputs($fp, $newdict);
@@ -131,7 +132,7 @@ if (strcmp($ann, $b64_trackerurl) != 0) {
 }
 
 if (strlen($pieces) % 20 != 0) {
-    bark("invalid pieces");
+    bark("Invalid pieces detected in torrent!");
 }
 
 $filelist = array();
@@ -142,11 +143,11 @@ if (isset($totallen)) {
 } else {
     $flist = dict_get($info, "files", "list");
     if (!isset($flist)) {
-        bark("missing both length and files");
+        bark("Dictionary is missing both length and files!");
     }
 
     if (!count($flist)) {
-        bark("no files");
+        bark("Torrent contains no files!");
     }
 
     $totallen = 0;
@@ -156,13 +157,13 @@ if (isset($totallen)) {
         $ffa = array();
         foreach ($ff as $ffe) {
             if ($ffe["type"] != "string") {
-                bark("filename error");
+                bark("Filename error!");
             }
 
             $ffa[] = $ffe["value"];
         }
         if (!count($ffa)) {
-            bark("filename error");
+            bark("Filename error!");
         }
 
         $ffe = implode("/", $ffa);
@@ -211,5 +212,3 @@ move_uploaded_file($tmpname, "$torrent_dir/$id.torrent");
 header("Refresh: 2; url=details.php?id=$id&uploaded=1");
 
 exit();
-
-?>

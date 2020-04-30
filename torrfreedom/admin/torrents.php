@@ -39,12 +39,14 @@ if (!isset($_GET['user'])) {
 <?php
 function delTorrent($torid, $name, $user)
 {
-    printf("<td><a href=\"delTorrent.php?wdel_id='%s'&amp;name='%s'&amp;user='%s'\" class=button><span class=no></span></a></td>", $torid, $name, $user);
+    printf(
+"<td><a href=\"delTorrent.php?wdel_id='%d'&name='%s'&user='%s'\" class=button><span class=no></span></a></td>",
+ $torid, $name, $user);
 }
 
 while ($row = mysqli_fetch_array($result)) {
     echo "<tr>";
-    $torid = $row['id'];
+    $torid = intval($row['id']);
     $form = "<form action=modifytorrent.php method=GET><input type=submit value=Apply>&nbsp;<input type=hidden name=torid value=$torid />";
 
     echo "<td>";

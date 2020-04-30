@@ -16,6 +16,7 @@
 #server th {
   border-bottom: 1px solid #111;
   font-weight: 700 !important;
+  font-size: 90%;
 }
 
 #server #serverdetails th:last-child {
@@ -82,8 +83,20 @@
   box-sizing: border-box;
 }
 
-#server input[type="submit"] {
+#server input[type="submit"], #server input[type="reset"] {
   margin: 0 4px -2px;
+}
+
+#server.categories input[type="submit"], #server.categories input[type="reset"] {
+  margin: 2px 4px;
+}
+
+#server.categories input[type="text"] {
+  margin: 2px 0;
+}
+
+#server.categories input.create[type="text"] {
+  margin: 2px 8px 2px 0;
 }
 
 #server .button {
@@ -91,10 +104,15 @@
   user-select: none;
 }
 
-#server.users tr:not(#dostuff) td:last-child .button {
+#server.users tr:not(#dostuff) td:last-child .button,
+#server.categories tr:not(#dostuff) td:last-child .button {
   padding: 3px !important;
   font-size: 14px !important;
 }
+
+ #server.categories .no {
+  mix-blend-mode: normal;
+ }
 
 #server.users .no, #server.torrents .no {
   background-size: 12px 12px !important;
@@ -186,6 +204,39 @@
 
 #server.torrents input[type="submit"] {
   min-width: 0;
+}
+
+#server.categories {
+  width: 600px !important;
+}
+
+#server.categories #dostuff {
+  border-bottom: 1px solid #111 !important;
+}
+
+#server.categories th, #server.categories td {
+  width: 1%;
+  white-space: nowrap;
+  text-align: left;
+}
+
+#server.categories td:nth-child(2) {
+  width: auto;
+  text-align: left;
+}
+
+#server.categories td:last-child span {
+  margin-bottom: 1px;
+  padding: 4px !important;
+}
+
+#server.categories td:nth-child(odd) {
+  background: rgba(0, 0, 0, .2);
+}
+
+#server.categories .create {
+  margin-right: 12px;
+  width: calc(100% - 100px);
 }
 
 #server .success, #server .fail {

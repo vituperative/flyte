@@ -32,14 +32,14 @@ $mytorrents = $row[0];
 <form method=post action=takeprofedit.php>
 <div class="tablewrap slim">
 <table id=myaccount>
-<tr><th>Profile for: <?php echo $CURUSER["username"] ?></th><th>
+<tr><th colspan=2>Profile for: <?php echo $CURUSER["username"] ?>&nbsp;&nbsp;<span style=float:right;>
 <?php
 
 if (!$mytorrents)
     print("No torrents uploaded!");
 else
     print("<a href=mytorrents.php>My Torrents</a> (" . $mytorrents . ")");
-print("</th></tr>");
+print("</span></th></tr>");
 
 $res = mysqli_query($GLOBALS["___mysqli_ston"], "SELECT COUNT(*) FROM comments WHERE user=" . $CURUSER["id"]);
 $row = mysqli_fetch_array($res);

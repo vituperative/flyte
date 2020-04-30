@@ -56,6 +56,10 @@ input[type="submit"], .button {
   user-select: none;
 }
 
+.briefdesc, #description div, .help {
+  user-select: text;
+}
+
 code {
   margin-left: 2px;
   font-family: Noto Sans Mono, DejaVu Sans Mono, Consolas, monospace;
@@ -237,7 +241,7 @@ th, #dostuff td {
 }
 
 #torrents th:nth-child(2), #torrents td:nth-child(2) {
-  text-align: left;
+  text-align: left !important;
 }
 
 #torrents th:nth-child(n+3), #torrents td:nth-child(n+3) {
@@ -255,14 +259,21 @@ th, #dostuff td {
   vertical-align: middle;
 }
 
-#torrents th:nth-child(2) {
-  text-align: left !important;
-}
-
 #torrents td {
   padding-top: 4px !important;
   padding-bottom: 4px !important;
-  border-bottom: 1px solid #222 !important;
+  position: relative;
+  border-bottom: 1px solid rgba(17,17,17,.4);
+  border-top: 1px solid rgba(17,17,17,.4);
+  border-right: 1px solid rgba(17,17,17,.15);
+}
+
+#torrents tr:nth-child(odd) td {
+  border-bottom: 1px solid rgba(17,17,17,.6);
+}
+
+#torrents tbody tr:first-child {
+  border-top: 1px solid #111;
 }
 
 #torrents td:first-child, #torrents td:nth-child(2) {
@@ -270,9 +281,25 @@ th, #dostuff td {
   vertical-align: middle !important;
 }
 
-#torrents td:first-child {
-  width: 1%;
-  white-space: nowrap;
+@supports (-moz-appearance: none) {
+  #torrents tr:nth-child(n+2) td::after {
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    display: inline-block;
+    content: "";
+  }
+  #torrents tr:nth-child(n+3) td::after {
+    background: rgba(17,17,17,.05) !important;
+  }
+  #torrents tr:nth-child(2n+2) td::after {
+    background: rgba(17,17,17,.4) !important;
+  }
+  #torrents tr:nth-child(2) td::after {
+    background: #111 !important;
+  }
 }
 
 #torrents td:first-child a {
@@ -305,6 +332,22 @@ th, #dostuff td {
   content: "";
 }
 
+#torrents td.size {
+  white-space: nowrap;
+}
+
+#torrents td.size span {
+    display: inline-block;
+    text-align: center;
+    min-width: 16px;
+}
+
+#torrents td.size .right {
+    margin: 0 2px 0 0;
+    min-width: 24px;
+    text-align: right;
+}
+
 #torrents td:nth-child(odd) {
   background: rgba(0, 0, 0, .01) !important;
 }
@@ -314,8 +357,28 @@ th, #dostuff td {
 }
 
 #torrents tr:nth-child(n+2):hover td, #filelist tr:hover {
+  color: #ccc;
+  border: 1px solid #2a2525 !important;
   background: #2a2525 !important;
-  border-color: transparent !important;
+}
+
+#torrents tr:nth-child(n+2):hover td {
+  background: none !important;
+}
+
+#torrents tr:hover {
+  background: #2a2525 !important;
+  transition: ease background .05s;
+}
+
+#torrents td:first-child {
+  width: 1%;
+  white-space: nowrap;
+  border-left: 1px solid #111 !important;
+}
+
+#torrents td:last-child {
+  border-right: 1px solid #111 !important;
 }
 
 #torrents td:nth-child(3), #torrents td:nth-child(7) {
@@ -324,6 +387,14 @@ th, #dostuff td {
 
 #torrents td:nth-child(7) {
   word-spacing: -0.1em;
+}
+
+#torrents tr:hover td:first-child {
+  border-left: 1px solid #111 !important;
+}
+
+#torrents tr:hover td:last-child {
+  border-right: 1px solid #111 !important;
 }
 
 #torrents .dlicons img {
@@ -361,7 +432,8 @@ select {
   font-weight: 700 !important;
   color: #9a9898;
   text-shadow: 0 1px 1px #111;
-  background: url(../pic/down.png) right 8px center no-repeat, linear-gradient(to bottom, #343232, #232121) !important;
+/*  background: url(../pic/down.png) right 8px center no-repeat, linear-gradient(to bottom, #343232, #232121) !important;*/
+  background:  url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAQCAMAAAAs2N9uAAAAq1BMVEUAAAD////q6urj4+Pn5+fj4+Pn5+fk5OTm5ubm5ubm5ubl5eXl5eXm5ubk5OTm5ubm5ubl5eXm5ubk5OTl5eXl5eXl5eXl5eXm5ubk5OTk5OTl5eXl5eXl5eXl5eXl5eXm5ubl5eXl5eXl5eXm5ubl5eXm5ubl5eXl5eXl5eXl5eXk5OTl5eXl5eXk5OTl5eXm5ubl5eXm5ubl5eXm5ubl5eXm5ubl5eXl5eV8UbPbAAAAOHRSTlMAAwwSFRsqMDM8PkVXWmlucHV4eYqepKersrS6x8za293i4+Xo8vLz9PX29/f4+fn6+/v8/P39/oHIsIkAAACXSURBVHjaVc0DosNQEAXQ+23UbWzb+19ZZ+Kc4GGErCM79Ha8ryCUtIQvIC8hbesrXmtaowvIOaJtTNETb5o34K3hsj9Oz2mXSICU0EZ7ADm63OLnmzu0H2BPdkF7XW/pf8Ng73BpMk1mj6bf9dp/TH694cp4wORBtTr2icV30BERa7JCA56x9lVl3QFbYm49YOs9/Zq2d1JCGmfUeyaOAAAAAElFTkSuQmCC) right 8px center no-repeat, linear-gradient(to bottom, #343232, #232121) !important;
   background-size: 8px auto !important;
   background-blend-mode: overlay, normal;
   -moz-appearance: none;
@@ -615,8 +687,7 @@ hr.separator {
   text-shadow: 0 1px 1px #000, 0 0 2px #000;
   color: #9f9090;
   border: 1px solid #343030;
-  box-shadow: inset 0 0 0 1px #000, 0 0 0 1px #121010;
-  box-shadow: inset 0 0 0 1px #000, inset 0 0 1px 1px rgba(0,0,0,0), 0 0 0 1px #121010;
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 1px 1px rgba(0,0,0,0);
   background: radial-gradient(at center 80px, rgba(255, 96, 0, .05) 0, rgba(0, 0, 0, 0) 90%), linear-gradient(to bottom, rgba(80, 72, 72, .15) 50%, #121010 50%), repeating-linear-gradient(to right, rgba(90, 72, 72, .5), rgba(0, 0, 0, 0) 2px), linear-gradient(to bottom, #454040, #232020);
   transition: ease box-shadow .1s, ease color .2s !important;
   will-change: transform;
@@ -626,14 +697,14 @@ hr.separator {
   position: relative;
   z-index: 10;
   color: #f60;
-  box-shadow: inset 0 0 0 1px #000, inset 0 0 1px 1px rgba(255, 128, 0, .9), 0 0 0 1px #121010;
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 1px 1px rgba(255, 128, 0, .9);
   background: radial-gradient(at center 80px, rgba(255, 96, 0, .6) 0, rgba(0, 0, 0, 0) 70%), linear-gradient(to bottom, rgba(255, 255, 255, .1) 50%, #000 50%), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px);
   transition: ease box-shadow .1s, ease color .25s !important;
 }
 
 #topnav a:active {
   color: rgba(255, 96, 0, .7);
-  box-shadow: 0 0 0 1px #121010, inset 0 0 0 1px #000, inset 0 0 1px 1px rgba(255, 128, 0, .75), inset 4px 4px 4px #121010;
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 1px 1px rgba(255, 128, 0, .75), inset 4px 4px 4px #121010;
   background: radial-gradient(at center 80px, rgba(200, 48, 0, .4) 0, rgba(0, 0, 0, 0) 75%), linear-gradient(to bottom, rgba(255, 255, 255, .1), rgba(0, 0, 0, .2)), repeating-linear-gradient(to right, rgba(0, 0, 0, .5), rgba(0, 0, 0, .0) 2px);
 }
 
@@ -674,6 +745,13 @@ hr.separator {
     margin: 8px 0;
     filter: opacity(1);
     transform: scale(1);
+  }
+}
+
+@supports (justify-content: center) {
+  #topnav {
+    display: flex;
+    justify-content: center;
   }
 }
 
@@ -816,7 +894,7 @@ hr.separator {
   border-bottom: 1px solid #111 !important;
 }
 
-#myaccount th:last-child {
+#myaccount th span {
   font-size: 90% !important;
 }
 
@@ -902,7 +980,7 @@ hr.separator {
 
 #toast .title {
   color: #cbc0c0;
-  border-bottom: 1px solid #232020;
+  border-bottom: 1px solid #121010;
   display: inline-block;
   width: 100%;
   padding: 0 0 7px;
@@ -910,6 +988,15 @@ hr.separator {
   text-align: center;
   font-weight: 700 !important;
   font-size: 110% !important;
+}
+
+#toast .title::after {
+  margin: 7px 0 -9px;
+  width: 100%;
+  height: 1px;
+  display: block;
+  background: #454040;
+  content: "";
 }
 
 #uawarn {
@@ -1024,16 +1111,8 @@ hr.separator {
   text-align: justify;
 }
 
-th a {
+table:not(#torrents):not(#myaccount) th a {
   float: right;
-}
-
-#myaccount th a, #torrents th a {
-  float: none;
-}
-
-#myaccount th:last-child {
-  text-align: right;
 }
 
 #changepass th {
@@ -1310,7 +1389,12 @@ input#username, input[type="password"], #search input[type="text"] {
 
 #search input[type="text"] {
   width: 160px;
-  background-image: url(../pic/search.png);
+/*  background-image: url(../pic/search.png);*/
+  background-image: url(data:image/png;base64,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);
+  padding-left: 28px !important;
+  background-repeat: no-repeat !important;
+  background-size: 16px 16px !important;
+  background-position: 6px center !important;
 }
 
 input#username {
@@ -1329,6 +1413,25 @@ input[type="password"] {
   margin: 0 0 20px !important;
   padding-bottom: 11px;
   border-bottom: 1px solid #343232;
+}
+
+#results {
+  margin: -9px auto 10px;
+  padding: 8px 15px;
+  min-width: 400px;
+  display: inline-block;
+  font-size: 115%;
+  font-weight: 600;
+  color: #aaa;
+  text-shadow: 0 1px 1px #000, 0 0 2px #000;
+  border: 1px solid #343232;
+  box-shadow: inset 0 0 0 1px #111, inset 0 0 1px 1px #343232;
+  background: #262323;
+}
+
+#results b {
+  font-weight: 700 !important;
+  color: #bbb;
 }
 
 #peerinfo, #details #filelist {
@@ -1819,6 +1922,10 @@ input#togglepanel {
   #torrents .briefdesc {
     max-width: 580px;
   }
+  .torrent, .size, .files, .seeds, .leech, .comments, .added, .views, .uploader, .visible, .downloads {
+    width: 90px;
+    box-sizing: border-box;
+  }
 }
 
 @media screen and (min-width: 1800px) {
@@ -1901,7 +2008,6 @@ input#togglepanel {
     padding: 2px 5px !important;
     width: 1% !important;
     white-space: nowrap;
-    border: 1px solid #222 !important;
   }
   #torrents td:nth-child(2) {
     width: 40% !important;
@@ -1960,6 +2066,12 @@ input#togglepanel {
   #torrents .briefdesc {
     margin-top: 1px;
     max-width: 280px;
+  }
+  #torrents td.size .right {
+    margin-right: 1px !important;
+  }
+  #torrents td.size span:not(.right) {
+    min-width: 14px;
   }
 }
 
