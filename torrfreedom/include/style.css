@@ -248,7 +248,7 @@ th, #dostuff td {
   text-align: center;
 }
 
-#torrents td:first-child::after {
+#torrents td:first-child::before {
   content: "";
   display: inline-block;
   height: 36px;
