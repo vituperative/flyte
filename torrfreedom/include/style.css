@@ -368,7 +368,6 @@ th, #dostuff td {
 
 #torrents tr:hover {
   background: #2a2525 !important;
-  transition: ease background .05s;
 }
 
 #torrents td:first-child {

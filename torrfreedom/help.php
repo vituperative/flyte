@@ -7,6 +7,9 @@ stdhead();
 <tr><td>
 <div>
 
+<h3>What are the terms of service for this tracker?</h3>
+<p>No gore, no snuff, no child pornography. Any torrent that the site admin deems inappropriate will be removed without warning, and the uploader's account may be also removed. </p>
+
 <h3>How do I download a torrent?</h3>
 <p>Choose the torrent you like and right click on the magnet or torrent icon and select <i>Copy Link Location</i>, paste the link into your I2P-capable BitTorrent client, and then start the torrent.</p>
 <p>If you don't have an I2P-capable BitTorrent client, we recommend the <a href=i2psnark-standalone.zip>standalone version</a> of I2PSnark which can be used with i2pd or other I2P software that doesn't provide its own client.
@@ -41,9 +44,6 @@ print("<span class=spacer>" . $spacer . "</span><code title=\"" . $tooltip . "\"
 
 <h3>Can I use html tags in the torrent descriptions and comments?</h3>
 Yes you can! There is support for a limited number of <a href=https://www.w3schools.com/TAGs/ target=_blank>html tags</a> to allow better presentation of your submitted text. The following tags are permitted: <code>&lt;b&gt; &lt;strong&gt; &lt;i&gt; &lt;ul&gt; &lt;ol&gt; &lt;li&gt; &lt;hr&gt; &lt;br&gt; &lt;p&gt;</code>
-
-<h3>What are the terms of service for this tracker?</h3>
-<p>No gore, no snuff, no child pornography. Any torrent that the site admin deems inappropriate will be removed without warning, and the uploader's account may be also removed. </p>
 
 <?php
 if ($contact != null) {
