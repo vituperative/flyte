@@ -129,10 +129,10 @@ if (!isset($dict)) {
 $alltrackers = array();
 
 array_push($alltrackers, $dict["value"]["announce"]["value"]);
-foreach($dict["value"]["announce-list"]["value"] as $val) {
-    foreach($val as $trr) {
-        array_push($alltrackers, $trr["value"]);
-    }
+for($i = 0; $i < sizeof($dict["value"]["announce-list"]["value"]); ++$i) {
+    for($j = 0; $j < sizeof($dict["value"]["announce-list"]["value"][$i]["value"]); ++$j) {
+        array_push($alltrackers, $dict["value"]["announce-list"]["value"][$i]["value"][$j]["value"]);
+    } 
 }
 
 //remove non-i2p trackers
@@ -160,16 +160,17 @@ array_unshift($alltrackers, $announce_urls[5]);
 
 //save all trackers to announce-list
 $dict["value"]["announce-list"]["value"] = array();
-$dict["value"]["announce-list"]["value"][] = array(); 
-$dict["value"]["announce-list"]["value"][0]["value"] = array();
 for($i = 0; $i < sizeof($alltrackers); ++$i) {
     $newan = array(
         "type" => "string",
         "value" => $alltrackers[$i]
     );
-    $dict["value"]["announce-list"]["value"][0]["value"][] = $newan;
+    $dict["value"]["announce-list"]["value"][] = array(); 
+    $dict["value"]["announce-list"]["value"][$i][] = array();
+    $dict["value"]["announce-list"]["value"][$i]["value"] = array();
+    $dict["value"]["announce-list"]["value"][$i]["type"] = "list";
+    $dict["value"]["announce-list"]["value"][$i]["value"][] = $newan;
 }
-$dict["value"]["announce-list"]["value"][0]["type"] = "list";
 $dict["value"]["announce-list"]["type"] = "list";
 
 //save changes to file
