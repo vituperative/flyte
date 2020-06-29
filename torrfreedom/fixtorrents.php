@@ -83,7 +83,7 @@ foreach($files as $file) {
         bark("Empty file!");
     }
 
-    $dict = bdec_file($tmpname, $max_torrent_size);
+    $dict = bdec_file($torrent_dir . "/" . $file, $max_torrent_size);
 
     if (!isset($dict)) {
         bark("What the hell did you upload?! This is not a bencoded file!");
