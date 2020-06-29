@@ -114,6 +114,27 @@ if (!filesize($tmpname)) {
     bark("Empty file!");
 }
 
+
+//fix torrent file
+$fp = fopen($tmpname, "rb");
+if (!$fp)
+    return;
+$e = fread($fp, $max_torrent_size);
+fclose($fp);
+if(strpos($e, "d8:announce13:announce-list") !== false || strpos($e, "d8:announce4:infod") !== false) {
+    if(strpos($e, "d8:announce13:announce-list") !== false) {
+        $e = substr($e, 27);
+        $e = "d13:announce-list" . $e;
+    }
+    if(strpos($e, "d8:announce4:infod") !== false) {
+        $e = substr($e, 18);
+        $e = "d4:infod" . $e;
+    }
+    $fp = fopen($tmpname, "w");
+    fputs($fp, $e);
+    fclose($fp);
+}
+
 $dict = bdec_file($tmpname, $max_torrent_size);
 
 if (!isset($dict)) {
