@@ -10,6 +10,71 @@ function bark($msg)
     genbark($msg, "Upload failed!");
 }
 
+function dict_check($d, $s)
+{
+    if ($d["type"] != "dictionary") {
+        bark("Invalid data in torrent: not a dictionary!");
+    }
+
+    $a = explode(":", $s);
+    $dd = $d["value"];
+    $ret = array();
+    foreach ($a as $k) {
+        unset($t);
+        if (preg_match('/^(.*)\((.*)\)$/', $k, $m)) {
+            $k = $m[1];
+            $t = $m[2];
+        }
+
+        if (!isset($dd[$k])) {
+            if($k == "announce") {
+		$dd[$k]["type"] = $t;
+                $dd[$k]["value"] = $announce_urls[5];
+            }
+            else if($k == "announce-list") {
+		$dd[$k]["type"] = $t;
+                $dd[$k]["value"] = array(array(
+                    "type" => $t,
+                    "value" => array()
+                ));
+            }
+            else
+                bark("Dictionary is missing key(s).. no trackers in torrent?");
+        }
+
+        if (isset($t)) {
+            if ($dd[$k]["type"] != $t) {
+                bark("Invalid entry in dictionary");
+            }
+
+            $ret[] = $dd[$k]["value"];
+        } else {
+            $ret[] = $dd[$k];
+        }
+
+    }
+    return $ret;
+}
+
+function dict_get($d, $k, $t)
+{
+    if ($d["type"] != "dictionary") {
+        bark("Invalid data in torrent: not a dictionary!");
+    }
+
+    $dd = $d["value"];
+    if (!isset($dd[$k])) {
+        return;
+    }
+
+    $v = $dd[$k];
+    if ($v["type"] != $t) {
+        bark("Invalid dictionary entry type");
+    }
+
+    return $v["value"];
+}
+
 dbconn(0);
 
 loggedinorreturn();
@@ -57,79 +122,66 @@ if (!isset($dict)) {
     bark("What the hell did you upload?! This is not a bencoded file!");
 }
 
-function dict_check($d, $s)
-{
-    if ($d["type"] != "dictionary") {
-        bark("Invalid data in torrent: not a dictionary!");
-    }
+//check all announce urls, set primary announce url to tf ann url
+//default is $announce_urls[5]
 
-    $a = explode(":", $s);
-    $dd = $d["value"];
-    $ret = array();
-    foreach ($a as $k) {
-        unset($t);
-        if (preg_match('/^(.*)\((.*)\)$/', $k, $m)) {
-            $k = $m[1];
-            $t = $m[2];
-        }
+//collect all trackers
+$alltrackers = array();
 
-        if (!isset($dd[$k])) {
-            bark("Dictionary is missing key(s).. no trackers in torrent?");
-        }
-
-        if (isset($t)) {
-            if ($dd[$k]["type"] != $t) {
-                bark("Invalid entry in dictionary");
-            }
-
-            $ret[] = $dd[$k]["value"];
-        } else {
-            $ret[] = $dd[$k];
-        }
-
-    }
-    return $ret;
+array_push($alltrackers, $dict["value"]["announce"]["value"]);
+foreach($dict["value"]["announce-list"]["value"][0]["value"] as $val) {
+    array_push($alltrackers, $val["value"]);
 }
 
-function dict_get($d, $k, $t)
-{
-    if ($d["type"] != "dictionary") {
-        bark("Invalid data in torrent: not a dictionary!");
+//remove non-i2p trackers
+for($i = 0; $i < sizeof($alltrackers); ++$i) {
+    if(!preg_match("^http:\/\/(w{3}\.)?(([a-zA-Z0-9-]*\.){1,2})?[a-zA-Z0-9-]*\.(i2p|I2P)\/?$", $alltrackers[$i])) {
+        unset($alltrackers[$i]);
+        $alltrackers = array_values($alltrackers);
     }
-
-    $dd = $d["value"];
-    if (!isset($dd[$k])) {
-        return;
-    }
-
-    $v = $dd[$k];
-    if ($v["type"] != $t) {
-        bark("Invalid dictionary entry type");
-    }
-
-    return $v["value"];
 }
 
-list($ann, $info) = dict_check($dict, "announce(string):info");
+//remove duplicates
+$alltrackers = array_unique($alltrackers);
+for($i = 0; $i < sizeof($alltrackers); ++$i) {
+    if(in_array($alltrackers[$i], $announce_urls)) {
+        unset($alltrackers[$i]);
+        $alltrackers = array_values($alltrackers);
+    }
+}
+
+//install primary tracker
+$dict["value"]["announce"]["value"] = $announce_urls[5];
+
+//add tracker to announce-list
+array_unshift($alltrackers, $announce_urls[5]);
+
+//save all trackers to announce-list
+$dict["value"]["announce-list"]["value"][0]["value"] = array();
+for($i = 0; $i < sizeof($alltrackers); ++$i) {
+    $newan = array(
+        "type" => "string",
+        "value" => $alltrackers[$i]
+    );
+    $dict["value"]["announce-list"]["value"][0]["value"][] = $newan;
+}
+$dict["value"]["announce-list"]["value"][0]["type"] = "list";
+$dict["value"]["announce-list"]["type"] = "list";
+
+//save changes to file
+$newdict = benc($dict);
+$fp = fopen($tmpname, "w");
+if (!$fp) {
+    bark("Problem rewriting torrent");
+}
+fputs($fp, $newdict);
+fclose($fp);
+
+//re-read overrided file
+$dict = bdec_file($tmpname, $max_torrent_size);
+
+list($ann, $annlist, $info) = dict_check($dict, "announce(string):announce-list:info");
 list($dname, $plen, $pieces) = dict_check($info, "name(string):piece length(integer):pieces(string)");
-
-//check against both announce urls: name and b64key as defined in bittorrent.inc.php:30,31, secrets.inc.php:8,9
-//if (!in_array($ann, $announce_urls, 1))
-//    bark("invalid announce url! must be " . $announce_urls[0] . " or " . $announce_urls[1]);
-
-//check announce url against b64key announce url, if not b64key, reencode dict
-$b64_trackerurl = "$tracker_url_key/announce.php";
-if (strcmp($ann, $b64_trackerurl) != 0) {
-    $dict["announce"]["value"] = $b64_trackerurl;
-    $newdict = benc($dict);
-    $fp = fopen($tmpname, "w");
-    if (!$fp) {
-        bark("Problem rewriting torrent with new b64 key");
-    }
-
-    fputs($fp, $newdict);
-    fclose($fp);
-}
 
 if (strlen($pieces) % 20 != 0) {
     bark("Invalid pieces detected in torrent!");
