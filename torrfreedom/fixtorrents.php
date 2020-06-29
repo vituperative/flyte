@@ -25,15 +25,12 @@ function dict_check($d, $s)
 
         if (!isset($dd[$k])) {
             if($k == "announce") {
-		$dd[$k]["type"] = $t;
-                $dd[$k]["value"] = $announce_urls[5];
+                $dd[$k]["value"] = false;
+                $dd[$k]["type"] = "string";
             }
             else if($k == "announce-list") {
-		$dd[$k]["type"] = $t;
-                $dd[$k]["value"] = array(array(
-                    "type" => $t,
-                    "value" => array()
-                ));
+                $dd[$k]["value"] = false;
+                $dd[$k]["type"] = "list";
             }
             else
                 bark("Dictionary is missing key(s).. no trackers in torrent?");
@@ -43,7 +40,7 @@ function dict_check($d, $s)
             if ($dd[$k]["type"] != $t) {
                 bark("Invalid entry in dictionary");
             }
-
+            
             $ret[] = $dd[$k]["value"];
         } else {
             $ret[] = $dd[$k];
@@ -86,9 +83,49 @@ foreach($files as $file) {
         bark("Empty file!");
     }
 
-    $dict = bdec_file($torrent_dir . "/" . $file, $max_torrent_size);
+    $dict = bdec_file($tmpname, $max_torrent_size);
+
     if (!isset($dict)) {
         bark("What the hell did you upload?! This is not a bencoded file!");
+    }
+
+    list($ann, $annlist, $info) = dict_check($dict, "announce(string):announce-list(list):info");
+    list($dname, $plen, $pieces) = dict_check($info, "name(string):piece length(integer):pieces(string)");
+
+    if($ann == false) {
+        $old = $dict["value"];
+        $new = array(
+            "announce" => array(
+                "type" => "string",
+                "value" => $announce_urls[5]
+            )
+        );
+        $dict["value"] = $new + $old;
+    }
+    if($annlist == false) {
+        $ann = $dict["value"]["announce"];
+        unset($dict["value"]["announce"]);
+        $oldann = array(
+            "announce" => $ann
+        );
+        $old = $dict["value"];
+        $new = array(
+            "announce-list" => array(
+                "type" => "list",
+                "value" => array(
+                    0 => array(
+                        "type" => "list",
+                        "value" => array(
+                            0 => array(
+                                "type" => "string",
+                                "value" => $announce_urls[5]
+                            )
+                        )
+                    )
+                )
+            )
+        );
+        $dict["value"] = $oldann + $new + $old;
     }
 
     //check all announce urls, set primary announce url to tf ann url
