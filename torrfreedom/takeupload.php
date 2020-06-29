@@ -129,8 +129,10 @@ if (!isset($dict)) {
 $alltrackers = array();
 
 array_push($alltrackers, $dict["value"]["announce"]["value"]);
-foreach($dict["value"]["announce-list"]["value"][0]["value"] as $val) {
-    array_push($alltrackers, $val["value"]);
+foreach($dict["value"]["announce-list"]["value"] as $val) {
+    foreach($val as $trr) {
+        array_push($alltrackers, $trr["value"]);
+    }
 }
 
 //remove non-i2p trackers
@@ -157,6 +159,8 @@ $dict["value"]["announce"]["value"] = $announce_urls[5];
 array_unshift($alltrackers, $announce_urls[5]);
 
 //save all trackers to announce-list
+$dict["value"]["announce-list"]["value"] = array();
+$dict["value"]["announce-list"]["value"][] = array(); 
 $dict["value"]["announce-list"]["value"][0]["value"] = array();
 for($i = 0; $i < sizeof($alltrackers); ++$i) {
     $newan = array(
