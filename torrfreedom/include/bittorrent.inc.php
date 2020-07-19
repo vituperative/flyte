@@ -42,7 +42,7 @@ $pagesize = 50;
 ##########################
 
 $appname = "Flyte";
-$version = "1.2.1";
+$version = "1.3.0";
 
 # the first one will be displayed on the pages
 $announce_urls = array(); //
