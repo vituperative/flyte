@@ -3,7 +3,7 @@ I2P BitTorrent Tracker
 
 Forked from the original ByteMonsoon tracker.
 
-Requirements: I2P/i2pd, Web server with php support, MySQL or compatible database server.
+Requirements: I2P+/I2P/i2pd, Web server with php support, MySQL or compatible database server.
 * Jetty + <a href="http://php-java-bridge.sourceforge.net/pjb/">phpjavabridge</a> is supported.
 
 # Todo:
