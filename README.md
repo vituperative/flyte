@@ -1,6 +1,8 @@
 # FLYTE
 I2P BitTorrent Tracker
 
+Forked from the original ByteMonsoon tracker.
+
 # Todo:
 - [ ] Code cleanup
 - [ ] Support of list of trackers
