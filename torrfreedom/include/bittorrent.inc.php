@@ -492,13 +492,17 @@ function pager($rpp, $count, $href, $opts = array())
     } else {
         $page = $pagedefault;
     }
+    
+    $url = (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != "") ? "?" . $_SERVER['QUERY_STRING'] . "&" : "?";
+    $filteredURL = preg_replace('~(\?|&)page=[^&]*.~', '$1', $url);
+    $filteredURL = htmlspecialchars($filteredURL);
 
     $pager = "";
 
     $mp = $pages - 1;
     $as = "<b>&lt;&lt;&nbsp;Previous</b>";
     if ($page >= 1) {
-        $pager .= "<a href=\"{$href}page=" . ($page - 1) . "\">";
+        $pager .= "<a href=\"{$filteredURL}page=" . ($page - 1) . "\">";
         $pager .= $as;
         $pager .= "</a>";
     } else {
@@ -508,7 +512,7 @@ function pager($rpp, $count, $href, $opts = array())
     $pager .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
     $as = "<b>Next&nbsp;&gt;&gt;</b>";
     if ($page < $mp && $mp >= 0) {
-        $pager .= "<a href=\"{$href}page=" . ($page + 1) . "\">";
+        $pager .= "<a href=\"{$filteredURL}page=" . ($page + 1) . "\">";
         $pager .= $as;
         $pager .= "</a>";
     } else {
@@ -540,7 +544,7 @@ function pager($rpp, $count, $href, $opts = array())
 
             $text = "$start - $end";
             if ($i != $page) {
-                $pagerarr[] = "<a class=pagelinks href=\"{$href}page=$i\">$text</a>";
+                $pagerarr[] = "<a class=pagelinks href=\"{$filteredURL}page=$i\">$text</a>";
             } else {
                 $pagerarr[] = "<span id=pagenow>$text</span>";
             }
