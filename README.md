@@ -1,5 +1,5 @@
-# TF
-TF Website
+# FLYTE
+I2P BitTorrent Tracker
 
 # Todo:
 - [ ] Code cleanup
@@ -7,7 +7,7 @@ TF Website
 - [ ] Built-in torrent search engine
 - [ ] Multi-page install script with support for initial db creation, categories, admin creation etc
 - [ ] Optional support of flatfiles (instead of mysql)
-- [ ] Jetty support (using phpbridge)
+- [x] Jetty support (using phpbridge)
 - [x] Refactor html markup and streamline css
 - [ ] Implement torrent syncing with torrent.ano
 - [ ] Optional automatic torrent upload to torrent.ano
@@ -20,4 +20,4 @@ TF Website
 - [ ] Admin UI with support for bulk delete, db export, bulk torrent import, user admin, category add/delete
 - [ ] Admin option to toggle opentracker capabilities
 - [ ] Optional automatic import of torrents from other trackers via RSS
-- [ ] Fix upload error when torrent contains no trackers
+- [x] Fix upload error when torrent contains no trackers
