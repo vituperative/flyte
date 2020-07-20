@@ -32,7 +32,7 @@ $announce_interval = 900;
 $signup_timeout = 86400 * 3;
 $max_dead_torrent_time = 4 * 3600;
 $autoclean_interval = 600;
-$pic_base_url = "pic/";
+$pic_base_url = "images/";
 $pagesize = 50;
 
 ##########################
