@@ -10,17 +10,17 @@ $mysql_user = "test";
 $mysql_pass = "test";
 
 // The name of the database you will use
-$mysql_db = "torrfreedom";
+$mysql_db = "flyte";
 
 // Name of your tracker
-$tracker_title = "Torrent Freedom";
+$tracker_title = "Flyte";
 
 // Complete human url to tracker location. DO NOT trail with a /
-$tracker_url_name = "http://torrfreedom.i2p";
+$tracker_url_name = "http://yourtrackerdomain.i2p";
 
 // Complete b64 url to tracker location. DO NOT trail with a /
 // remember to append the .i2p suffix after your key
-$tracker_url_key = "http://nfrjvknwcw47itotkzmk6mdlxmxfxsxhbhlr5ozhlsuavcogv4hq.b32.i2p"; 
+$tracker_url_key = "http://your.b32.i2p"; 
 
 // absolute path to the tracker, excluding the domain name or ip address, with a trailing /
 // if the tracker software is being served from the document root, specify / as the path
