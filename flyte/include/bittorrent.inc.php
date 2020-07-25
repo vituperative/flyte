@@ -743,9 +743,9 @@ function torrenttable($res, $variant = "index")
 
             print("<td>");
             if (isset($row["cat_name"])) {
-                print("<a href=\"./?cat=" . $row["category"] . "\" class=\"catlink\" data-tooltip=\"" . $row["cat_name"] . "\"><img src=\"" . $tracker_path . "pic/" . $row["category"] . ".png\" width=24 height=24></a>");
+                print("<a href=\"./?cat=" . $row["category"] . "\" class=\"catlink\" data-tooltip=\"" . $row["cat_name"] . "\"><img src=\"" . $tracker_path . $pic_base_url . $row["category"] . ".png\" width=24 height=24></a>");
             } else {
-                print("<span class=\"catlink\" data-tooltip=\"Uncategorized\"><img src=\"" . $tracker_path . "pic/unknown.png\" width=24 height=24></span>");
+                print("<span class=\"catlink\" data-tooltip=\"Uncategorized\"><img src=\"" . $tracker_path . $pic_base_url . "unknown.png\" width=24 height=24></span>");
             }
 
             print("</td>\n");
@@ -783,7 +783,7 @@ function torrenttable($res, $variant = "index")
             print("</td>\n");
 
             if ($variant == "index") {
-                print("<td class=dlicons><a href=\"download.php?id=$id&amp;file=" . htmlentities(urlencode($row["filename"])) . "\"><img src=\"" . $tracker_path . "pic/download.png\" border=0 width=24 height=24></a> <a href=\"magnet:?xt=urn:btih:" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "&amp;dn=" . htmlentities(urlencode($row["filename"])) . "&amp;tr=" . $announce_urls[5] . "\"><img src=\"" . $tracker_path . "pic/magnet.png\" border=0 width=24 height=24></a></td>");
+                print("<td class=dlicons><a href=\"download.php?id=$id&amp;file=" . htmlentities(urlencode($row["filename"])) . "\"><img src=\"" . $tracker_path . $pic_base_url . "download.png\" border=0 width=24 height=24></a> <a href=\"magnet:?xt=urn:btih:" . preg_replace_callback('/./s', "hex_esc", hash_pad($row["info_hash"])) . "&amp;dn=" . htmlentities(urlencode($row["filename"])) . "&amp;tr=" . $announce_urls[5] . "\"><img src=\"" . $tracker_path . $pic_base_url . "magnet.png\" border=0 width=24 height=24></a></td>");
             } elseif ($variant == "mytorrents") {
                 print("<td><a href=\"edit.php?returnto=" . urlencode($_SERVER["REQUEST_URI"]) . "&amp;id=" . $row["id"] . "\"><span class=edit title=\"Edit torrent\">edit</span></a></td>\n");
             }
