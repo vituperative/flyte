@@ -7,7 +7,7 @@ require_once "include/bittorrent.inc.php";
 
 function dltable($name, $arr, $torrent)
 {
-    global $CURUSER;
+    global $CURUSER, $pic_base_url;
 
     $s = "\n";
     $s .= "<table id=peerinfo>\n";
@@ -134,9 +134,9 @@ if (!$row || ($row["banned"] == "yes" && !$admin)) {
         $editlink = "a href=\"$url\" title=\"Edit torrent details\" class=edit";
 
         if (isset($row["cat_name"])) {
-            $s = "<a style=float:none href=\"./?cat=" . $row["category"] . "\" class=\"catlink\" data-tooltip=\"" . $row["cat_name"] . "\"><img src=\"" . $tracker_path . "pic/" . $row["category"] . ".png\" width=24 height=24></a><span class=titletorrent title=\"" . htmlspecialchars($row["name"]) . "\">Torrent: " . htmlspecialchars($row["name"]) . "</span>";
+            $s = "<a style=float:none href=\"./?cat=" . $row["category"] . "\" class=\"catlink\" data-tooltip=\"" . $row["cat_name"] . "\"><img src=\"" . $tracker_path . $pic_base_url . $row["category"] . ".png\" width=24 height=24></a><span class=titletorrent title=\"" . htmlspecialchars($row["name"]) . "\">Torrent: " . htmlspecialchars($row["name"]) . "</span>";
         } else {
-            $s = "<span class=\"catlink\" data-tooltip=\"Uncategorized\"><img src=\"" . $tracker_path . "pic/unknown.png\" width=24 height=24></span><span class=titletorrent title=\"" . htmlspecialchars($row["name"]) . "\">Torrent: " . htmlspecialchars($row["name"]) . "</span>";
+            $s = "<span class=\"catlink\" data-tooltip=\"Uncategorized\"><img src=\"" . $tracker_path . $pic_base_url . "unknown.png\" width=24 height=24></span><span class=titletorrent title=\"" . htmlspecialchars($row["name"]) . "\">Torrent: " . htmlspecialchars($row["name"]) . "</span>";
         }
         if ($owned) {
             $s .= " $spacer<$editlink><span>Edit torrent</span></a>";
