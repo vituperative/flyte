@@ -194,11 +194,13 @@ for($i = 0; $i < sizeof($dict["value"]["announce-list"]["value"]); ++$i) {
 }
 
 //remove non-i2p trackers
-for($i = 0; $i < sizeof($alltrackers); ++$i) {
+for($i = 0; $i < sizeof($alltrackers);) {
     if(!preg_match("^http:\/\/(w{3}\.)?(([a-zA-Z0-9-]*\.){1,2})?[a-zA-Z0-9-]*\.(i2p|I2P)\/?$", $alltrackers[$i])) {
         unset($alltrackers[$i]);
         $alltrackers = array_values($alltrackers);
     }
+    else
+    	$i++;
 }
 
 //remove duplicates
